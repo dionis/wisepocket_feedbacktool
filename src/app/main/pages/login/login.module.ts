@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
-import { LoginComponent } from 'app/main/pages/authentication/login/login.component';
+import { LoginComponent } from 'app/main/pages/login/login.component';
 
 const routes = [
     {

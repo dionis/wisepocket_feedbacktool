@@ -16,6 +16,7 @@ import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from
 import { fuseConfig } from 'app/fuse-config';
 
 import { AppComponent } from 'app/app.component';
+import { LoginComponent } from 'app/main/pages/login/login.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        LoginComponent
     ],
     imports     : [
         BrowserModule,
@@ -57,7 +59,7 @@ const appRoutes: Routes = [
         SampleModule
     ],
     bootstrap   : [
-        AppComponent
+        LoginComponent
     ]
 })
 export class AppModule

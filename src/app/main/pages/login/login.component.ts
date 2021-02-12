@@ -6,8 +6,8 @@ import { fuseAnimations } from '@fuse/animations';
 
 @Component({
     selector     : 'login',
-    templateUrl  : './login.component.html',
-    styleUrls    : ['./login.component.scss'],
+    templateUrl  : 'login.component.html',
+    styleUrls    : ['login.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })

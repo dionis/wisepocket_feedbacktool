@@ -10,7 +10,6 @@ import { LoginModule } from 'app/main/pages/login/login.module';
         LoginModule
     ]
 })
-export class PagesModule
-{
+export class PagesModule {
 
 }

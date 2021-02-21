@@ -17,8 +17,8 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
 
 import { fuseConfig } from 'app/fuse-config';
-// import { LoginModule } from 'app/main/pages/login/login.module';
-// import { PagesModule } from 'app/main/pages/pages.module';
+import { LoginModule } from 'app/main/pages/login/login.module';
+import { PagesModule } from 'app/main/pages/pages.module';
 
 import { AppComponent } from 'app/app.component';
 import { LoginComponent } from 'app/main/pages/login/login.component';
@@ -34,15 +34,14 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
-        LoginComponent
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
         RouterModule.forRoot(appRoutes),
-        // PagesModule,
-        // LoginModule,   
+        PagesModule,
+        LoginModule,   
         TranslateModule.forRoot(),
         MatCheckboxModule,
         MatFormFieldModule,

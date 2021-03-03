@@ -2,11 +2,17 @@ export const locale = {
     lang: 'es',
     data: {
         'NAV': {
-            'APPLICATIONS': 'Aplicaciones',
+            'APPLICATIONS': 'Aplicaiones',
             'SAMPLE'        : {
-                'TITLE': 'Muestra',
+                'TITLE': 'Ejemplo',
                 'BADGE': '25'
-            }
-        }
+            },
+            'CAMPINGS': 'Campañas',
+            'CampingsList': {
+                'TITLE': 'Lista de Campañas',
+                'BADGE': '12' 
+            },
+        },
+        
     }
 };

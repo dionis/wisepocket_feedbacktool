@@ -41,6 +41,25 @@ module.exports.routes = {
   '/logout':                  '/api/v1/account/logout',
 
 
+   //User's Requests
+ 'POST /singUp': 'UserController.singUp',
+ 'POST /singIn': 'UserController.login',
+ 'POST /logout': 'UserController.logout',
+ 'GET /user/getUserById/:id': 'UserController.getUserById',
+
+ //Image's Requests
+ 'POST /addImg': 'ImagenController.create',
+
+ //Camping's Requests
+ 'POST /camping/addCamping': 'CampingController.create',
+ 'PATCH /camping/editCamping': 'CampingController.editCamping',
+ 'DELETE /camping/deleteCamping': 'CampingController.deleteCamping',
+ 'GET /camping/campingslist': 'CampingController.getCampings',
+ 'GET /camping/campingslistbyUser/:_id': 'CampingController.getCampingsbyUser',
+
+
+
+
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝

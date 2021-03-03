@@ -5,7 +5,10 @@
 export const environment = {
     production: false,
     hmr       : false,
-    urlAddress: 'http://localhost:1337'
+    sails_services_urlpath:'http://localhost',
+    sails_services_urlport:'1337',
+
+
 };
 
 /*

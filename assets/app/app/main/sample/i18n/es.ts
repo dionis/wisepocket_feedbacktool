@@ -2,7 +2,7 @@ export const locale = {
     lang: 'es',
     data: {
         'SAMPLE': {
-            'HELLO': 'Hola, Mundo!'
+            'HELLO': 'Hola, Mundo'
         }
     }
 };

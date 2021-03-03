@@ -78,11 +78,11 @@ will be disabled and/or hidden in the UI.
           secret: sails.config.custom.stripeSecret
         });
 
-        sails.helpers.sendgrid.configure({
-          secret: sails.config.custom.sendgridSecret,
-          from: sails.config.custom.fromEmailAddress,
-          fromName: sails.config.custom.fromName,
-        });
+        // sails.helpers.sendgrid.configure({
+        //   secret: sails.config.custom.sendgridSecret,
+        //   from: sails.config.custom.fromEmailAddress,
+        //   fromName: sails.config.custom.fromName,
+        // });
 
       });//_∏_
 

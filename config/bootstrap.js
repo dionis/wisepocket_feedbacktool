@@ -8,6 +8,7 @@
  * For more information on seeding your app with fake data, check out:
  * https://sailsjs.com/config/bootstrap
  */
+const bcrypt = require('bcrypt');
 
 module.exports.bootstrap = async function() {
 
@@ -59,8 +60,14 @@ module.exports.bootstrap = async function() {
   }//∞
 
   // By convention, this is a good place to set up fake data during development.
+  const salt = await bcrypt.genSalt(10);
+  const hashpass = await bcrypt.hash('12345678',salt)
+  // await User.createEach([
+  //   { email: 'admin@example.com', phone:'+53552448', name: 'Ryan Dahl', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('12345678') },
+  // ]);
+
   await User.createEach([
-    { email: 'admin@example.com', phone:'+53552448', name: 'Ryan Dahl', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc123') },
+    { email: 'admin@example.com', phone:'+53552448', name: 'Ryan Dahl', fullName: 'Ryan Dahl', isSuperAdmin: true, password: hashpass },
   ]);
 
   // Save new bootstrap version

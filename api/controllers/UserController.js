@@ -7,10 +7,10 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 module.exports = {
-  
+
     singUp: async function(req,res){
         const user = await User.findOne({email:req.body.email})
-        if(user) return res.status(400).send('This Email is used!!!'); 
+        if(user) return res.status(400).send('This Email is used!!!');
         const salt = await bcrypt.genSalt(10);
         const hashpass = await bcrypt.hash(req.body.password,salt)
         User.create({
@@ -26,7 +26,7 @@ module.exports = {
             return res.send({
                 'success': true,
                 'message': 'Record Created',
-                'data': user 
+                'data': user
             })
         })
         .catch(err=>{
@@ -39,15 +39,21 @@ module.exports = {
             'message': 'Request must contain Email and password'
         })};
         const _user = await User.findOne({email:req.body.email}, async (err,user)=>{
-            if(err){ return res.sendStatus(500);}
+
+
+            if(err){
+              console.log("!!!!! In this position ");
+              console.error(err);
+              return res.sendStatus(500);}
             if(!user){
                 return res.sendStatus(400);
             }
+            // await sails.helpers.passwords.hashPassword('12345678')
             const validpass = await bcrypt.compare(req.body.password,user.password);
             if(!validpass) return res.sendStatus(400,{message:'Password Incorrect'});
             //sails.log.debug('Antes');
-            const token = jwt.sign({ _id:user.id, 
-                                    rol: user.isAdmin?'Admin':'Organization' }, 
+            const token = jwt.sign({ _id:user.id,
+                                    rol: user.isAdmin?'Admin':'Organization' },
             'hjghdvdfjvnishvishr4oo', {expiresIn: 900});
             req.session.me = token;
             //sails.log.debug(token);
@@ -55,10 +61,10 @@ module.exports = {
                 'message': 'Login Successfully',
                 'idToken': token,
                 'expiresIn': 900
-            });            
+            });
         });
     },
-    
+
     logout: function(req, res) {
         //     const token = req.header.auth_token;
         //     res.send('SingOut'+ token);

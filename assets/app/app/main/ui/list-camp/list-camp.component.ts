@@ -5,10 +5,10 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
-import { fuseAnimations } from '@fuse/animations';
-import { FuseUtils } from '@fuse/utils';
+import { fuseAnimations } from '../../../../@fuse/animations';
+import { FuseUtils } from '../../../../@fuse/utils';
 
-import { ListCampService } from 'app/main/ui/list-camp/list-camp.service';
+import { ListCampService } from '../../../../app/main/ui/list-camp/list-camp.service';
 import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({
@@ -35,12 +35,12 @@ export class ListCampComponent implements OnInit {
 
   constructor(
     private _listCampService: ListCampService
-  ) 
+  )
   {
-      this._unsubscribeAll = new Subject();    
+      this._unsubscribeAll = new Subject();
   }
 
-  ngOnInit(): void 
+  ngOnInit(): void
   {
 
     this.dataSource = new FilesDataSource(this._listCampService, this.paginator, this.sort);

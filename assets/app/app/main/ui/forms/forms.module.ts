@@ -7,9 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { FuseSharedModule } from '../../../../@fuse/shared.module';
 
-import { FormsComponent } from 'app/main/ui/forms/forms.component';
+import { FormsComponent } from '../../../../app/main/ui/forms/forms.component';
 
 const routes: Routes = [
     {

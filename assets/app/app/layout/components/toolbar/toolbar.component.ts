@@ -8,8 +8,6 @@ import { FuseConfigService } from '../../../../@fuse/services/config.service';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from '../../../../app/navigation/navigation';
-import { UserService } from '../../../../app/services/user.service';
-import { User } from '../../../../app/models/user.model';
 
 @Component({
     selector     : 'toolbar',
@@ -27,7 +25,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
     navigation: any;
     selectedLanguage: any;
     userStatusOptions: any[];
-    user: User;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -42,14 +39,11 @@ export class ToolbarComponent implements OnInit, OnDestroy
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService,
-        private userService: UserService
+        private _translateService: TranslateService
     )
     {
         // Set the defaults
-        this.user = new User();
         this.userStatusOptions = [
-
             {
                 title: 'Online',
                 icon : 'icon-checkbox-marked-circle',
@@ -87,6 +81,11 @@ export class ToolbarComponent implements OnInit, OnDestroy
                 id   : 'tr',
                 title: 'Turkish',
                 flag : 'tr'
+            },
+            {
+                id   : 'es',
+                title: 'Spanish',
+                flag : 'es'
             }
         ];
 
@@ -116,7 +115,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
-        this.user = this.userService.getMyUser();
     }
 
     /**
@@ -141,12 +139,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
     toggleSidebarOpen(key): void
     {
         this._fuseSidebarService.getSidebar(key).toggleOpen();
-    }
-
-    logout(){
-        console.log(this.userService.isLoggedIn())
-        this.user = null;
-        this.userService.logout();
     }
 
     /**

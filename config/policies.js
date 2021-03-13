@@ -32,6 +32,13 @@ module.exports.policies = {
     deleteCamping:true,
   },
 
+  /*CampaignController: {
+    '*': 'isAuthenticated',
+    editCampaign: true,
+    getCampaign:true,
+    deleteCampaign:true,
+  },*/
+
   ImagenController: {
     '*': 'isAuthenticated',
     create: true,

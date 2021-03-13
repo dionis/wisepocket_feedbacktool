@@ -67,6 +67,11 @@ module.exports = {
       via: 'createdby'
     },
 
+    /*campaign: {
+      collection: 'campaign',
+      via: 'userChief'
+    },*/
+
     imgPerfil: {
       collection: 'imagen',
       via: 'perfil'

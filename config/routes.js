@@ -58,6 +58,14 @@ module.exports.routes = {
  'GET /camping/campingslist': 'CampingController.getCampings',
  'GET /camping/campingslistbyUser/:_id': 'CampingController.getCampingsbyUser',
 
+ ///////////////////////////
+/* 'POST /campaign/create': 'CampaignController.create',
+ 'PATCH /campaign/editCampaign': 'CampaignController.editCampaign',
+ 'DELETE /campaign/deleteCampaign': 'CampaignController.deleteCampaign',
+ 'GET /campaign/getCampaign': 'CampaignController.getCampaign',
+ 'GET /campaign/getCampaignbyUser/:_id': 'CampaignController.getCampaignbyUser',   */
+///////////////////////////
+
 //Services Requests
  //POST
  'POST /userend/create': 'UserEndController.create',

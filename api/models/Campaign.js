@@ -18,7 +18,8 @@ module.exports = {
     },
 
     fecha: {
-      type: Date
+      type: 'string',
+      columnType: 'date'
     },
 
     /* userChief: {

@@ -1,46 +1,58 @@
 /**
- * RegistroController
+ * EntidadOpinionController
  *
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
 module.exports = {
+  
     create: async function (req, res) {
+        let opinion
+        await Opinion.findOne({
+            id: req.param('id'),
+        }).then((doc) => {
+            if (!doc) {
+                console.log("No encontrado")
+            } else {
+                console.log("Encontrado"),
+                    opinion = doc
 
-        await Registro.create({
+            }
+        });
+        await EntidadOpinion.create({
             texto: req.param('texto'),
-            evento: req.param('evento'),
-            fecha: req.param('fecha')
-        }).then(function (registro) {
+            start: req.param('start'),
+            end: req.param('end'),
+            opinion: opinion.id
+        }).then(function (entidadopinion) {
             return res.send({
                 'success': true,
-                'message': 'Registro creado',
-                'data': registro
+                'message': 'Entidades enviadas',
+                'data': entidadopinion
             })
         })
             .catch(function (err) {
                 sails.log.debug(err);
                 return res.send({
                     'success': false,
-                    'message': 'Falló, registro no enviado'
+                    'message': 'Falló, entidad no enviada'
                 })
             })
     },
 
+    deleteAllEntidad: async function (req, res) {
 
-    deleteAllRegistro: async function (req, res) {
-
-        await Registro.destroy({
+        await EntidadOpinion.destroy({
             id: req.params.id
-        }).then(registro => {
+        }).then(function (entidadopinion) {
             return res.send({
                 'success': true,
-                'message': 'Se han eliminado todos los registros',
-                'data': registro
+                'message': 'Se han eliminado todas las entidades',
+                'data': entidadopinion
             })
         })
-            .catch(err => {
+            .catch(function (err) {
                 sails.log.debug(err);
                 return res.send({
                     'success': false,
@@ -49,19 +61,19 @@ module.exports = {
             })
     },
 
-    getRegistro: (req, res) => {
+    getEntidad: (req, res) => {
         const page = req.param('page')
         //const limit = req.param('limit')
         //console.log(page);
-        Registro.find()
+        EntidadOpinion.find().populate('opinion')
             .paginate(
                 page,
                 5
             )
-            .then(registro => {
+            .then(entidadopinion => {
                 return res.send({
-                    'message': 'Registros',
-                    'data': registro,
+                    'message': 'Lista de Entidades',
+                    'data': entidadopinion,
                 })
             })
             .catch(err => {
@@ -71,23 +83,5 @@ module.exports = {
                 })
             })
     },
-
-    /*getAllRegistro: (req,res) => {
-
-        Registro.find()
-            .then(registro => {
-                return res.send({
-                    'message': 'Todos los registros',
-                    'data': registro
-                })
-            })
-            .catch(err => {
-                return res.status(500).send({
-                    'message': 'Imposible Mostrar',
-                    'error': err
-                })
-            })
-    },*/
-
 };
 

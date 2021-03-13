@@ -5,30 +5,132 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-
-
 module.exports = {
 
     //function beta
-    /*create: async (req, res) => {
-        const userend = await UserEnd.find({ name_alias: req.body.userend })
-        console.log(userend),
+    create: async function (req, res) {
+        let userend
+        let campaign
+        await UserEnd.findOne({
+            email: req.param('email'),
+        }).then((doc) => {
+            if (!doc) {
+                console.log("No encontrado")
+            } else {
+                console.log("Encontrado"),
+                    userend = doc
+
+            }
+        });
+        await Campaign.findOne({
+            nombre: req.param('nombre'),
+        }).then((doc) => {
+            if (!doc) {
+                console.log("No encontrado")
+            } else {
+                console.log("Encontrado"),
+                    campaign = doc
+
+            }
+        });
         await Opinion.create({
-            texto: req.body.texto,
-            fecha: req.body.fecha,
-            userend: userend._id
+            texto: req.param('texto'),
+            fecha: req.param('fecha'),
+            aspectos: req.param('aspectos'),
+            entidades: req.param('entidades'),
+            userend: userend.id,
+            campaign: campaign.id
+        }).then(function (opinion) {
+            return res.send({
+                'success': true,
+                'message': 'Opinion enviada',
+                'data': opinion
+            })
         })
+            .catch(function (err) {
+                sails.log.debug(err);
+                return res.send({
+                    'success': false,
+                    'message': 'Falló, opinion no enviada'
+                })
+            })
+    },
+
+    deleteOpinion: async function (req, res) {
+        await Opinion.findOne({
+            id: req.param('id')
+        }).then((doc) => {
+            if (!doc) {
+                console.log("No encontrado")
+                return res.send({
+                    'success': false,
+                    'message': 'Opinion no encontrada'
+                })
+            } else {
+                console.log("Encontrado"),
+                    Opinion.destroy({
+                        id: req.param('id')
+                    }).then(function (opinion) {
+                        return res.send({
+                            'success': true,
+                            'message': 'Opinion eliminada',
+                            'data': opinion
+                        })
+                    })
+                        .catch(function (err) {
+                            sails.log.debug(err);
+                            return res.send({
+                                'success': false,
+                                'message': 'Opinion no eliminada'
+                            })
+                        })
+            }
+        })
+    },
+
+    deleteAllOpinion: async function (req, res) {
+
+        await Opinion.destroy({
+            id: req.params.id
+        }).then(function (opinion) {
+            return res.send({
+                'success': true,
+                'message': 'Se han eliminado todas las opiniones',
+                'data': opinion
+            })
+        })
+            .catch(function (err) {
+                sails.log.debug(err);
+                return res.send({
+                    'success': false,
+                    'message': 'Falló la operación'
+                })
+            })
+    },
+
+    getOpinion: (req, res) => {
+        const page = req.param('page')
+        //const limit = req.param('limit')
+       //console.log(page);
+        Opinion.find().populate('campaign')
+            .paginate(
+                page,
+                5
+            )
             .then(opinion => {
                 return res.send({
+                    'message': 'Lista de Opiniones',
                     'data': opinion,
                 })
             })
             .catch(err => {
-                return res.send({
-                    'error': err,
+                return res.status(500).send({
+                    'message': 'Imposible Mostrar',
+                    'error': err
                 })
             })
-    }*/
+    },
+}
 
-};
+
 

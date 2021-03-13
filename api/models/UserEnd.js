@@ -8,15 +8,15 @@
 module.exports = {
 
   attributes: {
-    id: {
+    /*id: {
       type: 'string',
       unique: true,
       columnName:'_id'
-    },
+    },*/
 
     name_alias: {
       type: 'string',
-      required: true,
+      defaultsTo: 'Anónimo'
     },
 
     email: {

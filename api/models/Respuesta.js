@@ -9,12 +9,6 @@ module.exports = {
 
   attributes: {
 
-    id: {
-      type: 'string',
-      unique: true,
-      columnName:'_id'
-    },
-
     texto: {
       type: 'string',
       required: true
@@ -27,7 +21,6 @@ module.exports = {
 
     res: {
       model: 'user'
-
     }
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

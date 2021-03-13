@@ -9,7 +9,7 @@
  */
 
 module.exports.routes = {
-
+  
   //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
   //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
   //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
@@ -37,6 +37,7 @@ module.exports.routes = {
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
+
   '/terms':                   '/legal/terms',
   '/logout':                  '/api/v1/account/logout',
 
@@ -57,8 +58,36 @@ module.exports.routes = {
  'GET /camping/campingslist': 'CampingController.getCampings',
  'GET /camping/campingslistbyUser/:_id': 'CampingController.getCampingsbyUser',
 
+//Services Requests
+ //POST
+ 'POST /userend/create': 'UserEndController.create',
+ 'POST /opinion/create': 'OpinionController.create',
+ 'POST /pregunta/create': 'PreguntaController.create',
+ 'POST /respuesta/create': 'RespuestaController.create',
+ 'POST /registro/create': 'RegistroController.create',
+ 'POST /aspectoopinion/create': 'AspectoOpinionController.create',
+ 'POST /entidadopinion/create': 'EntidadOpinionController.create',
+ 
+ //DELETE
+ 'DELETE /opinion/deleteOpinion': 'OpinionController.deleteOpinion',
+ 'DELETE /opinion/deleteAllOpinion': 'OpinionController.deleteAllOpinion',
+ 'DELETE /pregunta/deletePregunta': 'PreguntaController.deletePregunta',
+ 'DELETE /pregunta/deleteAllPregunta': 'PreguntaController.deleteAllPregunta',
+ 'DELETE /respuesta/deleteAllRespuesta': 'RespuestaController.deleteAllRespuesta',
+ 'DELETE /registro/deleteAllRegistro': 'RegistroController.deleteAllRegistro',
+ 'DELETE /aspectoopinion/deleteAllAspecto': 'AspectoOpinionController.deleteAllAspecto',
+ 'DELETE /entidadopinion/deleteAllEntidad': 'EntidadOpinionController.deleteAllEntidad',
 
-
+ //POST for GET Pages
+ 'POST /opinion/getOpinion':'OpinionController.getOpinion',
+ 'POST /pregunta/getPregunta':'PreguntaController.getPregunta',
+ 'POST /respuesta/getRespuesta':'RespuestaController.getRespuesta',
+ 'POST /registro/getRegistro':'RegistroController.getRegistro',
+ 'POST /aspectoopinion/getAspecto':'AspectoOpinionController.getAspecto',
+ 'POST /entidadopinion/getEntidad':'EntidadOpinionController.getEntidad',
+ 
+ //GET
+ //'GET /registro/getAllRegistro':'RegistroController.getAllRegistro',
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

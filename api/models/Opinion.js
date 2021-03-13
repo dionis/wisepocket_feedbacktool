@@ -8,34 +8,28 @@
 module.exports = {
 
   attributes: {
+    
+   /* id: {
+      type: 'string',
+      unique: true,
+      columnName: '_id'
+    },*/
+
 
     texto: {
       type: 'string',
       required: true
     },
 
-    id: {
-      type: 'string',
-      unique: true,
-      columnName:'_id'
-    },
-
-
-
-    /*polaridad: {
-      type: 'boolean',
-      required: true
-    },
-
     aspectos: {
-      type: 'string',
-      required: true
+     collection:'aspectoopinion',
+     via:'opinion'
     },
 
     entidades: {
-      type: 'string',
-      required: true
-    },*/
+      collection:'entidadopinion',
+      via:'opinion'
+    },
 
     fecha: {
       type: 'string',
@@ -46,6 +40,9 @@ module.exports = {
       model: 'userend'
     },
 
+    campaign: {
+      model: 'campaign'
+    },
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝

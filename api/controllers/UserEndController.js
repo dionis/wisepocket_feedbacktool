@@ -11,24 +11,23 @@ const Opinion = require("../models/Opinion");
 
 module.exports = {
   
-  /*  create: async (req, res) => {
-        const opinion = await Opinion.find({ name_alias: req.body.userend })
+    create: async function (req, res) {
+
         await UserEnd.create({
-            texto: req.body.texto,
-            fecha: req.body.fecha,
-            userend: userend._id
+            name_alias: req.param('name_alias'),
+            email: req.param('email'),
+        }, (err) => {
+            if (err) {
+                sails.log.debug(err);
+                return res.sendStatus(500);
+            }
+            else {
+                return res.send(
+                    'Usuario cliente realizado con exito'
+                )
+            }
         })
-            .then(opinion => {
-                return res.send({
-                    'data': opinion,
-                })
-            })
-            .catch(err => {
-                return res.send({
-                    'error': err,
-                })
-            })
-    }*/
+    }
 
 };
 

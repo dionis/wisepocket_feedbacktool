@@ -127,7 +127,13 @@ export const navigation: FuseNavigation[] = [
   icon     : 'send',
   url      : 'forms'
 },
-
+{
+  id   : 'profile',
+  title: 'Profile',
+  type : 'item',
+  icon : 'person',
+  url  : '/pages/profile'
+},
 
 
 ];

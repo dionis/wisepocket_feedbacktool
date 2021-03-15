@@ -43,10 +43,10 @@ module.exports.routes = {
 
 
    //User's Requests
- 'POST /singUp': 'UserController.singUp',
- 'POST /singIn': 'UserController.login',
- 'POST /logout': 'UserController.logout',
- 'GET /user/getUserById/:id': 'UserController.getUserById',
+ 'POST /user/singUp': 'UserController.singUp',
+ 'POST /user/singIn': 'UserController.login',
+ 'POST /user/logout': 'UserController.logout',
+ 'GET /user/getUserById/:_id': 'UserController.getUserById',
 
  //Image's Requests
  'POST /addImg': 'ImagenController.create',
@@ -86,16 +86,19 @@ module.exports.routes = {
  'DELETE /aspectoopinion/deleteAllAspecto': 'AspectoOpinionController.deleteAllAspecto',
  'DELETE /entidadopinion/deleteAllEntidad': 'EntidadOpinionController.deleteAllEntidad',
 
- //POST for GET Pages
+ //POST for GET and Pages
  'POST /opinion/getOpinion':'OpinionController.getOpinion',
  'POST /pregunta/getPregunta':'PreguntaController.getPregunta',
  'POST /respuesta/getRespuesta':'RespuestaController.getRespuesta',
  'POST /registro/getRegistro':'RegistroController.getRegistro',
  'POST /aspectoopinion/getAspecto':'AspectoOpinionController.getAspecto',
  'POST /entidadopinion/getEntidad':'EntidadOpinionController.getEntidad',
+// 'POST /aspectoopinion/getAllAspectoXOpinion':'AspectoOpinionController.getAllAspectoXOpinion',
+// 'POST /entidadopinion/getAllEntidadesXOpinion':'EntidadOpinionController.getAllEntidadesXOpinion',
  
  //GET
- //'GET /registro/getAllRegistro':'RegistroController.getAllRegistro',
+ 'GET /registro/getAllRegistro':'RegistroController.getAllRegistro',
+ 
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

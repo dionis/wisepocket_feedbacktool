@@ -84,6 +84,34 @@ module.exports = {
                 })
             })
     },
-    
+
+    /*getAllAspectoXOpinion: async function (req, res) {
+
+        let aspc = await Opinion.find({
+            where: {id: req.param('_id')},
+            select: ['aspectos']
+        }).populate('aspectos')
+
+        if (aspc.length === 0) {
+            return res.send({
+                'message': 'No hay Aspectos que mostrar'
+            })
+        }
+
+        else if (aspc) {
+            return res.send({
+                'message': 'Todos los aspectos de la opinion',
+                'data': aspc
+            })
+        }
+        else {
+            return res.status(500).send({
+                'message': 'Imposible Mostrar'
+            })
+        }
+
+
+    },*/
+
 };
 

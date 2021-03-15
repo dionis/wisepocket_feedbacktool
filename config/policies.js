@@ -23,6 +23,7 @@ module.exports.policies = {
     login: true,
     singUp: true,
     logout: true,
+    getUserById:true
   },
 
   CampingController: {

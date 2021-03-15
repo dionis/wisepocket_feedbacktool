@@ -83,5 +83,35 @@ module.exports = {
                 })
             })
     },
+
+    /*getAllEntidadesXOpinion: async function (req, res) {
+
+        let ent = await Opinion.find({
+            where: {id: req.param('_id')},
+            select: ['entidades']
+        }).populate('entidades')
+
+        if (ent.length === 0) {
+            return res.send({
+                'message': 'No hay Entidadess que mostrar'
+            })
+        }
+
+        else if (ent) {
+            return res.send({
+                'message': 'Todos las entidades de la opinion',
+                'data': ent
+            })
+        }
+        else {
+            return res.status(500).send({
+                'message': 'Imposible Mostrar'
+            })
+        }
+
+
+
+    },*/
+
 };
 

@@ -72,6 +72,16 @@ module.exports = {
       via: 'userChief'
     },*/
 
+    respuesta: {
+      collection: 'respuesta',
+      via: 'res'
+    },
+
+    campaign: {
+      model: 'campaign'
+    },
+
+
     imgPerfil: {
       collection: 'imagen',
       via: 'perfil'

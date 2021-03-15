@@ -22,6 +22,11 @@ module.exports = {
       columnType: 'date'
     },
 
+    user: {
+      collection: 'user',
+      via: 'campaign'
+    },
+
     /* userChief: {
        model: 'user'
     }

@@ -66,9 +66,9 @@ module.exports.bootstrap = async function() {
   //   { email: 'admin@example.com', phone:'+53552448', name: 'Ryan Dahl', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('12345678') },
   // ]);
 
-  await User.createEach([
+  /*await User.createEach([
     { email: 'admin@example.com', phone:'+53552448', name: 'Ryan Dahl', fullName: 'Ryan Dahl', isSuperAdmin: true, password: hashpass },
-  ]);
+  ]);*/
 
   // Save new bootstrap version
   await sails.helpers.fs.writeJson.with({

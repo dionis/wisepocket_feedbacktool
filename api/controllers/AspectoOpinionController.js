@@ -85,33 +85,30 @@ module.exports = {
             })
     },
 
-    /*getAllAspectoXOpinion: async function (req, res) {
+    getAllAspectoXOpinion: async function (req, res) {
 
-        let aspc = await Opinion.find({
-            where: {id: req.param('_id')},
+        if (!req.param('id')) {
+            return res.sendStatus({
+                'error': 'User ID no encontrado en el Request'
+            })
+        }
+        await Opinion.findOne({
+            where: { id: req.param('id') },
             select: ['aspectos']
         }).populate('aspectos')
-
-        if (aspc.length === 0) {
-            return res.send({
-                'message': 'No hay Aspectos que mostrar'
+            .then(data => {
+                return res.send({
+                    'message': 'Lista de aspectos',
+                    'data': data
+                })
             })
-        }
-
-        else if (aspc) {
-            return res.send({
-                'message': 'Todos los aspectos de la opinion',
-                'data': aspc
+            .catch(err => {
+                return res.sendStatus(500);
             })
-        }
-        else {
-            return res.status(500).send({
-                'message': 'Imposible Mostrar'
-            })
-        }
 
 
-    },*/
+
+    },
 
 };
 

@@ -51,8 +51,8 @@ module.exports = {
     },
 
     editCampaign: (req, res) => {
-        if (!req.param('camp')) { return req.sendStatus(400) }
-        return Campaign.update({ id: req.param('camp') }, req.allParams()).fetch()
+        if (!req.param('id')) { return req.sendStatus(400) }
+        return Campaign.update({ id: req.param('id') }, req.allParams()).fetch()
             .then(campaign => {
                 return res.send({
                     'message': 'Record Edited',
@@ -99,7 +99,7 @@ module.exports = {
                 'error': 'User ID no encontrado en el Request'
             })
         }
-        const us = await User.findOne({
+        await User.findOne({
             where: { id: req.param('id') },
             select: ['campaign']
         }).populate('campaign')

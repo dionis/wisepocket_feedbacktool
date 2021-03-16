@@ -74,7 +74,7 @@ module.exports = {
 
     respuesta: {
       collection: 'respuesta',
-      via: 'res'
+      via: 'userRes'
     },
 
     campaign: {

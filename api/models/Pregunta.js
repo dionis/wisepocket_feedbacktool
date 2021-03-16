@@ -19,9 +19,18 @@ module.exports = {
       columnType: 'date'
     },
 
-    ques: {
+    quesUserend: {
       model: 'userend'
-    }
+    },
+
+    resp:{
+      collection:'respuesta',
+      via:'ques'
+    },
+
+    campaign: {
+      model: 'campaign'
+    },
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

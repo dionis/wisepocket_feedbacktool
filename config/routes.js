@@ -51,22 +51,17 @@ module.exports.routes = {
   //Image's Requests
   'POST /addImg': 'ImagenController.create',
 
-  //Camping's Requests
-  /* 'POST /camping/addCamping': 'CampingController.create',
-   'PATCH /camping/editCamping': 'CampingController.editCamping',
-   'DELETE /camping/deleteCamping': 'CampingController.deleteCamping',
-   'GET /camping/campingslist': 'CampingController.getCampings',
-   'GET /camping/campingslistbyUser/:_id': 'CampingController.getCampingsbyUser',*/
 
-  ///////////////////////////
+  //Campaign Requests
   'POST /campaign/create': 'CampaignController.create',
   'PATCH /campaign/editCampaign': 'CampaignController.editCampaign',
   'DELETE /campaign/deleteCampaign': 'CampaignController.deleteCampaign',
   'GET /campaign/getCampaign': 'CampaignController.getCampaign',
   'GET /campaign/getCampaignbyUser/_id': 'CampaignController.getCampaignbyUser',
-  ///////////////////////////
+
 
   //Services Requests
+  
   //POST
   'POST /userend/create': 'UserEndController.create',
   'POST /opinion/create': 'OpinionController.create',
@@ -86,17 +81,13 @@ module.exports.routes = {
   'DELETE /aspectoopinion/deleteAllAspecto': 'AspectoOpinionController.deleteAllAspecto',
   'DELETE /entidadopinion/deleteAllEntidad': 'EntidadOpinionController.deleteAllEntidad',
 
-  //POST for GET and Pages
-  'POST /opinion/getOpinion': 'OpinionController.getOpinion',
-  'POST /pregunta/getPregunta': 'PreguntaController.getPregunta',
-  'POST /respuesta/getRespuesta': 'RespuestaController.getRespuesta',
-  'POST /registro/getRegistro': 'RegistroController.getRegistro',
-  'POST /aspectoopinion/getAspecto': 'AspectoOpinionController.getAspecto',
-  'POST /entidadopinion/getEntidad': 'EntidadOpinionController.getEntidad',
-  // 'POST /aspectoopinion/getAllAspectoXOpinion':'AspectoOpinionController.getAllAspectoXOpinion',
-  // 'POST /entidadopinion/getAllEntidadesXOpinion':'EntidadOpinionController.getAllEntidadesXOpinion',
-
-  //GET
+  //GET and for Pages
+  'GET /opinion/getOpinion': 'OpinionController.getOpinion',
+  'GET /pregunta/getPregunta': 'PreguntaController.getPregunta',
+  'GET /respuesta/getRespuesta': 'RespuestaController.getRespuesta',
+  'GET /registro/getRegistro': 'RegistroController.getRegistro',
+  'GET /aspectoopinion/getAspecto': 'AspectoOpinionController.getAspecto',
+  'GET /entidadopinion/getEntidad': 'EntidadOpinionController.getEntidad',
   'GET /registro/getAllRegistro': 'RegistroController.getAllRegistro',
 
 

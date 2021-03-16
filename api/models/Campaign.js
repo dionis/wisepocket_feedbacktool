@@ -65,7 +65,7 @@ module.exports = {
     logo: {
       model: 'imagen',
       //unique: true,
-    }
+    },
 
   },
 

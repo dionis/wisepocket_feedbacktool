@@ -10,6 +10,7 @@ module.exports = {
 
     create: async function (req, res) {
         let userend
+        let campaign
         await UserEnd.findOne({
             email: req.param('email'),
         }).then((doc) => {
@@ -21,10 +22,22 @@ module.exports = {
 
             }
         });
+        await Campaign.findOne({
+            nombre: req.param('nombre'),
+        }).then((doc) => {
+            if (!doc) {
+                console.log("No encontrado")
+            } else {
+                console.log("Encontrado"),
+                    campaign = doc
+
+            }
+        });
         await Pregunta.create({
             texto: req.param('texto'),
             fecha: req.param('fecha'),
-            ques: userend.id
+            quesUserend: userend.id,
+            campaign: campaign.id
         }).then(pregunta => {
             return res.send({
                 'success': true,
@@ -93,11 +106,14 @@ module.exports = {
             })
     },
 
-    getPregunta: (req, res) => {
+    getPregunta: async (req, res) => {
         const page = req.param('page')
         //const limit = req.param('limit')
         //console.log(page);
-        Pregunta.find().populate('ques')
+        let campID = await Campaign.findOne({ id: req.param('id') })
+        await Pregunta.find({
+            where: { campaign: campID.id },
+        })
             .paginate(
                 page,
                 5

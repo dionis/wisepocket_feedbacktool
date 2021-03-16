@@ -19,9 +19,19 @@ module.exports = {
       columnType: 'date'
     },
 
-    res: {
+    userRes: {
       model: 'user'
-    }
+    },
+
+    ques:{
+      model:'pregunta'
+    },
+
+    campaign: {
+      model: 'campaign'
+    },
+
+
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝

@@ -62,15 +62,18 @@ module.exports = {
             })
     },
 
-    getAspecto: (req, res) => {
+    getAspecto: async (req, res) => {
         const page = req.param('page')
         //const limit = req.param('limit')
         //console.log(page);
-        AspectoOpinion.find().populate('opinion')
-            .paginate(
-                page,
-                5
-            )
+        let opinID = await Opinion.findOne({ id: req.param('id') })
+        await AspectoOpinion.find({
+            where: { opinion: opinID.id },
+        })
+            /* .paginate(
+                 page,
+                 5
+             )*/
             .then(aspectoopinion => {
                 return res.send({
                     'message': 'Lista de Aspectos',
@@ -85,30 +88,6 @@ module.exports = {
             })
     },
 
-    getAllAspectoXOpinion: async function (req, res) {
-
-        if (!req.param('id')) {
-            return res.sendStatus({
-                'error': 'User ID no encontrado en el Request'
-            })
-        }
-        await Opinion.findOne({
-            where: { id: req.param('id') },
-            select: ['aspectos']
-        }).populate('aspectos')
-            .then(data => {
-                return res.send({
-                    'message': 'Lista de aspectos',
-                    'data': data
-                })
-            })
-            .catch(err => {
-                return res.sendStatus(500);
-            })
-
-
-
-    },
 
 };
 

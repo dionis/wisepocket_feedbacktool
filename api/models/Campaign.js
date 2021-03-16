@@ -22,31 +22,29 @@ module.exports = {
       columnType: 'date'
     },
 
-    user: {
+    userCamp:{
       collection: 'user',
       via: 'campaign'
     },
 
-    /* userChief: {
-       model: 'user'
-    }
-
-     attributes: {
+    userChief: {
+      model: 'user'
+    },
 
     descripcion: {
       type: 'string',
-      required: true,
-      columnName:'descripcion'
+      //required: true,
+      columnName: 'descripcion'
     },
 
     contanctoTelefono: {
       type: 'number',
-      required: true,
-      columnName:'contanctoTelefono'
+      //required: true,
+      columnName: 'contanctoTelefono'
     },
     direccionPostal: {
       type: 'string',
-      required: true
+      //required: true
     },
 
     contactoTelegram: {
@@ -62,7 +60,13 @@ module.exports = {
     contactoFacebook: {
       type: 'string',
       allowNull: true
-    }*/
+    },
+
+    logo: {
+      model: 'imagen',
+      //unique: true,
+    }
+
   },
 
 

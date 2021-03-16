@@ -12,7 +12,7 @@ module.exports = {
     id: {
       type: 'string',
       unique: true,
-      columnName:'_id'
+      columnName: '_id'
     },
 
     name: {
@@ -26,7 +26,7 @@ module.exports = {
       required: true,
     },
 
-    phone:{
+    phone: {
       type: 'string',
       required: true,
     },
@@ -36,23 +36,23 @@ module.exports = {
       allowNull: true
     },
 
-    cargo:{
+    cargo: {
       type: 'string',
       allowNull: true
     },
 
-    password:{
+    password: {
       type: 'string',
       unique: true,
       required: true,
     },
 
-    isAdmin:{
+    isAdmin: {
       type: 'boolean',
       defaultsTo: false,
     },
 
-    isOrganization:{
+    isOrganization: {
       type: 'boolean',
       defaultsTo: true,
     },
@@ -62,14 +62,14 @@ module.exports = {
       defaultsTo: true,
     },
 
-    campings: {
+    /*campings: {
       collection: 'camping',
       via: 'createdby'
-    },
-
-    /*campaign: {
+    },*/
+    
+    /*campaign:{
       collection: 'campaign',
-      via: 'userChief'
+      via: 'userCamp'
     },*/
 
     respuesta: {
@@ -80,7 +80,6 @@ module.exports = {
     campaign: {
       model: 'campaign'
     },
-
 
     imgPerfil: {
       collection: 'imagen',

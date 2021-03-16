@@ -20,7 +20,8 @@ module.exports = {
     },
 
     opinion:{
-      model:'opinion'
+      model:'opinion',
+      unique: true
     }
 
   },

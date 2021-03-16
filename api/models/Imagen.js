@@ -20,8 +20,8 @@ module.exports = {
       unique: true,
     },
 
-    camping:{
-      collection: 'camping',
+    campaign:{
+      collection: 'campaign',
       via: 'logo'
     },
 

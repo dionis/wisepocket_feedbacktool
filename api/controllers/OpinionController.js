@@ -108,11 +108,14 @@ module.exports = {
             })
     },
 
-    getOpinion: (req, res) => {
+    getOpinion: async (req, res) => {
         const page = req.param('page')
         //const limit = req.param('limit')
-       //console.log(page);
-        Opinion.find().populate('campaign')
+        //console.log(page);
+        let campID = await Campaign.findOne({ id: req.param('id') })
+        await Opinion.find({
+            where: { campaign: campID.id },
+        })
             .paginate(
                 page,
                 5

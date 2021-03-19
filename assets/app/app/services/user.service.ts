@@ -34,7 +34,7 @@ export class UserService {
     return new Promise((resolve,reject)=>{
 
 
-        this._http.post(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/singUp',user).subscribe(res=>{
+        this._http.post(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/user/singUp',user).subscribe(res=>{
           resolve(res);
         },reject)
     })
@@ -43,7 +43,7 @@ export class UserService {
   login(user): Promise<any>{
     return new Promise((resolve,reject)=>{
       console.log("Url to call " + environment.sails_services_urlpath+":"+environment.sails_services_urlport)
-      this._http.post(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/singIn',{email:user.email,password:user.password},
+      this._http.post(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/user/singIn',{email:user.email,password:user.password},
       ).subscribe((res:any)=>{
         const expiresAt = moment().add(res.expiresIn,'second');
         localStorage.setItem('id_token', res.idToken);
@@ -82,7 +82,7 @@ export class UserService {
     console.log(user_id);
     let idparams = new HttpParams();
     idparams.append('id',user_id);
-    this._http.get(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/getUserById/'+user_id,
+    this._http.get(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/user/getUserById/_id?id='+user_id,
                   {params: idparams}).pipe(map((responseData:any) =>{
 
                       if(responseData.data){

@@ -23,21 +23,24 @@ module.exports.policies = {
     login: true,
     singUp: true,
     logout: true,
+    getUserById:true
   },
 
-  CampingController: {
+  /*CampingController: {
     '*': 'isAuthenticated',
     editCamping: true,
     getCampings:true,
     deleteCamping:true,
-  },
+  },*/
 
-  /*CampaignController: {
+  CampaignController: {
     '*': 'isAuthenticated',
+    create:true,
+    getCampaignbyUser:true,
     editCampaign: true,
     getCampaign:true,
     deleteCampaign:true,
-  },*/
+  },
 
   ImagenController: {
     '*': 'isAuthenticated',

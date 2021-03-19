@@ -9,23 +9,24 @@ module.exports = {
 
   attributes: {
 
-    texto:{
+    texto: {
       type: 'string',
     },
     polaridad: {
       type: 'string'
     },
-    start:{
-      type:'integer'
+    start: {
+      type: 'integer'
     },
-    end:{
-      type:'integer'
+    end: {
+      type: 'integer'
     },
 
-    opinion:{
-      model:'opinion'
+    opinion: {
+      model: 'opinion',
+      unique: true
     }
-   
+
   },
 
 };

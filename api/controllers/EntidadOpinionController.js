@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-  
+
     create: async function (req, res) {
         let opinion
         await Opinion.findOne({
@@ -61,15 +61,18 @@ module.exports = {
             })
     },
 
-    getEntidad: (req, res) => {
+    getEntidad: async (req, res) => {
         const page = req.param('page')
         //const limit = req.param('limit')
         //console.log(page);
-        EntidadOpinion.find().populate('opinion')
-            .paginate(
+        let opinID = await Opinion.findOne({ id: req.param('id') })
+        EntidadOpinion.find({
+            where: { opinion: opinID.id },
+        })
+            /*.paginate(
                 page,
                 5
-            )
+            )*/
             .then(entidadopinion => {
                 return res.send({
                     'message': 'Lista de Entidades',
@@ -83,5 +86,6 @@ module.exports = {
                 })
             })
     },
+
 };
 

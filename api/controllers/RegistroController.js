@@ -72,22 +72,31 @@ module.exports = {
             })
     },
 
-    /*getAllRegistro: (req,res) => {
+    getAllRegistro: async function (req, res) {
 
-        Registro.find()
-            .then(registro => {
-                return res.send({
-                    'message': 'Todos los registros',
-                    'data': registro
-                })
+        let reg = await Registro.find()
+
+        if (reg.length === 0) {
+            return res.send({
+                'message': 'No hay Registros'
             })
-            .catch(err => {
-                return res.status(500).send({
-                    'message': 'Imposible Mostrar',
-                    'error': err
-                })
+        }
+
+        else if (reg) {
+            return res.send({
+                'message': 'Todos los registros',
+                'data': reg
             })
-    },*/
+        }
+        else {
+            return res.status(500).send({
+                'message': 'Imposible Mostrar',
+                'error': err
+            })
+        }
+
+
+    },
 
 };
 

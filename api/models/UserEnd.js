@@ -32,7 +32,7 @@ module.exports = {
 
     pregunta: {
       collection: 'pregunta',
-      via: 'ques'
+      via: 'quesUserend'
     }
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗

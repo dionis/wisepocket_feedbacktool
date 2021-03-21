@@ -8,11 +8,6 @@
 module.exports = {
 
   attributes: {
-    /*id: {
-      type: 'string',
-      unique: true,
-      columnName:'_id'
-    },*/
 
     name_alias: {
       type: 'string',

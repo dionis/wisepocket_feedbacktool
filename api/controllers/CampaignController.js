@@ -9,9 +9,9 @@ var jwt = require('jsonwebtoken');  //NO ES NECESARIO
 module.exports = {
  
     //DEJAR SOLO EL SERVICE MOSTRAR CAMPAÑA POR USUARIO
+    //DE MOMENTO SE DEJAN LOS SERVICIOS PARA CREAR BASE DE DATOS TEMPORAL  
       
-      
-    create: async (req, res) => {
+   create: async (req, res) => {
         //if (!req.param()) { return res.sendStatus(400); }
         const token = req.header('Authorization').split('Bearer ')[1];
         sails.log.debug(token);
@@ -24,7 +24,7 @@ module.exports = {
                 await Campaign.create({
                     nombre: req.param('nombre'),
                     fecha: req.param('fecha'),
-                    userCamp: user.id,
+                   // userCamp: user.id,
                     userChief: user.id,
                     user: req.param('user'),
                    // logo: req.param('logo'),
@@ -53,7 +53,7 @@ module.exports = {
         })
     },
 
-    editCampaign: (req, res) => {
+   /* editCampaign: (req, res) => {
         if (!req.param('id')) { return req.sendStatus(400) }
         return Campaign.update({ id: req.param('id') }, req.allParams()).fetch()
             .then(campaign => {
@@ -94,7 +94,7 @@ module.exports = {
                     'error': err
                 })
             })
-    },
+    },*/
 
     getCampaignbyUser: async (req, res) => {
         if (!req.param('id')) {
@@ -102,11 +102,15 @@ module.exports = {
                 'error': 'User ID no encontrado en el Request'
             })
         }
-        await User.findOne({
-            where: { id: req.param('id') },
-            select: ['campaign']
-        }).populate('campaign')
-            .then(data => {
+        const page = req.param('page')
+        let userID = await User.findOne({ id: req.param('id') })
+        await Campaign.find({
+            where: { userChief: userID.id  },
+        
+        }).paginate(
+            page,
+            5
+        ).then(data => {
                 return res.send({
                     'message': 'Lista de tus Campañas',
                     'data': data

@@ -22,10 +22,9 @@ module.exports = {
       columnType: 'date'
     },
 
-    userCamp:{
-      collection: 'user',
-      via: 'campaign'
-    },
+    /*userCamp:{
+      model: 'user'
+    },*/
 
     userChief: {
       model: 'user'

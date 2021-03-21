@@ -49,7 +49,7 @@ module.exports = {
     for (var iValue = 1; iValue < registerSize; iValue++) {
 
     const salt = await bcrypt.genSalt(10);
-    const hashpass = await bcrypt.hash(faker.internet.password(8, true, "ts", "ts"),salt)
+    const hashpass = await bcrypt.hash("12345678",salt)
 
       gateWayArray.push({
         name: faker.name.firstName(),
@@ -59,7 +59,7 @@ module.exports = {
 
       })
     }
-
+    console.log('CONTRASEÑA PARA USUARIOS: 12345678');
     await User.createEach(gateWayArray)
 
     allGateway = await User.find({})

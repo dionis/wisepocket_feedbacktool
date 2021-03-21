@@ -20,10 +20,10 @@ module.exports = {
       unique: true,
     },
 
-    campaign:{
+    /*campaign:{
       collection: 'campaign',
       via: 'logo'
-    },
+    },*/
 
     perfil:{
       model: 'user',

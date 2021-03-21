@@ -62,10 +62,10 @@ module.exports = {
       allowNull: true
     },
 
-    logo: {
+    /*logo: {
       model: 'imagen',
       //unique: true,
-    },
+    },*/
 
   },
 

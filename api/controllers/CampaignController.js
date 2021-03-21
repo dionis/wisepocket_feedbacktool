@@ -4,10 +4,13 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
-var jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');  //NO ES NECESARIO
 
 module.exports = {
-
+ 
+    //DEJAR SOLO EL SERVICE MOSTRAR CAMPAÑA POR USUARIO
+      
+      
     create: async (req, res) => {
         //if (!req.param()) { return res.sendStatus(400); }
         const token = req.header('Authorization').split('Bearer ')[1];
@@ -24,7 +27,7 @@ module.exports = {
                     userCamp: user.id,
                     userChief: user.id,
                     user: req.param('user'),
-                    logo: req.param('logo'),
+                   // logo: req.param('logo'),
                     descripcion: req.param('descripcion'),
                     contanctoTelefono: req.param('contanctoTelefono'),
                     colorPrincipal: req.param('colorPrincipal'),

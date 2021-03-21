@@ -42,6 +42,7 @@ module.exports = {
     var gateWayArray = []
 
     var registerSize = 10;
+   
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
 

@@ -1,5 +1,6 @@
 
 var faker = require('faker');
+const bcrypt = require('bcrypt');
 
 module.exports = {
 
@@ -43,14 +44,18 @@ module.exports = {
     var gateWayArray = []
 
     var registerSize = 10;
+    
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
+
+    const salt = await bcrypt.genSalt(10);
+    const hashpass = await bcrypt.hash(faker.internet.password(8, true, "ts", "ts"),salt)
 
       gateWayArray.push({
         name: faker.name.firstName(),
         email: faker.internet.exampleEmail(faker.name.firstName()),
         phone: faker.phone.phoneFormats(),
-        password:faker.internet.password(8, true, "ts", "ts")
+        password: hashpass 
 
       })
     }

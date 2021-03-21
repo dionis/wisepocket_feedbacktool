@@ -73,11 +73,11 @@ module.exports.bootstrap = async function() {
  //Create temporaly information for test
  console.log("--- Seed database ---")
  await sails.helpers.seedUser()
- console.log("user and Campaign created")
+ console.log("user and Campaign CREATED")
  await sails.helpers.seedUserend()
- console.log("userEnd and opinion and pregunta created")
+ console.log("userEnd, opinion and pregunta CREATED")
  await sails.helpers.seedUserresp()
- console.log("user respuesta created")
+ console.log("respuesta CREATED")
  console.log("--- End Seed Database ---")
  
   // Save new bootstrap version

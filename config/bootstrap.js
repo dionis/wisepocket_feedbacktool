@@ -70,6 +70,16 @@ module.exports.bootstrap = async function() {
     { email: 'admin@example.com', phone:'+53552448', name: 'Ryan Dahl', fullName: 'Ryan Dahl', isSuperAdmin: true, password: hashpass },
   ]);*/
 
+ //Create temporaly information for test
+ console.log("--- Seed database ---")
+ await sails.helpers.seedUser()
+ console.log("user and Campaign created")
+ await sails.helpers.seedUserend()
+ console.log("userEnd and opinion and pregunta created")
+ await sails.helpers.seedUserresp()
+ console.log("user respuesta created")
+ console.log("--- End Seed Database ---")
+ 
   // Save new bootstrap version
   await sails.helpers.fs.writeJson.with({
     destination: bootstrapLastRunInfoPath,

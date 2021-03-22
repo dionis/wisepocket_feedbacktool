@@ -75,7 +75,7 @@ module.exports.bootstrap = async function() {
  await sails.helpers.seedUser()
  console.log("user and Campaign CREATED")
  await sails.helpers.seedUserend()
- console.log("userEnd, opinion and pregunta CREATED")
+ console.log("userEnd, opinion (aspectos y entidades) and pregunta CREATED")
  await sails.helpers.seedUserresp()
  console.log("respuesta CREATED")
  console.log("--- End Seed Database ---")

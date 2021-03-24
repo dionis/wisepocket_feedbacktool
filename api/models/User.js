@@ -9,12 +9,6 @@ module.exports = {
 
   attributes: {
 
-    id: {
-      type: 'string',
-      unique: true,
-      columnName: '_id'
-    },
-
     name: {
       type: 'string',
       required: true,
@@ -52,6 +46,7 @@ module.exports = {
       defaultsTo: false,
     },
 
+    
     isOrganization: {
       type: 'boolean',
       defaultsTo: true,
@@ -77,10 +72,7 @@ module.exports = {
       via: 'userRes'
     },
 
-    campaign: {
-      model: 'campaign'
-    },
-
+   
     imgPerfil: {
       collection: 'imagen',
       via: 'perfil'

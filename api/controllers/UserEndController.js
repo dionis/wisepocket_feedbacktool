@@ -27,7 +27,27 @@ module.exports = {
                 )
             }
         })
-    }
+    },
+
+    deleteAllUserEnd: async function (req, res) {
+
+        await UserEnd.destroy({
+            id: req.params.id
+        }).then(userend => {
+            return res.send({
+                'success': true,
+                'message': 'Se han eliminado todos los usuarios',
+                'data': userend
+            })
+        })
+            .catch(err => {
+                sails.log.debug(err);
+                return res.send({
+                    'success': false,
+                    'message': 'Falló la operación'
+                })
+            })
+    },
 
 };
 

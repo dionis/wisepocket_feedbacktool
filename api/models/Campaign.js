@@ -22,10 +22,9 @@ module.exports = {
       columnType: 'date'
     },
 
-    userCamp:{
-      collection: 'user',
-      via: 'campaign'
-    },
+    /*userCamp:{
+      model: 'user'
+    },*/
 
     userChief: {
       model: 'user'
@@ -62,10 +61,10 @@ module.exports = {
       allowNull: true
     },
 
-    logo: {
+    /*logo: {
       model: 'imagen',
       //unique: true,
-    },
+    },*/
 
   },
 

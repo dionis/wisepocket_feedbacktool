@@ -56,7 +56,9 @@ module.exports = {
             })
     },
 
-    deleteOpinion: async function (req, res) {
+    
+    
+   /* deleteOpinion: async function (req, res) {
         await Opinion.findOne({
             id: req.param('id')
         }).then((doc) => {
@@ -86,7 +88,9 @@ module.exports = {
                         })
             }
         })
-    },
+    },*/
+
+    
 
     deleteAllOpinion: async function (req, res) {
 

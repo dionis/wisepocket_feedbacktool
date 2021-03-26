@@ -20,9 +20,7 @@ module.exports = {
     },
 
     opinion: {
-      model: 'opinion',
-      //unique: true            //Esto es válido, temporalmente quitado para las BD automaticas
-                                // en la práctica las opiniones no se repiten
+      model: 'opinion'
     }
 
   },

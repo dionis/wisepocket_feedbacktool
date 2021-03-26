@@ -36,6 +36,8 @@ module.exports = {
         await Opinion.create({
             texto: req.param('texto'),
             fecha: req.param('fecha'),
+            idioma: req.param('idioma'),
+            polaridad: req.param('polaridad'),
             aspectos: req.param('aspectos'),
             entidades: req.param('entidades'),
             userend: userend.id,

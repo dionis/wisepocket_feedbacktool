@@ -59,22 +59,24 @@ module.exports = {
 
       })
     }
-    console.log('CONTRASEÑA PARA USUARIOS: 12345678');
+    console.log('CONTRASEÑA PARA USUARIOS: 12345678' +' ' + 'LOGIN VIA INTERFAZ');
+    console.log('Coger un EMAIL de cualquier usuario en la BD');
+    console.log('');
     await User.createEach(gateWayArray)
 
     allGateway = await User.find({})
 
-    registerSize = 20
+    registerSize = 51
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
 
       userObjet = faker.random.arrayElement(allGateway)
 
       let campaign = await Campaign.count({ 'userChief': userObjet.id })
-      if (campaign < 20) {
+      if (campaign < 51) {
         newCamp = {
           nombre: faker.company.companyName("Test"),
-          fecha: "21-3-2021",
+          fecha: faker.date.recent(7),
           userChief: userObjet.id
       }
 

@@ -53,7 +53,7 @@ module.exports.routes = {
   "POST /campaign/create": "CampaignController.create",
   //"PATCH /campaign/editCampaign": "CampaignController.editCampaign",
  // "DELETE /campaign/deleteCampaign": "CampaignController.deleteCampaign",
- // "GET /campaign/getCampaign": "CampaignController.getCampaign",
+  "GET /campaign/getCampaign": "CampaignController.getCampaign",
   "GET /campaign/getCampaignbyUser/_id": "CampaignController.getCampaignbyUser", //DEJAR ESTE SERVICE
 
   //Services Requests

@@ -8,7 +8,7 @@
  * For more information on seeding your app with fake data, check out:
  * https://sailsjs.com/config/bootstrap
  */
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 module.exports.bootstrap = async function() {
 
@@ -60,25 +60,26 @@ module.exports.bootstrap = async function() {
   }//∞
 
   // By convention, this is a good place to set up fake data during development.
-  //const salt = await bcrypt.genSalt(10);
- // const hashpass = await bcrypt.hash('12345678',salt)
-  // await User.createEach([
-  //   { email: 'admin@example.com', phone:'+53552448', name: 'Ryan Dahl', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('12345678') },
-  // ]);
-
+  const salt = await bcrypt.genSalt(10);
+ const hashpass = await bcrypt.hash('12345678',salt)
+   await User.createEach([
+     { email: 'admin@example.com', phone:'+53552448', name: 'Ryan Dahl', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('12345678') },
+   ]);
+  console.log('USER Example created para TEST LOGIN ');
   /*await User.createEach([
     { email: 'admin@example.com', phone:'+53552448', name: 'Ryan Dahl', fullName: 'Ryan Dahl', isSuperAdmin: true, password: hashpass },
   ]);*/
 
  //Create temporaly information for test
- console.log("--- Seed database ---")
+ console.log("--- Inyectando database ---")
  await sails.helpers.seedUser()
- console.log("user and Campaign CREATED")
+ console.log("CREATED >>>>>>>> user >>>>>>> Campaign ")
  await sails.helpers.seedUserend()
- console.log("userEnd, opinion (aspectos y entidades) and pregunta CREATED")
+ await sails.helpers.seedUserenden()
+ console.log("CREATED >>>>>> userEnd >>>>>> opinion (aspectos y entidades) >>>>> pregunta ")
  await sails.helpers.seedUserresp()
- console.log("respuesta CREATED")
- console.log("--- End Seed Database ---")
+ console.log("CREATED >>>> respuesta by userSys ")
+ console.log("--- Database Inyectada ---")
  
   // Save new bootstrap version
   await sails.helpers.fs.writeJson.with({

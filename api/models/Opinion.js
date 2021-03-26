@@ -31,9 +31,19 @@ module.exports = {
       via:'opinion'
     },
 
+    ///PROVISIONAL
+    polaridad:{             
+      type:'string'
+    },
+    ///PROVISIONAL
+
     fecha: {
       type: 'string',
       columnType: 'date'
+    },
+
+    idioma:{
+      type: 'string'
     },
 
     userend: {

@@ -42,6 +42,9 @@ module.exports.policies = {
    // deleteCampaign:true,
   },
 
+ 
+
+
   ImagenController: {
     '*': 'isAuthenticated',
     create: true,

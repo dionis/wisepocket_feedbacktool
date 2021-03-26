@@ -1,16 +1,20 @@
-var supertest = require('supertest');
-var faker = require('faker');
+//var supertest = require('supertest');
+//var faker = require('faker');
 
-describe('UserEndController.create', function() {
+///// SE INYECTA EN LA BASE DE DATOS AUTOMATICAMENTE
 
-  describe('#create()', function() {
+/*describe('UserEndController.create', function () {
+
+  describe('#create()', function () {
     it('should redirect to /my/page', function (done) {
       supertest(sails.hooks.http.app)
-      .post('/userend/create')
-      .send({ name_alias: 'test', email: faker.internet.exampleEmail(faker.name.firstName())})
-      .expect(302)
-      .expect('location','/my/page', done);
+        .post('/userend/create')
+        .query()
+        .send({ name_alias: 'test', email: faker.internet.exampleEmail(faker.name.firstName()) })
+        .expect(200, function (err, res) {
+          if (err) return done(err);
+          done();
+        });
     });
   });
-
-});
+});*/

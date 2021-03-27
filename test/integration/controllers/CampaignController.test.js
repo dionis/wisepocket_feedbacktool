@@ -23,8 +23,7 @@ describe('CampaignController.getCampaignbyUser', function () {
   ///https://www.npmjs.com/package/supertest
             console.log("FIND USER BY NAME " ,user.id);
             supertest(sails.hooks.http.app)
-            .get('/campaign/getCampaignbyUser/_id')
-            .query({ page: 1, id: user.id })
+            .get('/campaign/getCampaignbyUser/_id').query({ page: 1, id: user.id })
             .expect(200)
             .then(response => {
                ///EJEMPLO DE COMO VALIDAR LA RESPUESTA DEL SERVICIO

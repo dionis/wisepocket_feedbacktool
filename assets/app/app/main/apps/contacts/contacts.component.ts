@@ -3,9 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
+import {CampaingService} from '../../../services/campaing.service'
+
 
 import { ContactsService } from '../../../../app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/contacts/contact-form/contact-form.component';
@@ -23,6 +26,7 @@ export class ContactsComponent implements OnInit, OnDestroy
     hasSelectedContacts: boolean;
     searchInput: FormControl;
 
+
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -36,15 +40,21 @@ export class ContactsComponent implements OnInit, OnDestroy
     constructor(
         private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
-        private _matDialog: MatDialog
+        private _matDialog: MatDialog,
+        public campaingService: CampaingService
     )
     {
+        
+
         // Set the defaults
         this.searchInput = new FormControl('');
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
+   /* constructor(){
+
+    }*/
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -69,6 +79,13 @@ export class ContactsComponent implements OnInit, OnDestroy
             )
             .subscribe(searchText => {
                 this._contactsService.onSearchTextChanged.next(searchText);
+            });
+
+        this.campaingService.getAllCampaign().then(res=>{
+                console.log(res);
+            })
+            .catch(err=>{
+                console.log("Error");
             });
     }
 

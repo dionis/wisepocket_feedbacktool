@@ -23,6 +23,15 @@
 
         </div>
         <!-- / APP TITLE -->
+        
+        <div>
+            <ul>
+                <li *ngFor="let camp of campaingService ">
+                    {{camp.name }}
+                </li>
+            </ul>
+        </div>
+        <!--/Mostrar todas la campañas-->
 
         <!-- SEARCH -->
         <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
@@ -75,6 +84,8 @@
 
     </div>
     <!-- / CONTENT-->
+
+    
 
 </div>
 

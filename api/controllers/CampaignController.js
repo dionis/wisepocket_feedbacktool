@@ -7,10 +7,10 @@
 var jwt = require('jsonwebtoken');  //NO ES NECESARIO
 
 module.exports = {
- 
+
     //DEJAR SOLO EL SERVICE MOSTRAR CAMPAÑA POR USUARIO
-    //DE MOMENTO SE DEJAN LOS SERVICIOS PARA CREAR BASE DE DATOS TEMPORAL  
-      
+    //DE MOMENTO SE DEJAN LOS SERVICIOS PARA CREAR BASE DE DATOS TEMPORAL
+
    create: async (req, res) => {
         //if (!req.param()) { return res.sendStatus(400); }
         const token = req.header('Authorization').split('Bearer ')[1];
@@ -103,7 +103,7 @@ module.exports = {
             })
         }*/
         const page = req.param('page')
-        let userID = await User.findOne({ id: req.param('id') })
+        let userID = await User.find({ where:{ id: req.param('id') }}).limit(1);
         await Campaign.find({
             where: { userChief: userID.id  },
         }).paginate(
@@ -138,7 +138,7 @@ module.exports = {
         //             'data': campaign
         //         })
         //     })
-        // }) 
+        // })
 
     }
 };

@@ -6,8 +6,9 @@ var assert = require('assert');
 
 
 describe('UserController.login', function() {
-  describe('#login', function(req) {
-      it('should redirect to /my/page', function (done) {
+  describe('#login', function() {
+      it('should be sucessful', function (done) {
+
         supertest(sails.hooks.http.app)
         .post('/user/singIn')
         .query()
@@ -17,5 +18,17 @@ describe('UserController.login', function() {
           done();
         });
       });
+
+      // it('should be Error', function (done) {
+
+      //   supertest(sails.hooks.http.app)
+      //   .post('/user/singIn')
+      //   .query()
+      //   .send({ email: 'admin@example.com', password: 'hola mundo' })
+      //   .expect(500, (err,res)=>{
+      //     if(err) {return done(err);}
+      //     done();
+      //   });
+      // });
     });
 });

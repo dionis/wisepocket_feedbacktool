@@ -24,15 +24,15 @@ export const navigation: FuseNavigation[] = [
         ]
     },
     {
-        id       : 'campaña',
-        title    : 'Campañas',
-        translate: 'CAMPAÑA',
+        id       : 'campaing',
+        title    : 'Campaing',
+        translate: 'CAMPAING',
         type     : 'group',
         children : [
             {
-                id       : 'buzon_opiniones',
-                title    : 'Buzon de Opiniones',
-                translate: 'Buzon de Opiniones',
+                id       : 'opinion_mailbox',
+                title    : 'Opinion Mailbox',
+                translate: 'Opinion Mailbox',
                 type     : 'item',
                 icon     : 'list',
                 url      : '/apps/contacts',
@@ -44,9 +44,9 @@ export const navigation: FuseNavigation[] = [
                 }
             },
             {
-                id       : 'analisis_opiniones',
-                title    : 'Analisis de Opiniones',
-                translate: 'Analisis de Opiniones',
+                id       : 'opinion_analysis',
+                title    : 'Opinion Analysis',
+                translate: 'Opinion Analysis',
                 type     : 'item',
                 icon     : 'shopping_cart',
                 url      : '/apps/mail'
@@ -55,23 +55,23 @@ export const navigation: FuseNavigation[] = [
     },
    
     {
-        id       : 'estadisticas',
-        title    : 'Estadisticas',
-        translate: 'ESTADISTICAS',
+        id       : 'statistics',
+        title    : 'Statistics',
+        translate: 'Statistics',
         type     : 'group',
         children : [
             {
-                id       : 'est_fecha',
-                title    : 'Estadisticas de opiniones por Fecha',
-                translate: 'Estadisticas por Fecha',
+                id       : 'est_date',
+                title    : 'Opinion statistics by date',
+                translate: 'Statistics by date',
                 type     : 'item',
                 icon     : 'email',
                 url      : '/apps/dashboards/analytics'
             },
             {
                  id      : 'est_idioma',
-                title    : 'Estadisticas de opiniones por Idiomas',
-                translate: 'Estadisticas por Idioma',
+                title    : 'Opinion statistics by language',
+                translate: 'Statistics by language',
                 type     : 'item',
                 icon     : 'account_box',
                 url      : '/apps/dashboards/project'
@@ -79,15 +79,15 @@ export const navigation: FuseNavigation[] = [
         ]
     },
     {
-        id       : 'regist',
-        title    : 'Registro',
-        translate: 'REGISTRO',
+        id       : 'record',
+        title    : 'Record',
+        translate: 'RECORD',
         type     : 'group',
         children : [
         {
-            id       : 'registro',
-            title    : 'Registro',
-            translate: 'Registro',
+            id       : 'reg',
+            title    : 'Record',
+            translate: 'Record',
             type     : 'item',
             icon     : 'send',
             url      : '/apps/todo'

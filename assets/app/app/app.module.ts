@@ -54,7 +54,7 @@ const appRoutes: Routes = [
   },
    {
         path      : '**',
-        redirectTo: 'auth/login'
+        redirectTo: 'main/apps/contacts/contacts.module.ts'
     },
 
 

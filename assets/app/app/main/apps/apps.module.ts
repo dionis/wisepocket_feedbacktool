@@ -70,16 +70,8 @@ const routes = [
   {
       path        : 'contacts',
       loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule)
-  },
-//   {
-// //    path : 'todo', loadChildren:() => import ('./todo/todo.module').then(m=>m.TodoModule)
-//   },
-//   {
-//  //   path : 'analytics', loadChildren:() => import ('./dashboards/analytics/analytics.module').then(m=>m.AnalyticsDashboardModule)
-//   },
-//   {
-// //    path : 'project', loadChildren:() => import ('./dashboards/project/project.module').then(m=>m.ProjectDashboardModule)
-//   }
+  }
+
  ];
 
 @NgModule({

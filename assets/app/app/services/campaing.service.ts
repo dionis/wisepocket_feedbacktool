@@ -1,3 +1,4 @@
+//import * as console from 'console';
 import { PromiseType } from 'protractor/built/plugins';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -21,12 +22,9 @@ export class CampaingService {
   getAllCampaign(): Promise<any>{
 
     return new Promise((resolve,reject)=>{
-
-      // this._http.get('http://localhost:1337/users').subscribe((res:any)=>{
       //   resolve(res.data);
-      // },reject)
       console.log("Data getAll Campaign");
-      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/getCampaign')
+      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/campaign/getCampaign')
       .subscribe((res:any)=>{
         console.log("Data from Sails", res.data)
         resolve(res.data);
@@ -36,10 +34,29 @@ export class CampaingService {
 
   getCampaignById(): Promise<any>{
     return new Promise((resolve,reject)=>{
-      environment.sails_services_urlpath
-      // this._http.get('http://localhost:1337/users').subscribe((res:any)=>{
-      //   resolve(res.data);
-      // },reject)
+
+
+      // this._http.get(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/user/getUserById/_id?id='+user_id,
+      // {params: idparams}).pipe(map((responseData:any) =>{
+
+      //     if(responseData.data){
+      //       console.log(responseData.data.name)
+      //       this.user.name = responseData.data.name;
+      //       this.user.email = responseData.data.email;
+      //       this.user.phone = responseData.data.phone;
+      //       this.user.organization = responseData.data.organization;
+      //       this.user.cargo = responseData.data.cargo;
+      //       console.log(this.user);
+      //       return this.user;
+      //     }else{
+      //       return responseData;
+      //     }
+      // })).subscribe(res=>{
+      // },
+      // error =>{
+      //   this.user = null;
+      // })
+
 
       this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/campaign/getCampaign')
       .subscribe((res:any)=>{

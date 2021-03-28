@@ -1,4 +1,4 @@
-import * as console from 'console';
+//import * as console from 'console';
 import { PromiseType } from 'protractor/built/plugins';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -22,7 +22,7 @@ export class CampaingService {
   getAllCampaign(): Promise<any>{
       
     return new Promise((resolve,reject)=>{
-      environment.sails_services_urlpath
+    //  environment.sails_services_urlpath
       // this._http.get('http://localhost:1337/users').subscribe((res:any)=>{
       //   resolve(res.data);
       // },reject)

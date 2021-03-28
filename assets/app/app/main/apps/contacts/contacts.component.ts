@@ -1,3 +1,4 @@
+import { ListCampService } from '../../../../../../.tmp/public/app/app/main/ui/list-camp/list-camp.service';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,6 +26,7 @@ export class ContactsComponent implements OnInit, OnDestroy
     dialogRef: any;
     hasSelectedContacts: boolean;
     searchInput: FormControl;
+    ListaCampanaService: any;
 
 
     // Private
@@ -82,11 +84,13 @@ export class ContactsComponent implements OnInit, OnDestroy
             });
 
         this.campaingService.getAllCampaign().then(res=>{
-                console.log(res);
+            this.ListaCampanaService=res;
+              console.log(res)
             })
             .catch(err=>{
-                console.log("Error");
-            });
+                console.log("Error", Error);
+            });       
+        
     }
 
     /**

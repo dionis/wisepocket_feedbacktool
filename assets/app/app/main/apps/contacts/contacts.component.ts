@@ -44,7 +44,7 @@ export class ContactsComponent implements OnInit, OnDestroy
         public campaingService: CampaingService
     )
     {
-        
+
 
         // Set the defaults
         this.searchInput = new FormControl('');
@@ -85,7 +85,7 @@ export class ContactsComponent implements OnInit, OnDestroy
                 console.log(res);
             })
             .catch(err=>{
-                console.log("Error");
+                console.log("Error", err);
             });
     }
 

@@ -83,7 +83,7 @@ export class ContactsComponent implements OnInit, OnDestroy
                 this._contactsService.onSearchTextChanged.next(searchText);
             });
 
-        this.campaingService.getAllCampaign().then(res=>{
+        this.campaingService.getCampaignbyUser().then(res=>{
             this.ListaCampanaService=res;
               console.log(res)
             })

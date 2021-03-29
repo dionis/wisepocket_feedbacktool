@@ -21,14 +21,14 @@ describe('CampaignController.getCampaignbyUser', function () {
             console.log("---- New Test execution data ----",  zookeepers[0].id)
           // User.find().then(userResult => {
   ///https://www.npmjs.com/package/supertest
-            console.log("FIND USER BY NAME " ,user.id);
+            console.log("FIND USER BY NAME " ,user.name);
             supertest(sails.hooks.http.app)
-            .get('/campaign/getCampaignbyUser/_id').query({ page: 1, id: user.id })
+            .get('/campaign/getCampaignbyUser/_id').query({ page: 0, id: user.id })
             .expect(200)
             .then(response => {
                ///EJEMPLO DE COMO VALIDAR LA RESPUESTA DEL SERVICIO
                // assert(response.body.email, 'foo@bar.com')
-                console.log("Test executed")
+                console.log("Service OK:" + response.text)
                 done();
             })
             .catch(err => done(err))

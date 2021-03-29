@@ -19,7 +19,7 @@ export class CampaingService {
   constructor(private _http: HttpClient) {
     this.Campaing = new Campaing();
   }
-  getAllCampaign(): Promise<any>{
+ /* getCampaign(): Promise<any>{
       
     return new Promise((resolve,reject)=>{
     //  environment.sails_services_urlpath
@@ -27,22 +27,25 @@ export class CampaingService {
       //   resolve(res.data);
       // },reject)
   
-      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/getCampaign')
+      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/campaign/getCampaign')
       .subscribe((res:any)=>{
         console.log("Data from Sails", res.data)
         resolve(res.data);
       },reject)
     })
-  }
+  }*/
 
-  getCampaignById(): Promise<any>{
+  getCampaignbyUser(): Promise<any>{
     return new Promise((resolve,reject)=>{
       environment.sails_services_urlpath
       // this._http.get('http://localhost:1337/users').subscribe((res:any)=>{
       //   resolve(res.data);
       // },reject)
-  
-      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/campaign/getCampaign')
+ 
+ //>>>>> BUSCAR COMO Encontrar id del usuario activo en sesion y pasarlo al servicio, implementar la paginaciion en la interfaz
+ // >>>>> El id que tiene puesto es de ejemplo, cambia en cada inicio
+ // >>>>> Ver como Mostrar las campañas en la inerfaz, PD: por consola si salen
+      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/campaign/getCampaignbyUser/_id?id=6061ed318eb5252338dd3a4c&page=0')
       .subscribe((res:any)=>{
         resolve(res.data);
       },reject)

@@ -63,7 +63,7 @@ module.exports = {
     },
 
     getAspecto: async (req, res) => {
-        const page = req.param('page')
+        //const page = req.param('page')
         //const limit = req.param('limit')
         //console.log(page);
         let opinID = await Opinion.findOne({ id: req.param('id') })

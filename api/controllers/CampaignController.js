@@ -80,7 +80,7 @@ module.exports = {
             })
     },*/
 
-    getCampaign: (req, res) => {
+  /* getCampaign: (req, res) => {
         Campaign.find().populate('userChief')
             .then(campaign => {
                 return res.send({
@@ -94,16 +94,17 @@ module.exports = {
                     'error': err
                 })
             })
-    },
+    },*/
 
     getCampaignbyUser: async (req, res) => {
-        /*if (!req.param('id')) {
+        if (!req.param('id')) {
             return res.sendStatus({
                 'error': 'User ID no encontrado en el Request'
             })
-        }*/
+        }
         const page = req.param('page')
-        let userID = await User.find({ where:{ id: req.param('id') }}).limit(1);
+        let userID = await User.findOne({ id: req.param('id') })
+        //let userID = await User.find({ where:{ id: req.param('id') }}).limit(1);
         await Campaign.find({
             where: { userChief: userID.id  },
         }).paginate(

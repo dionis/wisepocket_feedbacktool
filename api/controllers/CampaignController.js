@@ -104,7 +104,6 @@ module.exports = {
         }
         const page = req.param('page')
         let userID = await User.findOne({ id: req.param('id') })
-        //let userID = await User.find({ where:{ id: req.param('id') }}).limit(1);
         await Campaign.find({
             where: { userChief: userID.id  },
         }).paginate(

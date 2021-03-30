@@ -2,16 +2,23 @@ export const locale = {
     lang: 'es',
     data: {
         'NAV': {
-            'APPLICATIONS': 'Aplicaiones',
-            'SAMPLE'        : {
-                'TITLE': 'Ejemplo',
+            'CampaignList': {
+                'TITLE': 'Lista de Campañas',
                 'BADGE': '25'
             },
-            'CAMPINGS': 'Campañas',
-            'CampingsList': {
-                'TITLE': 'Lista de Campañas',
+            'Opinion Statistics by idioma'        : {
+                'TITLE': 'Estadísticas por idioma',
+                'BADGE': '25'
+            },
+            'STATISTICS'        : {
+                'TITLE': 'Estadísticas de Opinion',
+                'BADGE': '25'
+            },
+            'Opinion': {
+                'TITLE': 'Administar Opiniones',
                 'BADGE': '12' 
             },
+            
         },
         
     }

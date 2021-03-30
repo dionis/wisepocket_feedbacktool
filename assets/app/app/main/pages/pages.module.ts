@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { LoginModule } from '../../../app/main/pages/login/login.module';
+import { LoginModule } from '../../../app/main/authentication/login/login.module';
 import { ProfileModule } from '../../../app/main/pages/profile/profile.module';
 
 

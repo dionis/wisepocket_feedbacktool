@@ -27,7 +27,7 @@ export class CampaingService {
       //   resolve(res.data);
       // },reject)
   
-      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/getCampaign')
+      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/campaign/getCampaign')
       .subscribe((res:any)=>{
         console.log("Data from Sails", res.data)
         resolve(res.data);

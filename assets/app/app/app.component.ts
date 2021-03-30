@@ -13,13 +13,12 @@ import { FuseTranslationLoaderService } from '../@fuse/services/translation-load
 
 import { navigation } from '../app/navigation/navigation';
 import { locale as navigationEnglish } from '../app/navigation/i18n/en';
-import { locale as navigationSpanish } from '../app/navigation/i18n/es';
 import { locale as navigationTurkish } from '../app/navigation/i18n/tr';
 
 @Component({
     selector   : 'app',
-    templateUrl: 'app.component.html',
-    styleUrls  : ['app.component.scss']
+    templateUrl: './app.component.html',
+    styleUrls  : ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy
 {

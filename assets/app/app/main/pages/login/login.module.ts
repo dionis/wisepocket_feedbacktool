@@ -7,12 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 import { FuseSharedModule } from '../../../../@fuse/shared.module';
-import { LoginComponent } from './login.component';
 
+import { LoginComponent } from '../../../../app/main/pages/login/login.component';
 
 const routes = [
     {
-        path     : 'login',
+        path: 'auth/login',
         component: LoginComponent
     }
 ];
@@ -21,7 +21,7 @@ const routes = [
     declarations: [
         LoginComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(routes),
 
         MatButtonModule,
@@ -33,6 +33,5 @@ const routes = [
         FuseSharedModule
     ]
 })
-export class LoginModule
-{
+export class LoginModule {
 }

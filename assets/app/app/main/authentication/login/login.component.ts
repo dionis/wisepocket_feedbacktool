@@ -7,11 +7,11 @@ import { UserService } from '../../../../app/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
+    selector     : 'login',
+    templateUrl  : './login.component.html',
+    styleUrls    : ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations: fuseAnimations
+    animations   : fuseAnimations
 })
 export class LoginComponent implements OnInit
 {

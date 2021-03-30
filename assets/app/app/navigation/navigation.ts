@@ -61,14 +61,6 @@ export const navigation: FuseNavigation[] = [
         type     : 'group',
         children : [
             {
-                id       : 'est_idioma',
-                title    : 'Opinion statistics by idioma',
-                translate: 'Statistics by idioma',
-                type     : 'item',
-                icon     : '',
-                url      : '/apps/dashboards/analyticsbyIdioma'
-            },
-            {
                 id       : 'est_date',
                 title    : 'Opinion statistics by date',
                 translate: 'Statistics by date',

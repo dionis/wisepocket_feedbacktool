@@ -10,22 +10,53 @@
 module.exports = {
 
     create: async (req, res) => {
-
-        let campaign = await Campaign.findOne({ id: req.param('id') })
+        let campaign
+        let ingles
+        let español
+        await Campaign.findOne({ id: req.param('id') })
             .then((doc) => {
                 if (!doc) {
                     console.log("No encontrado")
                 } else {
                     console.log("Encontrado"),
-                        userend = doc
+                        campaign = doc
 
                 }
             });
+        await Opinion.count({
+            campaign: campaign.id,
+            idioma: 'ingles'
+        }).then(function (count) {
+            ingles = count
+        })
+            .catch(function (err) {
+                sails.log.debug(err);
+                return res.send({
+                    'success': false,
+                    'message': 'Falló'
+                })
+            })
+            await Opinion.count({
+                campaign: campaign.id,
+                idioma: 'español'
+            }).then(function (count) {
+                console.log('espa', count)
+                español = count
+            })
+                .catch(function (err) {
+                    sails.log.debug(err);
+                    return res.send({
+                        'success': false,
+                        'message': 'Falló'
+                    })
+                })
+                console.log(español)
         await EstadisticaByidioma.create({
-            cantEnglish: req.param('cantEnglish'),
-            cantSpanish: req.param('cantSpanish'),
-            campaign: campaign
+            cantEnglish: ingles,
+            cantSpanish: español,
+            campaign: campaign.id
         }).then(function (estadistica) {
+            console.log(español)
             return res.send({
                 'success': true,
                 'message': 'Estadistica realizada',

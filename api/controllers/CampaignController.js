@@ -80,8 +80,12 @@ module.exports = {
             })
     },*/
 
+<<<<<<< HEAD
     getCampaign: (req, res) => {
       console.log("<----[[[ <== |||| ==> ]]]---->");
+=======
+  /* getCampaign: (req, res) => {
+>>>>>>> 5dccca8f5518a5cab59448670fbfdc3fc39f8084
         Campaign.find().populate('userChief')
             .then(campaign => {
                console.log("<-------->");
@@ -96,16 +100,16 @@ module.exports = {
                     'error': err
                 })
             })
-    },
+    },*/
 
     getCampaignbyUser: async (req, res) => {
-        /*if (!req.param('id')) {
+        if (!req.param('id')) {
             return res.sendStatus({
                 'error': 'User ID no encontrado en el Request'
             })
-        }*/
+        }
         const page = req.param('page')
-        let userID = await User.find({ where:{ id: req.param('id') }}).limit(1);
+        let userID = await User.findOne({ id: req.param('id') })
         await Campaign.find({
             where: { userChief: userID.id  },
         }).paginate(

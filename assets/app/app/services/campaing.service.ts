@@ -19,46 +19,31 @@ export class CampaingService {
   constructor(private _http: HttpClient) {
     this.Campaing = new Campaing();
   }
-  getAllCampaign(): Promise<any>{
+ /* getCampaign(): Promise<any>{
 
     return new Promise((resolve,reject)=>{
       //   resolve(res.data);
-      console.log("Data getAll Campaign");
+      // },reject)
+
       this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/campaign/getCampaign')
       .subscribe((res:any)=>{
         console.log("Data from Sails", res.data)
         resolve(res.data);
       },reject)
     })
-  }
+  }*/
 
-  getCampaignById(): Promise<any>{
+  getCampaignbyUser(): Promise<any>{
     return new Promise((resolve,reject)=>{
+      environment.sails_services_urlpath
+      // this._http.get('http://localhost:1337/users').subscribe((res:any)=>{
+      //   resolve(res.data);
+      // },reject)
 
-
-      // this._http.get(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/user/getUserById/_id?id='+user_id,
-      // {params: idparams}).pipe(map((responseData:any) =>{
-
-      //     if(responseData.data){
-      //       console.log(responseData.data.name)
-      //       this.user.name = responseData.data.name;
-      //       this.user.email = responseData.data.email;
-      //       this.user.phone = responseData.data.phone;
-      //       this.user.organization = responseData.data.organization;
-      //       this.user.cargo = responseData.data.cargo;
-      //       console.log(this.user);
-      //       return this.user;
-      //     }else{
-      //       return responseData;
-      //     }
-      // })).subscribe(res=>{
-      // },
-      // error =>{
-      //   this.user = null;
-      // })
-
-
-      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/campaign/getCampaign')
+ //>>>>> BUSCAR COMO Encontrar id del usuario activo en sesion y pasarlo al servicio, implementar la paginaciion en la interfaz
+ // >>>>> El id que tiene puesto es de ejemplo, cambia en cada inicio
+ // >>>>> Ver como Mostrar las campañas en la inerfaz, PD: por consola si salen
+      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/campaign/getCampaignbyUser/_id?id=6061ed318eb5252338dd3a4c&page=0')
       .subscribe((res:any)=>{
         resolve(res.data);
       },reject)

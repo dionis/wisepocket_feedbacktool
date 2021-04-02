@@ -16,95 +16,95 @@ export class UserService {
   constructor(private _http: HttpClient) {
     this.user = new User();
   }
-//https://www.jvandemo.com/how-to-use-environment-variables-to-configure-your-angular-application-without-a-rebuild/
-  getUsers(): Promise<any>{
-    return new Promise((resolve,reject)=>{
+  //https://www.jvandemo.com/how-to-use-environment-variables-to-configure-your-angular-application-without-a-rebuild/
+  getUsers(): Promise<any> {
+    return new Promise((resolve, reject) => {
       environment.sails_services_urlpath
       // this._http.get('http://localhost:1337/users').subscribe((res:any)=>{
       //   resolve(res.data);
       // },reject)
 
-      this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/users').subscribe((res:any)=>{
+      this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/users').subscribe((res: any) => {
         resolve(res.data);
-      },reject)
+      }, reject)
     })
   }
 
-  singUp(user): Promise<any>{
-    return new Promise((resolve,reject)=>{
+  singUp(user): Promise<any> {
+    return new Promise((resolve, reject) => {
 
 
-        this._http.post(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/user/singUp',user).subscribe(res=>{
-          resolve(res);
-        },reject)
+      this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/user/singUp', user).subscribe(res => {
+        resolve(res);
+      }, reject)
     })
   }
 
-  login(user): Promise<any>{
-    return new Promise((resolve,reject)=>{
-      console.log("Url to call " + environment.sails_services_urlpath+":"+environment.sails_services_urlport)
-      this._http.post(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/user/singIn',{email:user.email,password:user.password},
-      ).subscribe((res:any)=>{
-        const expiresAt = moment().add(res.expiresIn,'second');
+  login(user): Promise<any> {
+    return new Promise((resolve, reject) => {
+      console.log("Url to call " + environment.sails_services_urlpath + ":" + environment.sails_services_urlport)
+      this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/user/singIn', { email: user.email, password: user.password },
+      ).subscribe((res: any) => {
+        const expiresAt = moment().add(res.expiresIn, 'second');
         localStorage.setItem('id_token', res.idToken);
-        localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+        localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
         this.getUserById();
         resolve(res);
-      },error =>{
+      }, error => {
         reject(error);
       })
     });
   }
 
   logout() {
-      localStorage.removeItem("id_token");
-      localStorage.removeItem("expires_at");
-      this.user = null
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("expires_at");
+    this.user = null
   }
 
   public isLoggedIn() {
-      return moment().isBefore(this.getExpiration());
+    return moment().isBefore(this.getExpiration());
   }
 
   isLoggedOut() {
-      return !this.isLoggedIn();
+    return !this.isLoggedIn();
   }
 
   getExpiration() {
-      const expiration = localStorage.getItem("expires_at");
-      const expiresAt = JSON.parse(expiration);
-      return moment(expiresAt);
+    const expiration = localStorage.getItem("expires_at");
+    const expiresAt = JSON.parse(expiration);
+    return moment(expiresAt);
   }
-  getUserById(){
+  getUserById() {
     const jwt = new JwtHelperService();
-    let token =  jwt.decodeToken(localStorage.getItem('id_token'));
+    let token = jwt.decodeToken(localStorage.getItem('id_token'));
     let user_id = token._id;
     console.log(user_id);
     let idparams = new HttpParams();
-    idparams.append('id',user_id);
-    this._http.get(  environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/user/getUserById/_id?id='+user_id,
-                  {params: idparams}).pipe(map((responseData:any) =>{
+    idparams.append('id', user_id);
+    this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/user/getUserById/_id?id=' + user_id,
+      { params: idparams }).pipe(map((responseData: any) => {
 
-                      if(responseData.data){
-                        console.log(responseData.data.name)
-                        this.user.name = responseData.data.name;
-                        this.user.email = responseData.data.email;
-                        this.user.phone = responseData.data.phone;
-                        this.user.organization = responseData.data.organization;
-                        this.user.cargo = responseData.data.cargo;
-                        console.log(this.user);
-                        return this.user;
-                      }else{
-                        return responseData;
-                      }
-                  })).subscribe(res=>{
-                  },
-                  error =>{
-                    this.user = null;
-                  })
+        if (responseData.data) {
+          console.log(responseData.data.name)
+          this.user.name = responseData.data.name;
+          this.user.email = responseData.data.email;
+          this.user.phone = responseData.data.phone;
+          this.user.organization = responseData.data.organization;
+          this.user.cargo = responseData.data.cargo;
+          console.log(this.user);
+          return this.user;
+        } else {
+          return responseData;
+        }
+      })).subscribe(res => {
+      },
+        error => {
+          this.user = null;
+        })
   }
 
-  getMyUser():User{
+  getMyUser(): User {
     console.log(this.user)
     return this.user;
   }

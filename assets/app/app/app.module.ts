@@ -18,13 +18,10 @@ import { fuseConfig } from '../app/fuse-config';
 
 import { FakeDbService } from '../app/fake-db/fake-db.service';
 
-
 import { AppComponent } from '../app/app.component';
 import { LayoutModule } from '../app/layout/layout.module';
 import { SampleModule } from '../app/main/sample/sample.module';
 import { UIFormsModule } from '../app/main/ui/forms/forms.module';
-import { AnalyticsDashboardModule } from './main/apps/analyticsbyIdioma/analytics.module';
-import { ContactsModule } from './main/apps/contacts/contacts.module';
 import { AuthenticationModule } from './main/authentication/authentication.module';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './main/authentication/auth.interceptors.service';
@@ -74,7 +71,7 @@ const appRoutes: Routes = [
         path: 'analyticsbyIdioma',
         loadChildren: () => import('../app/main/apps/analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
     },
-    
+
 ];
 
 @NgModule({
@@ -120,7 +117,7 @@ const appRoutes: Routes = [
 
     ],
     providers: [
-        {
+        {    
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
             multi: true,

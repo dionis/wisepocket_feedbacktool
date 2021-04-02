@@ -1,3 +1,4 @@
+import { CampaignService } from './services/campaign.service';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
@@ -14,6 +15,7 @@ import { FuseTranslationLoaderService } from '../@fuse/services/translation-load
 import { navigation } from '../app/navigation/navigation';
 import { locale as navigationEnglish } from '../app/navigation/i18n/en';
 import { locale as navigationSpanish } from '../app/navigation/i18n/es';
+
 
 
 @Component({
@@ -43,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
     constructor(
         @Inject(DOCUMENT) private document: any,
         private _fuseConfigService: FuseConfigService,
+
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
         private _fuseSplashScreenService: FuseSplashScreenService,
@@ -52,6 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
     ) {
         // Get default navigation
         this.navigation = navigation;
+
 
         // Register the navigation to the service
         this._fuseNavigationService.register('main', this.navigation);

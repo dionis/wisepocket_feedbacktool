@@ -1,14 +1,11 @@
-import { ListCampService } from '../../../../../../.tmp/public/app/app/main/ui/list-camp/list-camp.service';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
-import {CampaingService} from '../../../services/campaing.service'
 
 
 import { ContactsService } from '../../../../app/main/apps/contacts/contacts.service';
@@ -43,7 +40,7 @@ export class ContactsComponent implements OnInit, OnDestroy
         private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
-        public campaingService: CampaingService
+        //public campaingService: CampaingService
     )
     {
         
@@ -83,13 +80,13 @@ export class ContactsComponent implements OnInit, OnDestroy
                 this._contactsService.onSearchTextChanged.next(searchText);
             });
 
-        this.campaingService.getCampaignbyUser().then(res=>{
+        /*this.campaingService.getCampaignbyUser().then(res=>{
             this.ListaCampanaService=res;
               console.log(res)
             })
             .catch(err=>{
                 console.log("Error", Error);
-            });       
+            }); */      
         
     }
 

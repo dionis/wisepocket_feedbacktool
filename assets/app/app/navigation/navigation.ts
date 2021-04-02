@@ -2,31 +2,25 @@ import { FuseNavigation } from '../../@fuse/types';
 
 export const navigation: FuseNavigation[] = [
     {
-        id       : 'applications',
-        title    : 'Aplicaciones',
-        translate: 'Aplicaciones',
+        id       : 'mis campañas',
+        title    : 'Mis Campañas',
+        translate: '',
         type     : 'group',
         children : [
             {
-                id       : 'sample',
-                title    : 'Sample',
-                translate: 'NAV.SAMPLE.TITLE',
+                id       : 'listCamp',
+                title    : 'Lista de Campañas',
+                translate: 'NAV.CampaignList.TITLE',
                 type     : 'item',
-                icon     : 'email',
+                icon     : '',
                 url      : '/sample',
-                badge    : {
-                    title    : '25',
-                    translate: 'NAV.SAMPLE.BADGE',
-                    bg       : '#F44336',
-                    fg       : '#FFFFFF'
-                }
             }
         ]
     },
     {
-        id       : 'campaing',
-        title    : 'Campaing',
-        translate: 'CAMPAING',
+        id       : 'opinion',
+        title    : 'Opinion',
+        translate: 'NAV.Opinion.TITLE',
         type     : 'group',
         children : [
             {
@@ -56,8 +50,8 @@ export const navigation: FuseNavigation[] = [
    
     {
         id       : 'statistics',
-        title    : 'Statistics',
-        translate: 'Statistics',
+        title    : 'Estadísticas de Opinion',
+        translate: 'NAV.STATISTICS.TITLE',
         type     : 'group',
         children : [
             {
@@ -70,11 +64,11 @@ export const navigation: FuseNavigation[] = [
             },
             {
                  id      : 'est_idioma',
-                title    : 'Opinion statistics by language',
-                translate: 'Statistics by language',
+                title    : 'Estadísticas por idioma',
+                translate: 'NAV.Opinion Statistics by idioma.TITLE',
                 type     : 'item',
-                icon     : 'account_box',
-                url      : '/apps/dashboards/project'
+                icon     : '',
+                url      : '/apps/analyticsbyIdioma'
             },
         ]
     },

@@ -79,6 +79,7 @@ module.exports.bootstrap = async function() {
  console.log("CREATED >>>>>> userEnd >>>>>> opinion (aspectos y entidades) >>>>> pregunta ")
  await sails.helpers.seedUserresp()
  console.log("CREATED >>>> respuesta by userSys ")
+ //await sails.helpers.seedEstadistidioma()   >>>>>>>>>>>>> //TRABAJANDO
  console.log("--- Database Inyectada ---")
  
   // Save new bootstrap version

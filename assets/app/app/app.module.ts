@@ -22,49 +22,66 @@ import { FakeDbService } from '../app/fake-db/fake-db.service';
 import { AppComponent } from '../app/app.component';
 import { LayoutModule } from '../app/layout/layout.module';
 import { SampleModule } from '../app/main/sample/sample.module';
-import {UIFormsModule} from '../app/main/ui/forms/forms.module';
+import { UIFormsModule } from '../app/main/ui/forms/forms.module';
+import { AnalyticsDashboardModule } from './main/apps/analyticsbyIdioma/analytics.module';
+import { ContactsModule } from './main/apps/contacts/contacts.module';
 import { AuthenticationModule } from './main/authentication/authentication.module';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './main/authentication/auth.interceptors.service';
 import { Error404Module } from './main/errors/404/error-404.module';
-import {Error500Module} from './main/errors/500/error-500.module'
+import { Error500Module } from './main/errors/500/error-500.module'
 
 const appRoutes: Routes = [
     {
-        path        : 'auth',
+        path: 'auth',
         loadChildren: () => import('./main/authentication/authentication.module')
-                            .then(m => m.AuthenticationModule)
+            .then(m => m.AuthenticationModule)
     },
     {
-        path        : 'dashboard',
+        path: 'dashboard',
         loadChildren: () => import('./main/sample/sample.module')
-                            .then(m => m.SampleModule)
+            .then(m => m.SampleModule)
     },
     {
-      path        : 'apps',
-      loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
-  },
-  {
-    path        : 'wizard',
-    loadChildren: () => import('./main/ui/forms/forms.module').then(m => m.UIFormsModule)
-},
-  {
-      path        : 'pages',
-      loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
-  },
-   {
-        path      : '**',
-        redirectTo: 'main/apps/contacts/contacts.module.ts'
+        path: 'apps',
+        loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
     },
-
-
+    {
+        path: 'wizard',
+        loadChildren: () => import('./main/ui/forms/forms.module').then(m => m.UIFormsModule)
+    },
+    {
+        path: 'pages',
+        loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
+    },
+    {
+        path: 'mail',
+        loadChildren: () => import('../app/main/apps/mail/mail.module').then(m => m.MailModule)
+    },
+    {
+        path: 'mail-ngrx',
+        loadChildren: () => import('../app/main/apps/mail-ngrx/mail.module').then(m => m.MailNgrxModule)
+    },
+    {
+        path: 'e-commerce',
+        loadChildren: () => import('../app/main/apps/e-commerce/e-commerce.module').then(m => m.EcommerceModule)
+    },
+    {
+        path: 'contacts',
+        loadChildren: () => import('../app/main/apps/contacts/contacts.module').then(m => m.ContactsModule)
+    },
+    {
+        path: 'analyticsbyIdioma',
+        loadChildren: () => import('../app/main/apps/analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
+    },
+    
 ];
 
 @NgModule({
     declarations: [
         AppComponent
     ],
-    imports     : [
+    imports: [
         BrowserModule,
         FormsModule,
         BrowserAnimationsModule,
@@ -72,9 +89,9 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
         TranslateModule.forRoot(),
         InMemoryWebApiModule.forRoot(FakeDbService, {
-          delay             : 0,
-          passThruUnknownUrl: true
-         }),
+            delay: 0,
+            passThruUnknownUrl: true
+        }),
 
 
         // Material moment date module
@@ -94,6 +111,8 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
         SampleModule,
+        //ContactsModule,
+        //AnalyticsDashboardModule,
         AuthenticationModule,
         UIFormsModule,
         Error404Module,
@@ -106,11 +125,10 @@ const appRoutes: Routes = [
             useClass: AuthInterceptor,
             multi: true,
         }
-    ]    ,
-    bootstrap   : [
+    ],
+    bootstrap: [
         AppComponent
     ]
 })
-export class AppModule
-{
+export class AppModule {
 }

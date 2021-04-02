@@ -54,32 +54,34 @@ import { FuseSharedModule } from '../../../@fuse/shared.module';
 //     }
 // ];
 
-const routes = [
-  {
-      path        : 'mail',
-      loadChildren: () => import('./mail/mail.module').then(m => m.MailModule)
-  },
-  {
-      path        : 'mail-ngrx',
-      loadChildren: () => import('./mail-ngrx/mail.module').then(m => m.MailNgrxModule)
-  },
-  {
-      path        : 'e-commerce',
-      loadChildren: () => import('./e-commerce/e-commerce.module').then(m => m.EcommerceModule)
-  },
-  {
-      path        : 'contacts',
-      loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule)
-  }
-
- ];
+/*const routes = [
+    {
+        path: 'mail',
+        loadChildren: () => import('./mail/mail.module').then(m => m.MailModule)
+    },
+    {
+        path: 'mail-ngrx',
+        loadChildren: () => import('./mail-ngrx/mail.module').then(m => m.MailNgrxModule)
+    },
+    {
+        path: 'e-commerce',
+        loadChildren: () => import('./e-commerce/e-commerce.module').then(m => m.EcommerceModule)
+    },
+    {
+        path: 'contacts',
+        loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule)
+    },
+    /*{
+    path : 'analyticsbyIdioma',
+    loadChildren: () => import('./analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
+    }
+];*/
 
 @NgModule({
-    imports     : [
-        RouterModule.forChild(routes),
+    imports: [
+       // RouterModule.forChild(routes),
         FuseSharedModule
     ]
 })
-export class AppsModule
-{
+export class AppsModule {
 }

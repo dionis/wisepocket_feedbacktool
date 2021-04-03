@@ -87,6 +87,12 @@ module.exports.routes = {
   "GET /entidadopinion/getEntidad": "EntidadOpinionController.getEntidad",
   "GET /registro/getAllRegistro": "RegistroController.getAllRegistro",
   "GET /estadisticaByidioma/getEstadistica": "EstadisticaByidiomaController.getEstadistica",
+  
+  
+
+
+  //PATCH
+  "PATCH /estadisticaByidioma/updateEstadIdioma": "EstadisticaByidiomaController.updateEstadIdioma",
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

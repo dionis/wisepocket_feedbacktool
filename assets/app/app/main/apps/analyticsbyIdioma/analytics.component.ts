@@ -15,6 +15,7 @@ export class AnalyticsDashboardComponent implements OnInit
 {
     widgets: any;
     widget5SelectedDay = 'today';
+    data: any;
 
     /**
      * Constructor

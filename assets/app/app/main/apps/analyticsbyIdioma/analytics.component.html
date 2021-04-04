@@ -21,20 +21,20 @@
                             <div class="pr-16">
                                 <div class="h3 secondary-text">Inglés</div>
                                 <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                    {{widgets.widget2.conversion.value}}
+                                    {{widgets.widget2.englishOpin.value}}
                                 </div>
                             </div>
 
                             <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
                                 <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
-                                    *ngIf="widgets.widget2.conversion.ofTarget > 0">
+                                    *ngIf="widgets.widget2.englishOpin.ofTarget > 0">
                                     <mat-icon class="green-fg mr-4">trending_up</mat-icon>
-                                    <span>{{widgets.widget2.conversion.ofTarget}}%</span>
+                                    <span>{{widgets.widget2.englishOpin.ofTarget}}%</span>
                                 </div>
                                 <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
-                                    *ngIf="widgets.widget2.conversion.ofTarget < 0">
+                                    *ngIf="widgets.widget2.englishOpin.ofTarget < 0">
                                     <mat-icon class="red-fg mr-4">trending_down</mat-icon>
-                                    <span>{{widgets.widget2.conversion.ofTarget}}%</span>
+                                    <span>{{widgets.widget2.englishOpin.ofTarget}}%</span>
                                 </div>
                                 <div class="ml-4 text-nowrap">del objetivo</div>
                             </div>
@@ -63,20 +63,20 @@
                             <div class="pr-16">
                                 <div class="h3 secondary-text">Español</div>
                                 <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                    {{widgets.widget3.impressions.value}}
+                                    {{widgets.widget3.spanishOpin.value}}
                                 </div>
                             </div>
 
                             <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
                                 <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
-                                     *ngIf="widgets.widget3.impressions.ofTarget > 0">
+                                    *ngIf="widgets.widget3.spanishOpin.ofTarget > 0">
                                     <mat-icon class="green-fg mr-4">trending_up</mat-icon>
-                                    <span>{{widgets.widget3.impressions.ofTarget}}%</span>
+                                    <span>{{widgets.widget3.spanishOpin.ofTarget}}%</span>
                                 </div>
                                 <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
-                                     *ngIf="widgets.widget3.impressions.ofTarget < 0">
+                                    *ngIf="widgets.widget3.spanishOpin.ofTarget < 0">
                                     <mat-icon class="red-fg mr-4">trending_down</mat-icon>
-                                    <span>{{widgets.widget3.impressions.ofTarget}}%</span>
+                                    <span>{{widgets.widget3.spanishOpin.ofTarget}}%</span>
                                 </div>
                                 <div class="ml-4 text-nowrap">del objetivo</div>
                             </div>
@@ -84,12 +84,9 @@
                         </div>
 
                         <div class="h-96 w-100-p">
-                            <canvas baseChart
-                                    [datasets]="widgets.widget3.datasets"
-                                    [labels]="widgets.widget3.labels"
-                                    [colors]="widgets.widget3.colors"
-                                    [options]="widgets.widget3.options"
-                                    [chartType]="widgets.widget3.chartType">
+                            <canvas baseChart [datasets]="widgets.widget3.datasets" [labels]="widgets.widget3.labels"
+                                [colors]="widgets.widget3.colors" [options]="widgets.widget3.options"
+                                [chartType]="widgets.widget3.chartType">
                             </canvas>
                         </div>
 
@@ -108,20 +105,20 @@
                             <div class="pr-16">
                                 <div class="h3 secondary-text">Total de Opiniones</div>
                                 <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                    {{widgets.widget4.visits.value}}
+                                    {{widgets.widget4.totalOpin.value}}
                                 </div>
                             </div>
 
                             <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
                                 <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
-                                    *ngIf="widgets.widget4.visits.ofTarget > 0">
+                                    *ngIf="widgets.widget4.totalOpin.ofTarget > 0">
                                     <mat-icon class="green-fg mr-4">trending_up</mat-icon>
-                                    <span>{{widgets.widget4.visits.ofTarget}}%</span>
+                                    <span>{{widgets.widget4.totalOpin.ofTarget}}%</span>
                                 </div>
                                 <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
-                                    *ngIf="widgets.widget4.visits.ofTarget < 0">
+                                    *ngIf="widgets.widget4.totalOpin.ofTarget < 0">
                                     <mat-icon class="red-fg mr-4">trending_down</mat-icon>
-                                    <span>{{widgets.widget4.visits.ofTarget}}%</span>
+                                    <span>{{widgets.widget4.totalOpin.ofTarget}}%</span>
                                 </div>
                                 <div class="ml-4 text-nowrap">del objetivo</div>
                             </div>
@@ -144,7 +141,7 @@
 
             <!-- Widget 5 -->
             <div class="pt-48 pb-24 font-size-18 font-weight-300">
-                Comportamiento 
+                Comportamiento
             </div>
 
             <div class="fuse-card auto-width">
@@ -177,56 +174,6 @@
             </div>
             <!-- / Widget 5 -->
 
-
-        </div>
-
-        <div class="right">
-
-            <div fxLayout="row wrap" fxLayout.gt-md="column">
-
-                <!-- Widget 9 -->
-                <div class="mb-48" [ngClass.lt-lg]="'mr-32'" [ngClass.xs]="'mr-0'">
-
-                    <div class="pb-24 font-size-18 font-weight-300" [ngClass.lt-lg]="'pt-0'">
-                        Comportamiento de Opiniones por Campaña
-                    </div>
-
-                    <div class="fuse-card">
-
-                        <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
-                            <div class="h1 pr-16">Top Campañas</div>
-
-                        </div>
-
-                        <table class="simple clickable">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th class="text-right">Español</th>
-                                    <th class="text-right">Inglés</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let row of widgets.widget9.rows">
-                                    <td>{{row.title}}</td>
-                                    <td class="text-right">{{row.clicks}}</td>
-                                    <td class="text-right">{{row.conversion}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="card-divider full-width"></div>
-
-                        <div class="p-8 pt-16" fxLayout="row" fxLayoutAlign="start center">
-                            <button mat-button color="accent">Ir a Lista de Campañas</button>
-                        </div>
-
-                    </div>
-
-                </div>
-                <!-- / widget 9 -->
-
-            </div>
 
         </div>
 

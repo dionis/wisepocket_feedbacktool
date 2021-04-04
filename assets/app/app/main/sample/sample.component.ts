@@ -12,20 +12,25 @@ import { locale as spanish } from './i18n/es';
     styleUrls: ['./sample.component.scss']
 })
 export class SampleComponent {
-        campaigns: any
-    /**
+        campaigns: any     //Se crea un objeto any(cualquiera) para guardar lo que devuelve la funcion
+    /** 
      * Constructor
      *
      * @param {FuseTranslationLoaderService} _fuseTranslationLoaderService
+     * @param {CampaignService} _campaignService
      */
     constructor(
-        private campaignService: CampaignService,
+        private _campaignService: CampaignService,  //Se crea un obj del Servicio Campaign
         private _fuseTranslationLoaderService: FuseTranslationLoaderService
     ) {
         this._fuseTranslationLoaderService.loadTranslations(english, spanish);
-        //Get Campaigns
-        //this.campaigns no coge el arreglo que devuelve la funcion
-        this.campaigns = this.campaignService.getCampaignbyUser()
+        //Get CampaignsbyUser
+        this.campaigns = this._campaignService.getMyCamps() //Le asignamos al obj el resultado de la funcion
+        
+        
+        
+        
+        
 
     }
 

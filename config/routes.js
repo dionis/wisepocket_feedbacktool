@@ -92,7 +92,7 @@ module.exports.routes = {
 
 
   //PATCH
-  "PATCH /estadisticaByidioma/updateEstadIdioma": "EstadisticaByidiomaController.updateEstadIdioma",
+  "GET /estadisticaByidioma/updateEstadIdioma": "EstadisticaByidiomaController.updateEstadIdioma",
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

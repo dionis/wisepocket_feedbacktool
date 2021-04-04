@@ -16,50 +16,29 @@ import { UserService } from './user.service';
 })
 
 export class CampaignService {
-  private campaign: Campaign[];
+  campaign: any = []
+  user: any
   // token: any;
-  constructor(private _http: HttpClient) {
-    //this.campaign = new Campaign();
-  }
-  /* getCampaign(): Promise<any>{
-       
-     return new Promise((resolve,reject)=>{
-     //  environment.sails_services_urlpath
-       // this._http.get('http://localhost:1337/users').subscribe((res:any)=>{
-       //   resolve(res.data);
-       // },reject)
+  constructor(private _http: HttpClient,
    
-       this._http.get(environment.sails_services_urlpath+":"+environment.sails_services_urlport+'/campaign/getCampaign')
-       .subscribe((res:any)=>{
-         console.log("Data from Sails", res.data)
-         resolve(res.data);
-       },reject)
-     })
-   }*/
+    ) {
+    
+  }
 
-
-  getCampaignbyUser() {
+  getCampaignbyUser(id:String) {
     environment.sails_services_urlpath
-    // this._http.get('http://localhost:1337/users').subscribe((res:any)=>{
-    //   resolve(res.data);
-    // },reject)
-    //const user = UserService
-    //const jwt = new JwtHelperService();
-    //let token = jwt.decodeToken(localStorage.getItem('id_token'));
-    let user_id = '6067591c0b762a27e0a64be9'/*token._id*/;
-    console.log(user_id);
-    //>>>>> BUSCAR COMO Encontrar id del usuario activo en sesion y pasarlo al servicio, implementar la paginaciion en la interfaz
-    // >>>>> El id que tiene puesto es de ejemplo, cambia en cada inicio
-    // >>>>> Ver como Mostrar las campañas en la inerfaz, PD: por consola si salen
-    this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/campaign/getCampaignbyUser/_id?id=' + user_id + '&page=0')
+    //implementar la paginaciion en la interfaz para pasarle la pagina al servicio, pagina apartir de 0 //page=0 es de prueba
+    //En la interfaz puede poner pagina 1 pero al pasar el parametro puede restar 1, es una sugerencia y ademas necesaria
+    this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/campaign/getCampaignbyUser/_id?id=' + id + '&page=0')
       .pipe(map((responseData: any) => {
 
         if (responseData.data) {
-          this.campaign = responseData.data;
+          for (let index = 0; index < responseData.data.length; index++) {
+            this.campaign[index] = responseData.data[index].nombre
+          }
           console.log(this.campaign);
-          return this.campaign;
-        } else {
-          return responseData;
+          
+          return this.campaign
         }
       })).subscribe(res => {
       },
@@ -67,5 +46,8 @@ export class CampaignService {
           this.campaign = null;
         })
   }
-
+  getMyCamps(): Campaign {          //getMyCamps(): Campaign //Camapaign es el modelo creado para la vista
+    console.log(this.campaign)
+    return this.campaign;
+  }
 }

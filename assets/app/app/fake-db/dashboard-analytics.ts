@@ -101,8 +101,8 @@ export class AnalyticsDashboardDb
         },
         widget2: {
             conversion: {
-                value   : 0,
-                ofTarget: 0
+                value   : 492,
+                ofTarget: 13
             },
             chartType : 'bar',
             datasets  : [
@@ -152,22 +152,21 @@ export class AnalyticsDashboardDb
         },
         widget3: {
             impressions: {
-                value   : '0',
-                ofTarget: 0
+                value   : '87k',
+                ofTarget: 12
             },
-            chartType  : 'bar',
+            chartType  : 'line',
             datasets   : [
                 {
                     label: 'Impression',
-                    data :  [221, 428, 492, 471, 413, 344, 294],
+                    data : [67000, 54000, 82000, 57000, 72000, 57000, 87000, 72000, 89000, 98700, 112000, 136000, 110000, 149000, 98000],
                     fill : false
                 }
             ],
-            labels     : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            labels     : ['Jan 1', 'Jan 2', 'Jan 3', 'Jan 4', 'Jan 5', 'Jan 6', 'Jan 7', 'Jan 8', 'Jan 9', 'Jan 10', 'Jan 11', 'Jan 12', 'Jan 13', 'Jan 14', 'Jan 15'],
             colors     : [
                 {
-                    borderColor: '#5c84f1',
-                    backgroundColor: '#42a5f5'
+                    borderColor: '#5c84f1'
                 }
             ],
             options    : {

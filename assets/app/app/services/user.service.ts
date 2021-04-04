@@ -6,6 +6,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { map } from 'rxjs/operators';
 
 import { environment } from './../../environments/environment';
+import { CampaignService } from './campaign.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,9 @@ import { environment } from './../../environments/environment';
 export class UserService {
   private user: User;
   token: any;
-  constructor(private _http: HttpClient) {
+  //SE CREA en el constructor un Objeto  del Servicio de Campaign para acceder a las funciones de esta
+  constructor(private _http: HttpClient,
+    private _userCamp: CampaignService) {
     this.user = new User();
   }
   //https://www.jvandemo.com/how-to-use-environment-variables-to-configure-your-angular-application-without-a-rebuild/
@@ -87,12 +90,14 @@ export class UserService {
 
         if (responseData.data) {
           console.log(responseData.data.name)
+          this.user.id = responseData.data.id;
           this.user.name = responseData.data.name;
           this.user.email = responseData.data.email;
           this.user.phone = responseData.data.phone;
           this.user.organization = responseData.data.organization;
           this.user.cargo = responseData.data.cargo;
           console.log(this.user);
+          this._userCamp.getCampaignbyUser(this.user.id) //SE LLAMA A la FUNCION para mandar el idUser LOGUEADO a CampaignService
           return this.user;
         } else {
           return responseData;

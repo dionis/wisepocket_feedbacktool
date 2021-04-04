@@ -1,6 +1,5 @@
 
 var supertest = require('supertest');
-var assert = require('assert');
 
 ///// SE INYECTA EN LA BASE DE DATOS AUTOMATICAMENTE
 
@@ -12,7 +11,7 @@ describe('UserController.login', function () {
         .post('/user/singIn')
         .query()
         .send({ email: 'admin@example.com', password: '12345678' })
-        .expect(200, (err, res) => {
+        .expect(200, (err) => {
           if (err) { return done(err); }
           done();
         });
@@ -29,7 +28,7 @@ describe('UserController.singUp', function () {
         .post('/user/singUp')
         .query()
         .send({ name: 'TESTname', phone: 52105030, email: 'Test@example.com', password: '12345678' })
-        .expect(200, (err, res) => {
+        .expect(200, (err) => {
           if (err) { return done(err); }
           done();
         });

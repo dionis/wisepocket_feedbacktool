@@ -25,7 +25,7 @@ export class CampaignService {
     
   }
 
-  getCampaignbyUser(id:String) {
+  getCampaignbyUser(id:String) {  //Le paso el id como parametro
     environment.sails_services_urlpath
     //implementar la paginaciion en la interfaz para pasarle la pagina al servicio, pagina apartir de 0 //page=0 es de prueba
     //En la interfaz puede poner pagina 1 pero al pasar el parametro puede restar 1, es una sugerencia y ademas necesaria

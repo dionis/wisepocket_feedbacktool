@@ -1,4 +1,4 @@
-//import { ListCampService } from '../../../../../../.tmp/public/app/app/main/ui/list-camp/list-camp.service';
+import { ListCampService } from '../../../../../../.tmp/public/app/app/main/ui/list-camp/list-camp.service';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,23 +8,22 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
-//import {CampaingService} from '../../../services/campaing.service'
+import {CampaignService} from '../../../services/campaing.service'
 
 
-import { ContactsService } from '../../../../app/main/apps/contacts/contacts.service';
-import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/contacts/contact-form/contact-form.component';
+import { CampaignFormDialogComponent } from './campaign-form/campaign-form.component';
 
 @Component({
-    selector     : 'contacts',
-    templateUrl  : './contacts.component.html',
-    styleUrls    : ['./contacts.component.scss'],
+    selector     : 'campaigns',
+    templateUrl  : './campaign.component.html',
+    styleUrls    : ['./campaign.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class ContactsComponent implements OnInit, OnDestroy
+export class CampaignComponent implements OnInit, OnDestroy
 {
     dialogRef: any;
-    hasSelectedContacts: boolean;
+    hasSelectedCampaign: boolean;
     searchInput: FormControl;
     ListaCampanaService: any;
 
@@ -35,15 +34,15 @@ export class ContactsComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {CampaignService} _campaignService
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContactsService,
+        private _campaignService: CampaignService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
-      //  public campaingService: CampaingService
+        public campaingService: CampaignService
     )
     {
         
@@ -67,10 +66,10 @@ export class ContactsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._contactsService.onSelectedContactsChanged
+        this._campaignService.onSelectedCampaignChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
-                this.hasSelectedContacts = selectedContacts.length > 0;
+            .subscribe(selectedCampaign => {
+                this.hasSelectedCampaign = selectedCampaign.length > 0;
             });
 
         this.searchInput.valueChanges
@@ -80,7 +79,7 @@ export class ContactsComponent implements OnInit, OnDestroy
                 distinctUntilChanged()
             )
             .subscribe(searchText => {
-                this._contactsService.onSearchTextChanged.next(searchText);
+                this._campaignService.onSearchTextChanged.next(searchText);
             });
 
         /*this.campaingService.getCampaignbyUser().then(res=>{
@@ -89,7 +88,7 @@ export class ContactsComponent implements OnInit, OnDestroy
             })
             .catch(err=>{
                 console.log("Error", Error);
-            });    */   
+            });     */  
         
     }
 
@@ -108,12 +107,12 @@ export class ContactsComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * New contact
+     * New campaign
      */
-    newContact(): void
+    newCampaign(): void
     {
-        this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
+        this.dialogRef = this._matDialog.open(CampaignFormDialogComponent, {
+            panelClass: 'campaign-form-dialog',
             data      : {
                 action: 'new'
             }
@@ -126,7 +125,7 @@ export class ContactsComponent implements OnInit, OnDestroy
                     return;
                 }
 
-                this._contactsService.updateContact(response.getRawValue());
+                this._campaignService.updateCampaign(response.getRawValue());
             });
     }
 

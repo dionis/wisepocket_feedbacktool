@@ -1,3 +1,4 @@
+import { ContactsComponent } from './main/apps/contacts/contacts.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -46,7 +47,7 @@ const appRoutes: Routes = [
         path: 'apps',
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
     },
-    {
+    /*{
         path: 'wizard',
         loadChildren: () => import('./main/ui/forms/forms.module').then(m => m.UIFormsModule)
     },
@@ -73,13 +74,22 @@ const appRoutes: Routes = [
     {
         path: 'analyticsbyIdioma',
         loadChildren: () => import('../app/main/apps/analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
+    },*/
+    {
+        path: 'campaign',
+        loadChildren: () => import('../app/main/apps/campaign/campaign.module').then(m => m.CampaignModule)
     },
+    {
+        path :'**',
+        redirectTo : 'auth/sample'
+    }
     
 ];
 
 @NgModule({
     declarations: [
         AppComponent
+        
     ],
     imports: [
         BrowserModule,

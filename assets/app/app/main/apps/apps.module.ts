@@ -1,3 +1,4 @@
+import { LoadChildren } from '@angular/router/router';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -54,7 +55,7 @@ import { FuseSharedModule } from '../../../@fuse/shared.module';
 //     }
 // ];
 
-/*const routes = [
+const routes = [
     {
         path: 'mail',
         loadChildren: () => import('./mail/mail.module').then(m => m.MailModule)
@@ -71,15 +72,19 @@ import { FuseSharedModule } from '../../../@fuse/shared.module';
         path: 'contacts',
         loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule)
     },
-    /*{
-    path : 'analyticsbyIdioma',
-    loadChildren: () => import('./analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
-    }
-];*/
+    {
+        path : 'analyticsbyIdioma',
+        loadChildren: () => import('./analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
+    },
+    {
+        path : 'campaign',
+        LoadChildren: () => import('./campaign/campaign.module').then(m => m.CampaignModule)
+    },
+];
 
 @NgModule({
     imports: [
-       // RouterModule.forChild(routes),
+        RouterModule.forChild(routes),
         FuseSharedModule
     ]
 })

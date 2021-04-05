@@ -1,4 +1,4 @@
-<div id="contacts" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+<div id="campaigns" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
 
     <!-- HEADER -->
     <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start"
@@ -8,7 +8,7 @@
         <div fxLayout="row" fxLayoutAlign="start center">
 
             <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-sm
-                    (click)="toggleSidebar('contacts-main-sidebar')">
+                    (click)="toggleSidebar('campaigns-main-sidebar')">
                 <mat-icon>menu</mat-icon>
             </button>
 
@@ -17,7 +17,7 @@
                           [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    Contacts
+                    Campaigns
                 </span>
             </div>
 
@@ -31,7 +31,7 @@
 
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
-                    <input [formControl]="searchInput" placeholder="Search for a contact">
+                    <input [formControl]="searchInput" placeholder="Search for a campaign">
                 </div>
 
             </div>
@@ -43,18 +43,18 @@
     <!-- / HEADER -->
 
     <!-- SELECTED BAR -->
-    <selected-bar class="accent-600" *ngIf="hasSelectedContacts" [@slideInTop]></selected-bar>
+    <selected-bar class="accent-600" *ngIf="hasSelectedCampaign" [@slideInTop]></selected-bar>
     <!-- / SELECTED BAR -->
 
     <!-- CONTENT -->
     <div class="content">
 
         <!-- SIDEBAR -->
-        <fuse-sidebar class="sidebar" name="contacts-main-sidebar" position="left" lockedOpen="gt-sm">
+        <fuse-sidebar class="sidebar" name="campaigns-main-sidebar" position="left" lockedOpen="gt-sm">
 
             <!-- SIDEBAR CONTENT -->
             <div class="content" fusePerfectScrollbar>
-                <contacts-main-sidebar [@animate]="{value:'*'}"></contacts-main-sidebar>
+                <campaigns-main-sidebar [@animate]="{value:'*'}"></campaigns-main-sidebar>
             </div>
             <!-- / SIDEBAR CONTENT -->
 
@@ -66,7 +66,7 @@
 
             <!-- CONTENT -->
             <div class="content">
-                <contacts-contact-list></contacts-contact-list>
+                <campaigns-campaign-list></campaigns-campaign-list>
             </div>
             <!-- / CONTENT -->
 
@@ -80,9 +80,9 @@
 
 </div>
 
-<!-- ADD CONTACT BUTTON -->
-<button mat-fab class="accent" id="add-contact-button" (click)="newContact()" aria-label="add contact"
+<!-- ADD CAMPAIGN BUTTON -->
+<button mat-fab class="accent" id="add-campaign-button" (click)="newCampaign()" aria-label="add campaign"
         [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}">
     <mat-icon>person_add</mat-icon>
 </button>
-<!-- / ADD CONTACT BUTTON -->
+<!-- / ADD CAMPAIGN BUTTON -->

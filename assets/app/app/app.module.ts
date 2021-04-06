@@ -19,13 +19,9 @@ import { fuseConfig } from '../app/fuse-config';
 
 import { FakeDbService } from '../app/fake-db/fake-db.service';
 
-
 import { AppComponent } from '../app/app.component';
 import { LayoutModule } from '../app/layout/layout.module';
 import { SampleModule } from '../app/main/sample/sample.module';
-import { UIFormsModule } from '../app/main/ui/forms/forms.module';
-import { AnalyticsDashboardModule } from './main/apps/analyticsbyIdioma/analytics.module';
-import { ContactsModule } from './main/apps/contacts/contacts.module';
 import { AuthenticationModule } from './main/authentication/authentication.module';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './main/authentication/auth.interceptors.service';
@@ -47,6 +43,7 @@ const appRoutes: Routes = [
         path: 'apps',
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
     },
+<<<<<<< HEAD
     /*{
         path: 'wizard',
         loadChildren: () => import('./main/ui/forms/forms.module').then(m => m.UIFormsModule)
@@ -83,7 +80,14 @@ const appRoutes: Routes = [
         path :'**',
         redirectTo : 'auth/sample'
     }
+=======
+>>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
     
+    {
+        path      : '**',
+        redirectTo: 'auth/login'
+    }
+
 ];
 
 @NgModule({
@@ -121,10 +125,7 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
         SampleModule,
-        //ContactsModule,
-        //AnalyticsDashboardModule,
         AuthenticationModule,
-        UIFormsModule,
         Error404Module,
         Error500Module,
 

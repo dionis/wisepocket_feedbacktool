@@ -13,7 +13,11 @@ module.exports = {
       type: 'integer'
     },
 
-    cantSapnish: {
+    cantSpanish: {
+      type: 'integer'
+    },
+
+    totalOpin: {
       type: 'integer'
     },
     

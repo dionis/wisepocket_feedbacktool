@@ -14,8 +14,8 @@ import { AnalyticsDashboardService } from './analytics.service';
 export class AnalyticsDashboardComponent implements OnInit
 {
     widgets: any;
-    widget1SelectedYear = '2016';
     widget5SelectedDay = 'today';
+    data: any;
 
     /**
      * Constructor

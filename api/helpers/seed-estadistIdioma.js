@@ -42,55 +42,18 @@ module.exports = {
     var gateWayArray = []
 
     var registerSize = 10;
-
+    camp = await Campaign.find({})
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
-
+      campOgjet = faker.random.arrayElement(camp)
       gateWayArray.push({
-        name_alias: faker.name.firstName(),
-        email: faker.internet.exampleEmail(faker.name.firstName())
-
+        campaign: campOgjet.id
       })
     }
 
-    await UserEnd.createEach(gateWayArray)
-
-    allGateway = await UserEnd.find({})
-    campAll = await Campaign.find({})
+    await EstadisticaByidioma.createEach(gateWayArray)
 
 
-    registerSize = 31
-
-    for (var iValue = 1; iValue < registerSize; iValue++) {
-
-
-      userEndObjet = faker.random.arrayElement(allGateway)
-      campOgjet = faker.random.arrayElement(campAll)
-
-
-      let opinion = await Opinion.count({ 'userend': userEndObjet.id })
-      let pregunta = await Pregunta.count({ 'quesUserend': userEndObjet.id })
-      let campOp = await Opinion.count({ 'campaign': campOgjet.id })
-      let campPreg = await Pregunta.count({ 'campaign': campOgjet.id })
-
-
-      if (opinion < 31) {
-        newOpinion = {
-          texto: faker.lorem.sentences(6, ''),
-          fecha: "21-3-2021",
-          idioma: 'español',
-          polaridad: 'positiva',
-          userend: userEndObjet.id,
-          campaign: campOgjet.id
-        }
-
-        await Opinion.create(newOpinion)
-
-      }
-
-
-
-      return exits.success("OK");
-    }
+    return exits.success("OK");
   }
 };

@@ -58,41 +58,41 @@ module.exports = {
             })
     },
 
-    
-    
-   /* deleteOpinion: async function (req, res) {
-        await Opinion.findOne({
-            id: req.param('id')
-        }).then((doc) => {
-            if (!doc) {
-                console.log("No encontrado")
-                return res.send({
-                    'success': false,
-                    'message': 'Opinion no encontrada'
-                })
-            } else {
-                console.log("Encontrado"),
-                    Opinion.destroy({
-                        id: req.param('id')
-                    }).then(function (opinion) {
-                        return res.send({
-                            'success': true,
-                            'message': 'Opinion eliminada',
-                            'data': opinion
-                        })
-                    })
-                        .catch(function (err) {
-                            sails.log.debug(err);
-                            return res.send({
-                                'success': false,
-                                'message': 'Opinion no eliminada'
-                            })
-                        })
-            }
-        })
-    },*/
 
-    
+
+    /* deleteOpinion: async function (req, res) {
+         await Opinion.findOne({
+             id: req.param('id')
+         }).then((doc) => {
+             if (!doc) {
+                 console.log("No encontrado")
+                 return res.send({
+                     'success': false,
+                     'message': 'Opinion no encontrada'
+                 })
+             } else {
+                 console.log("Encontrado"),
+                     Opinion.destroy({
+                         id: req.param('id')
+                     }).then(function (opinion) {
+                         return res.send({
+                             'success': true,
+                             'message': 'Opinion eliminada',
+                             'data': opinion
+                         })
+                     })
+                         .catch(function (err) {
+                             sails.log.debug(err);
+                             return res.send({
+                                 'success': false,
+                                 'message': 'Opinion no eliminada'
+                             })
+                         })
+             }
+         })
+     },*/
+
+
 
     deleteAllOpinion: async function (req, res) {
 
@@ -114,10 +114,9 @@ module.exports = {
             })
     },
 
+    //Requiere ID de la Campaña y la pagina
     getOpinion: async (req, res) => {
         const page = req.param('page')
-        //const limit = req.param('limit')
-        //console.log(page);
         let campID = await Campaign.findOne({ id: req.param('id') })
         await Opinion.find({
             where: { campaign: campID.id },
@@ -139,6 +138,7 @@ module.exports = {
                 })
             })
     },
+
 }
 
 

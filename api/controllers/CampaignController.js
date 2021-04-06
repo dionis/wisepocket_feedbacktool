@@ -80,12 +80,7 @@ module.exports = {
             })
     },*/
 
-<<<<<<< HEAD
-    getCampaign: (req, res) => {
-      console.log("<----[[[ <== |||| ==> ]]]---->");
-=======
   /* getCampaign: (req, res) => {
->>>>>>> 5dccca8f5518a5cab59448670fbfdc3fc39f8084
         Campaign.find().populate('userChief')
             .then(campaign => {
                console.log("<-------->");

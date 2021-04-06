@@ -80,6 +80,10 @@ const routes = [
         loadChildren: () => import('../apps/contacts/contacts.module').then(m => m.ContactsModule)
     },
     {
+      path: 'campaign',
+      loadChildren: () => import('../apps/campaign/campaign.module').then(m => m.CampaignModule)
+    },
+    {
         path: 'analyticsbyIdioma',
         loadChildren: () => import('../apps/analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
     },

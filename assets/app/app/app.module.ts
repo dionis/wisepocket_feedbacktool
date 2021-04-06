@@ -1,4 +1,3 @@
-import { ContactsComponent } from './main/apps/contacts/contacts.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -10,15 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import 'hammerjs';
-
 import { FuseModule } from '../@fuse/fuse.module';
 import { FuseSharedModule } from '../@fuse/shared.module';
 import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '../@fuse/components';
-
 import { fuseConfig } from '../app/fuse-config';
-
 import { FakeDbService } from '../app/fake-db/fake-db.service';
-
 import { AppComponent } from '../app/app.component';
 import { LayoutModule } from '../app/layout/layout.module';
 import { SampleModule } from '../app/main/sample/sample.module';
@@ -43,48 +38,9 @@ const appRoutes: Routes = [
         path: 'apps',
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
     },
-<<<<<<< HEAD
-    /*{
-        path: 'wizard',
-        loadChildren: () => import('./main/ui/forms/forms.module').then(m => m.UIFormsModule)
-    },
+
     {
-        path: 'pages',
-        loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
-    },
-    {
-        path: 'mail',
-        loadChildren: () => import('../app/main/apps/mail/mail.module').then(m => m.MailModule)
-    },
-    {
-        path: 'mail-ngrx',
-        loadChildren: () => import('../app/main/apps/mail-ngrx/mail.module').then(m => m.MailNgrxModule)
-    },
-    {
-        path: 'e-commerce',
-        loadChildren: () => import('../app/main/apps/e-commerce/e-commerce.module').then(m => m.EcommerceModule)
-    },
-    {
-        path: 'contacts',
-        loadChildren: () => import('../app/main/apps/contacts/contacts.module').then(m => m.ContactsModule)
-    },
-    {
-        path: 'analyticsbyIdioma',
-        loadChildren: () => import('../app/main/apps/analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
-    },*/
-    {
-        path: 'campaign',
-        loadChildren: () => import('../app/main/apps/campaign/campaign.module').then(m => m.CampaignModule)
-    },
-    {
-        path :'**',
-        redirectTo : 'auth/sample'
-    }
-=======
->>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
-    
-    {
-        path      : '**',
+        path: '**',
         redirectTo: 'auth/login'
     }
 
@@ -93,7 +49,6 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [
         AppComponent
-        
     ],
     imports: [
         BrowserModule,

@@ -1,26 +1,16 @@
 //import * as console from 'console';
-import { PromiseType } from 'protractor/built/plugins';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../models/user.model';
-import * as moment from 'moment';
-import { JwtHelperService } from "@auth0/angular-jwt";
 import { map } from 'rxjs/operators';
-//<<<<<<< HEAD
+
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
-//=======
+
 
 import { environment } from './../../environments/environment';
 import { Campaign } from '../models/campaing.model';
-import { UserService } from './user.service';
-//>>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
 
-@Injectable({
-  providedIn: 'root',
-})
-//<<<<<<< HEAD
 export class CampaignService {
 
   campaign: Campaign[];
@@ -271,8 +261,7 @@ export class CampaignService {
   campaign: any = []
   user: any
   // token: any;
-  constructor(private _http: HttpClient,
-   
+  constructor(private _http: HttpClient
     ) {
     
   }

@@ -81,7 +81,7 @@ module.exports.bootstrap = async function() {
  console.log("CREATED >>>> respuesta by userSys ")
  await sails.helpers.seedEstadistidioma()   
  console.log("CREATED >>>> estadistica por Idioma ")
- console.log("Las estadisticas estan en O, se actualizaran con el servicio")
+ console.log("Las estadisticas estan en O, se actualizaran con el servicio getUpdateEstadIdioma")
  console.log("--- Database Inyectada ---")
  
   // Save new bootstrap version

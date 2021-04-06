@@ -41,7 +41,7 @@ module.exports = {
 
     var gateWayArray = []
 
-    var registerSize = 10;
+    var registerSize = 51;
     camp = await Campaign.find({})
 
     for (var iValue = 1; iValue < registerSize; iValue++) {

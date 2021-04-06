@@ -10,7 +10,7 @@
 module.exports = {
 
     //Requiere ID de la Campaña
-    updateEstadIdioma: async (req, res) => {
+    getUpdateEstadIdioma: async (req, res) => {
         if (!req.param('id')) { return req.sendStatus(400) }
         let totalOpin
         let campaign
@@ -72,7 +72,7 @@ module.exports = {
         })
             .then(function (estadidioma) {
                 return res.send({
-                    'success': false,
+                    'success': true,
                     'message': 'Actualizado',
                     'data': estadidioma
                 })

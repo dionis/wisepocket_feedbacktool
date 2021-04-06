@@ -11,7 +11,7 @@ export class AnalyticsXIdiomaDashboardDb {
             datasets: [
                 {
                     label: 'englishOpin',
-                    data: []
+                    data: [] 
                 }
             ],
             labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],

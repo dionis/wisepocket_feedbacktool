@@ -1,4 +1,3 @@
-import { ContactsComponent } from './main/apps/contacts/contacts.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -10,15 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import 'hammerjs';
-
 import { FuseModule } from '../@fuse/fuse.module';
 import { FuseSharedModule } from '../@fuse/shared.module';
 import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '../@fuse/components';
-
 import { fuseConfig } from '../app/fuse-config';
-
 import { FakeDbService } from '../app/fake-db/fake-db.service';
-
 import { AppComponent } from '../app/app.component';
 import { LayoutModule } from '../app/layout/layout.module';
 import { SampleModule } from '../app/main/sample/sample.module';
@@ -45,7 +40,7 @@ const appRoutes: Routes = [
     },
 
     {
-        path      : '**',
+        path: '**',
         redirectTo: 'auth/login'
     }
 
@@ -54,7 +49,10 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [
         AppComponent
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0ee82623a1f310998ca95022088deaa6767a8aa1
     ],
     imports: [
         BrowserModule,

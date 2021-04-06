@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { fuseAnimations } from '../../../../@fuse/animations';
+import { EstadXidiomaService } from '../../../services/estad-xidioma.service';
 
 import { AnalyticsDashboardService } from './analytics.service';
 
@@ -21,13 +22,16 @@ export class AnalyticsDashboardComponent implements OnInit
      * Constructor
      *
      * @param {AnalyticsDashboardService} _analyticsDashboardService
+     * @param {EstadXidiomaService} _estadPrueba
      */
     constructor(
-        private _analyticsDashboardService: AnalyticsDashboardService
+        private _analyticsDashboardService: AnalyticsDashboardService,
+        private _estadPrueba: EstadXidiomaService
     )
     {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
+       // this._estadPrueba.getEstadistica();
     }
 
     // -----------------------------------------------------------------------------------------------------

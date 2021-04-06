@@ -1,10 +1,10 @@
-import { LoadChildren } from '@angular/router/router';
+import { LoadChildren, LoadChildrenCallback } from '@angular/router/router';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { FuseSharedModule } from '../../../@fuse/shared.module';
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 // const routes = [
 //     {
 //         path        : 'dashboards/analytics',
@@ -56,8 +56,8 @@ import { FuseSharedModule } from '../../../@fuse/shared.module';
 //     }
 // ];
 
-const routes = [
-=======
+//const routes = [
+//=======
 /*const routes = [
 >>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
     {
@@ -105,7 +105,7 @@ const routes = [
         loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule)
     },
     {
-<<<<<<< HEAD
+//<<<<<<< HEAD
         path : 'analyticsbyIdioma',
         loadChildren: () => import('./analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
     },
@@ -119,7 +119,7 @@ const routes = [
         loadChildren: () => import('./scrumboard/scrumboard.module').then(m => m.ScrumboardModule)
     }
 ];*/
->>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
+//>>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
 
 const routes = [
    {
@@ -145,6 +145,10 @@ const routes = [
     {
         path: 'contacts',
         loadChildren: () => import('../apps/contacts/contacts.module').then(m => m.ContactsModule)
+    },
+    {
+        path:  'campaign',
+        LoadChildren: () => import('../apps/campaign/campaign.module').then(m => m.CampaignModule)
     },
     {
         path: 'analyticsbyIdioma',

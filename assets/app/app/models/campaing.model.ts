@@ -1,9 +1,9 @@
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import { FuseUtils } from "../../@fuse/utils";
 
 //import { FuseUtils } from '../../../../@fuse/utils';
-=======
->>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
+//=======
+//>>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
 export class Campaign{
     nombre: string;
     fecha: string;
@@ -29,7 +29,7 @@ export class Campaign{
         {
             this.nombre = campaign.nombre|| FuseUtils.generateGUID();
             this.fecha = campaign.fecha || '';
-            this.user = campaign.user || '';
+            this.userChief = campaign.userChief || '';
             this.descripcion = campaign.descripcion || '';
             this.colorPrincipal = campaign.colorPrincipal || '';
             this.colorSecundario = campaign.colorSecundario || '';

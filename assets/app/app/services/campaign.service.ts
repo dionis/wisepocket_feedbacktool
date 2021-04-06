@@ -6,24 +6,21 @@ import { User } from '../models/user.model';
 import * as moment from 'moment';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { map } from 'rxjs/operators';
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
-
-import { environment } from '../../environments/environment';
-import { Campaign } from '../models/campaing.model';
-=======
+//=======
 
 import { environment } from './../../environments/environment';
 import { Campaign } from '../models/campaing.model';
 import { UserService } from './user.service';
->>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
+//>>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
 
 @Injectable({
   providedIn: 'root',
 })
-<<<<<<< HEAD
+//<<<<<<< HEAD
 export class CampaignService {
 
   campaign: Campaign[];
@@ -267,9 +264,10 @@ export class CampaignService {
         resolve(res.data);
       },reject)
     })
-=======
+  }
+  }
 
-export class CampaignService {
+/*export class CampaignService {
   campaign: any = []
   user: any
   // token: any;
@@ -303,6 +301,6 @@ export class CampaignService {
   getMyCamps(): Campaign {          //getMyCamps(): Campaign //Camapaign es el modelo creado para la vista
     console.log(this.campaign)
     return this.campaign;
->>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
+//>>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
   }
-}
+}*/

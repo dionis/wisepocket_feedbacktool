@@ -77,7 +77,7 @@ module.exports = {
       if (opinion < 31 ) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: "21-3-2021",
+          fecha: faker.date.recent(15),
           idioma: 'español',
           polaridad:'positiva',
           userend: userEndObjet.id,
@@ -124,7 +124,7 @@ module.exports = {
       if (iValue < 10) {
         newPregunta = {
           texto: faker.lorem.sentences(4, ''),
-          fecha: "21-3-2021",
+          fecha: faker.date.recent(7),
           quesUserend: userEndObjet.id,
           campaign: campOgjet.id
         }

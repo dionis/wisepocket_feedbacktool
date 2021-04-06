@@ -9,15 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import 'hammerjs';
-
 import { FuseModule } from '../@fuse/fuse.module';
 import { FuseSharedModule } from '../@fuse/shared.module';
 import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '../@fuse/components';
-
 import { fuseConfig } from '../app/fuse-config';
-
 import { FakeDbService } from '../app/fake-db/fake-db.service';
-
 import { AppComponent } from '../app/app.component';
 import { LayoutModule } from '../app/layout/layout.module';
 import { SampleModule } from '../app/main/sample/sample.module';
@@ -42,9 +38,9 @@ const appRoutes: Routes = [
         path: 'apps',
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
     },
-    
+
     {
-        path      : '**',
+        path: '**',
         redirectTo: 'auth/login'
     }
 

@@ -1,7 +1,7 @@
-export class Campaing{
+export class Campaign{
     nombre: string;
     fecha: string;
-    user: string;
+    userChief: string;
     descripcion: string;
     contanctoTelefono: number;
     colorPrincipal: string;

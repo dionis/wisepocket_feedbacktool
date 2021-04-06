@@ -6,7 +6,8 @@ import * as _ from 'lodash';
 
 import { FuseConfigService } from '../../../../@fuse/services/config.service';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
-
+import { User } from '../../../models/user.model';
+import { UserService } from '../../../services/user.service';
 import { navigation } from '../../../../app/navigation/navigation';
 
 @Component({
@@ -28,6 +29,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
     // Private
     private _unsubscribeAll: Subject<any>;
+    user: User;
 
     /**
      * Constructor
@@ -39,7 +41,8 @@ export class ToolbarComponent implements OnInit, OnDestroy
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        private userService: UserService
     )
     {
         // Set the defaults
@@ -78,17 +81,12 @@ export class ToolbarComponent implements OnInit, OnDestroy
                 flag : 'us'
             },
             {
-                id   : 'tr',
-                title: 'Turkish',
-                flag : 'tr'
-            },
-            {
                 id   : 'es',
                 title: 'Spanish',
                 flag : 'es'
             }
         ];
-
+        
         this.navigation = navigation;
 
         // Set the private defaults
@@ -115,8 +113,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
+        this.user = this.userService.getMyUser();
     }
-
+  
     /**
      * On destroy
      */

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { CampaignService } from '../../../../../../app/services/campaing.service';
+import { CampaignService } from '../../../../../services/campaign.service';
 import { Campaign } from '../../../../../models/campaing.model';
 
 @Component({

@@ -11,7 +11,7 @@ import { fuseAnimations } from '../../../../../@fuse/animations';
 import { FuseConfirmDialogComponent } from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
 
 import { CampaignFormDialogComponent } from '../../../../../app/main/apps/campaign/campaign-form/campaign-form.component';
-import {CampaignService} from '../../../../services/campaing.service';
+import {CampaignService} from '../../../../services/campaign.service';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class CampaignListComponent implements OnInit, OnDestroy
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
 
-    campaigns: any;
+    campaigns: Campaign;
     camp: any;
     dataSource: FilesDataSource | null;
     displayedColumns = ['checkbox', 'avatar', 'name', 'email', 'phone', 'jobTitle', 'buttons'];

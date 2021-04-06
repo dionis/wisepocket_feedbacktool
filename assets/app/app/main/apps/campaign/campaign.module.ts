@@ -15,7 +15,7 @@ import { FuseSharedModule } from '../../../../@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '../../../../@fuse/components';
 
 import { CampaignComponent } from '../../../../app/main/apps/campaign/campaign.component';
-import { CampaignService } from '../../../../app/services/campaing.service';
+import { CampaignService } from '../../../services/campaign.service';
 import { CampaignFormDialogComponent } from './campaign-form/campaign-form.component';
 import { CampaignListComponent } from '../../../../app/main/apps/campaign/campaign-list/campaign-list.component';
 import { CampaignSelectedBarComponent } from '../../../../app/main/apps/campaign/selected-bar/selected-bar.component';

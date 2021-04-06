@@ -8,10 +8,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
-import {CampaignService} from '../../../services/campaing.service'
+import {CampaignService} from '../../../services/campaign.service'
 
 
-import { CampaignFormDialogComponent } from './campaign-form/campaign-form.component';
+import { CampaignFormDialogComponent } from '../campaign/campaign-form/campaign-form.component';
 
 @Component({
     selector     : 'campaigns',

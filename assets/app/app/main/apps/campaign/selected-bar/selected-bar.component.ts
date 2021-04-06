@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseConfirmDialogComponent } from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
 
-import { CampaignService } from '../../../../services/campaing.service';
+import { CampaignService } from '../../../../services/campaign.service';
 
 @Component({
     selector   : 'selected-bar',

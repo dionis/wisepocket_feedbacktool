@@ -1,4 +1,4 @@
-import { Campaign } from '../../../../../../../.tmp/public/app/app/models/campaing.model';
+import { Campaign } from '../../../../models/campaing.model';
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';

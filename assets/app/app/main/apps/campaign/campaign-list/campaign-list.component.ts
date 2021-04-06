@@ -1,4 +1,5 @@
-//import { Campaing } from '../../../../models/campaing.model';
+
+import { Campaign } from '../../../../models/campaing.model';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -9,32 +10,31 @@ import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../../@fuse/animations';
 import { FuseConfirmDialogComponent } from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
 
-import { ContactsService } from '../../../../../app/main/apps/contacts/contacts.service';
-import { ContactsContactFormDialogComponent } from '../../../../../app/main/apps/contacts/contact-form/contact-form.component';
-//import {CampaingService} from '../../../../services/campaing.service';
+import { CampaignFormDialogComponent } from '../../../../../app/main/apps/campaign/campaign-form/campaign-form.component';
+import {CampaignService} from '../../../../services/campaign.service';
 
 
 @Component({
-    selector     : 'contacts-contact-list',
-    templateUrl  : './contact-list.component.html',
-    styleUrls    : ['./contact-list.component.scss'],
+    selector     : 'campaigns-campaign-list',
+    templateUrl  : './campaign-list.component.html',
+    styleUrls    : ['./campaign-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class ContactsContactListComponent implements OnInit, OnDestroy
+export class CampaignListComponent implements OnInit, OnDestroy
 {
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
 
-    contacts: any;
-    user: any;
+    campaigns: Campaign;
+    camp: any;
     dataSource: FilesDataSource | null;
     displayedColumns = ['checkbox', 'avatar', 'name', 'email', 'phone', 'jobTitle', 'buttons'];
-    selectedContacts: any[];
+    selectedCampaigns: any[];
     checkboxes: {};
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    ListaCampanaService: any;
+    //ListaCampanaService: any;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -42,13 +42,13 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {CampaignService} _campaignService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContactsService,
+        private _campaignService: CampaignService,
         public _matDialog: MatDialog,
-      //  public campaingService: CampaingService,
+       
        // public campaingModel: CampaingModel
     )
     {
@@ -65,44 +65,44 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this.dataSource = new FilesDataSource(this._contactsService);
+        this.dataSource = new FilesDataSource(this._campaignService);
 
-        this._contactsService.onContactsChanged
+        this._campaignService.onCampaignChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(contacts => {
-                this.contacts = contacts;
+            .subscribe(campaigns => {
+                this.campaigns = campaigns;
 
                 this.checkboxes = {};
-                contacts.map(contact => {
-                    this.checkboxes[contact.id] = false;
+                campaigns.map(campaigns => {
+                    this.checkboxes[campaigns.nombre] = false;
                 });
             });
 
-        this._contactsService.onSelectedContactsChanged
+        this._campaignService.onSelectedCampaignChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
-                for ( const id in this.checkboxes )
+            .subscribe(selectedCampaigns => {
+                for ( const nombre in this.checkboxes )
                 {
-                    if ( !this.checkboxes.hasOwnProperty(id) )
+                    if ( !this.checkboxes.hasOwnProperty(nombre) )
                     {
                         continue;
                     }
 
-                    this.checkboxes[id] = selectedContacts.includes(id);
+                    this.checkboxes[nombre] = this.selectedCampaigns.includes(nombre);
                 }
-                this.selectedContacts = selectedContacts;
+                this.selectedCampaigns = this.selectedCampaigns;
             });
 
-        this._contactsService.onUserDataChanged
+        this._campaignService.onCampDataChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(user => {
-                this.user = user;
+            .subscribe(camp => {
+                this.camp = camp;
             });
 
-        this._contactsService.onFilterChanged
+        this._campaignService.onFilterChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this._contactsService.deselectContacts();
+                this._campaignService.deselectCampaigns();
             });
     }
 
@@ -121,16 +121,16 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Edit contact
+     * Edit campaign
      *
-     * @param contact
+     * @param campaign
      */
-    editContact(contact): void
+    editCampaign(campaign): void
     {
-        this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
+        this.dialogRef = this._matDialog.open(CampaignFormDialogComponent, {
+            panelClass: 'campaign-form-dialog',
             data      : {
-                contact: contact,
+                campaign: campaign,
                 action : 'edit'
             }
         });
@@ -150,7 +150,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                      */
                     case 'save':
 
-                        this._contactsService.updateContact(formData.getRawValue());
+                        this._campaignService.updateCampaign(formData.getRawValue());
 
                         break;
                     /**
@@ -158,7 +158,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                      */
                     case 'delete':
 
-                        this.deleteContact(contact);
+                        this.deleteCampaign(campaign);
 
                         break;
                 }
@@ -166,9 +166,9 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Delete Contact
+     * Delete Campaign
      */
-    deleteContact(contact): void
+    deleteCampaign(campaign): void
     {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
@@ -179,7 +179,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                this._contactsService.deleteContact(contact);
+                this._campaignService.deleteCampaign(campaign);
             }
             this.confirmDialogRef = null;
         });
@@ -189,30 +189,30 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     /**
      * On selected change
      *
-     * @param contactId
+     * @param campaignNombre
      */
-    onSelectedChange(contactId): void
+    onSelectedChange(campaignNombre): void
     {
-        this._contactsService.toggleSelectedContact(contactId);
+        this._campaignService.toggleSelectedCampaign(campaignNombre);
     }
 
     /**
      * Toggle star
      *
-     * @param contactId
+     * @param campaignNombre
      */
-    toggleStar(contactId): void
+    toggleStar(campaignNombre): void
     {
-        if ( this.user.starred.includes(contactId) )
+        if ( this.camp.starred.includes(campaignNombre) )
         {
-            this.user.starred.splice(this.user.starred.indexOf(contactId), 1);
+            this.camp.starred.splice(this.camp.starred.indexOf(campaignNombre), 1);
         }
         else
         {
-            this.user.starred.push(contactId);
+            this.camp.starred.push(campaignNombre);
         }
 
-        this._contactsService.updateUserData(this.user);
+        this._campaignService.updateCampData(this.camp);
     }
 }
 
@@ -221,10 +221,10 @@ export class FilesDataSource extends DataSource<any>
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {CampaignService} _campaignService
      */
     constructor(
-        private _contactsService: ContactsService
+        private _campaignService: CampaignService
     )
     {
         super();
@@ -236,7 +236,7 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._contactsService.onContactsChanged;
+        return this._campaignService.onCampaignChanged;
     }
 
     /**

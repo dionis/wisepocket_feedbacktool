@@ -49,10 +49,6 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [
         AppComponent
-<<<<<<< HEAD
-
-=======
->>>>>>> 0ee82623a1f310998ca95022088deaa6767a8aa1
     ],
     imports: [
         BrowserModule,

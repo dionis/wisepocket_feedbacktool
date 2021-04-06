@@ -86,6 +86,7 @@ export class ContactsComponent implements OnInit, OnDestroy
             })
             .catch(err=>{
                 console.log("Error", Error);
+<<<<<<< HEAD
             }); */
 
     }

@@ -15,6 +15,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { environment } from './../../environments/environment';
 import { Campaign } from '../models/campaing.model';
 import { UserService } from './user.service';
+//>>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
 
 
 @Injectable({
@@ -266,4 +267,5 @@ export class CampaignService {
     })
   }
   }
+
 

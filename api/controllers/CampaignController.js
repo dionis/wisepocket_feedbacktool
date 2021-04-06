@@ -80,7 +80,7 @@ module.exports = {
             })
     },*/
 
-  /* getCampaign: (req, res) => {
+   getCampaign: (req, res) => {
         Campaign.find().populate('userChief')
             .then(campaign => {
                console.log("<-------->");
@@ -95,7 +95,7 @@ module.exports = {
                     'error': err
                 })
             })
-    },*/
+    },
 
     getCampaignbyUser: async (req, res) => {
         if (!req.param('id')) {

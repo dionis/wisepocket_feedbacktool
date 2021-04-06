@@ -1,3 +1,4 @@
+//import { Campaing } from '../../../../models/campaing.model';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -10,6 +11,8 @@ import { FuseConfirmDialogComponent } from '../../../../../@fuse/components/conf
 
 import { ContactsService } from '../../../../../app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from '../../../../../app/main/apps/contacts/contact-form/contact-form.component';
+//import {CampaingService} from '../../../../services/campaing.service';
+
 
 @Component({
     selector     : 'contacts-contact-list',
@@ -31,6 +34,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     checkboxes: {};
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    ListaCampanaService: any;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -43,7 +47,9 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      */
     constructor(
         private _contactsService: ContactsService,
-        public _matDialog: MatDialog
+        public _matDialog: MatDialog,
+      //  public campaingService: CampaingService,
+       // public campaingModel: CampaingModel
     )
     {
         // Set the private defaults

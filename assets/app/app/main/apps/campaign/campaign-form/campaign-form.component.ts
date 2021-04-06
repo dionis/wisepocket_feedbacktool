@@ -42,7 +42,7 @@ export class CampaignFormDialogComponent
         else
         {
             this.dialogTitle = 'New Campaign';
-            this.campaign = new Campaign();
+            this.campaign = new Campaign({});
         }
 
         this.campaignForm = this.createCampaignForm();
@@ -62,7 +62,7 @@ export class CampaignFormDialogComponent
         return this._formBuilder.group({
             name            : [this.campaign.nombre],
             date            : [this.campaign.fecha],
-            user            : [this.campaign.user],
+            user            : [this.campaign.userChief],
             description     : [this.campaign.descripcion],
             phoneContact    : [this.campaign.contactoTelefono],
             firstColor      : [this.campaign.colorPrincipal],

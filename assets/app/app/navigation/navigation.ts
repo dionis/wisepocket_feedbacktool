@@ -13,7 +13,7 @@ export const navigation: FuseNavigation[] = [
                 translate: 'NAV.CampaignList.TITLE',
                 type     : 'item',
                 icon     : '',
-                url      : '/apps/campaign',
+                url      : '/sample',
             }
         ]
     },

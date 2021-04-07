@@ -1,3 +1,4 @@
+import { url } from 'inspector';
 import { FuseNavigation } from '../../@fuse/types';
 
 export const navigation: FuseNavigation[] = [
@@ -72,6 +73,7 @@ export const navigation: FuseNavigation[] = [
             },
         ]
     },
+    
     {
         id       : 'record',
         title    : 'Record',
@@ -85,6 +87,13 @@ export const navigation: FuseNavigation[] = [
             type     : 'item',
             icon     : 'send',
             url      : '/apps/todo'
+        },
+        {
+            id    :'test',
+            title : 'Prueba del OpinionMailbox',
+            translate : 'Prueba del OpinionMailbox',
+            type : 'item',
+            url : '/apps/opinionMailbox'
         },
         ]
     }

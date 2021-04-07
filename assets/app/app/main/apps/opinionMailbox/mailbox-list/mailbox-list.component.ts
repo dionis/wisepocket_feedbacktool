@@ -53,7 +53,7 @@ export class MailboxListComponent implements OnInit, OnDestroy
         // Subscribe to update mails on changes
         this._opinionService.onMailsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(mails => {
+            .subscribe(opinions => {
                 this.opinions = opinions;
             });
 
@@ -130,6 +130,6 @@ export class MailboxListComponent implements OnInit, OnDestroy
         }
 
         // Set current mail
-        this._opinionServicee.setCurrentMail(opinionId);
+        this._opinionService.setCurrentMail(opinionId);
     }
 }

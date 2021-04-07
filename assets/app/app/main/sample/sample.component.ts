@@ -13,7 +13,7 @@ import { locale as spanish } from './i18n/es';
 })
 export class SampleComponent {
         campaigns: any     //Se crea un objeto any(cualquiera) para guardar lo que devuelve la funcion
-    /**
+    /** 
      * Constructor
      *
      * @param {FuseTranslationLoaderService} _fuseTranslationLoaderService
@@ -24,6 +24,13 @@ export class SampleComponent {
         private _fuseTranslationLoaderService: FuseTranslationLoaderService
     ) {
         this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        //Get CampaignsbyUser
+        this.campaigns = this._campaignService.getMyCamps() //Le asignamos al obj el resultado de la funcion
+        
+        
+        
+        
+        
 
     }
 

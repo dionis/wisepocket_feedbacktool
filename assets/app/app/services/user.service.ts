@@ -97,6 +97,10 @@ export class UserService {
           this.user.organization = responseData.data.organization;
           this.user.cargo = responseData.data.cargo;
           console.log(this.user);
+        ///ESTA LINEA
+          this._userCamp.getCampaignbyUser(this.user.id) //SE LLAMA A la FUNCION para mandar el idUser LOGUEADO a
+CampaignService
+        ///////////
           return this.user;
         } else {
           return responseData;

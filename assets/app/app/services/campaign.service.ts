@@ -213,7 +213,7 @@ getCampaign(): Promise<any>{
 
   getCampaignbyUser(id: String) {  //Recibe el id como parametro
     environment.sails_services_urlpath
-    //implementar la paginaciion en la interfaz para pasarle la pagina al servicio, pagina apartir de 0 //page=0 es de prueba
+   //pagina apartir de 0 //page=0 es de prueba
     //En la interfaz puede poner pagina 1 pero al pasar el parametro puede restar 1, es una sugerencia y ademas necesaria
     this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/campaign/getCampaignbyUser/_id?id=' + id + '&page=0')
       .pipe(map((responseData: any) => {

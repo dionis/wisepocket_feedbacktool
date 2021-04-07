@@ -93,10 +93,22 @@ module.exports = {
      },*/
 
 
-
+    //Requiere id de Campaña
     deleteAllOpinion: async function (req, res) {
+        let campaign
+        await Campaign.findOne({
+            id: req.param('id'),
+        }).then((doc) => {
+            if (!doc) {
+                console.log("No encontrado")
+            } else {
+                console.log("Encontrado"),
+                    campaign = doc
 
+            }
+        });
         await Opinion.destroy({
+            where:{campaign: campaign.id},
             id: req.params.id
         }).then(function (opinion) {
             return res.send({

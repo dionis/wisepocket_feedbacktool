@@ -147,8 +147,12 @@ const routes = [
         loadChildren: () => import('../apps/contacts/contacts.module').then(m => m.ContactsModule)
     },
     {
-        path:  'campaign',
-        LoadChildren: () => import('../apps/campaign/campaign.module').then(m => m.CampaignModule)
+        path:  'products',
+        LoadChildren: () => import('../apps/e-commerce/products/products.component').then(m => m.EcommerceProductsComponent)
+    },
+    {
+        path        : 'analytics',
+        loadChildren: () => import('../apps/analytics/analytics.module').then(m => m.AnalyticsDashboardModule)
     },
     {
         path: 'analyticsbyIdioma',

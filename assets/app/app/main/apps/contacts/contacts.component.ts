@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-//import { ListCampService } from '../../../../../../.tmp/public/app/app/main/ui/list-camp/list-camp.service';
-=======
->>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,10 +6,6 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
-<<<<<<< HEAD
-//import {CampaingService} from '../../../services/campaing.service'
-=======
->>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
 
 
 import { ContactsService } from '../../../../app/main/apps/contacts/contacts.service';
@@ -48,14 +40,10 @@ export class ContactsComponent implements OnInit, OnDestroy
         private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
-<<<<<<< HEAD
-      //  public campaingService: CampaingService
-=======
         //public campaingService: CampaingService
->>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
     )
     {
-        
+
 
         // Set the defaults
         this.searchInput = new FormControl('');
@@ -99,11 +87,8 @@ export class ContactsComponent implements OnInit, OnDestroy
             .catch(err=>{
                 console.log("Error", Error);
 <<<<<<< HEAD
-            });    */   
-=======
-            }); */      
->>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd
-        
+            }); */
+
     }
 
     /**

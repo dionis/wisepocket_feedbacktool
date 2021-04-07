@@ -73,5 +73,5 @@ export class CampaignFormDialogComponent
             whatsappContact : [this.campaign.contactoWhatsapp],
             facebookContact : [this.campaign.contactoFacebook],
         });
-    }        
+    }
 }

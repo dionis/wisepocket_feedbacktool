@@ -83,6 +83,7 @@ module.exports = {
    getCampaign: (req, res) => {
         Campaign.find().populate('userChief')
             .then(campaign => {
+               console.log("<-------->");
                 return res.send({
                     'message': 'Lista de Campañas',
                     'data': campaign,

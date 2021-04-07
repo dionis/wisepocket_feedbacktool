@@ -15,6 +15,3 @@ describe('CampaignService', () => {
   });
 <<<<<<< HEAD
 });
-=======
-});
->>>>>>> 66934c029b1ec91ef0ff8e5cdae856d31738e0cd

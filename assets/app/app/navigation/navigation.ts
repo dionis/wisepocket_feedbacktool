@@ -42,7 +42,7 @@ export const navigation: FuseNavigation[] = [
                 title: 'Opinion Analysis',
                 translate: 'Opinion Analysis',
                 type: 'item',
-                icon: 'shopping_cart',
+                icon: 'email',
                 url: '/apps/contacts'
             },
         ]

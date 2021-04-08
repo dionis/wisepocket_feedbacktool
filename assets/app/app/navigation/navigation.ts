@@ -73,30 +73,11 @@ export const navigation: FuseNavigation[] = [
             },
         ]
     },
-    
+
     {
         id: 'record',
         title: 'Record',
         translate: 'RECORD',
-<<<<<<< HEAD
-        type     : 'group',
-        children : [
-        {
-            id       : 'reg',
-            title    : 'Record',
-            translate: 'Record',
-            type     : 'item',
-            icon     : 'send',
-            url      : '/apps/todo'
-        },
-        {
-            id    :'test',
-            title : 'Prueba del OpinionMailbox',
-            translate : 'Prueba del OpinionMailbox',
-            type : 'item',
-            url : '/apps/opinionMailbox'
-        },
-=======
         type: 'group',
         children: [
             {
@@ -107,7 +88,6 @@ export const navigation: FuseNavigation[] = [
                 icon: 'send',
                 url: '/apps/todo'
             },
->>>>>>> f2e1c5bebefa0bbc5b5c7b04a892935134e2f088
         ]
     }
 ];

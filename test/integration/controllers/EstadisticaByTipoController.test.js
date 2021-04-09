@@ -1,8 +1,8 @@
 var supertest = require('supertest');
 
 
-///// SE INYECTA EN LA BASE DE DATOS AUTOMATICAMENTE
-describe('EstadisticaByidiomaController.getCantENXDia', function () {
+
+describe('EstadisticaByTipoController.getCPostivaXDia', function () {
   before(function () {
     // runs once before the first test in this block
     //https://mochajs.org/#hooks
@@ -11,7 +11,7 @@ describe('EstadisticaByidiomaController.getCantENXDia', function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe('#getCantENXDia', function () {
+  describe('#getCPostivaXDia', function () {
     it('should redirect to /my/page', function (done) {
       Campaign.find().then(zookeepers => {
         let campaign = zookeepers[0];
@@ -20,13 +20,13 @@ describe('EstadisticaByidiomaController.getCantENXDia', function () {
         ///https://www.npmjs.com/package/supertest
         console.log("FIND Campaign BY NAME ", campaign.nombre);
         supertest(sails.hooks.http.app)
-          .get('/estadisticaByidioma/getCantENXDia').query({ id: campaign.id })
+          .get('/estadisticaByTipo/getCPostivaXDia').query({ id: campaign.id })
           .expect(200)
           .then(response => {
             ///EJEMPLO DE COMO VALIDAR LA RESPUESTA DEL SERVICIO
             // assert(response.body.email, 'foo@bar.com')
             console.log("Service OK:" + response.text)
-            /// response.text >>>>> total de opiniones en ingles por dia de una Campaña
+            /// response.text >>>>> total de opiniones positivas por dia de una Campaña
             done();
           })
           .catch(err => done(err))
@@ -39,7 +39,7 @@ describe('EstadisticaByidiomaController.getCantENXDia', function () {
   })
 });
 
-describe('EstadisticaByidiomaController.getCantESXDia', function () {
+describe('EstadisticaByTipoController.getCNegativaXDia', function () {
   before(function () {
     // runs once before the first test in this block
     //https://mochajs.org/#hooks
@@ -48,7 +48,7 @@ describe('EstadisticaByidiomaController.getCantESXDia', function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe('#getCantESXDia', function () {
+  describe('#getCNegativaXDia', function () {
     it('should redirect to /my/page', function (done) {
       Campaign.find().then(zookeepers => {
         let campaign = zookeepers[0];
@@ -57,13 +57,13 @@ describe('EstadisticaByidiomaController.getCantESXDia', function () {
         ///https://www.npmjs.com/package/supertest
         console.log("FIND Campaign BY NAME ", campaign.nombre);
         supertest(sails.hooks.http.app)
-          .get('/estadisticaByidioma/getCantESXDia').query({ id: campaign.id })
+          .get('/estadisticaByTipo/getCNegativaXDia').query({ id: campaign.id })
           .expect(200)
           .then(response => {
             ///EJEMPLO DE COMO VALIDAR LA RESPUESTA DEL SERVICIO
             // assert(response.body.email, 'foo@bar.com')
             console.log("Service OK:" + response.text)
-            /// response.text >>>>>  total de opiniones en español por dia de una Campaña
+            /// response.text >>>>> total de opiniones negativas por dia de una Campaña
             done();
           })
           .catch(err => done(err))
@@ -76,7 +76,7 @@ describe('EstadisticaByidiomaController.getCantESXDia', function () {
   })
 });
 
-describe('EstadisticaByidiomaController.getCantTotalXDia', function () {
+describe('EstadisticaByTipoController.getCNeutraXDia', function () {
   before(function () {
     // runs once before the first test in this block
     //https://mochajs.org/#hooks
@@ -85,7 +85,7 @@ describe('EstadisticaByidiomaController.getCantTotalXDia', function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe('#getCantTotalXDia', function () {
+  describe('#getCNeutraXDia', function () {
     it('should redirect to /my/page', function (done) {
       Campaign.find().then(zookeepers => {
         let campaign = zookeepers[0];
@@ -94,13 +94,13 @@ describe('EstadisticaByidiomaController.getCantTotalXDia', function () {
         ///https://www.npmjs.com/package/supertest
         console.log("FIND Campaign BY NAME ", campaign.nombre);
         supertest(sails.hooks.http.app)
-          .get('/estadisticaByidioma/getCantTotalXDia').query({ id: campaign.id })
+          .get('/estadisticaByTipo/getCNeutraXDia').query({ id: campaign.id })
           .expect(200)
           .then(response => {
             ///EJEMPLO DE COMO VALIDAR LA RESPUESTA DEL SERVICIO
             // assert(response.body.email, 'foo@bar.com')
             console.log("Service OK:" + response.text)
-            /// response.text >>>>>  total de opiniones por dia de una Campaña
+            /// response.text >>>>> total de opiniones neutras por dia de una Campaña
             done();
           })
           .catch(err => done(err))

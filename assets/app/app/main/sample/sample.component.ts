@@ -25,7 +25,7 @@ export class SampleComponent {
     ) {
         this._fuseTranslationLoaderService.loadTranslations(english, spanish);
         //Get CampaignsbyUser
-        this.campaigns = this._campaignService.getMyCamps() //Le asignamos al obj el resultado de la funcion
+        //this.campaigns = this._campaignService.getMyCamps() //Le asignamos al obj el resultado de la funcion
         
         
         

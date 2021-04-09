@@ -14,14 +14,14 @@ export class Campaign{
     contactoTelegram: string;
     contactoWhatsapp: string;
     contactoFacebook: string;
-   // constructor(){}
+   constructor(){}
 
    /**
      * Constructor
      *
      * @param campaign
      */
-    constructor(campaign)
+   /* constructor(campaign)
     {
         {
             this.nombre = campaign.nombre|| FuseUtils.generateGUID();
@@ -37,5 +37,5 @@ export class Campaign{
             this.contactoTelegram = campaign.contactoTelegram || '';
             this.contactoTelefono = campaign.contactoTelefono || '';
         }
-    }
+    }*/
 }

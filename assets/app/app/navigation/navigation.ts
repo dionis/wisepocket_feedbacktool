@@ -73,7 +73,7 @@ export const navigation: FuseNavigation[] = [
             },
         ]
     },
-    
+
     {
         id: 'record',
         title: 'Record',

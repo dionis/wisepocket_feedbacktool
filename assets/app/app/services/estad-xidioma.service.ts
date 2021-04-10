@@ -3,29 +3,28 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AnalyticsXIdiomaDashboardDb } from '../fake-db/dashboard-analyticsXIdioma';
-import { EstadisticaXIdioma } from '../models/estadistica.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstadXidiomaService {
 
-  constructor(private _http: HttpClient, /*private _widget: AnalyticsXIdiomaDashboardDb*/) {
+  constructor(private _http: HttpClient, ) {
 
   }
 
   /*getEstadistica() {
     environment.sails_services_urlpath
-    let campaign_id = '606a006dd843ea1d447dc95e';
+    let campaign_id = '606f50e3c37c8833c42e09ca';
     console.log(campaign_id);
     this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/updateEstadIdioma?id=' + campaign_id)
       .pipe(map((responseData: any) => {
-
+        console.log(responseData.data);
+        
         if (responseData.data) {
-        /*  this._widget.widgets.widget2.englishOpin.value = responseData.data.cantEnglish;
-          this._widget.widgets.widget3.spanishOpin.value = responseData.data.cantSpanish;
-          this._widget.widgets.widget4.totalOpin.value = responseData.data.totalOpin;
-          return this._widget
+          this._widget.widget2.englishOpin.value = responseData.data.cantEnglish;
+          return this._widget.widget2.englishOpin.value
         }
       })).subscribe(res => {
       },
@@ -36,10 +35,10 @@ export class EstadXidiomaService {
 
   }
 
-  getMyEstad(): AnalyticsXIdiomaDashboardDb {
+  getMyEstad(): WidgetM {
     console.log(this._widget)
     return this._widget;
-  }*/
+  }
 
 
 
@@ -47,7 +46,7 @@ export class EstadXidiomaService {
 
 
 
-
+*/
 
 
 }

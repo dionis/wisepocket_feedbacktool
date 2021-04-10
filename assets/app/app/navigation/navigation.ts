@@ -78,16 +78,16 @@ export const navigation: FuseNavigation[] = [
         id: 'record',
         title: 'Record',
         translate: 'RECORD',
-        type: 'group',
-        children: [
-            {
-                id: 'reg',
-                title: 'Record',
-                translate: 'Record',
-                type: 'item',
-                icon: 'send',
-                url: '/apps/todo'
-            },
+        type     : 'group',
+        children : [
+        {
+            id       : 'reg',
+            title    : 'Record',
+            translate: 'Record',
+            type     : 'item',
+            icon     : 'send',
+            url      : '/apps/todo'
+        },
         ]
     }
 ];

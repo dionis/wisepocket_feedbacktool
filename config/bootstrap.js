@@ -71,6 +71,7 @@ module.exports.bootstrap = async function() {
   ]);*/
 
  //Create temporaly information for test
+ console.log("--- PUEDE REALIZAR UN TEST de Servicios con: npm test")
  console.log("--- Inyectando database ---")
  await sails.helpers.seedUser()
  console.log("CREATED >>>>>>>> user >>>>>>> Campaign ")
@@ -79,9 +80,9 @@ module.exports.bootstrap = async function() {
  console.log("CREATED >>>>>> userEnd >>>>>> opinion (aspectos y entidades) >>>>> pregunta ")
  await sails.helpers.seedUserresp()
  console.log("CREATED >>>> respuesta by userSys ")
- await sails.helpers.seedEstadistidioma()   
+ /*await sails.helpers.seedEstadistidioma()   
  console.log("CREATED >>>> estadistica por Idioma ")
- console.log("Las estadisticas estan en O, se actualizaran con el servicio getUpdateEstadIdioma")
+ console.log("Las estadisticas estan en O, se actualizaran con el servicio getUpdateEstadIdioma")*/
  console.log("--- Database Inyectada ---")
  
   // Save new bootstrap version

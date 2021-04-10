@@ -86,8 +86,12 @@ module.exports.routes = {
   "GET /aspectoopinion/getAspecto": "AspectoOpinionController.getAspecto",
   "GET /entidadopinion/getEntidad": "EntidadOpinionController.getEntidad",
   "GET /registro/getAllRegistro": "RegistroController.getAllRegistro",
-  "GET /estadisticaByidioma/getEstadistica": "EstadisticaByidiomaController.getEstadistica",
-  "GET /estadisticaByidioma/getUpdateEstadIdioma": "EstadisticaByidiomaController.getUpdateEstadIdioma",
+  "GET /estadisticaByidioma/getCantENXDia": "EstadisticaByidiomaController.getCantENXDia",
+  "GET /estadisticaByidioma/getCantESXDia": "EstadisticaByidiomaController.getCantESXDia",
+  "GET /estadisticaByidioma/getCantTotalXDia": "EstadisticaByidiomaController.getCantTotalXDia",
+  "GET /estadisticaByTipo/getCPostivaXDia": "EstadisticaByTipoController.getCPostivaXDia",
+  "GET /estadisticaByTipo/getCNegativaXDia": "EstadisticaByTipoController.getCNegativaXDia",
+  "GET /estadisticaByTipo/getCNeutraXDia": "EstadisticaByTipoController.getCNeutraXDia",
   
 
 

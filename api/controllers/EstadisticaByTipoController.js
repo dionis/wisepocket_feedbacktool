@@ -1,15 +1,13 @@
 /**
- * EstadisticaByidiomaController
+ * EstadisticaByTipoController
  *
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-
-
 module.exports = {
-    //Requiere ID de la Campaña
-    getCantENXDia: async (req, res) => {
+  
+    getCPostivaXDia: async (req, res) => {
         let campaign
         let cantDay = [1, 2, 3, 4, 5, 6, 7]
         await Campaign.findOne({ id: req.param('id') })
@@ -22,7 +20,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Monday',
-                        idioma: 'ingles'
+                        polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[0] = opinion
                     })
@@ -35,7 +33,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Tuesday',
-                        idioma: 'ingles'
+                        polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[1] = opinion
                     })
@@ -48,7 +46,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Wednesday',
-                        idioma: 'ingles'
+                        polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[2] = opinion
                     })
@@ -61,7 +59,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Thursday',
-                        idioma: 'ingles'
+                        polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[3] = opinion
                     })
@@ -74,7 +72,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Friday',
-                        idioma: 'ingles'
+                        polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[4] = opinion
                     })
@@ -87,7 +85,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Saturday',
-                        idioma: 'ingles'
+                        polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[5] = opinion
                     })
@@ -100,7 +98,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Sunday',
-                        idioma: 'ingles'
+                        polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[6] = opinion
                         return res.send({
@@ -119,8 +117,7 @@ module.exports = {
             )
     },
 
-    //Requiere ID de la Campaña
-    getCantESXDia: async (req, res) => {
+    getCNegativaXDia: async (req, res) => {
         let campaign
         let cantDay = [1, 2, 3, 4, 5, 6, 7]
         await Campaign.findOne({ id: req.param('id') })
@@ -133,7 +130,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Monday',
-                        idioma: 'español'
+                        polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[0] = opinion
                     })
@@ -146,7 +143,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Tuesday',
-                        idioma: 'español'
+                        polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[1] = opinion
                     })
@@ -159,7 +156,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Wednesday',
-                        idioma: 'español'
+                        polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[2] = opinion
                     })
@@ -172,7 +169,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Thursday',
-                        idioma: 'español'
+                        polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[3] = opinion
                     })
@@ -185,7 +182,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Friday',
-                        idioma: 'español'
+                        polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[4] = opinion
                     })
@@ -198,7 +195,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Saturday',
-                        idioma: 'español'
+                        polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[5] = opinion
                     })
@@ -211,7 +208,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Sunday',
-                        idioma: 'español'
+                        polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[6] = opinion
                         return res.send({
@@ -230,8 +227,7 @@ module.exports = {
             )
     },
 
-    //Requiere ID de la Campaña
-    getCantTotalXDia: async (req, res) => {
+    getCNeutraXDia: async (req, res) => {
         let campaign
         let cantDay = [1, 2, 3, 4, 5, 6, 7]
         await Campaign.findOne({ id: req.param('id') })
@@ -244,6 +240,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Monday',
+                        polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[0] = opinion
                     })
@@ -256,6 +253,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Tuesday',
+                        polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[1] = opinion
                     })
@@ -268,6 +266,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Wednesday',
+                        polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[2] = opinion
                     })
@@ -280,6 +279,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Thursday',
+                        polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[3] = opinion
                     })
@@ -292,6 +292,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Friday',
+                        polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[4] = opinion
                     })
@@ -304,6 +305,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Saturday',
+                        polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[5] = opinion
                     })
@@ -316,6 +318,7 @@ module.exports = {
                     await Opinion.count({
                         campaign: campaign.id,
                         fecha: 'Sunday',
+                        polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[6] = opinion
                         return res.send({
@@ -332,6 +335,8 @@ module.exports = {
 
             }
             )
-    }
-}
+    },
+
+    
+};
 

@@ -10,6 +10,7 @@ import { FuseUtils } from '../../../../../@fuse/utils';
 
 import { EcommerceProductsService } from '../../../../../app/main/apps/e-commerce/products/products.service';
 import { takeUntil } from 'rxjs/internal/operators';
+import { CampaignService } from '../../../../services/campaign.service';
 
 @Component({
     selector     : 'e-commerce-products',
@@ -19,7 +20,20 @@ import { takeUntil } from 'rxjs/internal/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class EcommerceProductsComponent implements OnInit
-{
+{   campaigns: {
+    nombre: string,
+    fecha: string,
+    userChief: string;
+    descripcion: string;
+    contactoTelefono: number;
+    colorPrincipal: string;
+    colorSecundario: string;
+    contactoEmail: string;
+    direccionPostal: string;
+    contactoTelegram: string;
+    contactoWhatsapp: string;
+    contactoFacebook: string;
+} 
     dataSource: FilesDataSource | null;
     displayedColumns = ['id', 'image', 'name', 'category', 'price', 'quantity', 'active'];
 
@@ -36,11 +50,13 @@ export class EcommerceProductsComponent implements OnInit
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _ecommerceProductsService: EcommerceProductsService
+        private _ecommerceProductsService: EcommerceProductsService,
+        private _campaignService: CampaignService
     )
     {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+       this.campaigns = this._campaignService.getMyCamps()
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -52,6 +68,8 @@ export class EcommerceProductsComponent implements OnInit
      */
     ngOnInit(): void
     {
+        console.log(this.campaigns);
+        
         this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
 
         fromEvent(this.filter.nativeElement, 'keyup')

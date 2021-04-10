@@ -77,7 +77,7 @@ module.exports = {
       if (iValue < 21 ) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.recent(7),
+          fecha: faker.date.weekday('long'),
           idioma: 'ingles',
           polaridad:'positiva',
           userend: userEndObjet.id,
@@ -91,7 +91,7 @@ module.exports = {
       if (iValue < 41 ) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.recent(7),
+          fecha: faker.date.weekday('long'),
           idioma: 'ingles',
           polaridad:'negativa',
           userend: userEndObjet.id,
@@ -105,7 +105,7 @@ module.exports = {
       if (iValue < 61 ) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.recent(7),
+          fecha: faker.date.weekday('long'),
           idioma: 'ingles',
           polaridad:'neutra',
           userend: userEndObjet.id,

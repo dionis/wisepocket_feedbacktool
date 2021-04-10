@@ -38,7 +38,7 @@ module.exports = {
     ///PROVISIONAL
 
     fecha: {
-      type: 'string',
+      type: 'string', //new Date().toLocaleString('en-US', {weekday:'long'})
       columnType: 'date'
     },
 

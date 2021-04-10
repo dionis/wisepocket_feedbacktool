@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../../@fuse/animations';
 
 import {Opinion} from '../../../../models/opinion.model';
-import {OpinionService} from '../../../../services/opinion.service';
+import {OpinionService} from '../../../../services/opinion-analizer.service';
 
 @Component({
     selector     : 'mailbox-list',
@@ -50,20 +50,20 @@ export class MailboxListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        // Subscribe to update mails on changes
-        this._opinionService.onMailsChanged
+        // Subscribe to update opinions on changes
+        this._opinionService.onOpinionsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(opinions => {
                 this.opinions = opinions;
             });
 
-        // Subscribe to update current mail on changes
-        this._opinionService.onCurrentMailChanged
+        // Subscribe to update current Opinion on changes
+        this._opinionService.onCurrentOpinionChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(currentMail => {
-                if ( !currentMail )
+            .subscribe(currentOpinion => {
+                if ( !currentOpinion )
                 {
-                    // Set the current mail id to null to deselect the current mail
+                    // Set the current Opinion id to null to deselect the current Opinion
                     this.currentOpinion = null;
 
                     // Handle the location changes
@@ -73,20 +73,20 @@ export class MailboxListComponent implements OnInit, OnDestroy
 
                     if ( labelHandle )
                     {
-                        this._location.go('apps/mail/label/' + labelHandle);
+                        this._location.go('apps/opinionMailbox/label/' + labelHandle);
                     }
                     else if ( filterHandle )
                     {
-                        this._location.go('apps/mail/filter/' + filterHandle);
+                        this._location.go('apps/opinionMailbox/filter/' + filterHandle);
                     }
                     else
                     {
-                        this._location.go('apps/mail/' + folderHandle);
+                        this._location.go('apps/opinionMailbox/' + folderHandle);
                     }
                 }
                 else
                 {
-                    this.currentOpinion = currentMail;
+                    this.currentOpinion = currentOpinion;
                 }
             });
     }
@@ -106,7 +106,7 @@ export class MailboxListComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Read mail
+     * Read Opinion
      *
      * @param opinionId
      */
@@ -118,18 +118,18 @@ export class MailboxListComponent implements OnInit, OnDestroy
 
         if ( labelHandle )
         {
-            this._location.go('apps/mail/label/' + labelHandle + '/' + opinionId);
+            this._location.go('apps/opinionMailbox/label/' + labelHandle + '/' + opinionId);
         }
         else if ( filterHandle )
         {
-            this._location.go('apps/mail/filter/' + filterHandle + '/' + opinionId);
+            this._location.go('apps/opinionMailbox/filter/' + filterHandle + '/' + opinionId);
         }
         else
         {
-            this._location.go('apps/mail/' + folderHandle + '/' + opinionId);
+            this._location.go('apps/opinionMailbox/' + folderHandle + '/' + opinionId);
         }
 
-        // Set current mail
-        this._opinionService.setCurrentMail(opinionId);
+        // Set current Opinion
+        this._opinionService.setCurrentOpinion(opinionId);
     }
 }

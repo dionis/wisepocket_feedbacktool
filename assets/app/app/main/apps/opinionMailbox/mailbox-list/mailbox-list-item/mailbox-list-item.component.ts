@@ -3,10 +3,10 @@ import { Component, HostBinding, Input, OnDestroy, OnInit, ViewEncapsulation } f
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { OpinionService } from '../../../../../services/opinion.service';
+import { OpinionService } from '../../../../../services/opinion-analizer.service';
 
 @Component({
-    selector     : 'mail-list-item',
+    selector     : 'mailbox-list-item',
     templateUrl  : './mailbox-list-item.component.html',
     styleUrls    : ['./mailbox-list-item.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -47,10 +47,10 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
         // Set the initial values
         this.opinion = new Opinion(this.opinion);
 
-        // Subscribe to update on selected mail change
-        this._opinionService.onSelectedOpinonsChanged
+        // Subscribe to update on selected opinion change
+        this._opinionService.onSelectedOpinionsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedOpinons => {
+            .subscribe(selectedOpinions => {
                 this.selected = false;
 
                 if ( selectedOpinions.length > 0 )
@@ -93,7 +93,7 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
      */
     onSelectedChange(): void
     {
-        this._opinionService.toggleSelectedMail(this.mail.id);
+        this._opinionService.toggleSelectedOpinion(this.opinion.id);
     }
 
     /**
@@ -105,9 +105,9 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
     {
         event.stopPropagation();
 
-        this.mail.toggleStar();
+        this.opinion.toggleStar();
 
-        this._mailService.updateMail(this.mail);
+        this._opinionService.updateOpinion(this.opinion);
     }
 
     /**
@@ -119,8 +119,8 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
     {
         event.stopPropagation();
 
-        this.mail.toggleImportant();
+        this.opinion.toggleImportant();
 
-        this._mailService.updateMail(this.mail);
+        this._opinionService.updateOpinion(this.opinion);
     }
 }

@@ -1,6 +1,6 @@
 @import "../../../../@fuse/scss/fuse";
 
-mail {
+opinion {
     width: 100%;
 
     .center {
@@ -51,12 +51,12 @@ mail {
 
             @include media-breakpoint(xs) {
 
-                mail-list {
+                mailbox-list {
                     border-right: none;
                 }
 
-                mail-list,
-                mail-details {
+                mailbox-list,
+                mailbox-details {
                     flex: 1 0 100%;
                 }
 
@@ -64,23 +64,23 @@ mail {
                     display: none !important;
                 }
 
-                &.current-mail-selected {
+                &.current-mailbox-selected {
 
                     .toolbar {
                         padding-left: 16px !important;
 
-                        .mail-selection {
+                        .mailbox-selection {
                             display: none !important;
                         }
                     }
 
                     .content {
 
-                        mail-list {
+                        mailbox-list {
                             display: none !important;
                         }
 
-                        mail-details {
+                        mailbox-details {
                             display: flex !important;
                         }
                     }

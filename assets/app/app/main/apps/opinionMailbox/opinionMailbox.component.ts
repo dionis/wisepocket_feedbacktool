@@ -6,27 +6,27 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
 import { FuseTranslationLoaderService } from '../../../../@fuse/services/translation-loader.service';
 
-import { Mail } from '../../../../app/main/apps/mail/mail.model';
-import { MailService } from '../../../../app/main/apps/mail/mail.service';
+import { Opinion } from '../../../models/opinion.model';
+import { OpinionService } from '../../../services/opinion-analizer.service';
 
-import { locale as english } from '../../../../app/main/apps/mail//i18n/en';
-import { locale as turkish } from '../../../../app/main/apps/mail//i18n/tr';
+//import { locale as english } from '../../../../app/main/apps/mail//i18n/en';
+//import { locale as turkish } from '../../../../app/main/apps/mail//i18n/tr';
 
 @Component({
-    selector     : 'mail',
-    templateUrl  : './mail.component.html',
-    styleUrls    : ['./mail.component.scss'],
+    selector     : 'opinion',
+    templateUrl  : './opinionMailbox.component.html',
+    styleUrls    : ['./opinionMailbox.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class MailComponent implements OnInit, OnDestroy
+export class OpinionMailboxComponent implements OnInit, OnDestroy
 {
-    hasSelectedMails: boolean;
+    hasSelectedOpinions: boolean;
     isIndeterminate: boolean;
     folders: any[];
     filters: any[];
     labels: any[];
     searchInput: FormControl;
-    currentMail: Mail;
+    currentOpinion: Opinion;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -34,18 +34,18 @@ export class MailComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {MailService} _mailService
+     * @param {OpinionService} _opinionService
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {FuseTranslationLoaderService} _fuseTranslationLoaderService
      */
     constructor(
-        private _mailService: MailService,
+        private _opinionService: OpinionService,
         private _fuseSidebarService: FuseSidebarService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService
     )
     {
         // Load the translations
-        this._fuseTranslationLoaderService.loadTranslations(english, turkish);
+        //this._fuseTranslationLoaderService.loadTranslations(english, turkish);
 
         // Set the defaults
         this.searchInput = new FormControl('');
@@ -63,43 +63,43 @@ export class MailComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._mailService.onSelectedMailsChanged
+        this._opinionService.onSelectedOpinionsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedMails => {
+            .subscribe(selectedOpinions => {
                 setTimeout(() => {
-                    this.hasSelectedMails = selectedMails.length > 0;
-                    this.isIndeterminate = (selectedMails.length !== this._mailService.mails.length && selectedMails.length > 0);
+                    this.hasSelectedOpinions = selectedOpinions.length > 0;
+                    this.isIndeterminate = (selectedOpinions.length !== this._opinionService.opinions.length && selectedOpinions.length > 0);
                 }, 0);
             });
 
-        this._mailService.onFoldersChanged
+        this._opinionService.onFoldersChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(folders => {
-                this.folders = this._mailService.folders;
+                this.folders = this._opinionService.folders;
             });
 
-        this._mailService.onFiltersChanged
+        this._opinionService.onFiltersChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(folders => {
-                this.filters = this._mailService.filters;
+                this.filters = this._opinionService.filters;
             });
 
-        this._mailService.onLabelsChanged
+        this._opinionService.onLabelsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(labels => {
-                this.labels = this._mailService.labels;
+                this.labels = this._opinionService.labels;
             });
 
-        this._mailService.onCurrentMailChanged
+        this._opinionService.onCurrentOpinionChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(currentMail => {
-                if ( !currentMail )
+            .subscribe(currentOpinion => {
+                if ( !currentOpinion )
                 {
-                    this.currentMail = null;
+                    this.currentOpinion = null;
                 }
                 else
                 {
-                    this.currentMail = currentMail;
+                    this.currentOpinion = currentOpinion;
                 }
             });
 
@@ -109,7 +109,7 @@ export class MailComponent implements OnInit, OnDestroy
             distinctUntilChanged()
         )
             .subscribe(searchText => {
-                this._mailService.onSearchTextChanged.next(searchText);
+                this._opinionService.onSearchTextChanged.next(searchText);
             });
     }
 
@@ -132,54 +132,54 @@ export class MailComponent implements OnInit, OnDestroy
      */
     toggleSelectAll(): void
     {
-        this._mailService.toggleSelectAll();
+        this._opinionService.toggleSelectAll();
     }
 
     /**
-     * Select mails
+     * Select opinions
      *
      * @param filterParameter
      * @param filterValue
      */
-    selectMails(filterParameter?, filterValue?): void
+    selectOpinions(filterParameter?, filterValue?): void
     {
-        this._mailService.selectMails(filterParameter, filterValue);
+        this._opinionService.selectOpinions(filterParameter, filterValue);
     }
 
     /**
-     * Deselect mails
+     * Deselect Opinions
      */
-    deselectMails(): void
+    deselectOpinions(): void
     {
-        this._mailService.deselectMails();
+        this._opinionService.deselectOpinions();
     }
 
     /**
-     * Deselect current mail
+     * Deselect current Opinion
      */
-    deselectCurrentMail(): void
+    deselectCurrentOpinion(): void
     {
-        this._mailService.onCurrentMailChanged.next(null);
+        this._opinionService.onCurrentOpinionChanged.next(null);
     }
 
     /**
-     * Toggle label on selected mails
+     * Toggle label on selected Opinions
      *
      * @param labelId
      */
-    toggleLabelOnSelectedMails(labelId): void
+    toggleLabelOnSelectedOpinions(labelId): void
     {
-        this._mailService.toggleLabelOnSelectedMails(labelId);
+        this._opinionService.toggleLabelOnSelectedOpinions(labelId);
     }
 
     /**
-     * Set folder on selected mails
+     * Set folder on selected Opinions
      *
      * @param folderId
      */
-    setFolderOnSelectedMails(folderId): void
+    setFolderOnSelectedOpinions(folderId): void
     {
-        this._mailService.setFolderOnSelectedMails(folderId);
+        this._opinionService.setFolderOnSelectedOpinions(folderId);
     }
 
     /**

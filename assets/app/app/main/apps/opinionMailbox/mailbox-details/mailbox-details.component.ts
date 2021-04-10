@@ -4,19 +4,19 @@ import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '../../../../../@fuse/animations';
 
-import { Mail } from '../../../../../app/main/apps/mail/mail.model';
-import { MailService } from '../../../../../app/main/apps/mail/mail.service';
+import { Opinion } from '../../../../models/opinion.model';
+import { OpinionService } from '../../../../services/opinion-analizer.service';
 
 @Component({
-    selector     : 'mail-details',
-    templateUrl  : './mail-details.component.html',
-    styleUrls    : ['./mail-details.component.scss'],
+    selector     : 'mailbox-opinion-details',
+    templateUrl  : './mailbox-details.component.html',
+    styleUrls    : ['./mailbox-details.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class MailDetailsComponent implements OnInit, OnDestroy
+export class OpinionDetailsComponent implements OnInit, OnDestroy
 {
-    mail: Mail;
+    opinion: Opinion;
     labels: any[];
     showDetails: boolean;
 
@@ -26,10 +26,10 @@ export class MailDetailsComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {MailService} _mailService
+     * @param {OpinionService} _opinionService
      */
     constructor(
-        private _mailService: MailService
+        private _opinionService: OpinionService
     )
     {
         // Set the defaults
@@ -48,15 +48,15 @@ export class MailDetailsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        // Subscribe to update the current mail
-        this._mailService.onCurrentMailChanged
+        // Subscribe to update the current opinion
+        this._opinionService.onCurrentOpinionChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(currentMail => {
-                this.mail = currentMail;
+            .subscribe(currentOpinion => {
+                this.opinion = currentOpinion;
             });
 
         // Subscribe to update on label change
-        this._mailService.onLabelsChanged
+        this._opinionService.onLabelsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(labels => {
                 this.labels = labels;
@@ -86,9 +86,9 @@ export class MailDetailsComponent implements OnInit, OnDestroy
     {
         event.stopPropagation();
 
-        this.mail.toggleStar();
+        this.opinion.toggleStar();
 
-        this._mailService.updateMail(this.mail);
+        this._opinionService.updateOpinion(this.opinion);
     }
 
     /**
@@ -100,8 +100,8 @@ export class MailDetailsComponent implements OnInit, OnDestroy
     {
         event.stopPropagation();
 
-        this.mail.toggleImportant();
+        this.opinion.toggleImportant();
 
-        this._mailService.updateMail(this.mail);
+        this._opinionService.updateOpinion(this.opinion);
     }
 }

@@ -78,7 +78,6 @@ export const navigation: FuseNavigation[] = [
         id: 'record',
         title: 'Record',
         translate: 'RECORD',
-<<<<<<< HEAD
         type     : 'group',
         children : [
         {
@@ -96,18 +95,14 @@ export const navigation: FuseNavigation[] = [
             type : 'item',
             url : '/apps/opinionMailbox'
         },
-=======
-        type: 'group',
-        children: [
-            {
-                id: 'reg',
-                title: 'Record',
-                translate: 'Record',
-                type: 'item',
-                icon: 'send',
-                url: '/apps/todo'
-            },
->>>>>>> f2e1c5bebefa0bbc5b5c7b04a892935134e2f088
+        {
+            id:'test2',
+            title:'Prueba del OpinionAnalytics',
+            translate:'Prueba del OpinionAnalytics',
+            type: 'item',
+            url: '/apps/opinionAnalytics'
+        },
+
         ]
     }
 ];

@@ -6,17 +6,17 @@ import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '../../../../../../@fuse/animations';
 
-import { MailService } from '../../../../../../app/main/apps/mail/mail.service';
-import { MailComposeDialogComponent } from '../../../../../../app/main/apps/mail/dialogs/compose/compose.component';
+import { OpinionService } from '../../../../../services/opinion-analizer.service';
+import { OpinionComposeDialogComponent } from '../../../../../../app/main/apps/opinionMailbox/dialogs/compose/compose.component';
 
 @Component({
-    selector     : 'mail-main-sidebar',
-    templateUrl  : './main-sidebar.component.html',
-    styleUrls    : ['./main-sidebar.component.scss'],
+    selector     : 'mailbox-main-sidebar',
+    templateUrl  : './mailbox-main-sidebar.component.html',
+    styleUrls    : ['./mailbox-main-sidebar.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class MailMainSidebarComponent implements OnInit, OnDestroy
+export class MailboxMainSidebarComponent implements OnInit, OnDestroy
 {
     folders: any[];
     filters: any[];
@@ -31,11 +31,11 @@ export class MailMainSidebarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {MailService} _mailService
+     * @param {OpinionService} _opinionService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _mailService: MailService,
+        private _opinionService: OpinionService,
         public _matDialog: MatDialog
     )
     {
@@ -59,19 +59,19 @@ export class MailMainSidebarComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._mailService.onFoldersChanged
+        this._opinionService.onFoldersChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(folders => {
                 this.folders = folders;
             });
 
-        this._mailService.onFiltersChanged
+        this._opinionService.onFiltersChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(filters => {
                 this.filters = filters;
             });
 
-        this._mailService.onLabelsChanged
+        this._opinionService.onLabelsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(labels => {
                 this.labels = labels;
@@ -97,8 +97,8 @@ export class MailMainSidebarComponent implements OnInit, OnDestroy
      */
     composeDialog(): void
     {
-        this.dialogRef = this._matDialog.open(MailComposeDialogComponent, {
-            panelClass: 'mail-compose-dialog'
+        this.dialogRef = this._matDialog.open(OpinionComposeDialogComponent, {
+            panelClass: 'mailbox-compose-dialog'
         });
         this.dialogRef.afterClosed()
             .subscribe(response => {
@@ -114,13 +114,13 @@ export class MailMainSidebarComponent implements OnInit, OnDestroy
                      * Send
                      */
                     case 'send':
-                        console.log('new Mail', formData.getRawValue());
+                        console.log('new Opinion', formData.getRawValue());
                         break;
                     /**
                      * Delete
                      */
                     case 'delete':
-                        console.log('delete Mail');
+                        console.log('delete Opinion');
                         break;
                 }
             });

@@ -129,7 +129,7 @@ export class OpinionService implements Resolve<any>
     getFilters(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/mail-filters')
+            this._httpClient.get('api/opinion-filters')
                 .subscribe((response: any) => {
                     this.filters = response;
                     this.onFiltersChanged.next(this.filters);
@@ -197,12 +197,12 @@ export class OpinionService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
 
-            this._httpClient.get('api/mail-folders?handle=' + handle)
+            this._httpClient.get('api/opinion-folders?handle=' + handle)
                 .subscribe((folders: any) => {
 
                     const folderId = folders[0].id;
 
-                    this._httpClient.get('api/mail-mails?folder=' + folderId)
+                    this._httpClient.get('api/opinion-opinions?folder=' + folderId)
                         .subscribe((opinions: any) => {
 
                             this.opinions = opinions.map(opinion => {

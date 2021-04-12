@@ -10,7 +10,11 @@ import { Opinion } from '../models/opinion.model';
 @Injectable()
 export class OpinionService implements Resolve<any>
 {
+    deleteSelectedOpinions() {
+        throw new Error('Method not implemented.');
+    }
     opinions: Opinion[];
+    user: string;
     selectedOpinions: Opinion[];
     currentOpinion: Opinion;
     searchText = '';
@@ -25,8 +29,11 @@ export class OpinionService implements Resolve<any>
     onCurrentOpinionChanged: BehaviorSubject<any>;
     onFoldersChanged: BehaviorSubject<any>;
     onFiltersChanged: BehaviorSubject<any>;
+    onUserDataChanged: BehaviorSubject<any>;
     onLabelsChanged: BehaviorSubject<any>;
     onSearchTextChanged: BehaviorSubject<any>;
+
+    filterBy: string;
 
     /**
      * Constructor
@@ -45,6 +52,7 @@ export class OpinionService implements Resolve<any>
         this.onFoldersChanged = new BehaviorSubject([]);
         this.onFiltersChanged = new BehaviorSubject([]);
         this.onLabelsChanged = new BehaviorSubject([]);
+        this.onUserDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new BehaviorSubject('');
     }
 
@@ -155,29 +163,28 @@ export class OpinionService implements Resolve<any>
     getOpinions(): Promise<Opinion[]>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/opinions-opinions')
-                .subscribe((response: any) => {
+            this._httpClient.get('api/opinion')
+                .subscribe((response:any) => {
 
-        if ( this.routeParams.labelHandle )
+            if ( this.routeParams.labelHandle )
         {
             return this.getOpinionsByLabel(this.routeParams.labelHandle);
         }
 
-        if ( this.routeParams.filterHandle )
+            if ( this.routeParams.filterHandle )
         {
             return this.getOpinionsByFilter(this.routeParams.filterHandle);
         }
 
-        if( this.routeParams.folderHandle)
-        {
-            return this.getOpinionsByFolder(this.routeParams.folderHandle);
-        }
-        this.onOpinionsChanged.next(this.opinions);
-                        resolve(this.opinions);
-                    }, reject);
-                }
-        );
+            if ( this.routeParams.folderHandle)
+            {
+                return this.getOpinionsByFolder(this.routeParams.folderHandle);
+            }
+                })
+        })
+        
 
+        return this.getOpinionsByFolder(this.routeParams.folderHandle);
     }
 
     /**

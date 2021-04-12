@@ -20,6 +20,7 @@ import { KnowledgeBaseFakeDb } from '../../app/fake-db/knowledge-base';
 import { IconsFakeDb } from '../../app/fake-db/icons';
 import { ChatPanelFakeDb } from '../../app/fake-db/chat-panel';
 import { QuickPanelFakeDb } from '../../app/fake-db/quick-panel';
+import { OpinionFakeDb } from '../../app/fake-db/opinion';
 
 export class FakeDbService implements InMemoryDbService
 {
@@ -97,7 +98,14 @@ export class FakeDbService implements InMemoryDbService
 
             // Quick Panel
             'quick-panel-notes' : QuickPanelFakeDb.notes,
-            'quick-panel-events': QuickPanelFakeDb.events
+            'quick-panel-events': QuickPanelFakeDb.events,
+
+            //Opinios
+            'opinion-opinions' : OpinionFakeDb.opinions,
+            'opinion-folder'   : OpinionFakeDb.folders,
+            'opinion-filters'  : OpinionFakeDb.filters,
+            'opinion-labels'   : OpinionFakeDb.labels,
+
         };
     }
 }

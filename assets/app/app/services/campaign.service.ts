@@ -43,6 +43,7 @@ export class CampaignService {
           this.campaign = null;
         })
   }
+
   getMyCamps() {
     const date = new Date()
     console.log(date.toLocaleDateString('en-US', { weekday: 'long' }))

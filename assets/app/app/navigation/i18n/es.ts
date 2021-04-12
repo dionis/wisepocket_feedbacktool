@@ -6,20 +6,24 @@ export const locale = {
                 'TITLE': 'Lista de Campañas',
                 'BADGE': '25'
             },
-            'Opinion Statistics by idioma'        : {
+            'Opinion Statistics by idioma': {
                 'TITLE': 'Estadísticas por idioma',
                 'BADGE': '25'
             },
-            'STATISTICS'        : {
+            'Opinion Statistics by polaridad': {
+                'TITLE': 'Estadísticas por polaridad',
+                'BADGE': '25'
+            },
+            'STATISTICS': {
                 'TITLE': 'Estadísticas de Opinion',
                 'BADGE': '25'
             },
             'Opinion': {
                 'TITLE': 'Administar Opiniones',
-                'BADGE': '12' 
+                'BADGE': '12'
             },
-            
+
         },
-        
+
     }
 };

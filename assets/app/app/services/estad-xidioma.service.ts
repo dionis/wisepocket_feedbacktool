@@ -32,7 +32,6 @@ export class EstadXidiomaService {
         error => {
           this.dataEn = null;
         })
-
   }
 
   getMyDataEn() {

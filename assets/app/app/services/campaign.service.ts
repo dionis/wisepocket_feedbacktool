@@ -14,7 +14,7 @@ import { WeekDay } from '@angular/common';
 })
 
 export class CampaignService {
-  campaign: any = [{}]
+  campaign: any = []
 
 
 
@@ -43,10 +43,10 @@ export class CampaignService {
           this.campaign = null;
         })
   }
-  getMyCamps(): Campaign {
+  getMyCamps() {
     const date = new Date()
-    console.log(date.toLocaleDateString('en-US', {weekday:'long'}))
-              //getMyCamps(): Campaign //Camapaign es el modelo creado para la vista
+    console.log(date.toLocaleDateString('en-US', { weekday: 'long' }))
+    //getMyCamps(): Campaign //Camapaign es el modelo creado para la vista
     console.log(this.campaign)
     return this.campaign;
   }

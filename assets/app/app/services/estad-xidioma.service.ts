@@ -9,44 +9,39 @@ import { AnalyticsXIdiomaDashboardDb } from '../fake-db/dashboard-analyticsXIdio
   providedIn: 'root'
 })
 export class EstadXidiomaService {
-
-  constructor(private _http: HttpClient, ) {
+   dataEn: any
+  constructor(private _http: HttpClient ) {
 
   }
 
-  /*getEstadistica() {
+  getDataEn() {
     environment.sails_services_urlpath
-    let campaign_id = '606f50e3c37c8833c42e09ca';
+    let campaign_id = '6072f83c677baa1d9c08dbb4';
     console.log(campaign_id);
-    this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/updateEstadIdioma?id=' + campaign_id)
+    this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getCantENXDia?id=' + campaign_id)
       .pipe(map((responseData: any) => {
-        console.log(responseData.data);
+
         
         if (responseData.data) {
-          this._widget.widget2.englishOpin.value = responseData.data.cantEnglish;
-          return this._widget.widget2.englishOpin.value
+           this.dataEn = responseData.data
+           console.log(this.dataEn);
+          return this.dataEn
         }
       })).subscribe(res => {
       },
         error => {
-          this._widget = null;
+          this.dataEn = null;
         })
 
-
   }
 
-  getMyEstad(): WidgetM {
-    console.log(this._widget)
-    return this._widget;
+  getMyDataEn() {
+    this.getDataEn()
+    console.log(this.dataEn);
+    return this.dataEn
   }
 
 
-
-
-
-
-
-*/
 
 
 }

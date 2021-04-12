@@ -4,16 +4,15 @@ import { FuseUtils } from "../../@fuse/utils";
 export class Campaign{
     nombre: string;
     fecha: string;
-    userChief: string;
     descripcion: string;
-    contactoTelefono: number;
+    /*contactoTelefono: number;
     colorPrincipal: string;
     colorSecundario: string;
     contactoEmail: string;
     direccionPostal: string;
     contactoTelegram: string;
     contactoWhatsapp: string;
-    contactoFacebook: string;
+    contactoFacebook: string;*/
    constructor(){}
 
    /**

@@ -9,8 +9,8 @@ import { FuseTranslationLoaderService } from '../../../../@fuse/services/transla
 import { Opinion } from '../../../models/opinion.model';
 import { OpinionService } from '../../../services/opinion-analizer.service';
 
-//import { locale as english } from '../../../../app/main/apps/mail//i18n/en';
-//import { locale as turkish } from '../../../../app/main/apps/mail//i18n/tr';
+import { locale as english } from '../../../../app/main/apps/opinionMailbox/i18n/en';
+import { locale as turkish } from '../../../../app/main/apps/opinionMailbox/i18n/tr';
 
 @Component({
     selector     : 'opinion',
@@ -45,7 +45,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
     )
     {
         // Load the translations
-        //this._fuseTranslationLoaderService.loadTranslations(english, turkish);
+        this._fuseTranslationLoaderService.loadTranslations(english, turkish);
 
         // Set the defaults
         this.searchInput = new FormControl('');

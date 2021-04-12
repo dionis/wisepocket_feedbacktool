@@ -1,9 +1,3 @@
-import {
-    OpinionComposeDialogComponent
-} from '../../../../../../.tmp/public/app/app/main/apps/opinionMailbox/dialogs/compose/compose.component';
-import {
-    MailboxMainSidebarComponent
-} from '../../../../../../.tmp/public/app/app/main/apps/opinionMailbox/sidebars/main/mailbox-main-sidebar.componet';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,8 +18,11 @@ import { FuseSidebarModule } from '../../../../@fuse/components';
 import { OpinionService } from '../../../services/opinion-analizer.service';
 import { OpinionMailboxComponent } from '../../../../app/main/apps/opinionMailbox/opinionMailbox.component';
 import { MailboxListComponent } from '../../../../app/main/apps/opinionMailbox/mailbox-list/mailbox-list.component';
-import { MailboxListItemComponent } from '../../../../app/main/apps/opinionMailbox/mailbox-list/mailbox-list-item/mailbox-list-item.component';
-import { OpinionDetailsComponent } from '../../../../app/main/apps/opinionMailbox/mailbox-details/mailbox-details.component';
+import { MailboxListItemComponent } from '../../../../app/main/apps/opinionMailbox/mailbox-list/opinion-list-item/opinion-list-item.component';
+import { OpinionDetailsComponent } from '../../../../app/main/apps/opinionMailbox/opinion-details/opinion-details.component';
+import { MailboxMainSidebarComponent } from '../../../../app/main/apps/opinionMailbox/sidebars/main/mailbox-main-sidebar.componet';
+
+import {OpinionComposeDialogComponent}from '../../../../app/main/apps/opinionMailbox/dialogs/compose/compose.component';
 
 const routes: Routes = [
     {
@@ -78,7 +75,7 @@ const routes: Routes = [
 
 @NgModule({
     declarations   : [
-        OpinionMailboxComponent,   
+        OpinionMailboxComponent,
         MailboxListComponent,
         MailboxListItemComponent,
         OpinionDetailsComponent,

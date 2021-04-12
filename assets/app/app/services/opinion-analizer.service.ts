@@ -67,6 +67,8 @@ export class OpinionService implements Resolve<any>
                 this.getOpinions()
             ]).then(
                 () => {
+
+                  //console.log("Data in resolve")
                     if ( this.routeParams.opinionId )
                     {
                         this.setCurrentOpinion(this.routeParams.opinionId);
@@ -104,7 +106,7 @@ export class OpinionService implements Resolve<any>
     getFolders(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/mail-folders')
+            this._httpClient.get('api/opinion-folders')
                 .subscribe((response: any) => {
                     this.folders = response;
                     this.onFoldersChanged.next(this.folders);
@@ -121,7 +123,7 @@ export class OpinionService implements Resolve<any>
     getFilters(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/mail-filters')
+            this._httpClient.get('api/opinion-filters')
                 .subscribe((response: any) => {
                     this.filters = response;
                     this.onFiltersChanged.next(this.filters);
@@ -138,7 +140,7 @@ export class OpinionService implements Resolve<any>
     getLabels(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/mail-labels')
+            this._httpClient.get('api/opinion-labels')
                 .subscribe((response: any) => {
                     this.labels = response;
                     this.onLabelsChanged.next(this.labels);
@@ -154,9 +156,15 @@ export class OpinionService implements Resolve<any>
      */
     getOpinions(): Promise<Opinion[]>
     {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/opinions-opinions')
-                .subscribe((response: any) => {
+
+        // return new Promise((resolve, reject) => {
+        //     this._httpClient.get('api/opinions-opinions')
+        //         .subscribe((opinions: any) => {
+
+        //               console.log("------ Process Data -------")
+        //               this.opinions = opinions.map(opinion => {
+        //                 return new Opinion(opinion);
+        //               });
 
         if ( this.routeParams.labelHandle )
         {
@@ -168,15 +176,13 @@ export class OpinionService implements Resolve<any>
             return this.getOpinionsByFilter(this.routeParams.filterHandle);
         }
 
-        if( this.routeParams.folderHandle)
-        {
-            return this.getOpinionsByFolder(this.routeParams.folderHandle);
-        }
-        this.onOpinionsChanged.next(this.opinions);
-                        resolve(this.opinions);
-                    }, reject);
-                }
-        );
+        return this.getOpinionsByFolder(this.routeParams.folderHandle);
+                      //console.log("------ Process Data -------")
+                      // this.onOpinionsChanged.next(this.opinions);
+                      //                 resolve(this.opinions);
+                      //             }, reject);
+                      // }
+                      // );
 
     }
 
@@ -190,12 +196,12 @@ export class OpinionService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
 
-            this._httpClient.get('api/mail-folders?handle=' + handle)
+            this._httpClient.get('api/opinion-folders?handle=' + handle)
                 .subscribe((folders: any) => {
 
                     const folderId = folders[0].id;
 
-                    this._httpClient.get('api/mail-mails?folder=' + folderId)
+                    this._httpClient.get('api/opinions-opinions?folder=' + folderId)
                         .subscribe((opinions: any) => {
 
                             this.opinions = opinions.map(opinion => {
@@ -223,7 +229,7 @@ export class OpinionService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
 
-            this._httpClient.get('api/mail-mails?' + handle + '=true')
+            this._httpClient.get('api/opinions-opinions?' + handle + '=true')
                 .subscribe((opinions: any) => {
 
                     this.opinions = opinions.map(opinion => {
@@ -249,12 +255,12 @@ export class OpinionService implements Resolve<any>
     getOpinionsByLabel(handle): Promise<Opinion[]>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/mail-labels?handle=' + handle)
+            this._httpClient.get('api/opinion-labels?handle=' + handle)
                 .subscribe((labels: any) => {
 
                     const labelId = labels[0].id;
 
-                    this._httpClient.get('api/mail-mails?labels=' + labelId)
+                    this._httpClient.get('api/opinions-opinions?labels=' + labelId)
                         .subscribe((opinions: any) => {
 
                             this.opinions = opinions.map(opinion => {
@@ -433,7 +439,7 @@ export class OpinionService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
 
-            this._httpClient.post('api/mail-mails/' + opinion.id, {...opinion})
+            this._httpClient.post('api/opinions-opinions/' + opinion.id, {...opinion})
                 .subscribe(response => {
 
                     this.getOpinions().then(opinions => {

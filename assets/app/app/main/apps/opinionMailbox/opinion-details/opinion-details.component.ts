@@ -1,23 +1,24 @@
-import { Opinion } from '../../../../../../../../.tmp/public/app/app/models/opinion.model';
-import { Component, HostBinding, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { OpinionService } from '../../../../../services/opinion-analizer.service';
+import { fuseAnimations } from '../../../../../@fuse/animations';
+
+import { Opinion } from '../../../../models/opinion.model';
+import { OpinionService } from '../../../../services/opinion-analizer.service';
 
 @Component({
-    selector     : 'mailbox-list-item',
-    templateUrl  : './mailbox-list-item.component.html',
-    styleUrls    : ['./mailbox-list-item.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector     : 'opinion-details',
+    templateUrl  : './opinion-details.component.html',
+    styleUrls    : ['./opinion-details.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    animations   : fuseAnimations
 })
-export class MailboxListItemComponent implements OnInit, OnDestroy
+export class OpinionDetailsComponent implements OnInit, OnDestroy
 {
-    @Input() opinion: Opinion;
+    opinion: Opinion;
     labels: any[];
-
-    @HostBinding('class.selected')
-    selected: boolean;
+    showDetails: boolean;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -31,6 +32,9 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
         private _opinionService: OpinionService
     )
     {
+        // Set the defaults
+        this.showDetails = false;
+
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -44,26 +48,11 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        // Set the initial values
-        this.opinion = new Opinion(this.opinion);
-
-        // Subscribe to update on selected opinion change
-        this._opinionService.onSelectedOpinionsChanged
+        // Subscribe to update the current opinion
+        this._opinionService.onCurrentOpinionChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedOpinions => {
-                this.selected = false;
-
-                if ( selectedOpinions.length > 0 )
-                {
-                    for ( const opinion of selectedOpinions )
-                    {
-                        if ( opinion.id === this.opinion.id )
-                        {
-                            this.selected = true;
-                            break;
-                        }
-                    }
-                }
+            .subscribe(currentOpinion => {
+                this.opinion = currentOpinion;
             });
 
         // Subscribe to update on label change
@@ -89,14 +78,6 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * On selected change
-     */
-    onSelectedChange(): void
-    {
-        this._opinionService.toggleSelectedOpinion(this.opinion.id);
-    }
-
-    /**
      * Toggle star
      *
      * @param event
@@ -111,7 +92,7 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Toggle Important
+     * Toggle important
      *
      * @param event
      */

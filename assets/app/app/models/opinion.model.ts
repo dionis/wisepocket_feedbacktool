@@ -4,11 +4,14 @@ export class Opinion{
     id: string
     from:{
         user: string,
+        avatar: string,
+        email: string
     };
     to:{
-        user: string
+        user: string,
+        email: string
     }[];
-    opinionText: string;
+    opinionText?: string;
     labels: string[];
     folder: string;
     hasAttachments: boolean;
@@ -24,7 +27,7 @@ export class Opinion{
     important: boolean;
     message: string;
     subject: string;
-    
+
    /**
      * Constructor
      *
@@ -37,6 +40,7 @@ export class Opinion{
             this.from = opinion.from;
             this.to = opinion.to;
             this.opinionText = opinion.opinionText;
+            this.message = opinion.message;
             this.labels = opinion.labels;
             this.folder = opinion.folder;
             this.hasAttachments = opinion.hasAttachments;

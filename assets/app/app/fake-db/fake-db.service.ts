@@ -21,6 +21,8 @@ import { IconsFakeDb } from '../../app/fake-db/icons';
 import { ChatPanelFakeDb } from '../../app/fake-db/chat-panel';
 import { QuickPanelFakeDb } from '../../app/fake-db/quick-panel';
 
+import {OpinionFakeDB} from '../../app/fake-db/opinions';
+
 export class FakeDbService implements InMemoryDbService
 {
     createDb(): any
@@ -49,6 +51,13 @@ export class FakeDbService implements InMemoryDbService
             'mail-folders': MailFakeDb.folders,
             'mail-filters': MailFakeDb.filters,
             'mail-labels' : MailFakeDb.labels,
+
+            //Opinions
+            'opinions-opinions' : OpinionFakeDB.opinions,
+            'opinion-folders': OpinionFakeDB.folders,
+            'opinion-filters': OpinionFakeDB.filters,
+            'opinion-labels' : OpinionFakeDB.labels,
+
 
             // Chat
             'chat-contacts': ChatFakeDb.contacts,

@@ -1,6 +1,6 @@
 @import '../../../../../@fuse/scss/fuse';
 
-mail-details {
+opinion-details {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -13,7 +13,7 @@ mail-details {
         font-weight: 300;
     }
 
-    .mail-header {
+    .opinion-header {
         padding-bottom: 16px;
         border-bottom: 1px solid;
 
@@ -41,7 +41,7 @@ mail-details {
         }
     }
 
-    .mail-content {
+    .opinion-content {
         padding: 24px 0;
 
         .to {
@@ -84,7 +84,7 @@ mail-details {
         }
     }
 
-    .mail-attachments {
+    .opinion-attachments {
         padding: 24px 0;
         border-top: 1px solid;
 

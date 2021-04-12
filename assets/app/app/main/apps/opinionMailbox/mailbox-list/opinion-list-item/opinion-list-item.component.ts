@@ -1,14 +1,14 @@
-import { Opinion } from '../../../../../../../../.tmp/public/app/app/models/opinion.model';
+import { Opinion } from '../../../../../../app/models/opinion.model';
 import { Component, HostBinding, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { OpinionService } from '../../../../../services/opinion.service';
+import { OpinionService } from '../../../../../services/opinion-analizer.service';
 
 @Component({
-    selector     : 'mail-list-item',
-    templateUrl  : './mailbox-list-item.component.html',
-    styleUrls    : ['./mailbox-list-item.component.scss'],
+    selector     : 'opinion-list-item',
+    templateUrl  : './opinion-list-item.component.html',
+    styleUrls    : ['./opinion-list-item.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class MailboxListItemComponent implements OnInit, OnDestroy
@@ -47,10 +47,10 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
         // Set the initial values
         this.opinion = new Opinion(this.opinion);
 
-        // Subscribe to update on selected mail change
-        this._opinionService.onSelectedOpinonsChanged
+        // Subscribe to update on selected opinion change
+        this._opinionService.onSelectedOpinionsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedOpinons => {
+            .subscribe(selectedOpinions => {
                 this.selected = false;
 
                 if ( selectedOpinions.length > 0 )
@@ -93,7 +93,7 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
      */
     onSelectedChange(): void
     {
-        this._opinionService.toggleSelectedMail(this.mail.id);
+        this._opinionService.toggleSelectedOpinion(this.opinion.id);
     }
 
     /**
@@ -105,9 +105,9 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
     {
         event.stopPropagation();
 
-        this.mail.toggleStar();
+        this.opinion.toggleStar();
 
-        this._mailService.updateMail(this.mail);
+        this._opinionService.updateOpinion(this.opinion);
     }
 
     /**
@@ -119,8 +119,8 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
     {
         event.stopPropagation();
 
-        this.mail.toggleImportant();
+        this.opinion.toggleImportant();
 
-        this._mailService.updateMail(this.mail);
+        this._opinionService.updateOpinion(this.opinion);
     }
 }

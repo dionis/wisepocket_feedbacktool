@@ -1,12 +1,12 @@
-<div id="mail" class="page-layout carded left-sidebar inner-scroll">
+<div id="opinion" class="page-layout carded left-sidebar inner-scroll">
 
     <!-- TOP BACKGROUND -->
     <div class="top-bg accent"></div>
     <!-- / TOP BACKGROUND -->
 
     <!-- SIDEBAR -->
-    <fuse-sidebar class="sidebar" name="mail-main-sidebar" position="left" lockedOpen="gt-md">
-        <mail-main-sidebar></mail-main-sidebar>
+    <fuse-sidebar class="sidebar" name="box-main-sidebar" position="left" lockedOpen="gt-md">
+        <mailbox-main-sidebar></mailbox-main-sidebar>
     </fuse-sidebar>
     <!-- / SIDEBAR -->
 
@@ -19,7 +19,7 @@
             <div class="search-wrapper" fxFlex fxLayout="row" fxLayoutAlign="start center">
 
                 <button mat-icon-button class="sidebar-toggle" fxHide.gt-md
-                        (click)="toggleSidebar('mail-main-sidebar')">
+                        (click)="toggleSidebar('mailbox-main-sidebar')">
                     <mat-icon>menu</mat-icon>
                 </button>
 
@@ -34,56 +34,56 @@
         <!-- / CONTENT HEADER -->
 
         <!-- CONTENT CARD -->
-        <div class="content-card" [ngClass]="{'current-mail-selected':currentMail}">
+        <div class="content-card" [ngClass]="{'current-mailbox-selected':currentOpinion}">
 
             <!-- CONTENT TOOLBAR -->
             <div class="toolbar px-24 py-8">
 
-                <div class="mail-selection" fxFlex="row" fxLayoutAlign="start center">
-                    <mat-checkbox (click)="toggleSelectAll()" [checked]="hasSelectedMails"
+                <div class="mailbox-selection" fxFlex="row" fxLayoutAlign="start center">
+                    <mat-checkbox (click)="toggleSelectAll()" [checked]="hasSelectedOpinions"
                                   [indeterminate]="isIndeterminate"></mat-checkbox>
 
                     <button mat-icon-button [matMenuTriggerFor]="selectMenu">
                         <mat-icon>arrow_drop_down</mat-icon>
                     </button>
                     <mat-menu #selectMenu="matMenu">
-                        <button mat-menu-item (click)="selectMails()">All</button>
-                        <button mat-menu-item (click)="deselectMails()">None</button>
-                        <button mat-menu-item (click)="selectMails('read', true)">Read</button>
-                        <button mat-menu-item (click)="selectMails('read', false)">Unread</button>
-                        <button mat-menu-item (click)="selectMails('starred', true)">Starred</button>
-                        <button mat-menu-item (click)="selectMails('starred', false)">Unstarred</button>
-                        <button mat-menu-item (click)="selectMails('important', true)">Important</button>
-                        <button mat-menu-item (click)="selectMails('important', false)">Unimportant</button>
+                        <button mat-menu-item (click)="selectOpinions()">All</button>
+                        <button mat-menu-item (click)="deselectOpinions()">None</button>
+                        <button mat-menu-item (click)="selectOpinions('read', true)">Read</button>
+                        <button mat-menu-item (click)="selectOpinions('read', false)">Unread</button>
+                        <button mat-menu-item (click)="selectOpinions('starred', true)">Starred</button>
+                        <button mat-menu-item (click)="selectOpinions('starred', false)">Unstarred</button>
+                        <button mat-menu-item (click)="selectOpinions('important', true)">Important</button>
+                        <button mat-menu-item (click)="selectOpinions('important', false)">Unimportant</button>
                     </mat-menu>
 
-                    <div class="toolbar-separator" *ngIf="hasSelectedMails"></div>
+                    <div class="toolbar-separator" *ngIf="hasSelectedOpinions"></div>
 
-                    <button mat-icon-button (click)="setFolderOnSelectedMails(4)" *ngIf="hasSelectedMails">
+                    <button mat-icon-button (click)="setFolderOnSelectedOpinions(4)" *ngIf="hasSelectedOpinions">
                         <mat-icon class="secondary-text">delete</mat-icon>
                     </button>
 
-                    <button mat-icon-button [matMenuTriggerFor]="folderMenu" *ngIf="hasSelectedMails">
+                    <button mat-icon-button [matMenuTriggerFor]="folderMenu" *ngIf="hasSelectedOpinions">
                         <mat-icon class="secondary-text">folder</mat-icon>
                     </button>
                     <mat-menu #folderMenu="matMenu">
                         <button mat-menu-item *ngFor="let folder of folders"
-                                (click)="setFolderOnSelectedMails(folder.id)">{{folder.title}}
+                                (click)="setFolderOnSelectedOpinions(folder.id)">{{folder.title}}
                         </button>
                     </mat-menu>
 
-                    <button mat-icon-button [matMenuTriggerFor]="labelMenu" *ngIf="hasSelectedMails">
+                    <button mat-icon-button [matMenuTriggerFor]="labelMenu" *ngIf="hasSelectedOpinions">
                         <mat-icon class="secondary-text">label</mat-icon>
                     </button>
                     <mat-menu #labelMenu="matMenu">
                         <button mat-menu-item *ngFor="let label of labels"
-                                (click)="toggleLabelOnSelectedMails(label.id)">{{label.title}}
+                                (click)="toggleLabelOnSelectedOpinions(label.id)">{{label.title}}
                         </button>
                     </mat-menu>
                 </div>
 
-                <div *ngIf="currentMail" fxHide.gt-xs>
-                    <button mat-icon-button (click)="deselectCurrentMail()">
+                <div *ngIf="currentOpinion" fxHide.gt-xs>
+                    <button mat-icon-button (click)="deselectCurrentOpinion()">
                         <mat-icon class="secondary-text">arrow_back</mat-icon>
                     </button>
                 </div>
@@ -93,8 +93,8 @@
             <!-- CONTENT -->
             <div class="content" fxLayout="row">
 
-                <mail-list fusePerfectScrollbar fxFlex></mail-list>
-                <mail-details fusePerfectScrollbar fxFlex></mail-details>
+                <mailbox-list fusePerfectScrollbar fxFlex></mailbox-list>
+                <opinion-details fusePerfectScrollbar fxFlex></opinion-details>
 
             </div>
             <!-- / CONTENT -->

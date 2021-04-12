@@ -7,16 +7,16 @@
 
         <div class="row-1" fxLayout="row" fxLayoutAlign="start center">
 
-            <div class="name" fxLayout="row" fxLayoutAlign="start center" fxFlex>
-              <!--  <img class="avatar" *ngIf="mail.from?.avatar" alt="{{mail.from?.name}}" src="{{mail.from?.avatar}}"/>-->
-                <div class="avatar accent" *ngIf="!mail.from?.avatar">{{mail.from?.name[0]}}</div>
-                <span class="text-truncate" *ngIf="mail?.from">{{mail.from?.name}}</span>
-                <mat-icon class="s-16 ml-8" *ngIf="mail.hasAttachments">attachment</mat-icon>
-            </div>
-
+          <div class="name" fxLayout="row" fxLayoutAlign="start center" fxFlex>
+            <img class="avatar" *ngIf="opinion.from?.avatar" alt="{{opinion.from?.name}}" src="{{opinion.from?.avatar}}"/>
+            <div class="avatar accent" *ngIf="!opinion.from?.avatar">{{opinion.from?.name[0]}}</div>
+            <span class="text-truncate" *ngIf="opinion?.from">{{opinion.from?.name}}</span>
+            <mat-icon class="s-16 ml-8" *ngIf="opinion.hasAttachments">attachment</mat-icon>
+          </div>
+<!--*ngIf="!opinion.from?.avatar"-->
             <div fxLayout="row" fxLayoutAlign="start center">
 
-                <div class="time">{{mail.time}}</div>
+                <div class="time">{{opinion.time}}</div>
 
             </div>
 
@@ -27,15 +27,15 @@
             <div fxLayout="column" fxLayoutAlign="start start">
 
                 <div class="subject text-truncate">
-                    {{mail.subject}}
+                    {{opinion.subject}}
                 </div>
 
-                <div class="message text-truncate" *ngIf="mail?.message">
-                    {{mail.message | htmlToPlaintext | slice:0:180}}{{mail.message.length > 180 ? '...' : ''}}
+                <div class="message text-truncate" *ngIf="opinion?.message">
+                    {{opinion.message | htmlToPlaintext | slice:0:180}}{{opinion.message.length > 180 ? '...' : ''}}
                 </div>
 
                 <div class="labels" fxLayout="row wrap" fxHide fxShow.gt-sm>
-                    <div class="label" *ngFor="let labelId of mail.labels"
+                    <div class="label" *ngFor="let labelId of opinion.labels"
                          fxLayout="row" fxLayoutAlign="start center">
                         <div class="label-color"
                              [ngStyle]="{'background-color': labels | getById:labelId:'color'}"></div>

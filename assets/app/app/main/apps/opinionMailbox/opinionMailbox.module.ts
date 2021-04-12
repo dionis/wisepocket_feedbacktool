@@ -15,55 +15,56 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FuseSharedModule } from '../../../../@fuse/shared.module';
 import { FuseSidebarModule } from '../../../../@fuse/components';
 
-//import { MailService } from '../../../../app/main/apps/mail/mail.service';
-//import { MailComponent } from '../../../../app/main/apps/mail/mail.component';
-//import { MailListComponent } from '../../../../app/main/apps/mail/mail-list/mail-list.component';
-//import { MailListItemComponent } from '../../../../app/main/apps/mail/mail-list/mail-list-item/mail-list-item.component';
-//import { MailDetailsComponent } from '../../../../app/main/apps/mail/mail-details/mail-details.component';
-//import { MailMainSidebarComponent } from '../../../../app/main/apps/mail/sidebars/main/main-sidebar.component';
-//import { MailComposeDialogComponent } from '../../../../app/main/apps/mail/dialogs/compose/compose.component';
+import { OpinionService } from '../../../services/opinion-analizer.service';
+import { OpinionMailboxComponent } from '../../../../app/main/apps/opinionMailbox/opinionMailbox.component';
+import { MailboxListComponent } from '../../../../app/main/apps/opinionMailbox/mailbox-list/mailbox-list.component';
+import { MailboxListItemComponent } from '../../../../app/main/apps/opinionMailbox/mailbox-list/opinion-list-item/opinion-list-item.component';
+import { OpinionDetailsComponent } from '../../../../app/main/apps/opinionMailbox/opinion-details/opinion-details.component';
+import { MailboxMainSidebarComponent } from '../../../../app/main/apps/opinionMailbox/sidebars/main/mailbox-main-sidebar.componet';
+
+import {OpinionComposeDialogComponent}from '../../../../app/main/apps/opinionMailbox/dialogs/compose/compose.component';
 
 const routes: Routes = [
     {
         path     : 'label/:labelHandle',
-        component: MailComponent,
+        component: OpinionMailboxComponent,
         resolve  : {
-            mail: MailService
+            opinion: OpinionService
         }
     },
     {
-        path     : 'label/:labelHandle/:mailId',
-        component: MailComponent,
+        path     : 'label/:labelHandle/:opinionId',
+        component: OpinionMailboxComponent,
         resolve  : {
-            mail: MailService
+            opinion: OpinionService
         }
     },
     {
         path     : 'filter/:filterHandle',
-        component: MailComponent,
+        component: OpinionMailboxComponent,
         resolve  : {
-            mail: MailService
+            opinion: OpinionService
         }
     },
     {
-        path     : 'filter/:filterHandle/:mailId',
-        component: MailComponent,
+        path     : 'filter/:filterHandle/:opinionId',
+        component: OpinionMailboxComponent,
         resolve  : {
-            mail: MailService
+            opinion: OpinionService
         }
     },
     {
         path     : ':folderHandle',
-        component: MailComponent,
+        component: OpinionMailboxComponent,
         resolve  : {
-            mail: MailService
+            opinion: OpinionService
         }
     },
     {
-        path     : ':folderHandle/:mailId',
-        component: MailComponent,
+        path     : ':folderHandle/:opinionId',
+        component: OpinionMailboxComponent,
         resolve  : {
-            mail: MailService
+            opinion: OpinionService
         }
     },
     {
@@ -74,12 +75,12 @@ const routes: Routes = [
 
 @NgModule({
     declarations   : [
-        MailComponent,   //cambiar todo esto
-        MailListComponent,
-        MailListItemComponent,
-        MailDetailsComponent,
-        MailMainSidebarComponent,
-        MailComposeDialogComponent
+        OpinionMailboxComponent,
+        MailboxListComponent,
+        MailboxListItemComponent,
+        OpinionDetailsComponent,
+        MailboxMainSidebarComponent,
+        OpinionComposeDialogComponent
     ],
     imports        : [
         RouterModule.forChild(routes),
@@ -101,12 +102,12 @@ const routes: Routes = [
         FuseSidebarModule
     ],
     providers      : [
-        MailService
+        OpinionService
     ],
     entryComponents: [
-        MailComposeDialogComponent
+        OpinionComposeDialogComponent
     ]
 })
-export class MailModule
+export class OpinionModule
 {
 }

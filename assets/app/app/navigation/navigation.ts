@@ -88,6 +88,21 @@ export const navigation: FuseNavigation[] = [
             icon     : 'send',
             url      : '/apps/todo'
         },
+        {
+            id    :'test',
+            title : 'Prueba del OpinionMailbox',
+            translate : 'Prueba del OpinionMailbox',
+            type : 'item',
+            url : '/apps/opinionMailbox'
+        },
+        {
+            id:'test2',
+            title:'Prueba del OpinionAnalytics',
+            translate:'Prueba del OpinionAnalytics',
+            type: 'item',
+            url: '/apps/opinionAnalytics'
+        },
+
         ]
     }
 ];

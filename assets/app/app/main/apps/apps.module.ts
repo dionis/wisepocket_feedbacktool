@@ -1,6 +1,7 @@
-import { LoadChildren, LoadChildrenCallback } from '@angular/router/router';
+import { DeprecatedLoadChildren, LoadChildren, LoadChildrenCallback } from '@angular/router/router';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 
 import { FuseSharedModule } from '../../../@fuse/shared.module';
 
@@ -158,6 +159,14 @@ const routes = [
         path: 'analyticsbyIdioma',
         loadChildren: () => import('../apps/analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
     },
+    {
+        path: 'opinionMailbox',
+        loadChildren: () => import('../apps/opinionMailbox/opinionMailbox.module').then(m => m.OpinionModule)
+    },
+    /*{
+        path: 'opinionAnalytics',
+        loadChildren: () => import('../apps/opinionAnalytics/opinionAnalytics.module').then(m =>m.OpinionAnalytics)
+    },*/
 ];
 
 @NgModule({

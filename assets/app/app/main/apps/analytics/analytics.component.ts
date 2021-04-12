@@ -40,6 +40,22 @@ export class AnalyticsDashboardComponent implements OnInit
     {
         // Get the widgets from the service
         this.widgets = this._analyticsDashboardService.widgets;
+
+
+        console.log("TO SEE DATA IN CHART");
+        console.log("WIDGET 5");
+        console.log("Datasets ", this.widgets.widget5.datasets)
+        console.log("-----------------------")
+        console.log("labels ",  this.widgets.widget5.labels );
+        console.log("-----------------------");
+        console.log("colors ",  this.widgets.widget5.colors);
+        console.log("-----------------------");
+        console.log("options ",  this.widgets.widget5.options);
+        console.log("-----------------------");
+        console.log("charType ",  this.widgets.widget5.chartType);
+
+
+
     }
 
     // -----------------------------------------------------------------------------------------------------

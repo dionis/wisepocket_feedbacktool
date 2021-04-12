@@ -26,7 +26,7 @@ export class AnalyticsDashboardComponent implements OnInit {
         datasets: [
             {
                 label: 'englishOpin',
-                data: [221, 428, 492, 471, 413, 344, 294]
+                data: []
             }
         ],
         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -298,7 +298,7 @@ export class AnalyticsDashboardComponent implements OnInit {
     ) {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
-       // this._estadPrueba.getEstadistica();
+        
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -310,9 +310,11 @@ export class AnalyticsDashboardComponent implements OnInit {
      */
     ngOnInit(): void {
         // Get the widgets from the service
+        console.log(this._estadPrueba.getDataEn());
+        this.widget2.datasets[0].data = this._estadPrueba.getDataEn();
         console.log("TO SEE DATA IN CHART");
         console.log("WIDGET 5");
-        console.log("Datasets ", this.widget5.datasets)
+        console.log("Datasets ", this.widget2.datasets[0].data)
         console.log("-----------------------")
         console.log("labels ", this.widget5.labels);
         console.log("-----------------------");

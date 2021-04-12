@@ -20,20 +20,7 @@ import { CampaignService } from '../../../../services/campaign.service';
     encapsulation: ViewEncapsulation.None
 })
 export class EcommerceProductsComponent implements OnInit
-{   campaigns: {
-    nombre: string,
-    fecha: string,
-    userChief: string;
-    descripcion: string;
-    contactoTelefono: number;
-    colorPrincipal: string;
-    colorSecundario: string;
-    contactoEmail: string;
-    direccionPostal: string;
-    contactoTelegram: string;
-    contactoWhatsapp: string;
-    contactoFacebook: string;
-} 
+{   campaigns: any 
     dataSource: FilesDataSource | null;
     displayedColumns = ['id', 'image', 'name', 'category', 'price', 'quantity', 'active'];
 
@@ -56,7 +43,7 @@ export class EcommerceProductsComponent implements OnInit
     {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-       this.campaigns = this._campaignService.getMyCamps()
+       this.campaigns = this._campaignService.getCampaignbyUser()
     }
 
     // -----------------------------------------------------------------------------------------------------

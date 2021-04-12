@@ -286,6 +286,7 @@ export class AnalyticsDashboardComponent implements OnInit {
         }
     }
 
+    temp: any;
     /**
      * Constructor
      *

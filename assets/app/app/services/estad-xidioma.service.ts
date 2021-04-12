@@ -9,14 +9,14 @@ import { AnalyticsXIdiomaDashboardDb } from '../fake-db/dashboard-analyticsXIdio
   providedIn: 'root'
 })
 export class EstadXidiomaService {
-   dataEn: any
+   dataEn: any = []
   constructor(private _http: HttpClient ) {
 
   }
 
   getDataEn() {
     environment.sails_services_urlpath
-    let campaign_id = '6072f83c677baa1d9c08dbb4';
+    let campaign_id = '607450a67aa1291fec1efac4';
     console.log(campaign_id);
     this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getCantENXDia?id=' + campaign_id)
       .pipe(map((responseData: any) => {

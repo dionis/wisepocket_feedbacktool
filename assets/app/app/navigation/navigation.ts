@@ -71,6 +71,14 @@ export const navigation: FuseNavigation[] = [
                 icon: 'list',
                 url: '/apps/analyticsbyIdioma'
             },
+            {
+                id: 'est_polaridad',
+                title: 'Estadísticas por polaridad',
+                translate: 'NAV.Opinion Statistics by polaridad.TITLE',
+                type: 'item',
+                icon: 'list',
+                url: '/apps/analyticsbyPolaridad'
+            },
         ]
     },
 
@@ -78,30 +86,30 @@ export const navigation: FuseNavigation[] = [
         id: 'record',
         title: 'Record',
         translate: 'RECORD',
-        type     : 'group',
-        children : [
-        {
-            id       : 'reg',
-            title    : 'Record',
-            translate: 'Record',
-            type     : 'item',
-            icon     : 'send',
-            url      : '/apps/todo'
-        },
-        {
-            id    :'test',
-            title : 'Prueba del OpinionMailbox',
-            translate : 'Prueba del OpinionMailbox',
-            type : 'item',
-            url : '/apps/opinionMailbox'
-        },
-        {
-            id:'test2',
-            title:'Prueba del OpinionAnalytics',
-            translate:'Prueba del OpinionAnalytics',
-            type: 'item',
-            url: '/apps/opinionAnalytics'
-        },
+        type: 'group',
+        children: [
+            {
+                id: 'reg',
+                title: 'Record',
+                translate: 'Record',
+                type: 'item',
+                icon: 'send',
+                url: '/apps/todo'
+            },
+            {
+                id: 'test',
+                title: 'Prueba del OpinionMailbox',
+                translate: 'Prueba del OpinionMailbox',
+                type: 'item',
+                url: '/apps/opinionMailbox'
+            },
+            {
+                id: 'test2',
+                title: 'Prueba del OpinionAnalytics',
+                translate: 'Prueba del OpinionAnalytics',
+                type: 'item',
+                url: '/apps/opinionAnalytics'
+            },
 
         ]
     }

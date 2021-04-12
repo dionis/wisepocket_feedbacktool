@@ -27,6 +27,10 @@ export const locale = {
                 'TITLE': 'Statistics by language',
                 'BADGE': '25'
             },
+            'Opinion Statistics by polarity': {
+                'TITLE': 'Statistics by polarity',
+                'BADGE': '25'
+            },
             'STATISTICS': {
                 'TITLE': 'Opinion Statistics',
                 'BADGE': '25'

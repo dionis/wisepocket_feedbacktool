@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import { Component, OnInit, OnDestroy,  ViewEncapsulation } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { EstadXidiomaService } from '../../../services/estad-xidioma.service';
-
+import { CampaignService } from '../../../services/campaign.service';
+import { UserService } from '../../../services/user.service';
+import { takeUntil } from 'rxjs/operators';
 //import { AnalyticsDashboardService } from './analytics.service';
 
 @Component({
@@ -12,10 +14,13 @@ import { EstadXidiomaService } from '../../../services/estad-xidioma.service';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class AnalyticsDashboardComponent implements OnInit {
+export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     //widgets: any;
     widget5SelectedDay = 'Ayer';
     data: any;
+
+    // Private
+    private _unsubscribeAll: Subject<any>;
 
     widget2: any = {
         englishOpin: {
@@ -295,11 +300,15 @@ export class AnalyticsDashboardComponent implements OnInit {
      */
     constructor(
         //private _analyticsDashboardService: AnalyticsDashboardService,
-        private _estadPrueba: EstadXidiomaService
+        private _estadPrueba: EstadXidiomaService,
+        private _camapignService: CampaignService,
+        private _userService:UserService
     ) {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
-        
+          // Set the private defaults
+          this._unsubscribeAll = new Subject();
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -309,22 +318,50 @@ export class AnalyticsDashboardComponent implements OnInit {
     /**
      * On init
      */
-    ngOnInit(): void {
+    ngOnInit():  void {
         // Get the widgets from the service
-        console.log(this._estadPrueba.getDataEn());
-        this.widget2.datasets[0].data = this._estadPrueba.getDataEn();
-        console.log("TO SEE DATA IN CHART");
-        console.log("WIDGET 5");
-        console.log("Datasets ", this.widget2.datasets[0].data)
-        console.log("-----------------------")
-        console.log("labels ", this.widget5.labels);
-        console.log("-----------------------");
-        console.log("colors ", this.widget5.colors);
-        console.log("-----------------------");
-        console.log("options ", this.widget5.options);
-        console.log("-----------------------");
-        console.log("charType ", this.widget5.chartType);
-        //this.widgets = this._analyticsDashboardService.widgets;
+        ///Actualizar los datos de una de
+        ///las camapanas
+
+        /// En proximas versiones se obtendra el
+        ///identificador de una campama
+
+        //Por ahora se toma una campana aleatoria
+        //de la lista de campana que se carga en
+        ///_camapignService.campaign
+
+        let currentCamapingId : string  = "";
+        console.log(" Get information about USER ", this._userService.user.id);
+        this._camapignService.getCampaignbyUser(this._userService.user.id);
+
+        if ( typeof(this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0){
+          //Seleccionar un id de camapana aleatoriamente
+          let camapIgnObjet = this._camapignService.campaign[0];
+
+          console.log("Campaingn list ", this._camapignService.campaign);
+
+          currentCamapingId = camapIgnObjet.id;
+          this._estadPrueba.setCurrentCamaignId(currentCamapingId);
+        }
+
+
+        this._estadPrueba.getDataEn().pipe(takeUntil(this._unsubscribeAll)).subscribe( newdata =>{
+            console.log("<--- Get my data ---> ", newdata);
+          this.widget2.datasets[0].data = newdata;
+          console.log("TO SEE DATA IN CHART");
+          console.log("WIDGET 5");
+          console.log("Datasets ", this.widget2.datasets[0].data)
+          console.log("-----------------------")
+          console.log("labels ", this.widget5.labels);
+          console.log("-----------------------");
+          console.log("colors ", this.widget5.colors);
+          console.log("-----------------------");
+          console.log("options ", this.widget5.options);
+          console.log("-----------------------");
+          console.log("charType ", this.widget5.chartType);
+        })
+
+          //this.widgets = this._analyticsDashboardService.widgets;
 
     }
 
@@ -389,5 +426,16 @@ export class AnalyticsDashboardComponent implements OnInit {
             }
         });
     }
+
+
+     /**
+     * On destroy
+     */
+      ngOnDestroy(): void
+      {
+          // Unsubscribe from all subscriptions
+          this._unsubscribeAll.next();
+          this._unsubscribeAll.complete();
+      }
 }
 

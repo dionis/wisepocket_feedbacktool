@@ -12,7 +12,7 @@ import { CampaignService } from './campaign.service';
   providedIn: 'root',
 })
 export class UserService {
-  private user: User;
+  public user: User;
   token: any;
   //SE CREA en el constructor un Objeto  del Servicio de Campaign para acceder a las funciones de esta
   constructor(private _http: HttpClient,
@@ -96,8 +96,9 @@ export class UserService {
           this.user.phone = responseData.data.phone;
           this.user.organization = responseData.data.organization;
           this.user.cargo = responseData.data.cargo;
+          console.log("********* Current User data *******")
           console.log(this.user);
-        
+
           this._userCamp.getCampaignbyUser(this.user.id) //SE LLAMA A la FUNCION para mandar el idUser LOGUEADO a CampaignService
 
           return this.user;

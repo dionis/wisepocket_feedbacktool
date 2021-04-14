@@ -30,6 +30,7 @@ export class OpinionFakeDb{
             'starred'       : false,
             'important'     : true,
             'hasAttachments': true,
+            'avatar': 'assets/images/avatars/alice.jpg',
             'attachments'   : [
                 {
                     'type'    : 'image',
@@ -72,7 +73,8 @@ export class OpinionFakeDb{
             'read'          : false,
             'starred'       : false,
             'important'     : true,
-            'hasAttachments': false,            
+            'hasAttachments': false,
+            'avatar': 'assets/images/avatars/garry.jpg',            
             'labels'        : [
                 2
             ],
@@ -104,6 +106,7 @@ export class OpinionFakeDb{
             'starred'       : false,
             'important'     : false,
             'hasAttachments': false,
+            'avatar': 'assets/images/avatars/danielle.jpg',
             'labels'        : [
                 3,
                 2

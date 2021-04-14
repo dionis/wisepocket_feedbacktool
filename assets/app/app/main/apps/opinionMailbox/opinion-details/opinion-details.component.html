@@ -47,23 +47,23 @@
                 <div fxLayout="row" fxLayoutAlign="start start">
 
                     <div>
-                        <img *ngIf="opinion.from.avatar" alt="{{opinion.from.name}}"
-                             src="{{opinion.from.avatar}}" class="avatar"/>
+                        <img *ngIf="opinion.avatar" alt="{{opinion.from.user}}"
+                             src="{{opinion.avatar}}" class="avatar"/>
 
-                        <div *ngIf="!opinion.from.avatar" class="avatar" ms-random-class="vm.colors">
-                            {{opinion.from.name[0]}}
+                        <div *ngIf="!opinion.avatar" class="avatar" ms-random-class="vm.colors">
+                            {{opinion.from.user[0]}}
                         </div>
                     </div>
 
                     <div fxLayout="column" fxLayoutAlign="start start">
 
                         <div class="name">
-                            {{opinion.from.name}}
+                            {{opinion.from.user}}
                         </div>
 
                         <div class="to" fxLayout="row" fxLayoutAlign="start center">
                             <div class="to-text">to</div>
-                            <div>{{opinion.to[0].name}}</div>
+                            <div>{{opinion.to[0].user}}</div>
                         </div>
                     </div>
                 </div>
@@ -82,9 +82,9 @@
                     </div>
 
                     <div fxLayout="column">
-                        <span class="detail">{{opinion.from.email}}</span>
-                        <span class="detail">{{opinion.to[0].email}}</span>
-                        <span class="detail">{{opinion.time}}</span>
+                        <span class="detail">{{opinion.from.sourceAdrees}}</span>
+                        <span class="detail">{{opinion.to[0].user}}</span>
+                        <span class="detail">{{opinion.arrivetime}}</span>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@
             </mat-menu>
         </div>
 
-        <div [innerHTML]="opinion.message"></div>
+        <div [innerHTML]="opinion.opinionText"></div>
 
     </div>
 

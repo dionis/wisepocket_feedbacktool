@@ -40,7 +40,7 @@
         <div class="nav-subheader">{{ 'OPINION.FOLDERS' | translate }}</div>
 
         <div class="nav-item" *ngFor="let folder of folders">
-            <a class="nav-link" matRipple [routerLink]="'/apps/opinionMailbox/' + folder.handle"
+            <a class="nav-link" matRipple [routerLink]="'/apps/opinionMailbox/folder/' + folder.handle"
                [routerLinkActive]="['active', 'accent']">
                 <mat-icon class="nav-link-icon" *ngIf="folder.icon">{{folder.icon}}</mat-icon>
                 <span>{{folder.title}}</span>

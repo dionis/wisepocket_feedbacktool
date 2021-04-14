@@ -195,7 +195,8 @@ export class OpinionService implements Resolve<any>
                 return this.getOpinionsByFolder(this.routeParams.folderHandle);
             }
                 })
-        })
+        });
+    
         
         return this.getOpinionsByFolder(this.routeParams.folderHandle);
                       //console.log("------ Process Data -------")

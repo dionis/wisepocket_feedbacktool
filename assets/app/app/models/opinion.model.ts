@@ -20,6 +20,7 @@ export class Opinion{
         user: string
     }[];
     opinionText: string;
+    avatar: string;
     labels: string[];
     folder: string;
     hasAttachments: boolean;
@@ -61,6 +62,7 @@ export class Opinion{
             this.time = opinion.time;
             this.arrivetime = opinion.arrivetime;
             this.subject = opinion.subject;
+            this.avatar = opinion.avatar;
         }
     }
     toggleStar(): void

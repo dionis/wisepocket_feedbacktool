@@ -51,6 +51,13 @@ export class FakeDbService implements InMemoryDbService
             'mail-filters': MailFakeDb.filters,
             'mail-labels' : MailFakeDb.labels,
 
+            //Opinions
+            'opinions-opinions' : OpinionFakeDb.opinions,
+            'opinion-folders': OpinionFakeDb.folders,
+            'opinion-filters': OpinionFakeDb.filters,
+            'opinion-labels' : OpinionFakeDb.labels,
+
+
             // Chat
             'chat-contacts': ChatFakeDb.contacts,
             'chat-chats'   : ChatFakeDb.chats,
@@ -103,8 +110,8 @@ export class FakeDbService implements InMemoryDbService
             //Opinios
             'opinion-opinions' : OpinionFakeDb.opinions,
             'opinion-folder'   : OpinionFakeDb.folders,
-            'opinion-filters'  : OpinionFakeDb.filters,
-            'opinion-labels'   : OpinionFakeDb.labels,
+            'opinion-filter'   : OpinionFakeDb.filters,
+            'opinion-label'   : OpinionFakeDb.labels,
 
         };
     }

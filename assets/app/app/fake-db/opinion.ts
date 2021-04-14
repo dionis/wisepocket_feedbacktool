@@ -152,6 +152,7 @@ export class OpinionFakeDb{
             'color' : 'red-fg'
         }
     ];
+    
     public static labels = [
         {
             'id'    : 0,

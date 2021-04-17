@@ -20,8 +20,7 @@ import { KnowledgeBaseFakeDb } from '../../app/fake-db/knowledge-base';
 import { IconsFakeDb } from '../../app/fake-db/icons';
 import { ChatPanelFakeDb } from '../../app/fake-db/chat-panel';
 import { QuickPanelFakeDb } from '../../app/fake-db/quick-panel';
-
-import {OpinionFakeDB} from '../../app/fake-db/opinions';
+import { OpinionFakeDb } from '../../app/fake-db/opinion';
 
 export class FakeDbService implements InMemoryDbService
 {
@@ -53,10 +52,10 @@ export class FakeDbService implements InMemoryDbService
             'mail-labels' : MailFakeDb.labels,
 
             //Opinions
-            'opinions-opinions' : OpinionFakeDB.opinions,
-            'opinion-folders': OpinionFakeDB.folders,
-            'opinion-filters': OpinionFakeDB.filters,
-            'opinion-labels' : OpinionFakeDB.labels,
+            'opinions-opinions' : OpinionFakeDb.opinions,
+            'opinion-folders': OpinionFakeDb.folders,
+            'opinion-filters': OpinionFakeDb.filters,
+            'opinion-labels' : OpinionFakeDb.labels,
 
 
             // Chat
@@ -106,7 +105,14 @@ export class FakeDbService implements InMemoryDbService
 
             // Quick Panel
             'quick-panel-notes' : QuickPanelFakeDb.notes,
-            'quick-panel-events': QuickPanelFakeDb.events
+            'quick-panel-events': QuickPanelFakeDb.events,
+
+            //Opinios
+            'opinion-opinions' : OpinionFakeDb.opinions,
+            'opinion-folder'   : OpinionFakeDb.folders,
+            'opinion-filter'   : OpinionFakeDb.filters,
+            'opinion-label'   : OpinionFakeDb.labels,
+
         };
     }
 }

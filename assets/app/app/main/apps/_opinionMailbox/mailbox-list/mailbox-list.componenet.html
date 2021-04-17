@@ -1,0 +1,10 @@
+<div *ngIf="opinions.length === 0" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+    <span class="no-messages-text hint-text">{{ 'OPINION.NO_MESSAGES' | translate }}</span>
+</div>
+
+<div class="opinion-list" [@animateStagger]="{value:'50'}">
+    <opinion-list-item *ngFor="let opinion of opinions" [opinion]="opinion" (click)="readOpinion(opinion.id)"
+                    [ngClass]="{'current-opinion':opinion?.id == currentOpinion?.id}"
+                    [@animate]="{value:'*',params:{y:'100%'}}">
+    </opinion-list-item>
+</div>

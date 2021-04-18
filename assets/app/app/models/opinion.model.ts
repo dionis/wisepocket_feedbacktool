@@ -23,10 +23,12 @@ export class Opinion{
         size: string
     }[];
     time: string;
+    arrivetime: string;
     starred: boolean;
     important: boolean;
     message: string;
     subject: string;
+
 
    /**
      * Constructor

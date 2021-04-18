@@ -5,9 +5,15 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '../../../../../../@fuse/animations';
+import { FuseTranslationLoaderService } from '../../../../../../@fuse/services/translation-loader.service';
 
 import { OpinionService } from '../../../../../services/opinion-analizer.service';
 import { OpinionComposeDialogComponent } from '../../../../../../app/main/apps/opinionMailbox/dialogs/compose/compose.component';
+
+
+import { locale as english } from '../../../../../main/apps/opinionMailbox/i18n/en';
+import { locale as turkish } from '../../../../../main/apps/opinionMailbox/i18n/tr';
+
 
 @Component({
     selector     : 'mailbox-main-sidebar',
@@ -36,7 +42,8 @@ export class MailboxMainSidebarComponent implements OnInit, OnDestroy
      */
     constructor(
         private _opinionService: OpinionService,
-        public _matDialog: MatDialog
+        public _matDialog: MatDialog,
+        private _fuseTranslationLoaderService: FuseTranslationLoaderService
     )
     {
         // Set the defaults
@@ -48,6 +55,10 @@ export class MailboxMainSidebarComponent implements OnInit, OnDestroy
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
+         // Load the translations
+         this._fuseTranslationLoaderService.loadTranslations(english, turkish);
+
     }
 
     // -----------------------------------------------------------------------------------------------------

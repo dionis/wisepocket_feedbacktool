@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OpinionAnalizerService } from './opinion-analizer.service';
+import { OpinionService } from './opinion-analizer.service';
 
 describe('OpinionAnalizerService', () => {
-  let service: OpinionAnalizerService;
+  let service: OpinionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(OpinionAnalizerService);
+    service = TestBed.inject(OpinionService);
   });
 
   it('should be created', () => {

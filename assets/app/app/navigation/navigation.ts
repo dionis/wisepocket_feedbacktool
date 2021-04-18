@@ -102,6 +102,13 @@ export const navigation: FuseNavigation[] = [
             type: 'item',
             url: '/apps/opinionAnalytics'
         },
+        {
+            id:'test3',
+            title:'Prueba del AnalyticsPolarity',
+            translate:'Prueba del AnalyticsPolarity',
+            type: 'item',
+            url: '/apps/analyticsPolarity'
+        },
 
         ]
     }

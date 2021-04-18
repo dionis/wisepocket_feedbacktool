@@ -21,6 +21,7 @@ import { IconsFakeDb } from '../../app/fake-db/icons';
 import { ChatPanelFakeDb } from '../../app/fake-db/chat-panel';
 import { QuickPanelFakeDb } from '../../app/fake-db/quick-panel';
 import { OpinionFakeDb } from '../../app/fake-db/opinion';
+import { AnalyticsPolarityDashboardDb } from './dashboard-analyticsPolarity';
 
 export class FakeDbService implements InMemoryDbService
 {
@@ -32,6 +33,7 @@ export class FakeDbService implements InMemoryDbService
             'project-dashboard-widgets'  : ProjectDashboardDb.widgets,
             'analyticsXIdioma-dashboard-widgets': AnalyticsXIdiomaDashboardDb.widgets,
             'analytics-dashboard-widgets': AnalyticsDashboardDb.widgets,
+            'analyticsPolarity-dashboard-widgets' : AnalyticsPolarityDashboardDb.widgets,
 
             // Calendar
             'calendar': CalendarFakeDb.data,

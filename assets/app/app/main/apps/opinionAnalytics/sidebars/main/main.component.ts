@@ -3,15 +3,16 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { OpinionService } from '../../../../../services/opinion-analizer.service';
+import { Opinion } from '../../../../../models/opinion.model';
 
 @Component({
-    selector   : 'contacts-main-sidebar',
+    selector   : 'opinionAnalytics-main-sidebar',
     templateUrl: './main.component.html',
     styleUrls  : ['./main.component.scss']
 })
 export class OpinionAnalyticsMainSidebarComponent implements OnInit, OnDestroy
 {
-    user: any;
+    opinion: Opinion;
     filterBy: string;
 
     // Private
@@ -43,8 +44,8 @@ export class OpinionAnalyticsMainSidebarComponent implements OnInit, OnDestroy
 
         this._opinionService.onUserDataChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(user => {
-                this.user = user;
+            .subscribe(opinion => {
+                this.opinion = opinion;
             });
     }
 

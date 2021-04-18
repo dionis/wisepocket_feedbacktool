@@ -27,7 +27,7 @@ const routes: Routes = [
         path     : '**',
         component: OpinionAnalyticsComponent,
         resolve  : {
-            contacts: OpinionService
+            opinions: OpinionService
         }
     }
 ];

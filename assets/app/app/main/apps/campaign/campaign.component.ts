@@ -66,7 +66,7 @@ export class CampaignComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._campaignService.onSelectedCampaignChanged
+        this._campaignService.onSelectedCampaignsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedCampaign => {
                 this.hasSelectedCampaign = selectedCampaign.length > 0;

@@ -20,6 +20,7 @@ export class Opinion{
         user: string
     }[];
     opinionText: string;
+    user: string;
     avatar: string;
     labels: string[];
     folder: string;

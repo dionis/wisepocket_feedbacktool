@@ -11,7 +11,7 @@ import { OpinionService } from '../../../services/opinion-analizer.service'
 import { OpinionAnalyticsFormDialogComponent } from '../opinionAnalytics/opinionAnalytics-form/opinionAnalytics-form.component'
 
 @Component({
-    selector     : 'contacts',
+    selector     : 'opinions',
     templateUrl  : './opinionAnalytics.component.html',
     styleUrls    : ['./opinionAnalytics.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -107,10 +107,10 @@ export class OpinionAnalyticsComponent implements OnInit, OnDestroy
     /**
      * New contact
      */
-    newContact(): void
+    newOpinion(): void
     {
         this.dialogRef = this._matDialog.open(OpinionAnalyticsFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
+            panelClass: 'opinionsAnalytics-form-dialog',
             data      : {
                 action: 'new'
             }

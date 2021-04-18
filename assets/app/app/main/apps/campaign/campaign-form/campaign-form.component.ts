@@ -62,16 +62,16 @@ export class CampaignFormDialogComponent
         return this._formBuilder.group({
             name            : [this.campaign.nombre],
             date            : [this.campaign.fecha],
-            user            : [this.campaign.userChief],
+          //  user            : [this.campaign.userChief],
             description     : [this.campaign.descripcion],
-            phoneContact    : [this.campaign.contactoTelefono],
-            firstColor      : [this.campaign.colorPrincipal],
-            secondColor     : [this.campaign.colorSecundario],
-            emailContact    : [this.campaign.contactoEmail],
-            postalCode      : [this.campaign.direccionPostal],
-            telegramContact : [this.campaign.contactoTelegram],
-            whatsappContact : [this.campaign.contactoWhatsapp],
-            facebookContact : [this.campaign.contactoFacebook],
+          //  phoneContact    : [this.campaign.contactoTelefono],
+          //  firstColor      : [this.campaign.colorPrincipal],
+           // secondColor     : [this.campaign.colorSecundario],
+           // emailContact    : [this.campaign.contactoEmail],
+           // postalCode      : [this.campaign.direccionPostal],
+           // telegramContact : [this.campaign.contactoTelegram],
+           // whatsappContact : [this.campaign.contactoWhatsapp],
+          //  facebookContact : [this.campaign.contactoFacebook],
         });
     }
 }

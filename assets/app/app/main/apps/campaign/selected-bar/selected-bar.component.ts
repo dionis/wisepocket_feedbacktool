@@ -47,7 +47,7 @@ export class CampaignSelectedBarComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._campignService.onSelectedCampaignChanged
+        this._campignService.onSelectedCampaignsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedCampaign => {
                 this.selectedCampaigns = selectedCampaign;

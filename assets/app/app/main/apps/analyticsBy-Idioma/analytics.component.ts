@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,  ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { EstadXidiomaService } from '../../../services/estad-xidioma.service';
@@ -30,15 +30,15 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         chartType: 'bar',
         datasets: [
             {
-                label: 'englishOpin',
+                label: 'Cantidad',
                 data: []
             }
         ],
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
         colors: [
             {
-                borderColor: '#42a5f5',
-                backgroundColor: '#42a5f5'
+                borderColor: '#00008b',
+                backgroundColor: '#00008b'
             }
         ],
         options: {
@@ -63,11 +63,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                 ],
                 yAxes: [
                     {
-                        display: false,
-                        ticks: {
-                            min: 100,
-                            max: 500
-                        }
+                        display: false
                     }
                 ]
             }
@@ -75,18 +71,17 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     }
     widget3: any = {
         spanishOpin: {
-            value: 400,
+            value: 500,
             ofTarget: 0
         },
         chartType: 'bar',
         datasets: [
             {
-                label: 'spanishOpin',
-                data: [221, 428, 492, 471, 413, 344, 294],
-                fill: false
+                label: 'Cantidad',
+                data: []
             }
         ],
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
         colors: [
             {
                 borderColor: '#5c84f1',
@@ -99,17 +94,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                 display: false
             },
             maintainAspectRatio: false,
-            elements: {
-                point: {
-                    radius: 2,
-                    borderWidth: 1,
-                    hoverRadius: 2,
-                    hoverBorderWidth: 1
-                },
-                line: {
-                    tension: 0
-                }
-            },
             layout: {
                 padding: {
                     top: 24,
@@ -126,11 +110,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                 ],
                 yAxes: [
                     {
-                        display: false,
-                        ticks: {
-                            // min: 100,
-                            // max: 500
-                        }
+                        display: false
                     }
                 ]
             }
@@ -144,11 +124,11 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         chartType: 'bar',
         datasets: [
             {
-                label: 'totalOpin',
-                data: [221, 428, 492, 471, 413, 344, 294]
+                label: 'Cantidad',
+                data: []
             }
         ],
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
         colors: [
             {
                 borderColor: '#f44336',
@@ -177,11 +157,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                 ],
                 yAxes: [
                     {
-                        display: false,
-                        ticks: {
-                            min: 150,
-                            max: 500
-                        }
+                        display: false
                     }
                 ]
             }
@@ -302,12 +278,12 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         //private _analyticsDashboardService: AnalyticsDashboardService,
         private _estadPrueba: EstadXidiomaService,
         private _camapignService: CampaignService,
-        private _userService:UserService
+        private _userService: UserService
     ) {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
-          // Set the private defaults
-          this._unsubscribeAll = new Subject();
+        // Set the private defaults
+        this._unsubscribeAll = new Subject();
 
     }
 
@@ -318,7 +294,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     /**
      * On init
      */
-    ngOnInit():  void {
+    ngOnInit(): void {
         // Get the widgets from the service
         ///Actualizar los datos de una de
         ///las camapanas
@@ -330,41 +306,50 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         //de la lista de campana que se carga en
         ///_camapignService.campaign
 
-        let currentCamapingId : string  = "";
+        let currentCamapingId: string = "";
         console.log(" Get information about USER ", this._userService.user.id);
         this._camapignService.getCampaignbyUser(this._userService.user.id);
 
-        if ( typeof(this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0){
-          //Seleccionar un id de camapana aleatoriamente
-          let camapIgnObjet = this._camapignService.campaign[0];
+        if (typeof (this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0) {
+            //Seleccionar un id de camapana aleatoriamente
+            let camapIgnObjet = this._camapignService.campaign[0];
 
-          console.log("Campaingn list ", this._camapignService.campaign);
+            console.log("Campaingn list ", this._camapignService.campaign);
 
-          currentCamapingId = camapIgnObjet.id;
-          this._estadPrueba.setCurrentCamaignId(currentCamapingId);
+            currentCamapingId = camapIgnObjet.id;
+            this._estadPrueba.setCurrentCamaignId(currentCamapingId);
         }
 
-
-        this._estadPrueba.getDataEn().pipe(takeUntil(this._unsubscribeAll)).subscribe( newdata =>{
+        /// Widget 2 Data
+        this._estadPrueba.getDataEn().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
             console.log("<--- Get my data ---> ", newdata);
-          this.widget2.datasets[0].data = newdata;
-          console.log("TO SEE DATA IN CHART");
-          console.log("WIDGET 5");
-          console.log("Datasets ", this.widget2.datasets[0].data)
-          console.log("-----------------------")
-          console.log("labels ", this.widget5.labels);
-          console.log("-----------------------");
-          console.log("colors ", this.widget5.colors);
-          console.log("-----------------------");
-          console.log("options ", this.widget5.options);
-          console.log("-----------------------");
-          console.log("charType ", this.widget5.chartType);
+            this.widget2.datasets[0].data = newdata;
+        })
+        /// Widget 3 Data
+        this._estadPrueba.getDataEs().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
+            console.log("<--- Get my data ---> ", newdata);
+            this.widget3.datasets[0].data = newdata;
+        })
+        /// Widget 4 Data
+        this._estadPrueba.getDataTotal().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
+            console.log("<--- Get my data ---> ", newdata);
+            this.widget4.datasets[0].data = newdata;
         })
 
-          //this.widgets = this._analyticsDashboardService.widgets;
+        /*console.log("TO SEE DATA IN CHART");
+        console.log("WIDGET 5");
+        console.log("Datasets ", this.widget2.datasets[0].data)
+        console.log("-----------------------")
+        console.log("labels ", this.widget5.labels);
+        console.log("-----------------------");
+        console.log("colors ", this.widget5.colors);
+        console.log("-----------------------");
+        console.log("options ", this.widget5.options);
+        console.log("-----------------------");
+        console.log("charType ", this.widget5.chartType);*/
+        //this.widgets = this._analyticsDashboardService.widgets;
 
     }
-
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
@@ -428,14 +413,13 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     }
 
 
-     /**
-     * On destroy
-     */
-      ngOnDestroy(): void
-      {
-          // Unsubscribe from all subscriptions
-          this._unsubscribeAll.next();
-          this._unsubscribeAll.complete();
-      }
+    /**
+    * On destroy
+    */
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next();
+        this._unsubscribeAll.complete();
+    }
 }
 

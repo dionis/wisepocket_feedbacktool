@@ -68,7 +68,8 @@ const routes: Routes = [
         path     : ':folderHandle',
         component: OpinionMailboxComponent,
         resolve  : {
-            opinion: OpinionService
+            opinion: OpinionService,
+            data: EcommerceOrdersService
         }
     },
     {

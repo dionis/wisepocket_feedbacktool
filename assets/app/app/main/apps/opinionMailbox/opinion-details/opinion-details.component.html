@@ -7,231 +7,234 @@
         <span>{{ 'OPINION.SELECT_A_MESSAGE_TO_READ' | translate }}</span>
     </span>
 </div>
+<div fxLayout="row">
+    <div fxFlex="75%" *ngIf="opinion">
 
-<div *ngIf="opinion">
+      <div class="opinion-header" fxLayout="row" fxLayoutAlign="space-between center">
 
-    <div class="opinion-header" fxLayout="row" fxLayoutAlign="space-between center">
+          <div>
+              <div class="subject">{{opinion.subject}}</div>
 
-        <div>
-            <div class="subject">{{opinion.subject}}</div>
+              <div class="labels mt-8" fxLayout="row wrap">
+                  <div class="label" *ngFor="let labelId of opinion.labels"
+                      fxLayout="row" fxLayoutAlign="start center">
+                      <div class="label-color" [ngStyle]="{'background-color': labels | getById:labelId:'color'}"></div>
+                      <div class="label-title">{{labels | getById:labelId:'title'}}</div>
+                  </div>
+              </div>
 
-            <div class="labels mt-8" fxLayout="row wrap">
-                <div class="label" *ngFor="let labelId of opinion.labels"
-                     fxLayout="row" fxLayoutAlign="start center">
-                    <div class="label-color" [ngStyle]="{'background-color': labels | getById:labelId:'color'}"></div>
-                    <div class="label-title">{{labels | getById:labelId:'title'}}</div>
-                </div>
-            </div>
+          </div>
 
-        </div>
+          <div class="actions" fxLayout="row" fxLayoutAlign="start center">
+              <button mat-icon-button (click)="toggleStar($event)" aria-label="Toggle star">
+                  <mat-icon class="amber-fg" *ngIf="opinion.starred">star</mat-icon>
+                  <mat-icon class="secondary-text" *ngIf="!opinion.starred">star_border</mat-icon>
+              </button>
 
-        <div class="actions" fxLayout="row" fxLayoutAlign="start center">
-            <button mat-icon-button (click)="toggleStar($event)" aria-label="Toggle star">
-                <mat-icon class="amber-fg" *ngIf="opinion.starred">star</mat-icon>
-                <mat-icon class="secondary-text" *ngIf="!opinion.starred">star_border</mat-icon>
-            </button>
+              <button mat-icon-button (click)="toggleImportant($event)" aria-label="Toggle important">
+                  <mat-icon class="red-fg" *ngIf="opinion.important">label</mat-icon>
+                  <mat-icon class="secondary-text" *ngIf="!opinion.important">label_outline</mat-icon>
+              </button>
+          </div>
+      </div>
 
-            <button mat-icon-button (click)="toggleImportant($event)" aria-label="Toggle important">
-                <mat-icon class="red-fg" *ngIf="opinion.important">label</mat-icon>
-                <mat-icon class="secondary-text" *ngIf="!opinion.important">label_outline</mat-icon>
-            </button>
-        </div>
+      <div class="opinion-content">
+
+          <div class="info" fxLayout="row" fxLayoutAlign="space-between start">
+
+              <div fxFlex fxLayout="column" fxLayoutAlign="start start">
+
+                  <div fxLayout="row" fxLayoutAlign="start start">
+
+                      <div>
+                          <img *ngIf="opinion.avatar" alt="{{opinion.from.user}}"
+                              src="{{opinion.avatar}}" class="avatar"/>
+
+                          <div *ngIf="!opinion.avatar" class="avatar" ms-random-class="vm.colors">
+                              {{opinion.from.user[0]}}
+                          </div>
+                      </div>
+
+                      <div fxLayout="column" fxLayoutAlign="start start">
+
+                          <div class="name">
+                              {{opinion.from.user}}
+                          </div>
+
+                          <div class="to" fxLayout="row" fxLayoutAlign="start center">
+                              <div class="to-text">to</div>
+                              <div>{{opinion.to[0].user}}</div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <a class="toggle-details" (click)="showDetails = !showDetails">
+                      <span *ngIf="!showDetails">Show Details</span>
+                      <span *ngIf="showDetails">Hide Details</span>
+                  </a>
+
+                  <div *ngIf="showDetails" class="details" fxLayout="row" fxLayoutAlign="start start">
+
+                      <div fxLayout="column">
+                          <span class="title">From:</span>
+                          <span class="title">To:</span>
+                          <span class="title">Date:</span>
+                      </div>
+
+                      <div fxLayout="column">
+                          <span class="detail">{{opinion.from.sourceAdrees}}</span>
+                          <span class="detail">{{opinion.to[0].user}}</span>
+                          <span class="detail">{{opinion.arrivetime}}</span>
+                      </div>
+                  </div>
+              </div>
+
+              <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation()">
+                  <mat-icon>more_vert</mat-icon>
+              </button>
+
+              <mat-menu #moreMenu="matMenu">
+                  <button mat-menu-item aria-label="Reply">
+                      <mat-icon>reply</mat-icon>
+                      <span>Reply</span>
+                  </button>
+
+                  <button mat-menu-item aria-label="Forward">
+                      <mat-icon>forward</mat-icon>
+                      <span>Forward</span>
+                  </button>
+
+                  <button mat-menu-item aria-label="Print">
+                      <mat-icon>print</mat-icon>
+                      <span>Print</span>
+                  </button>
+              </mat-menu>
+          </div>
+
+          <div [innerHTML]="opinion.opinionText"></div>
+
+      </div>
+
+
+      <div *ngIf="opinion.attachments" class="opinion-attachments">
+
+          <div class="title">
+              <span>Attachments</span>
+              ({{opinion.attachments.length}})
+          </div>
+
+          <div class="attachment-list" fxLayout="row wrap">
+
+              <div class="attachment" fxLayout="column"
+                  *ngFor="let attachment of opinion.attachments">
+
+                  <img class="preview" src="{{attachment.preview}}">
+
+                  <div fxLayout="column">
+                      <a href="#" onclick="event.preventDefault()">View</a>
+                      <a href="#" onclick="event.preventDefault()">Download</a>
+                      <div class="size">({{attachment.size}})</div>
+                  </div>
+
+              </div>
+          </div>
+      </div>
     </div>
-
-    <div class="opinion-content">
-
-        <div class="info" fxLayout="row" fxLayoutAlign="space-between start">
-
-            <div fxFlex fxLayout="column" fxLayoutAlign="start start">
-
-                <div fxLayout="row" fxLayoutAlign="start start">
-
-                    <div>
-                        <img *ngIf="opinion.avatar" alt="{{opinion.from.user}}"
-                             src="{{opinion.avatar}}" class="avatar"/>
-
-                        <div *ngIf="!opinion.avatar" class="avatar" ms-random-class="vm.colors">
-                            {{opinion.from.user[0]}}
-                        </div>
-                    </div>
-
-                    <div fxLayout="column" fxLayoutAlign="start start">
-
-                        <div class="name">
-                            {{opinion.from.user}}
-                        </div>
-
-                        <div class="to" fxLayout="row" fxLayoutAlign="start center">
-                            <div class="to-text">to</div>
-                            <div>{{opinion.to[0].user}}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <a class="toggle-details" (click)="showDetails = !showDetails">
-                    <span *ngIf="!showDetails">Show Details</span>
-                    <span *ngIf="showDetails">Hide Details</span>
-                </a>
-
-                <div *ngIf="showDetails" class="details" fxLayout="row" fxLayoutAlign="start start">
-
-                    <div fxLayout="column">
-                        <span class="title">From:</span>
-                        <span class="title">To:</span>
-                        <span class="title">Date:</span>
-                    </div>
-
-                    <div fxLayout="column">
-                        <span class="detail">{{opinion.from.sourceAdrees}}</span>
-                        <span class="detail">{{opinion.to[0].user}}</span>
-                        <span class="detail">{{opinion.arrivetime}}</span>
-                    </div>
-                </div>
-            </div>
-
-            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation()">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-
-            <mat-menu #moreMenu="matMenu">
-                <button mat-menu-item aria-label="Reply">
-                    <mat-icon>reply</mat-icon>
-                    <span>Reply</span>
-                </button>
-
-                <button mat-menu-item aria-label="Forward">
-                    <mat-icon>forward</mat-icon>
-                    <span>Forward</span>
-                </button>
-
-                <button mat-menu-item aria-label="Print">
-                    <mat-icon>print</mat-icon>
-                    <span>Print</span>
-                </button>
-            </mat-menu>
-        </div>
-
-        <div [innerHTML]="opinion.opinionText"></div>
-
-    </div>
-
-
-    <div *ngIf="opinion.attachments" class="opinion-attachments">
-
-        <div class="title">
-            <span>Attachments</span>
-            ({{opinion.attachments.length}})
-        </div>
-
-        <div class="attachment-list" fxLayout="row wrap">
-
-            <div class="attachment" fxLayout="column"
-                 *ngFor="let attachment of opinion.attachments">
-
-                <img class="preview" src="{{attachment.preview}}">
-
-                <div fxLayout="column">
-                    <a href="#" onclick="event.preventDefault()">View</a>
-                    <a href="#" onclick="event.preventDefault()">Download</a>
-                    <div class="size">({{attachment.size}})</div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- CONTENT CARD -->
-<div class="content-card" >
+    <div fxFlex="25%" class="content-card" >
 
-    <mat-table class="orders-table"
-               #table [dataSource]="dataSource"
-               matSort
-               [@animateStagger]="{value:'50'}"
-               fusePerfectScrollbar>
+        <mat-table class="orders-table"
+                  #table [dataSource]="dataSource"
+                  matSort
+                  [@animateStagger]="{value:'50'}"
+                  fusePerfectScrollbar>
 
-        <!-- ID Column -->
-        <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-            <mat-cell *matCellDef="let order">
-                <p class="text-truncate">{{order.id}}</p>
-            </mat-cell>
-        </ng-container>
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                <mat-cell *matCellDef="let order">
+                    <p class="text-truncate">{{order.id}}</p>
+                </mat-cell>
+            </ng-container>
 
-        <!-- Reference Column -->
-        <!-- <ng-container matColumnDef="reference">
-            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Reference</mat-header-cell>
-            <mat-cell *matCellDef="let order" fxHide fxShow.gt-sm>
-                <p class="text-truncate">{{order.reference}}</p>
-            </mat-cell>
-        </ng-container> -->
+            <!-- Reference Column -->
+            <!-- <ng-container matColumnDef="reference">
+                <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Reference</mat-header-cell>
+                <mat-cell *matCellDef="let order" fxHide fxShow.gt-sm>
+                    <p class="text-truncate">{{order.reference}}</p>
+                </mat-cell>
+            </ng-container> -->
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="aspects">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>{{'OPINION.ASPECT' | translate}}</mat-header-cell>
-            <mat-cell *matCellDef="let order">
-                <p class="text-truncate">
-                    {{order.customer.firstName}}
-                    {{order.customer.lastName}}
-                </p>
-            </mat-cell>
-        </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="aspects">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'OPINION.ASPECT' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let order">
+                    <p class="text-truncate">
+                        {{order.customer.firstName}}
+                        {{order.customer.lastName}}
+                    </p>
+                </mat-cell>
+            </ng-container>
 
-        <!-- Total Price Column -->
-        <ng-container matColumnDef="total">
-            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Total</mat-header-cell>
-            <mat-cell *matCellDef="let order" fxHide fxShow.gt-md>
-                <p class="total-price text-truncate">
-                    {{order.total | currency:'USD':'symbol'}}
-                </p>
-            </mat-cell>
-        </ng-container>
+            <!-- Total Price Column -->
+            <ng-container matColumnDef="total">
+                <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Total</mat-header-cell>
+                <mat-cell *matCellDef="let order" fxHide fxShow.gt-md>
+                    <p class="total-price text-truncate">
+                        {{order.total | currency:'USD':'symbol'}}
+                    </p>
+                </mat-cell>
+            </ng-container>
 
-        <!-- Payment Column -->
-        <!-- <ng-container matColumnDef="payment">
-            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Payment</mat-header-cell>
-            <mat-cell *matCellDef="let order" fxHide fxShow.gt-sm>
-                <p class="text-truncate">
-                    {{order.payment.method}}
-                </p>
-            </mat-cell>
-        </ng-container> -->
+            <!-- Payment Column -->
+            <!-- <ng-container matColumnDef="payment">
+                <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Payment</mat-header-cell>
+                <mat-cell *matCellDef="let order" fxHide fxShow.gt-sm>
+                    <p class="text-truncate">
+                        {{order.payment.method}}
+                    </p>
+                </mat-cell>
+            </ng-container> -->
 
-        <!-- Status Column -->
-        <ng-container matColumnDef="polarity">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>{{'OPINION.POLARITY' | translate}}</mat-header-cell>
-            <mat-cell *matCellDef="let order">
-                <p class="status text-truncate h6 p-4" [ngClass]="order.status[0].color">
-                    {{order.status[0].name}}
-                </p>
-            </mat-cell>
-        </ng-container>
+            <!-- Status Column -->
+            <ng-container matColumnDef="polarity">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'OPINION.POLARITY' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let order">
+                    <p class="status text-truncate h6 p-4" [ngClass]="order.status[0].color">
+                        {{order.status[0].name}}
+                    </p>
+                </mat-cell>
+            </ng-container>
 
-        <!-- Date Column -->
-        <!-- <ng-container matColumnDef="date">
-            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Date</mat-header-cell>
-            <mat-cell *matCellDef="let order" fxHide fxShow.gt-sm>
-                <p class="text-truncate">
-                    {{order.date}}
-                </p>
-            </mat-cell>
-        </ng-container> -->
+            <!-- Date Column -->
+            <!-- <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Date</mat-header-cell>
+                <mat-cell *matCellDef="let order" fxHide fxShow.gt-sm>
+                    <p class="text-truncate">
+                        {{order.date}}
+                    </p>
+                </mat-cell>
+            </ng-container> -->
 
-        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
 
-        <mat-row *matRowDef="let order; columns: displayedColumns;"
-                 class="order"
-                 matRipple
-                >
-        </mat-row>
-    </mat-table>
+            <mat-row *matRowDef="let order; columns: displayedColumns;"
+                    class="order"
+                    matRipple
+                    >
+            </mat-row>
+        </mat-table>
 
-    <mat-paginator #paginatorDetails
-                   [length]="10"
-                   [pageIndex]="0"
-                   [pageSize]="10"
-                   [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>
+        <mat-paginator #paginatorDetails
+                      [length]="10"
+                      [pageIndex]="0"
+                      [pageSize]="10"
+                      [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+
+    </div>
+<!-- / CONTENT CARD -->
 
 </div>
-<!-- / CONTENT CARD -->
+

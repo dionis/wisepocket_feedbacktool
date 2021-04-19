@@ -8,7 +8,7 @@ import { AnalyticsPolarityDashboardService } from '../analyticsbyPolarity/analyt
 //import { AnalyticsDashboardService } from './analytics.service';
 
 @Component({
-    selector: 'analytics-dashboard',
+    selector: 'polarity-dashboard-analytics',
     templateUrl: './analyticsPolarity.component.html',
     styleUrls: ['./analyticsPolarity.component.scss'],
     encapsulation: ViewEncapsulation.None,

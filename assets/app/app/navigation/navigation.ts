@@ -109,6 +109,13 @@ export const navigation: FuseNavigation[] = [
             type: 'item',
             url: '/apps/analyticsPolarity'
         },
+        {
+            id:'test4',
+            title:'Prueba del AnalyticsDate',
+            translate:'Prueba del AnalyticsDate',
+            type: 'item',
+            url: '/apps/analyticsDate'
+        },
 
         ]
     }

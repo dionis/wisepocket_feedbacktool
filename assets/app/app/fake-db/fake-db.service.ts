@@ -1,3 +1,4 @@
+import { AnalyticsDateDashboardDb } from './dashboard-analyticsDate';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 import { ProjectDashboardDb } from '../../app/fake-db/dashboard-project';
@@ -34,6 +35,7 @@ export class FakeDbService implements InMemoryDbService
             'analyticsXIdioma-dashboard-widgets': AnalyticsXIdiomaDashboardDb.widgets,
             'analytics-dashboard-widgets': AnalyticsDashboardDb.widgets,
             'analyticsPolarity-dashboard-widgets' : AnalyticsPolarityDashboardDb.widgets,
+            'analyticsDate-dashboard-widgets' : AnalyticsDateDashboardDb.widgets,
 
             // Calendar
             'calendar': CalendarFakeDb.data,

@@ -66,14 +66,14 @@ module.exports = {
 
     allGateway = await User.find({})
 
-    registerSize = 51
+    registerSize = 25
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
 
       userObjet = faker.random.arrayElement(allGateway)
 
       let campaign = await Campaign.count({ 'userChief': userObjet.id })
-      if (campaign < 51) {
+      if (campaign < 25) {
         newCamp = {
           nombre: faker.company.companyName("Test"),
           fecha: faker.date.recent(7),

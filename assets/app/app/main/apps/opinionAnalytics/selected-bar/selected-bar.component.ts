@@ -1,4 +1,3 @@
-import { Campaign } from '../../../../models/campaing.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
@@ -6,19 +5,19 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseConfirmDialogComponent } from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
 
-import { CampaignService } from '../../../../services/campaign.service';
+import { OpinionService } from '../../../../services/opinion-analizer.service';
 
 @Component({
     selector   : 'selected-bar',
     templateUrl: './selected-bar.component.html',
     styleUrls  : ['./selected-bar.component.scss']
 })
-export class CampaignSelectedBarComponent implements OnInit, OnDestroy
+export class OpinionAnalyticsSelectedBarComponent implements OnInit, OnDestroy
 {
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    hasSelectedCampaign: boolean;
+    hasSelectedOpinions: boolean;
     isIndeterminate: boolean;
-    selectedCampaigns: string[];
+    selectedOpinions: string[];
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -26,11 +25,11 @@ export class CampaignSelectedBarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {CampaignService} _campaignService
+     * @param {OpinionService} _opinionService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _campignService: CampaignService,
+        private _opinionService: OpinionService,
         public _matDialog: MatDialog
     )
     {
@@ -47,13 +46,13 @@ export class CampaignSelectedBarComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._campignService.onSelectedCampaignsChanged
+        this._opinionService.onSelectedOpinionsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedCampaign => {
-                this.selectedCampaigns = selectedCampaign;
+            .subscribe(selectedOpinions => {
+                this.selectedOpinions = selectedOpinions;
                 setTimeout(() => {
-                    this.hasSelectedCampaign = selectedCampaign.length > 0;
-                    this.isIndeterminate = (selectedCampaign.length !== this._campignService.campaign.length && selectedCampaign.length > 0);
+                    this.hasSelectedOpinions = selectedOpinions.length > 0;
+                    this.isIndeterminate = (selectedOpinions.length !== this._opinionService.opinions.length && selectedOpinions.length > 0);
                 }, 0);
             });
     }
@@ -77,7 +76,7 @@ export class CampaignSelectedBarComponent implements OnInit, OnDestroy
      */
     selectAll(): void
     {
-        this._campignService.selectCampaign();
+        this._opinionService.selectOpinions();
     }
 
     /**
@@ -85,25 +84,25 @@ export class CampaignSelectedBarComponent implements OnInit, OnDestroy
      */
     deselectAll(): void
     {
-        this._campignService.deselectCampaigns();
+        this._opinionService.deselectOpinions();
     }
 
     /**
-     * Delete selected campaigns
+     * Delete selected contacts
      */
-    deleteSelectedCampaigns(): void
+    deleteSelectedOpinions(): void
     {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
 
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete all selected campaigns?';
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete all selected contacts?';
 
         this.confirmDialogRef.afterClosed()
             .subscribe(result => {
                 if ( result )
                 {
-                    this._campignService.deleteSelectedCampaigns();
+                    this._opinionService.deleteSelectedOpinions();
                 }
                 this.confirmDialogRef = null;
             });

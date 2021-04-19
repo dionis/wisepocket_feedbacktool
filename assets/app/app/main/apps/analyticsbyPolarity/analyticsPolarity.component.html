@@ -1,4 +1,4 @@
-<div id="dashboard-analytics" class="page-layout blank">
+<div id="polarity-dashboard-analytics" class="page-layout blank">
 
 
     <div class="content">
@@ -6,10 +6,9 @@
         <div class="left mr-lg-32">
 
             <div class="pb-24 font-size-18 font-weight-300">
-                Tendencia de Opiniones por idiomas Inglés - Español
-                <h4>Campaña analizada: {{campaigns}}</h4>
+                Tendencia de Opiniones por polaridad Positiva - Negativa
             </div>
-            <br>
+
             <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
 
                 <!-- Widget 2 -->
@@ -20,22 +19,22 @@
                         <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
 
                             <div class="pr-16">
-                                <div class="h3 secondary-text">Inglés</div>
+                                <div class="h3 secondary-text">Positiva</div>
                                 <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                    {{widget2.englishOpin.value}}
+                                    {{widget2.positiveOpin.value}}
                                 </div>
                             </div>
 
                             <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
                                 <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
-                                    *ngIf="widget2.englishOpin.ofTarget > 0">
+                                    *ngIf="widget2.positiveOpin.ofTarget > 0">
                                     <mat-icon class="green-fg mr-4">trending_up</mat-icon>
-                                    <span>{{widget2.englishOpin.ofTarget}}%</span>
+                                    <span>{{widget2.positiveOpin.ofTarget}}%</span>
                                 </div>
                                 <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
-                                    *ngIf="widget2.englishOpin.ofTarget < 0">
+                                    *ngIf="widget2.positiveOpin.ofTarget < 0">
                                     <mat-icon class="red-fg mr-4">trending_down</mat-icon>
-                                    <span>{{widget2.englishOpin.ofTarget}}%</span>
+                                    <span>{{widget2.positiveOpin.ofTarget}}%</span>
                                 </div>
                                 <div class="ml-4 text-nowrap">del objetivo</div>
                             </div>
@@ -44,7 +43,8 @@
 
                         <div class="h-96 w-100-p">
                             <canvas baseChart [datasets]="widget2.datasets" [labels]="widget2.labels"
-                                [colors]="widget2.colors" [options]="widget2.options" [chartType]="widget2.chartType">
+                                [colors]="widget2.colors" [options]="widget2.options"
+                                [chartType]="widget2.chartType">
                             </canvas>
                         </div>
 
@@ -61,22 +61,22 @@
                         <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
 
                             <div class="pr-16">
-                                <div class="h3 secondary-text">Español</div>
+                                <div class="h3 secondary-text">Negativa</div>
                                 <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                    {{widget3.spanishOpin.value}}
+                                    {{widget3.negativeOpin.value}}
                                 </div>
                             </div>
 
                             <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
                                 <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
-                                    *ngIf="widget3.spanishOpin.ofTarget > 0">
+                                    *ngIf="widget3.negativeOpin.ofTarget > 0">
                                     <mat-icon class="green-fg mr-4">trending_up</mat-icon>
-                                    <span>{{widget3.spanishOpin.ofTarget}}%</span>
+                                    <span>{{widget3.negativeOpin.ofTarget}}%</span>
                                 </div>
                                 <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
-                                    *ngIf="widget3.spanishOpin.ofTarget < 0">
+                                    *ngIf="widget3.negativeOpin.ofTarget < 0">
                                     <mat-icon class="red-fg mr-4">trending_down</mat-icon>
-                                    <span>{{widget3.spanishOpin.ofTarget}}%</span>
+                                    <span>{{widget3.negativeOpin.ofTarget}}%</span>
                                 </div>
                                 <div class="ml-4 text-nowrap">del objetivo</div>
                             </div>
@@ -85,7 +85,8 @@
 
                         <div class="h-96 w-100-p">
                             <canvas baseChart [datasets]="widget3.datasets" [labels]="widget3.labels"
-                                [colors]="widget3.colors" [options]="widget3.options" [chartType]="widget3.chartType">
+                                [colors]="widget3.colors" [options]="widget3.options"
+                                [chartType]="widget3.chartType">
                             </canvas>
                         </div>
 
@@ -126,7 +127,8 @@
 
                         <div class="h-96 w-100-p">
                             <canvas baseChart [datasets]="widget4.datasets" [labels]="widget4.labels"
-                                [colors]="widget4.colors" [options]="widget4.options" [chartType]="widget4.chartType">
+                                [colors]="widget4.colors" [options]="widget4.options"
+                                [chartType]="widget4.chartType">
                             </canvas>
                         </div>
 
@@ -146,7 +148,7 @@
 
                 <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="column" fxLayoutAlign="start start">
-                        <span class="h2">Inglés y Español</span>
+                        <span class="h2">Positiva y Negativa</span>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="start center">
                         <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
@@ -163,8 +165,9 @@
                 </div>
 
                 <div class="position-relative h-368 pb-16">
-                    <canvas baseChart [datasets]="widget5.datasets[widget5SelectedDay]" [labels]="widget5.labels"
-                        [colors]="widget5.colors" [options]="widget5.options" [chartType]="widget5.chartType">
+                    <canvas baseChart [datasets]="widget5.datasets[widget5SelectedDay]"
+                        [labels]="widget5.labels" [colors]="widget5.colors"
+                        [options]="widget5.options" [chartType]="widget5.chartType">
                     </canvas>
                 </div>
 

@@ -10,7 +10,11 @@ import { Opinion } from '../models/opinion.model';
 @Injectable()
 export class OpinionService implements Resolve<any>
 {
+    deleteSelectedOpinions() {
+        throw new Error('Method not implemented.');
+    }
     opinions: Opinion[];
+    user: string;
     selectedOpinions: Opinion[];
     currentOpinion: Opinion;
     searchText = '';
@@ -25,8 +29,11 @@ export class OpinionService implements Resolve<any>
     onCurrentOpinionChanged: BehaviorSubject<any>;
     onFoldersChanged: BehaviorSubject<any>;
     onFiltersChanged: BehaviorSubject<any>;
+    onUserDataChanged: BehaviorSubject<any>;
     onLabelsChanged: BehaviorSubject<any>;
     onSearchTextChanged: BehaviorSubject<any>;
+
+    filterBy: string;
 
     /**
      * Constructor
@@ -45,6 +52,7 @@ export class OpinionService implements Resolve<any>
         this.onFoldersChanged = new BehaviorSubject([]);
         this.onFiltersChanged = new BehaviorSubject([]);
         this.onLabelsChanged = new BehaviorSubject([]);
+        this.onUserDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new BehaviorSubject('');
     }
 
@@ -157,6 +165,11 @@ export class OpinionService implements Resolve<any>
     getOpinions(): Promise<Opinion[]>
     {
 
+        return new Promise((resolve, reject) => {
+            this._httpClient.get('api/opinion')
+                .subscribe((response:any) => {
+
+
         // return new Promise((resolve, reject) => {
         //     this._httpClient.get('api/opinions-opinions')
         //         .subscribe((opinions: any) => {
@@ -166,16 +179,25 @@ export class OpinionService implements Resolve<any>
         //                 return new Opinion(opinion);
         //               });
 
-        if ( this.routeParams.labelHandle )
+
+            if ( this.routeParams.labelHandle )
         {
             return this.getOpinionsByLabel(this.routeParams.labelHandle);
         }
 
-        if ( this.routeParams.filterHandle )
+            if ( this.routeParams.filterHandle )
         {
             return this.getOpinionsByFilter(this.routeParams.filterHandle);
         }
 
+            if ( this.routeParams.folderHandle)
+            {
+                return this.getOpinionsByFolder(this.routeParams.folderHandle);
+            }
+                })
+        });
+    
+        
         return this.getOpinionsByFolder(this.routeParams.folderHandle);
                       //console.log("------ Process Data -------")
                       // this.onOpinionsChanged.next(this.opinions);
@@ -184,6 +206,8 @@ export class OpinionService implements Resolve<any>
                       // }
                       // );
 
+
+        return this.getOpinionsByFolder(this.routeParams.folderHandle);
     }
 
     /**
@@ -201,7 +225,11 @@ export class OpinionService implements Resolve<any>
 
                     const folderId = folders[0].id;
 
+
+                    this._httpClient.get('api/opinion-opinions?folder=' + folderId)
+
                     this._httpClient.get('api/opinions-opinions?folder=' + folderId)
+
                         .subscribe((opinions: any) => {
 
                             this.opinions = opinions.map(opinion => {

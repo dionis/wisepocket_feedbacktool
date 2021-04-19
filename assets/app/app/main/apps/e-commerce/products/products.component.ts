@@ -43,7 +43,7 @@ export class EcommerceProductsComponent implements OnInit
     {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-       this.campaigns = this._campaignService.getMyCamps()
+ //      this.campaigns = this._campaignService.getCampaignbyUser()
     }
 
     // -----------------------------------------------------------------------------------------------------

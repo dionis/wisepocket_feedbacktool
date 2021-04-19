@@ -167,6 +167,15 @@ const routes = [
         path: 'opinionMailbox',
         loadChildren: () => import('../apps/opinionMailbox/opinionMailbox.module').then(m => m.OpinionModule)
     },
+    {
+        path: 'analyticsPolarity',
+        loadChildren: () => import('../apps/analyticsbyPolarity/analyticsPolarity.module').then(m => m.AnalyticsPolarityDashboardModule)
+    },
+    {
+        path: 'analyticsDate',
+        loadChildren: () => import('../apps/analyticsbyDate/analyticsDate.module').then(m => m.AnalyticsDateDashboardModule)
+    },
+
     /*{
         path: 'opinionAnalytics',
         loadChildren: () => import('../apps/opinionAnalytics/opinionAnalytics.module').then(m =>m.OpinionAnalytics)

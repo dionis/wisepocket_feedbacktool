@@ -1,17 +1,27 @@
+import { interval } from 'rxjs';
 import { FuseUtils } from "../../@fuse/utils";
 
 export class Opinion{
     id: string
+    aspectList:{                            //lista con las palabras claves del opinionText
+        aspectText: string,                //palabras claves 
+        position: number[],                //posicion de dichas palabras
+        polarity: string,                 //Buena, mala , nuetral
+
+    }[];
+    idioma: string;                        //en, es
+    opinionPolarity: string;              //Buena, Mala, Neutral
     from:{
+        type: string,                  //Numero de telefono, Nombre, Correo
+        sourceAdrees: string,           //Whatsapp, Telegram, Messenger, Mensaje por Telefono, Email
         user: string,
-        avatar: string,
-        email: string
     };
     to:{
-        user: string,
-        email: string
+        user: string
     }[];
-    opinionText?: string;
+    opinionText: string;
+    user: string;
+    avatar: string;
     labels: string[];
     folder: string;
     hasAttachments: boolean;
@@ -22,14 +32,13 @@ export class Opinion{
         url: string,
         size: string
     }[];
-    time: string;
     arrivetime: string;
+    time: string;
     starred: boolean;
     important: boolean;
-    message: string;
+    //message: string;
     subject: string;
-
-
+    
    /**
      * Constructor
      *
@@ -39,10 +48,12 @@ export class Opinion{
     {
         {
             this.id = opinion.id;
+            this.aspectList = opinion.aspectList;
+            this.idioma = opinion.idioma;
+            this.opinionPolarity = opinion.opinionPolarity;
             this.from = opinion.from;
             this.to = opinion.to;
             this.opinionText = opinion.opinionText;
-            this.message = opinion.message;
             this.labels = opinion.labels;
             this.folder = opinion.folder;
             this.hasAttachments = opinion.hasAttachments;
@@ -50,8 +61,9 @@ export class Opinion{
             this.starred = opinion.starred;
             this.important = opinion.important;
             this.time = opinion.time;
-            this.message = opinion.message;
+            this.arrivetime = opinion.arrivetime;
             this.subject = opinion.subject;
+            this.avatar = opinion.avatar;
         }
     }
     toggleStar(): void

@@ -12,6 +12,7 @@ module.exports = {
     getCantENXDia: async (req, res) => {
         let campaign
         let cantDay = [1, 2, 3, 4, 5, 6, 7]
+        //let temp = [221, 428, 492, 471, 413, 344, 294]
         await Campaign.findOne({ id: req.param('id') })
             .then(async (doc) => {
                 if (!doc) {
@@ -115,8 +116,10 @@ module.exports = {
                         })
                 }
 
-            }
-            )
+            })
+
+
+
     },
 
     //Requiere ID de la Campaña

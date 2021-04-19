@@ -1,29 +1,26 @@
-import { ListCampService } from '../../../../../../.tmp/public/app/app/main/ui/list-camp/list-camp.service';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
-import {CampaignService} from '../../../services/campaign.service'
 
-
-import { CampaignFormDialogComponent } from '../campaign/campaign-form/campaign-form.component';
+import { OpinionService } from '../../../services/opinion-analizer.service'
+import { OpinionAnalyticsFormDialogComponent } from '../opinionAnalytics/opinionAnalytics-form/opinionAnalytics-form.component'
 
 @Component({
-    selector     : 'campaigns',
-    templateUrl  : './campaign.component.html',
-    styleUrls    : ['./campaign.component.scss'],
+    selector     : 'opinions',
+    templateUrl  : './opinionAnalytics.component.html',
+    styleUrls    : ['./opinionAnalytics.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class CampaignComponent implements OnInit, OnDestroy
+export class OpinionAnalyticsComponent implements OnInit, OnDestroy
 {
     dialogRef: any;
-    hasSelectedCampaign: boolean;
+    hasSelectedOpinions: boolean;
     searchInput: FormControl;
     ListaCampanaService: any;
 
@@ -34,18 +31,18 @@ export class CampaignComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {CampaignService} _campaignService
+     * @param {OpinionService} _opinionService
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _campaignService: CampaignService,
+        private _opinionService: OpinionService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
-        public campaingService: CampaignService
+        //public campaingService: CampaingService
     )
     {
-        
+
 
         // Set the defaults
         this.searchInput = new FormControl('');
@@ -66,10 +63,10 @@ export class CampaignComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._campaignService.onSelectedCampaignsChanged
+        this._opinionService.onSelectedOpinionsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedCampaign => {
-                this.hasSelectedCampaign = selectedCampaign.length > 0;
+            .subscribe(selectedContacts => {
+                this.hasSelectedOpinions = selectedContacts.length > 0;
             });
 
         this.searchInput.valueChanges
@@ -79,7 +76,7 @@ export class CampaignComponent implements OnInit, OnDestroy
                 distinctUntilChanged()
             )
             .subscribe(searchText => {
-                this._campaignService.onSearchTextChanged.next(searchText);
+                this._opinionService.onSearchTextChanged.next(searchText);
             });
 
         /*this.campaingService.getCampaignbyUser().then(res=>{
@@ -88,8 +85,9 @@ export class CampaignComponent implements OnInit, OnDestroy
             })
             .catch(err=>{
                 console.log("Error", Error);
-            });     */  
-        
+<<<<<<< HEAD
+            }); */
+
     }
 
     /**
@@ -107,12 +105,12 @@ export class CampaignComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * New campaign
+     * New contact
      */
-    newCampaign(): void
+    newOpinion(): void
     {
-        this.dialogRef = this._matDialog.open(CampaignFormDialogComponent, {
-            panelClass: 'campaign-form-dialog',
+        this.dialogRef = this._matDialog.open(OpinionAnalyticsFormDialogComponent, {
+            panelClass: 'opinionsAnalytics-form-dialog',
             data      : {
                 action: 'new'
             }
@@ -125,7 +123,7 @@ export class CampaignComponent implements OnInit, OnDestroy
                     return;
                 }
 
-                this._campaignService.updateCampaign(response.getRawValue());
+                this._opinionService.updateOpinion(response.getRawValue());
             });
     }
 

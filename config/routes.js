@@ -65,7 +65,6 @@ module.exports.routes = {
   "POST /registro/create": "RegistroController.create",
   "POST /aspectoopinion/create": "AspectoOpinionController.create",
   "POST /entidadopinion/create": "EntidadOpinionController.create",
-  "POST /estadisticaByidioma/create": "EstadisticaByidiomaController.create",
 
   //DELETE
   //'DELETE /opinion/deleteOpinion': 'OpinionController.deleteOpinion',

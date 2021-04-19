@@ -214,6 +214,7 @@ export class FilesDataSource extends DataSource<any>
             this._ecommerceOrdersService.onOrdersChanged,
             this._matPaginator.page,
             this._filterChange,
+            this._matSort.sortChange
 
         ];
 
@@ -225,7 +226,7 @@ export class FilesDataSource extends DataSource<any>
 
                 this.filteredData = [...data];
 
-                //data = this.sortData(data);
+                data = this.sortData(data);
 
                 // Grab the page's slice of data.
                 const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
@@ -256,48 +257,48 @@ export class FilesDataSource extends DataSource<any>
      * @param data
      * @returns {any[]}
      */
-    // sortData(data): any[]
-    // {
-    //     if ( !this._matSort.active || this._matSort.direction === '' )
-    //     {
-    //         return data;
-    //     }
+    sortData(data): any[]
+    {
+        if ( !this._matSort.active || this._matSort.direction === '' )
+        {
+            return data;
+        }
 
-    //     return data.sort((a, b) => {
-    //         let propertyA: number | string = '';
-    //         let propertyB: number | string = '';
+        return data.sort((a, b) => {
+            let propertyA: number | string = '';
+            let propertyB: number | string = '';
 
-    //         switch ( this._matSort.active )
-    //         {
-    //             case 'id':
-    //                 [propertyA, propertyB] = [a.id, b.id];
-    //                 break;
-    //             case 'reference':
-    //                 [propertyA, propertyB] = [a.reference, b.reference];
-    //                 break;
-    //             case 'customer':
-    //                 [propertyA, propertyB] = [a.customer.firstName, b.customer.firstName];
-    //                 break;
-    //             case 'total':
-    //                 [propertyA, propertyB] = [a.total, b.total];
-    //                 break;
-    //             case 'payment':
-    //                 [propertyA, propertyB] = [a.payment.method, b.payment.method];
-    //                 break;
-    //             case 'status':
-    //                 [propertyA, propertyB] = [a.status[0].name, b.status[0].name];
-    //                 break;
-    //             case 'date':
-    //                 [propertyA, propertyB] = [a.date, b.date];
-    //                 break;
-    //         }
+            switch ( this._matSort.active )
+            {
+                case 'id':
+                    [propertyA, propertyB] = [a.id, b.id];
+                    break;
+                case 'reference':
+                    [propertyA, propertyB] = [a.reference, b.reference];
+                    break;
+                case 'aspects':
+                    [propertyA, propertyB] = [a.customer.firstName, b.customer.firstName];
+                    break;
+                case 'total':
+                    [propertyA, propertyB] = [a.total, b.total];
+                    break;
+                case 'payment':
+                    [propertyA, propertyB] = [a.payment.method, b.payment.method];
+                    break;
+                case 'polarity':
+                    [propertyA, propertyB] = [a.status[0].name, b.status[0].name];
+                    break;
+                case 'date':
+                    [propertyA, propertyB] = [a.date, b.date];
+                    break;
+            }
 
-    //         const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-    //         const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+            const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+            const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 
-    //         return (valueA < valueB ? -1 : 1) * (this._matSort.direction === 'asc' ? 1 : -1);
-    //     });
-    // }
+            return (valueA < valueB ? -1 : 1) * (this._matSort.direction === 'asc' ? 1 : -1);
+        });
+    }
 
     /**
      * Disconnect

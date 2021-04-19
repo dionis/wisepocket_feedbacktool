@@ -36,7 +36,8 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     showDetails: boolean;
 
     dataSource: FilesDataSource | null;
-    displayedColumns = ['id', 'reference', 'customer', 'total', 'payment', 'status', 'date'];
+    displayedColumns = ['id', 'aspects', 'total', 'polarity'];
+    //['id', 'reference', 'customer', 'total', 'payment', 'status', 'date'];
 
     @ViewChild(MatPaginator, {static: true})
     paginatorDetails: MatPaginator;
@@ -83,8 +84,8 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-       console.log("Is paginator ", this.paginatorDetails)
-       this.dataSource = new FilesDataSource(this._ecommerceOrdersService, this.paginatorDetails);
+       console.log("Is paginator ", this.sort)
+       this.dataSource = new FilesDataSource(this._ecommerceOrdersService, this.paginatorDetails, this.sort);
 
 
         // Subscribe to update the current opinion
@@ -162,7 +163,8 @@ export class FilesDataSource extends DataSource<any>
      */
     constructor(
         private _ecommerceOrdersService: EcommerceOrdersService,
-        private _matPaginator: MatPaginator
+        private _matPaginator: MatPaginator,
+        private _matSort: MatSort
 
     )
     {

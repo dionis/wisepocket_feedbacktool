@@ -8,14 +8,12 @@
         <div class="row-1" fxLayout="row" fxLayoutAlign="start center">
 
           <div class="name" fxLayout="row" fxLayoutAlign="start center" fxFlex>
-            <img class="avatar" *ngIf="opinion.avatar" alt="{{opinion.from?.user}}" src="{{opinion.avatar}}"/> 
+            <img class="avatar" *ngIf="opinion.avatar" alt="{{opinion.from?.user}}" src="{{opinion.avatar}}"/>
             <div class="avatar accent" *ngIf="!opinion.avatar">{{opinion.from?.user[0]}}</div>
             <span class="text-truncate" *ngIf="opinion?.from">{{opinion.from?.user}}</span>
             <mat-icon class="s-16 ml-8" *ngIf="opinion.hasAttachments">attachment</mat-icon>
           </div>
-                *ngIf="!opinion.from?.avatar"
-            <div fxLayout="row" fxLayoutAlign="start center">
-
+                <div fxLayout="row" fxLayoutAlign="start center">
                 <div class="time">{{opinion.arrivetime}}</div>
 
             </div>

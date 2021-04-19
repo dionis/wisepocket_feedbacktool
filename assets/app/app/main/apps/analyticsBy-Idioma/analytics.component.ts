@@ -18,6 +18,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     //widgets: any;
     widget5SelectedDay = 'Ayer';
     data: any;
+    campaigns: any
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -335,7 +336,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
             console.log("<--- Get my data ---> ", newdata);
             this.widget4.datasets[0].data = newdata;
         })
-
+        this.campaigns = this._camapignService.getMyCamps();
+        console.log(this.campaigns);
+        
         /*console.log("TO SEE DATA IN CHART");
         console.log("WIDGET 5");
         console.log("Datasets ", this.widget2.datasets[0].data)

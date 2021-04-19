@@ -7,8 +7,9 @@
 
             <div class="pb-24 font-size-18 font-weight-300">
                 Tendencia de Opiniones por idiomas Inglés - Español
+                <h4>Campaña analizada: {{campaigns}}</h4>
             </div>
-
+            <br>
             <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
 
                 <!-- Widget 2 -->
@@ -43,8 +44,7 @@
 
                         <div class="h-96 w-100-p">
                             <canvas baseChart [datasets]="widget2.datasets" [labels]="widget2.labels"
-                                [colors]="widget2.colors" [options]="widget2.options"
-                                [chartType]="widget2.chartType">
+                                [colors]="widget2.colors" [options]="widget2.options" [chartType]="widget2.chartType">
                             </canvas>
                         </div>
 
@@ -85,8 +85,7 @@
 
                         <div class="h-96 w-100-p">
                             <canvas baseChart [datasets]="widget3.datasets" [labels]="widget3.labels"
-                                [colors]="widget3.colors" [options]="widget3.options"
-                                [chartType]="widget3.chartType">
+                                [colors]="widget3.colors" [options]="widget3.options" [chartType]="widget3.chartType">
                             </canvas>
                         </div>
 
@@ -127,8 +126,7 @@
 
                         <div class="h-96 w-100-p">
                             <canvas baseChart [datasets]="widget4.datasets" [labels]="widget4.labels"
-                                [colors]="widget4.colors" [options]="widget4.options"
-                                [chartType]="widget4.chartType">
+                                [colors]="widget4.colors" [options]="widget4.options" [chartType]="widget4.chartType">
                             </canvas>
                         </div>
 
@@ -165,9 +163,8 @@
                 </div>
 
                 <div class="position-relative h-368 pb-16">
-                    <canvas baseChart [datasets]="widget5.datasets[widget5SelectedDay]"
-                        [labels]="widget5.labels" [colors]="widget5.colors"
-                        [options]="widget5.options" [chartType]="widget5.chartType">
+                    <canvas baseChart [datasets]="widget5.datasets[widget5SelectedDay]" [labels]="widget5.labels"
+                        [colors]="widget5.colors" [options]="widget5.options" [chartType]="widget5.chartType">
                     </canvas>
                 </div>
 

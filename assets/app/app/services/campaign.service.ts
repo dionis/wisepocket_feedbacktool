@@ -59,8 +59,8 @@ export class CampaignService {
     const date = new Date()
     console.log(date.toLocaleDateString('en-US', { weekday: 'long' }))
     //getMyCamps(): Campaign //Camapaign es el modelo creado para la vista
-    console.log(this.campaign)
-    return this.campaign;
+    console.log(this.campaign[0].nombre)
+    return this.campaign[0].nombre;
   }
 
   updateCampaign(campaign): Promise<any>

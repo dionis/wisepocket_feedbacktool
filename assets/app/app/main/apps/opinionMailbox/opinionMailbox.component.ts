@@ -28,6 +28,8 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
     searchInput: FormControl;
     currentOpinion: Opinion;
 
+    showOpinionList:boolean = true;
+
     // Private
     private _unsubscribeAll: Subject<any>;
 

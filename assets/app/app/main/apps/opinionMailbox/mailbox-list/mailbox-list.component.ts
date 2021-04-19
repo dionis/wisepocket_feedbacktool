@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { fuseAnimations } from '../../../../../@fuse/animations';
 
 import {Opinion} from '../../../../models/opinion.model';
@@ -20,6 +21,9 @@ export class MailboxListComponent implements OnInit, OnDestroy
 {
     opinions: Opinion[];
     currentOpinion: Opinion;
+
+    @ViewChild(MatPaginator, {static: true})
+    paginator: MatPaginator;
 
     // Private
     private _unsubscribeAll: Subject<any>;

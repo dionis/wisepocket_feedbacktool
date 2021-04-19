@@ -93,9 +93,14 @@
             <!-- CONTENT -->
             <div class="content" fxLayout="row">
 
-                <mailbox-list fusePerfectScrollbar fxFlex></mailbox-list>
-                <opinion-details fusePerfectScrollbar fxFlex></opinion-details>
+             <!-- <ng-container *ngIf="showOpinionList; else hideOpinionList"> -->
 
+              <mailbox-list fusePerfectScrollbar fxFlex></mailbox-list>
+
+              <!-- </ng-container>
+              <ng-template #hideOpinionList> -->
+                <opinion-details fusePerfectScrollbar fxFlex></opinion-details>
+               <!-- </ng-template> -->
             </div>
             <!-- / CONTENT -->
 

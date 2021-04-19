@@ -3,11 +3,17 @@ import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FuseTranslationLoaderService } from '../../../../../../@fuse/services/translation-loader.service';
 
 import { fuseAnimations } from '../../../../../../@fuse/animations';
 
 import { OpinionService } from '../../../../../services/opinion-analizer.service';
 import { OpinionComposeDialogComponent } from '../../../../../../app/main/apps/opinionMailbox/dialogs/compose/compose.component';
+
+
+import { locale as english } from '../../../../../../app/main/apps/opinionMailbox/i18n/en';
+import { locale as turkish } from '../../../../../../app/main/apps/opinionMailbox/i18n/tr';
+import { locale as spanish } from '../../../../../../app/main/apps/opinionMailbox/i18n/es';
 
 @Component({
     selector     : 'mailbox-main-sidebar',
@@ -36,9 +42,16 @@ export class MailboxMainSidebarComponent implements OnInit, OnDestroy
      */
     constructor(
         private _opinionService: OpinionService,
-        public _matDialog: MatDialog
+        public _matDialog: MatDialog,
+        private _fuseTranslationLoaderService: FuseTranslationLoaderService
+
     )
     {
+
+         // Load the translations
+         this._fuseTranslationLoaderService.loadTranslations(english, turkish,spanish);
+
+
         // Set the defaults
         this.accounts = {
             creapond    : 'johndoe@creapond.com',

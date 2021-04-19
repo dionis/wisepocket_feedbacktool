@@ -10,8 +10,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSortModule } from '@angular/material/sort';
+
 import { TranslateModule } from '@ngx-translate/core';
 
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { FuseSharedModule } from '../../../../@fuse/shared.module';
 import { FuseSidebarModule } from '../../../../@fuse/components';
 
@@ -24,33 +29,39 @@ import { MailboxMainSidebarComponent } from '../../../../app/main/apps/opinionMa
 
 import {OpinionComposeDialogComponent}from '../../../../app/main/apps/opinionMailbox/dialogs/compose/compose.component';
 
+import { EcommerceOrdersService } from '../../../../app/main/apps/e-commerce/orders/orders.service';
+
 const routes: Routes = [
     {
         path     : 'label/:labelHandle',
         component: OpinionMailboxComponent,
         resolve  : {
-            opinion: OpinionService
+            opinion: OpinionService,
+            data: EcommerceOrdersService
         }
     },
     {
         path     : 'label/:labelHandle/:opinionId',
         component: OpinionMailboxComponent,
         resolve  : {
-            opinion: OpinionService
+            opinion: OpinionService,
+            data: EcommerceOrdersService
         }
     },
     {
         path     : 'filter/:filterHandle',
         component: OpinionMailboxComponent,
         resolve  : {
-            opinion: OpinionService
+            opinion: OpinionService,
+            data: EcommerceOrdersService
         }
     },
     {
         path     : 'filter/:filterHandle/:opinionId',
         component: OpinionMailboxComponent,
         resolve  : {
-            opinion: OpinionService
+            opinion: OpinionService,
+            data: EcommerceOrdersService
         }
     },
     {
@@ -64,7 +75,8 @@ const routes: Routes = [
         path     : ':folderHandle/:opinionId',
         component: OpinionMailboxComponent,
         resolve  : {
-            opinion: OpinionService
+            opinion: OpinionService,
+            data: EcommerceOrdersService
         }
     },
     {
@@ -95,6 +107,10 @@ const routes: Routes = [
         MatRippleModule,
         MatSelectModule,
         MatToolbarModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatTabsModule,
+        MatSortModule,
 
         TranslateModule,
 
@@ -102,7 +118,8 @@ const routes: Routes = [
         FuseSidebarModule
     ],
     providers      : [
-        OpinionService
+        OpinionService,
+        EcommerceOrdersService
     ],
     entryComponents: [
         OpinionComposeDialogComponent

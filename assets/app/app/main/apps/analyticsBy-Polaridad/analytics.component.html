@@ -1,0 +1,146 @@
+<div id="dashboard-analytics" class="page-layout blank">
+
+
+    <div class="content">
+
+        <div class="left mr-lg-32">
+
+            <div class="pb-24 font-size-18 font-weight-300">
+                Tendencia de Opiniones por Polaridad
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+
+                <!-- Widget 2 -->
+                <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+
+                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+
+                        <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                            <div class="pr-16">
+                                <div class="h3 secondary-text">Negativa</div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                    {{widget2.negativaOpin.value}}
+                                </div>
+                            </div>
+
+                            <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                                <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
+                                    *ngIf="widget2.negativaOpin.ofTarget > 0">
+                                    <mat-icon class="green-fg mr-4">trending_up</mat-icon>
+                                    <span>{{widget2.negativaOpin.ofTarget}}%</span>
+                                </div>
+                                <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
+                                    *ngIf="widget2.negativaOpin.ofTarget < 0">
+                                    <mat-icon class="red-fg mr-4">trending_down</mat-icon>
+                                    <span>{{widget2.negativaOpin.ofTarget}}%</span>
+                                </div>
+                                <div class="ml-4 text-nowrap">del objetivo</div>
+                            </div>
+
+                        </div>
+
+                        <div class="h-96 w-100-p">
+                            <canvas baseChart [datasets]="widget2.datasets" [labels]="widget2.labels"
+                                [colors]="widget2.colors" [options]="widget2.options"
+                                [chartType]="widget2.chartType">
+                            </canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- / Widget 2 -->
+
+                <!-- Widget 3 -->
+                <div class="widget" fxFlex="100" fxFlex.gt-sm="34">
+
+                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+
+                        <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                            <div class="pr-16">
+                                <div class="h3 secondary-text">Positiva</div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                    {{widget3.positivaOpin.value}}
+                                </div>
+                            </div>
+
+                            <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                                <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
+                                    *ngIf="widget3.positivaOpin.ofTarget > 0">
+                                    <mat-icon class="green-fg mr-4">trending_up</mat-icon>
+                                    <span>{{widget3.positivaOpin.ofTarget}}%</span>
+                                </div>
+                                <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
+                                    *ngIf="widget3.positivaOpin.ofTarget < 0">
+                                    <mat-icon class="red-fg mr-4">trending_down</mat-icon>
+                                    <span>{{widget3.positivaOpin.ofTarget}}%</span>
+                                </div>
+                                <div class="ml-4 text-nowrap">del objetivo</div>
+                            </div>
+
+                        </div>
+
+                        <div class="h-96 w-100-p">
+                            <canvas baseChart [datasets]="widget3.datasets" [labels]="widget3.labels"
+                                [colors]="widget3.colors" [options]="widget3.options"
+                                [chartType]="widget3.chartType">
+                            </canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- / Widget 3 -->
+
+                <!-- Widget 4 -->
+                <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+
+                    <div class="fuse-card auto-width">
+
+                        <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                            <div class="pr-16">
+                                <div class="h3 secondary-text">Total de Opiniones</div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                    {{widget4.totalOpin.value}}
+                                </div>
+                            </div>
+
+                            <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                                <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
+                                    *ngIf="widget4.totalOpin.ofTarget > 0">
+                                    <mat-icon class="green-fg mr-4">trending_up</mat-icon>
+                                    <span>{{widget4.totalOpin.ofTarget}}%</span>
+                                </div>
+                                <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
+                                    *ngIf="widget4.totalOpin.ofTarget < 0">
+                                    <mat-icon class="red-fg mr-4">trending_down</mat-icon>
+                                    <span>{{widget4.totalOpin.ofTarget}}%</span>
+                                </div>
+                                <div class="ml-4 text-nowrap">del objetivo</div>
+                            </div>
+
+                        </div>
+
+                        <div class="h-96 w-100-p">
+                            <canvas baseChart [datasets]="widget4.datasets" [labels]="widget4.labels"
+                                [colors]="widget4.colors" [options]="widget4.options"
+                                [chartType]="widget4.chartType">
+                            </canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- / Widget 4 -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

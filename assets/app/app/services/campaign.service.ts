@@ -36,7 +36,7 @@ export class CampaignService {
 
 
   getCampaignbyUser(id: String) {  //Recibe el id como parametro
-    environment.sails_services_urlpath
+
     //pagina apartir de 0 //page=0 es de prueba
     //En la interfaz puede poner pagina 1 pero al pasar el parametro puede restar 1, es una sugerencia y ademas necesaria
     this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/campaign/getCampaignbyUser/_id?id=' + id + '&page=0')
@@ -54,6 +54,7 @@ export class CampaignService {
           this.campaign = null;
         })
   }
+
   getMyCamps() {
     const date = new Date()
     console.log(date.toLocaleDateString('en-US', { weekday: 'long' }))

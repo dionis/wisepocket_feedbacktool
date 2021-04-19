@@ -71,6 +71,14 @@ export const navigation: FuseNavigation[] = [
                 icon: 'list',
                 url: '/apps/analyticsbyIdioma'
             },
+            {
+                id: 'est_polaridad',
+                title: 'Estadísticas por polaridad',
+                translate: 'NAV.Opinion Statistics by polaridad.TITLE',
+                type: 'item',
+                icon: 'list',
+                url: '/apps/analyticsbyPolaridad'
+            },
         ]
     },
 

@@ -20,7 +20,7 @@ import { CampaignService } from '../../../../services/campaign.service';
     encapsulation: ViewEncapsulation.None
 })
 export class EcommerceProductsComponent implements OnInit
-{   campaigns: any 
+{   campaigns: any
     dataSource: FilesDataSource | null;
     displayedColumns = ['id', 'image', 'name', 'category', 'price', 'quantity', 'active'];
 
@@ -56,7 +56,7 @@ export class EcommerceProductsComponent implements OnInit
     ngOnInit(): void
     {
         console.log(this.campaigns);
-        
+
         this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
 
         fromEvent(this.filter.nativeElement, 'keyup')

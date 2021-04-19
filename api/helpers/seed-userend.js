@@ -57,29 +57,29 @@ module.exports = {
 
     allGateway = await UserEnd.find({})
     campAll = await Campaign.find({})
-    
 
-    registerSize = 31
-    
+
+    registerSize = 60
+
     for (var iValue = 1; iValue < registerSize; iValue++) {
 
 
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
-     
+
 
       let opinion = await Opinion.count({ 'userend': userEndObjet.id })
       let pregunta = await Pregunta.count({ 'quesUserend': userEndObjet.id })
       let campOp = await Opinion.count({ 'campaign': campOgjet.id })
       let campPreg = await Pregunta.count({ 'campaign': campOgjet.id })
-      
 
-      if (opinion < 31 ) {
+
+      if (opinion < 61) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
           fecha: faker.date.weekday('long'),
           idioma: 'español',
-          polaridad:'positiva',
+          polaridad: 'positiva',
           userend: userEndObjet.id,
           campaign: campOgjet.id
         }
@@ -95,7 +95,7 @@ module.exports = {
 
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
-      if (iValue < 31 ) {
+      if (iValue < 50) {
         newAspect = {
           texto: faker.lorem.word(1),
           polaridad: 'positiva',
@@ -110,7 +110,7 @@ module.exports = {
 
       let entdOpin = await EntidadOpinion.count({ 'opinion': opinObjet.id })
 
-      if (iValue < 31 ) {
+      if (iValue < 50) {
         newEntidad = {
           texto: faker.lorem.word(1),
           start: 20,
@@ -118,7 +118,7 @@ module.exports = {
           opinion: opinObjet.id
         }
 
-        await EntidadOpinion.create(newEntidad )
+        await EntidadOpinion.create(newEntidad)
 
       }
       if (iValue < 10) {

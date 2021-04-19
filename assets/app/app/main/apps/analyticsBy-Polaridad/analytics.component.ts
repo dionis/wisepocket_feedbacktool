@@ -14,18 +14,17 @@ import { EstadXidiomaService } from '../../../services/estad-xidioma.service';
 })
 export class AnalyticsDashboardComponent implements OnInit {
     //widgets: any;
-    widget5SelectedDay = 'Ayer';
     data: any;
 
     widget2: any = {
-        englishOpin: {
+        negativaOpin: {
             value: 500,
             ofTarget: 0
         },
         chartType: 'bar',
         datasets: [
             {
-                label: 'englishOpin',
+                label: 'negativaOpin',
                 data: []
             }
         ],
@@ -69,14 +68,14 @@ export class AnalyticsDashboardComponent implements OnInit {
         }
     }
     widget3: any = {
-        spanishOpin: {
+        positivaOpin: {
             value: 400,
             ofTarget: 0
         },
         chartType: 'bar',
         datasets: [
             {
-                label: 'spanishOpin',
+                label: 'positivaOpin',
                 data: [221, 428, 492, 471, 413, 344, 294],
                 fill: false
             }
@@ -182,109 +181,7 @@ export class AnalyticsDashboardComponent implements OnInit {
             }
         }
     }
-    widget5: any = {
-        chartType: 'line',
-        datasets: {
-            'Ayer': [
-                {
-                    label: 'Inglés',
-                    data: [190, 300, 340, 220, 290, 390, 250, 380, 410, 380, 320, 290],
-                    fill: 'start'
-
-                },
-                {
-                    label: 'Español',
-                    data: [2200, 2900, 3900, 2500, 3800, 3200, 2900, 1900, 3000, 3400, 4100, 3800],
-                    fill: 'start'
-                }
-            ],
-            'Hoy': [
-                {
-                    label: 'Inglés',
-                    data: [2200, 2900, 3900, 2500, 3800, 3200, 2900, 1900, 3000, 3400, 4100, 3800],
-                    fill: 'start'
-                },
-                {
-                    label: 'Español',
-                    data: [190, 300, 340, 220, 290, 390, 250, 380, 410, 380, 320, 290],
-                    fill: 'start'
-
-                }
-            ]
-        },
-        labels: ['12am', '2am', '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
-        colors: [
-            {
-                borderColor: '#3949ab',
-                backgroundColor: '#3949ab',
-                pointBackgroundColor: '#3949ab',
-                pointHoverBackgroundColor: '#3949ab',
-                pointBorderColor: '#ffffff',
-                pointHoverBorderColor: '#ffffff'
-            },
-            {
-                borderColor: 'rgba(30, 136, 229, 0.87)',
-                backgroundColor: 'rgba(30, 136, 229, 0.87)',
-                pointBackgroundColor: 'rgba(30, 136, 229, 0.87)',
-                pointHoverBackgroundColor: 'rgba(30, 136, 229, 0.87)',
-                pointBorderColor: '#ffffff',
-                pointHoverBorderColor: '#ffffff'
-            }
-        ],
-        options: {
-            spanGaps: false,
-            legend: {
-                display: false
-            },
-            maintainAspectRatio: false,
-            tooltips: {
-                position: 'nearest',
-                mode: 'index',
-                intersect: false
-            },
-            layout: {
-                padding: {
-                    left: 24,
-                    right: 32
-                }
-            },
-            elements: {
-                point: {
-                    radius: 4,
-                    borderWidth: 2,
-                    hoverRadius: 4,
-                    hoverBorderWidth: 2
-                }
-            },
-            scales: {
-                xAxes: [
-                    {
-                        gridLines: {
-                            display: false
-                        },
-                        ticks: {
-                            fontColor: 'rgba(0,0,0,0.54)'
-                        }
-                    }
-                ],
-                yAxes: [
-                    {
-                        gridLines: {
-                            tickMarkLength: 16
-                        },
-                        ticks: {
-                            stepSize: 1000
-                        }
-                    }
-                ]
-            },
-            plugins: {
-                filler: {
-                    propagate: false
-                }
-            }
-        }
-    }
+    
 
     /**
      * Constructor
@@ -310,19 +207,9 @@ export class AnalyticsDashboardComponent implements OnInit {
      */
     ngOnInit(): void {
         // Get the widgets from the service
-        console.log(this._estadPrueba.getDataEn());
-        this.widget2.datasets[0].data = this._estadPrueba.getDataEn();
         console.log("TO SEE DATA IN CHART");
-        console.log("WIDGET 5");
+        console.log("WIDGET 2");
         console.log("Datasets ", this.widget2.datasets[0].data)
-        console.log("-----------------------")
-        console.log("labels ", this.widget5.labels);
-        console.log("-----------------------");
-        console.log("colors ", this.widget5.colors);
-        console.log("-----------------------");
-        console.log("options ", this.widget5.options);
-        console.log("-----------------------");
-        console.log("charType ", this.widget5.chartType);
         //this.widgets = this._analyticsDashboardService.widgets;
 
     }

@@ -157,7 +157,11 @@ const routes = [
     },
     {
         path: 'analyticsbyIdioma',
-        loadChildren: () => import('../apps/analyticsbyIdioma/analytics.module').then(m => m.AnalyticsDashboardModule)
+        loadChildren: () => import('./analyticsBy-Idioma/analytics.module').then(m => m.AnalyticsDashboardModule)
+    },
+    {
+        path: 'analyticsbyPolaridad',
+        loadChildren: () => import('./analyticsBy-Polaridad/analytics.module').then(m => m.AnalyticsDashboardModule)
     },
     {
         path: 'opinionMailbox',

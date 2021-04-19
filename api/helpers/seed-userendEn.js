@@ -59,22 +59,21 @@ module.exports = {
     campAll = await Campaign.find({})
 
 
-    registerSize = 350
+    registerSize = 201
+    registerSize1 = 201
+    registerSize2 = 50
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
-
-
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
 
+      /* let opinion = await Opinion.count({ 'userend': userEndObjet.id })
+       let pregunta = await Pregunta.count({ 'quesUserend': userEndObjet.id })
+       let campOp = await Opinion.count({ 'campaign': campOgjet.id })
+       let campPreg = await Pregunta.count({ 'campaign': campOgjet.id })*/
 
-      let opinion = await Opinion.count({ 'userend': userEndObjet.id })
-      let pregunta = await Pregunta.count({ 'quesUserend': userEndObjet.id })
-      let campOp = await Opinion.count({ 'campaign': campOgjet.id })
-      let campPreg = await Pregunta.count({ 'campaign': campOgjet.id })
 
-
-      if (iValue < 151) {
+      if (iValue < 201) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
           fecha: faker.date.weekday('long'),
@@ -88,7 +87,12 @@ module.exports = {
 
       }
 
-      if (iValue < 151) {
+    }
+    for (var iValue = 1; iValue < registerSize1; iValue++) {
+      userEndObjet = faker.random.arrayElement(allGateway)
+      campOgjet = faker.random.arrayElement(campAll)
+
+      if (iValue < 201) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
           fecha: faker.date.weekday('long'),
@@ -101,7 +105,10 @@ module.exports = {
         await Opinion.create(newOpinion)
 
       }
-
+    }
+    for (var iValue = 1; iValue < registerSize2; iValue++) {
+      userEndObjet = faker.random.arrayElement(allGateway)
+      campOgjet = faker.random.arrayElement(campAll)
       if (iValue < 50) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
@@ -115,8 +122,6 @@ module.exports = {
         await Opinion.create(newOpinion)
 
       }
-
-
       opinAll = await Opinion.find({})
 
       opinObjet = faker.random.arrayElement(opinAll)
@@ -171,9 +176,7 @@ module.exports = {
          }
          await Pregunta.create(newPregunta)
        }*/
-
     }
-
     return exits.success("OK");
   }
 };

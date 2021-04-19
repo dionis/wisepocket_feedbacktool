@@ -59,7 +59,7 @@ module.exports = {
     campAll = await Campaign.find({})
 
 
-    registerSize = 60
+    registerSize = 80
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
 
@@ -69,12 +69,12 @@ module.exports = {
 
 
       let opinion = await Opinion.count({ 'userend': userEndObjet.id })
-      let pregunta = await Pregunta.count({ 'quesUserend': userEndObjet.id })
+      /*let pregunta = await Pregunta.count({ 'quesUserend': userEndObjet.id })
       let campOp = await Opinion.count({ 'campaign': campOgjet.id })
-      let campPreg = await Pregunta.count({ 'campaign': campOgjet.id })
+      let campPreg = await Pregunta.count({ 'campaign': campOgjet.id })*/
 
 
-      if (opinion < 61) {
+      if (opinion < 81) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
           fecha: faker.date.weekday('long'),

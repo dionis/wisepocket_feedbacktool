@@ -9,6 +9,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { AgmCoreModule } from '@agm/core';
 import { ChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MatInputModule } from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { FuseSharedModule } from '../../../../@fuse/shared.module';
 import { FuseWidgetModule } from '../../../../@fuse/components/widget/widget.module';
@@ -47,7 +49,10 @@ const routes: Routes = [
         NgxChartsModule,
 
         FuseSharedModule,
-        FuseWidgetModule
+        FuseWidgetModule,
+        MatDatepickerModule,
+        MatInputModule
+
     ],
     providers   : [
         AnalyticsDashboardService

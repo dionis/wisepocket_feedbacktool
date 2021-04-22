@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AnalyticsXIdiomaDashboardDb } from '../fake-db/dashboard-analyticsXIdioma';
-
+import { BehaviorSubject, Observable,  combineLatest ,Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +86,11 @@ export class EstadXidiomaService {
           return this.dataTotal
         }
       }))
+  }
+
+  getAllStadistics(): Observable<any[]>{
+     return combineLatest([ this.getDataEn() , this.getDataEs(),this.getDataTotal()]);
+
   }
 
 }

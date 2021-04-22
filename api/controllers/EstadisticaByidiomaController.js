@@ -12,6 +12,7 @@ module.exports = {
     getCantENXDia: async (req, res) => {
         let campaign
         let cantDay = [1, 2, 3, 4, 5, 6, 7]
+        let clientTimestamp =  req.param('client_timestamp');
         //let temp = [221, 428, 492, 471, 413, 344, 294]
         await Campaign.findOne({ id: req.param('id') })
             .then(async (doc) => {
@@ -126,6 +127,7 @@ module.exports = {
     getCantESXDia: async (req, res) => {
         let campaign
         let cantDay = [1, 2, 3, 4, 5, 6, 7]
+        let clientTimestamp =  req.param('client_timestamp');
         await Campaign.findOne({ id: req.param('id') })
             .then(async (doc) => {
                 if (!doc) {
@@ -235,8 +237,24 @@ module.exports = {
 
     //Requiere ID de la Campaña
     getCantTotalXDia: async (req, res) => {
+
+      ///Compute all element in a array (summ all)
+      ///Bibliografy: https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+
+          // const array1 = [1, 2, 3, 4];
+          // const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+          // // 1 + 2 + 3 + 4
+          // console.log(array1.reduce(reducer));
+          // // expected output: 10
+
+          // // 5 + 1 + 2 + 3 + 4
+          // console.log(array1.reduce(reducer, 5));
+          // // expected output: 15
+
         let campaign
         let cantDay = [1, 2, 3, 4, 5, 6, 7]
+        let clientTimestamp =  req.param('client_timestamp');
         await Campaign.findOne({ id: req.param('id') })
             .then(async (doc) => {
                 if (!doc) {

@@ -9,6 +9,26 @@
 
 module.exports = {
     //Requiere ID de la Campaña
+
+    getNameDay(s) {
+        var date = s
+        console.log('FakerDateBase:' + date);
+        var fecha = Date.parse(String(date));
+        console.log('NameDay:' + new Date(fecha).toLocaleString('en-US', { weekday: 'long' }));
+        return String(fecha);
+    },
+
+    searchOpinion: async () => {
+     
+     await Opinion.find({ 
+        }).then((docs) => {
+            return docs
+        }).catch((err) => {
+            console.log(`Error: ` + err)
+        })
+    },
+    
+
     getCantENXDia: async (req, res) => {
         let campaign
         let cantDay = [1, 2, 3, 4, 5, 6, 7]

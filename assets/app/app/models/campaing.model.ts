@@ -5,6 +5,7 @@ export class Campaign{
     id: string;
     nombre: string;
     fecha: string;
+    //userChief: any;
     descripcion: string;
     /*contactoTelefono: number;
     colorPrincipal: string;
@@ -14,6 +15,7 @@ export class Campaign{
     contactoTelegram: string;
     contactoWhatsapp: string;
     contactoFacebook: string;*/
+    
  //  constructor(){}
 
    /**
@@ -27,7 +29,7 @@ export class Campaign{
             this.id = campaign.id || '';
             this.nombre = campaign.nombre|| FuseUtils.generateGUID();
             this.fecha = campaign.fecha || '';
-        //    this.userChief = campaign.userChief || '';
+            //this.userChief = campaign.userChief || '';
             this.descripcion = campaign.descripcion || '';
            /* this.colorPrincipal = campaign.colorPrincipal || '';
             this.colorSecundario = campaign.colorSecundario || '';

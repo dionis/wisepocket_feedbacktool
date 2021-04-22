@@ -17,6 +17,7 @@ module.exports = {
             } else {
                 console.log("Encontrado"),
                     opinion = doc
+                    console.log(doc.fecha);
 
             }
         });

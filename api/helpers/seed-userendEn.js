@@ -76,7 +76,7 @@ module.exports = {
       if (iValue < 201) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.weekday('long'),
+          fecha: faker.date.recent(5),
           idioma: 'ingles',
           polaridad: 'positiva',
           userend: userEndObjet.id,
@@ -88,6 +88,7 @@ module.exports = {
       }
 
     }
+  
     for (var iValue = 1; iValue < registerSize1; iValue++) {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
@@ -95,7 +96,7 @@ module.exports = {
       if (iValue < 201) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.weekday('long'),
+          fecha: faker.date.recent(7),
           idioma: 'ingles',
           polaridad: 'negativa',
           userend: userEndObjet.id,
@@ -112,7 +113,7 @@ module.exports = {
       if (iValue < 50) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.weekday('long'),
+          fecha: faker.date.recent(4),
           idioma: 'ingles',
           polaridad: 'neutra',
           userend: userEndObjet.id,

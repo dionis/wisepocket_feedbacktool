@@ -18,7 +18,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     //widgets: any;
     widget5SelectedDay = 'Ayer';
     data: any;
-    campaigns: any
+    campaigns: any;
+    usertime:any;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -307,6 +308,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         //de la lista de campana que se carga en
         ///_camapignService.campaign
 
+        //DATEPICKER BIBLIOGRAFY:
+        //https://material.angular.io/components/datepicker/overview
+
         let currentCamapingId: string = "";
         console.log(" Get information about USER ", this._userService.user.id);
         this._camapignService.getCampaignbyUser(this._userService.user.id);
@@ -321,24 +325,37 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
             this._estadPrueba.setCurrentCamaignId(currentCamapingId);
         }
 
+
+        ///Read all Stadistics
+        this._estadPrueba.getAllStadistics()
+           .pipe(takeUntil(this._unsubscribeAll))
+           .subscribe(([englishData, spanishData, allData]) => {
+              console.log("<--- Get my data Spanish ---> ", spanishData);
+              this.widget3.datasets[0].data = spanishData;
+              console.log("<--- Get my data English ---> ", englishData);
+              this.widget2.datasets[0].data = englishData;
+              console.log("<--- Get my data All ---> ", allData);
+              this.widget4.datasets[0].data = allData;
+
+           })
         /// Widget 2 Data
-        this._estadPrueba.getDataEn().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
-            console.log("<--- Get my data ---> ", newdata);
-            this.widget2.datasets[0].data = newdata;
-        })
-        /// Widget 3 Data
-        this._estadPrueba.getDataEs().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
-            console.log("<--- Get my data ---> ", newdata);
-            this.widget3.datasets[0].data = newdata;
-        })
-        /// Widget 4 Data
-        this._estadPrueba.getDataTotal().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
-            console.log("<--- Get my data ---> ", newdata);
-            this.widget4.datasets[0].data = newdata;
-        })
+        // this._estadPrueba.getDataEn().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
+        //     console.log("<--- Get my data ---> ", newdata);
+        //     this.widget2.datasets[0].data = newdata;
+        // })
+        // /// Widget 3 Data
+        // this._estadPrueba.getDataEs().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
+        //     console.log("<--- Get my data ---> ", newdata);
+        //     this.widget3.datasets[0].data = newdata;
+        // })
+        // /// Widget 4 Data
+        // this._estadPrueba.getDataTotal().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
+        //     console.log("<--- Get my data ---> ", newdata);
+        //     this.widget4.datasets[0].data = newdata;
+        // })
         this.campaigns = this._camapignService.getMyCamps();
         console.log(this.campaigns);
-        
+
         /*console.log("TO SEE DATA IN CHART");
         console.log("WIDGET 5");
         console.log("Datasets ", this.widget2.datasets[0].data)

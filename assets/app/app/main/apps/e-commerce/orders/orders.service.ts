@@ -31,6 +31,8 @@ export class EcommerceOrdersService implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
+
+        console.log("<--- Find orders informations --->");
         return new Promise((resolve, reject) => {
 
             Promise.all([

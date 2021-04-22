@@ -67,6 +67,8 @@ export class OpinionService implements Resolve<any>
     {
         this.routeParams = route.params;
 
+       console.log("Find Information");
+
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.getFolders(),
@@ -76,7 +78,7 @@ export class OpinionService implements Resolve<any>
             ]).then(
                 () => {
 
-                  //console.log("Data in resolve")
+                    console.log("Data in resolve");
                     if ( this.routeParams.opinionId )
                     {
                         this.setCurrentOpinion(this.routeParams.opinionId);
@@ -165,49 +167,18 @@ export class OpinionService implements Resolve<any>
     getOpinions(): Promise<Opinion[]>
     {
 
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/opinion')
-                .subscribe((response:any) => {
+      if ( this.routeParams.labelHandle )
+      {
+          return this.getOpinionsByLabel(this.routeParams.labelHandle);
+      }
 
+      if ( this.routeParams.filterHandle )
+      {
+          return this.getOpinionsByFilter(this.routeParams.filterHandle);
+      }
 
-        // return new Promise((resolve, reject) => {
-        //     this._httpClient.get('api/opinions-opinions')
-        //         .subscribe((opinions: any) => {
+      return this.getOpinionsByFolder(this.routeParams.folderHandle);
 
-        //               console.log("------ Process Data -------")
-        //               this.opinions = opinions.map(opinion => {
-        //                 return new Opinion(opinion);
-        //               });
-
-
-            if ( this.routeParams.labelHandle )
-        {
-            return this.getOpinionsByLabel(this.routeParams.labelHandle);
-        }
-
-            if ( this.routeParams.filterHandle )
-        {
-            return this.getOpinionsByFilter(this.routeParams.filterHandle);
-        }
-
-            if ( this.routeParams.folderHandle)
-            {
-                return this.getOpinionsByFolder(this.routeParams.folderHandle);
-            }
-                })
-        });
-    
-        
-        return this.getOpinionsByFolder(this.routeParams.folderHandle);
-                      //console.log("------ Process Data -------")
-                      // this.onOpinionsChanged.next(this.opinions);
-                      //                 resolve(this.opinions);
-                      //             }, reject);
-                      // }
-                      // );
-
-
-        return this.getOpinionsByFolder(this.routeParams.folderHandle);
     }
 
     /**

@@ -43,7 +43,7 @@ export class EcommerceProductsComponent implements OnInit
     {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
- //      this.campaigns = this._campaignService.getCampaignbyUser()
+      // this.campaigns = this._campaignService.getMyCamps()
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ export class EcommerceProductsComponent implements OnInit
      */
     ngOnInit(): void
     {
-        console.log(this.campaigns);
+       // console.log(this.campaigns);
 
         this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
 

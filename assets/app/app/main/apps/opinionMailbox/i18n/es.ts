@@ -17,7 +17,9 @@ export const locale = {
           LABELS                  : 'Etiquetas',
           NO_MESSAGES             : 'No hay mensajes!',
           SELECT_A_MESSAGE_TO_READ: 'Seleccionar un mensaje para leer',
-          SEARCH_PLACEHOLDER      : 'Buscar por un e-mail o contacto'
+          SEARCH_PLACEHOLDER      : 'Buscar por un e-mail o contacto',
+          POLARITY                : 'Polaridad',
+          ASPECT                  : 'Aspectos'
       }
     }
 };

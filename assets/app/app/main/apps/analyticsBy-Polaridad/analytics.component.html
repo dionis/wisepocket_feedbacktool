@@ -95,6 +95,48 @@
                 </div>
                 <!-- / Widget 3 -->
 
+            <!-- Widget 6 -->
+                <div class="widget" fxFlex="100" fxFlex.gt-sm="34">
+
+                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+
+                        <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                            <div class="pr-16">
+                                <div class="h3 secondary-text">Neutra</div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                    {{widget6.positivaOpin.value}}
+                                </div>
+                            </div>
+
+                            <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                                <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
+                                    *ngIf="widget6.positivaOpin.ofTarget > 0">
+                                    <mat-icon class="green-fg mr-4">trending_up</mat-icon>
+                                    <span>{{widget6.positivaOpin.ofTarget}}%</span>
+                                </div>
+                                <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
+                                    *ngIf="widget6.positivaOpin.ofTarget < 0">
+                                    <mat-icon class="red-fg mr-4">trending_down</mat-icon>
+                                    <span>{{widget6.positivaOpin.ofTarget}}%</span>
+                                </div>
+                                <div class="ml-4 text-nowrap">del objetivo</div>
+                            </div>
+
+                        </div>
+
+                        <div class="h-96 w-100-p">
+                            <canvas baseChart [datasets]="widget6.datasets" [labels]="widget6.labels"
+                                [colors]="widget6.colors" [options]="widget3.options"
+                                [chartType]="widget6.chartType">
+                            </canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+            <!-- / Widget 6 -->
+
                 <!-- Widget 4 -->
                 <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
 
@@ -137,7 +179,53 @@
                 </div>
                 <!-- / Widget 4 -->
 
+                
+
             </div>
+
+        <!-- Widget 5 -->
+            <div class="pt-48 pb-24 font-size-18 font-weight-300">
+                Comportamiento
+            </div>
+
+            <div class="fuse-card auto-width">
+
+                <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column" fxLayoutAlign="start start">
+                        <span class="h2">Inglés y Español</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+
+                      <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                            (click)="widget5SelectedDay = 'yesterday'"
+                            [ngClass]="{'accent': widget5SelectedDay === 'yesterday'}">
+                            Ayer
+                       </div>
+                       <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                            (click)="widget5SelectedDay = 'today'"
+                            [ngClass]="{'accent': widget5SelectedDay === 'today'}">
+                            Hoy
+                       </div>
+                       <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer">
+                        <mat-form-field>
+                          <!-- <mat-label>Choose a date</mat-label> -->
+                          <input matInput [matDatepicker]="picker" formControl="usertime">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                       </div>
+                    </div>
+                </div>
+
+                <div class="position-relative h-368 pb-16">
+                    <canvas baseChart [datasets]="widget5.datasets[widget5SelectedDay]" [labels]="widget5.labels"
+                        [colors]="widget5.colors" [options]="widget5.options" [chartType]="widget5.chartType">
+                    </canvas>
+                </div>
+
+            </div>
+        <!-- / Widget 5 -->
 
         </div>
 

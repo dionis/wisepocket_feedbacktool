@@ -2,6 +2,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { EstadXidiomaService } from '../../../services/estad-xidioma.service';
+import { CampaignService } from '../../../services/campaign.service';
+import { UserService } from '../../../services/user.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 //import { AnalyticsDashboardService } from './analytics.service';
 
@@ -14,7 +18,11 @@ import { EstadXidiomaService } from '../../../services/estad-xidioma.service';
 })
 export class AnalyticsDashboardComponent implements OnInit {
     //widgets: any;
+    widget5SelectedDay = 'Ayer';
     data: any;
+    campaign:any;
+    usertime:any;
+    private _unsubscribeAll: Subject<any>;
 
     widget2: any = {
         negativaOpin: {
@@ -24,15 +32,17 @@ export class AnalyticsDashboardComponent implements OnInit {
         chartType: 'bar',
         datasets: [
             {
-                label: 'negativaOpin',
+                label: 'Opiniones Negativas',
                 data: []
+                // data: [281, 468, 490, 371, 480, 44, 194],
+                // fill: false
             }
         ],
         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         colors: [
             {
-                borderColor: '#42a5f5',
-                backgroundColor: '#42a5f5'
+                borderColor: '#2de000',
+                backgroundColor: '#2de000'
             }
         ],
         options: {
@@ -75,9 +85,10 @@ export class AnalyticsDashboardComponent implements OnInit {
         chartType: 'bar',
         datasets: [
             {
-                label: 'positivaOpin',
-                data: [221, 428, 492, 471, 413, 344, 294],
-                fill: false
+                label: 'Opiniones Positivas',
+                data: []
+                // data: [221, 428, 492, 471, 413, 344, 294],
+                // fill: false
             }
         ],
         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -138,8 +149,9 @@ export class AnalyticsDashboardComponent implements OnInit {
         chartType: 'bar',
         datasets: [
             {
-                label: 'totalOpin',
-                data: [221, 428, 492, 471, 413, 344, 294]
+                label: 'Total de Opiniones',
+                // data: [271, 408, 494, 471, 413, 344, 294]
+                data: []
             }
         ],
         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -181,6 +193,193 @@ export class AnalyticsDashboardComponent implements OnInit {
             }
         }
     }
+
+    widget5: any = {
+        chartType: 'line',
+        datasets: {
+            'Ayer': [
+                {
+                    label: 'Neutras',
+                    data: [1900, 1300, 3400, 2200, 2900, 390, 1500, 380, 4000, 1380, 1320, 2290],
+                    fill: 'start'
+
+                },
+                {
+                    label: 'Positivas',
+                    data: [2200, 2900, 3900, 2500, 3800, 3200, 2900, 1900, 3000, 3400, 4100, 3800],
+                    fill: 'start'
+                },
+                {
+                    label: 'Negativas',
+                    data: [1000, 1000, 3000, 2700, 3500, 1500, 2100, 500, 2000, 1000, 5000, 2000, 3000],
+                    fill: 'start'
+                }
+            ],
+            'Hoy': [
+                {
+                    label: 'Positivas',
+                    data: [2200, 2900, 3900, 2500, 3800, 3200, 2900, 1900, 3000, 3400, 4100, 3800],
+                    fill: 'start'
+                },
+                {
+                    label: 'Negativas',
+                    data: [1000, 3000, 2700, 3500, 1500, 2100, 500, 2000, 1000, 5000, 2000, 3000],
+                    fill: 'start'
+
+                },
+                {
+                    label: 'Neutras',
+                    data: [1900, 1300, 3400, 2200, 2900, 390, 500, 200, 2500, 300, 450, 2000],
+                    fill: 'start'
+                }
+            ]
+        },
+        labels: ['12am', '2am', '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
+        colors: [
+            {
+                borderColor: '#cc72f0',
+                backgroundColor: '#cc72f0',
+                pointBackgroundColor: '#cc72f0',
+                pointHoverBackgroundColor: '#cc72f0',
+                pointBorderColor: '#ffffff',
+                pointHoverBorderColor: '#ffffff'
+            },
+            {
+                borderColor: '#0fd1eb',
+                backgroundColor: '#0fd1eb',
+                pointBackgroundColor: '#0fd1eb',
+                pointHoverBackgroundColor: '#0fd1eb',
+                pointBorderColor: '#ffffff',
+                pointHoverBorderColor: '#ffffff'
+            },
+            {
+                borderColor: '#0feb8f',
+                backgroundColor: '#0feb8f',
+                pointBackgroundColor: '#0feb8f',
+                pointHoverBackgroundColor: '#0feb8f',
+                pointBorderColor: '#ffffff',
+                pointHoverBorderColor: '#ffffff'
+            },
+        ],
+        options: {
+            spanGaps: false,
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+            tooltips: {
+                position: 'nearest',
+                mode: 'index',
+                intersect: false
+            },
+            layout: {
+                padding: {
+                    left: 24,
+                    right: 32
+                }
+            },
+            elements: {
+                point: {
+                    radius: 4,
+                    borderWidth: 2,
+                    hoverRadius: 4,
+                    hoverBorderWidth: 2
+                }
+            },
+            scales: {
+                xAxes: [
+                    {
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            fontColor: 'rgba(0,0,0,0.54)'
+                        }
+                    }
+                ],
+                yAxes: [
+                    {
+                        gridLines: {
+                            tickMarkLength: 16
+                        },
+                        ticks: {
+                            stepSize: 1000
+                        }
+                    }
+                ]
+            },
+            plugins: {
+                filler: {
+                    propagate: false
+                }
+            }
+        }
+    }
+
+    widget6: any = {
+        positivaOpin: {
+            value: 200,
+            ofTarget: 0
+        },
+        chartType: 'bar',
+        datasets: [
+            {
+                label: 'Opiniones Neutrales',
+                // data: [221, 428, 492, 471, 413, 344, 294],
+                // fill: false
+                data: []
+            }
+        ],
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        colors: [
+            {
+                borderColor: '#6e076e',
+                backgroundColor: '#6e076e'
+            }
+        ],
+        options: {
+            spanGaps: false,
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+            elements: {
+                point: {
+                    radius: 2,
+                    borderWidth: 1,
+                    hoverRadius: 2,
+                    hoverBorderWidth: 1
+                },
+                line: {
+                    tension: 0
+                }
+            },
+            layout: {
+                padding: {
+                    top: 24,
+                    left: 16,
+                    right: 16,
+                    bottom: 16
+                }
+            },
+            scales: {
+                xAxes: [
+                    {
+                        display: false
+                    }
+                ],
+                yAxes: [
+                    {
+                        display: false,
+                        ticks: {
+                            // min: 100,
+                            // max: 500
+                        }
+                    }
+                ]
+            }
+        }
+    }
     
 
     /**
@@ -191,10 +390,14 @@ export class AnalyticsDashboardComponent implements OnInit {
      */
     constructor(
         //private _analyticsDashboardService: AnalyticsDashboardService,
-        private _estadPrueba: EstadXidiomaService
+        private _estadPrueba: EstadXidiomaService,
+        private _campaignService :CampaignService,
+        private _userService: UserService
     ) {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
+        
+        this._unsubscribeAll = new Subject();
         
     }
 
@@ -211,6 +414,38 @@ export class AnalyticsDashboardComponent implements OnInit {
         console.log("WIDGET 2");
         console.log("Datasets ", this.widget2.datasets[0].data)
         //this.widgets = this._analyticsDashboardService.widgets;
+
+        let currentCamapingId: string = "";
+        console.log(" Get information about USER ", this._userService.user.id);
+        this._campaignService.getCampaignbyUser(this._userService.user.id);
+
+        if (typeof (this._campaignService.campaign) !== 'undefined' && this._campaignService.campaign.length > 0) {
+            //Seleccionar un id de camapana aleatoriamente
+            let camapIgnObjet = this._campaignService.campaign[0];
+
+            console.log("Campaingn list ", this._campaignService.campaign);
+
+            currentCamapingId = camapIgnObjet.id;
+            this._estadPrueba.setCurrentCamaignId(currentCamapingId);
+        }
+
+                ///Read all Stadistics
+                this._estadPrueba.getAllStadistics()
+                .pipe(takeUntil(this._unsubscribeAll))
+                .subscribe(([ positiveData, negativeData, neutralData, allData]) => {
+                   console.log("<--- Get my data Positive ---> ", positiveData);
+                   this.widget3.datasets[0].data = positiveData;
+                   console.log("<--- Get my data Negative ---> ", negativeData);
+                   this.widget2.datasets[0].data = negativeData;
+                   console.log("<--- Get my data Neutral ---> ", neutralData);
+                   this.widget6.datasets[0].data = neutralData;
+                   console.log("<--- Get my data All ---> ", allData);
+                   this.widget4.datasets[0].data = allData;
+     
+                })
+
+        this.campaign = this._campaignService.getMyCamps();
+        console.log(this.campaign); 
 
     }
 

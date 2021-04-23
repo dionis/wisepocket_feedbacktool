@@ -91,6 +91,7 @@ module.exports.routes = {
   "GET /estadisticaByTipo/getCPostivaXDia": "EstadisticaByTipoController.getCPostivaXDia",
   "GET /estadisticaByTipo/getCNegativaXDia": "EstadisticaByTipoController.getCNegativaXDia",
   "GET /estadisticaByTipo/getCNeutraXDia": "EstadisticaByTipoController.getCNeutraXDia",
+  "GET /estadisticaByTipo/getCantTotalXDia":"EstadisticaByTipoController.getCantTotalXDia",
   
 
 

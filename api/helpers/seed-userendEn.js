@@ -82,7 +82,8 @@ module.exports = {
 
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.weekday('long'),//faker.date.recent(5)
+          fecha: currentTime,
+          currentime: String.toString(timestamp),
           idioma: 'ingles',
           polaridad: 'positiva',
           userend: userEndObjet.id,
@@ -105,7 +106,8 @@ module.exports = {
         var timestamp =  dateObjet.getTime();
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.weekday('long'),                       //faker.date.recent(7)
+          fecha: currentTime,
+          currentime: String.toString(timestamp),
           idioma: 'ingles',
           polaridad: 'negativa',
           userend: userEndObjet.id,
@@ -120,13 +122,15 @@ module.exports = {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
       if (iValue < 50) {
+
         var currentTime =  faker.date.recent(4);
         var dateObjet = new Date(currentTime);
         var timestamp =  dateObjet.getTime();
 
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.weekday('long'),
+          fecha:currentTime,
+          currentime: String.toString(timestamp),
           idioma: 'ingles',
           polaridad: 'neutra',
           userend: userEndObjet.id,

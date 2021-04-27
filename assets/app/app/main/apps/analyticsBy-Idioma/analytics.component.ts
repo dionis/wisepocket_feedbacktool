@@ -21,14 +21,14 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     widget5SelectedDay = 'Ayer';
     data: any;
     campaigns: any;
-    usertime:any;
+    usertime: any;
 
     // Private
     private _unsubscribeAll: Subject<any>;
 
     widget2: any = {
         englishOpin: {
-            value: 500,
+            value: 0,
             ofTarget: 0
         },
         chartType: 'bar',
@@ -333,16 +333,16 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
         ///Read all Stadistics
         this._estadPrueba.getAllStadistics()
-           .pipe(takeUntil(this._unsubscribeAll))
-           .subscribe(([englishData, spanishData, allData]) => {
-              console.log("<--- Get my data Spanish ---> ", spanishData);
-              this.widget3.datasets[0].data = spanishData;
-              console.log("<--- Get my data English ---> ", englishData);
-              this.widget2.datasets[0].data = englishData;
-              console.log("<--- Get my data All ---> ", allData);
-              this.widget4.datasets[0].data = allData;
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(([englishData, spanishData, allData]) => {
+                console.log("<--- Get my data Spanish ---> ", spanishData);
+                this.widget3.datasets[0].data = spanishData;
+                console.log("<--- Get my data English ---> ", englishData);
+                this.widget2.datasets[0].data = englishData;
+                console.log("<--- Get my data All ---> ", allData);
+                this.widget4.datasets[0].data = allData;
 
-           })
+            })
         /// Widget 2 Data
         // this._estadPrueba.getDataEn().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
         //     console.log("<--- Get my data ---> ", newdata);

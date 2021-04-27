@@ -86,8 +86,7 @@ module.exports = {
       if (opinion < 81) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: currentTime,
-          currentime: String.toString(timestamp),
+          fecha: faker.date.weekday('long'), //faker.date.recent(3),
           idioma: 'español',
           polaridad: 'positiva',
           userend: userEndObjet.id,

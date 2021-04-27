@@ -5,6 +5,8 @@ import { EstadXidiomaService } from '../../../services/estad-xidioma.service';
 import { CampaignService } from '../../../services/campaign.service';
 import { UserService } from '../../../services/user.service';
 import { takeUntil } from 'rxjs/operators';
+
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 //import { AnalyticsDashboardService } from './analytics.service';
 
 @Component({
@@ -270,6 +272,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     }
 
     temp: any;
+
+    dateForm: FormGroup;
     /**
      * Constructor
      *
@@ -280,7 +284,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         //private _analyticsDashboardService: AnalyticsDashboardService,
         private _estadPrueba: EstadXidiomaService,
         private _camapignService: CampaignService,
-        private _userService: UserService
+        private _userService: UserService,
+        private _fb: FormBuilder
     ) {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
@@ -369,6 +374,10 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         console.log("charType ", this.widget5.chartType);*/
         //this.widgets = this._analyticsDashboardService.widgets;
 
+        this.dateForm = this._fb.group({
+          usertime: [ '']
+        });
+
     }
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
@@ -440,6 +449,12 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+    }
+
+     /* Date */
+     date(e) {
+      var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
+
     }
 }
 

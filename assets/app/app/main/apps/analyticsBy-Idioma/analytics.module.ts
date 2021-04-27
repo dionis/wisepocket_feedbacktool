@@ -18,6 +18,8 @@ import { FuseWidgetModule } from '../../../../@fuse/components/widget/widget.mod
 import { AnalyticsDashboardComponent } from './analytics.component';
 import { AnalyticsDashboardService } from './analytics.service';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 const routes: Routes = [
     {
         path     : '**',
@@ -51,7 +53,8 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         MatDatepickerModule,
-        MatInputModule
+        MatInputModule,
+        ReactiveFormsModule
 
     ],
     providers   : [

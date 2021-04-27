@@ -49,7 +49,7 @@ module.exports.routes = {
   "POST /imagen/addImg": "ImagenController.create",
 
   //Campaign Requests //DEJAR SOLO MOSTRAR CAMPAÑA POR USUARIO
-  //DE MOMENTO SE DEJAN LOS SERVICIOS PARA CREAR BASE DE DATOS TEMPORAL  
+  //DE MOMENTO SE DEJAN LOS SERVICIOS PARA CREAR BASE DE DATOS TEMPORAL
   "POST /campaign/create": "CampaignController.create",
   //"PATCH /campaign/editCampaign": "CampaignController.editCampaign",
  // "DELETE /campaign/deleteCampaign": "CampaignController.deleteCampaign",
@@ -92,11 +92,11 @@ module.exports.routes = {
   "GET /estadisticaByTipo/getCNegativaXDia": "EstadisticaByTipoController.getCNegativaXDia",
   "GET /estadisticaByTipo/getCNeutraXDia": "EstadisticaByTipoController.getCNeutraXDia",
   "GET /estadisticaByTipo/getCantTotalXDia":"EstadisticaByTipoController.getCantTotalXDia",
-  
+
+  "GET /estadisticaByidioma/getCantENXDiaEx": "EstadisticaByidiomaController.getCantENXDiaEx",
 
 
 
- 
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

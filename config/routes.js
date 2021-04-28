@@ -95,6 +95,10 @@ module.exports.routes = {
 
   "GET /estadisticaByidioma/getCantENXDiaEx": "EstadisticaByidiomaController.getCantENXDiaEx",
 
+  "GET /estadisticaByidioma/getIntervalInADay": "EstadisticaByidiomaController.getIntervalInADay",
+
+
+
 
 
 

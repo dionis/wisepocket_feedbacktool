@@ -463,15 +463,77 @@ module.exports = {
             )
     },
 
+ /**
+  *  Count in a date (date parameters) the opinion
+  *  size in campaingid identifier
+  *
+  */
+     getIntervalInDayData: async (campaignid, date) => {
+
+                             let hourInDayInterval = [];
+
+                             let cantDayResult = [];
+                             let initData = date.hour(12).format("YYYY-MM-DD HH:mm a");
+
+                             //2- Find yesterday date
+                             hourInDayInterval.push(initData)
+
+                              //1- Compute all interval between init and interval
+                              let dateInMoment = aDate;
+                              for ( var i = 0; i < intervalInHour; i++ ){
+                                 let dayForSearch = dateInMoment.add(2, 'hour').format("YYYY-MM-DD HH:mm a");
+                                 hourInDayInterval.push(dayForSearch)
+                              }
+
+                              //3- Compute in parallel all opinion inner echa interval (today, yesterday)
+                              // var queryObj = {date: {'>=': begin, '<': end}};
+                              // Day.count(queryObj, newDay).exec(function(err, day) {
+                              //     console.log(day)
+                              // });
+
+                              await Promise.all(hourInDayInterval.map(async (item) => {
+                                console.log("<--- Execute query ---->||| <--- ")
+                                console.log(" Hour start ", item)
+                                let endMoment = moment(item,"YYYY-MM-DD HH:mm a").add(60,"minutes").format("YYYY-MM-DD HH:mm a")
+                                console.log(" Hour end ", endMoment)
+                                let opinion =  await Opinion.count({
+                                          campaign: campaignid,
+                                          fecha:  {'>=': item, '<': endMoment},
+                                          idioma: 'ingles'
+                                });
+
+                                  console.log("=== In these ===")
+                                  console.log("Opinion sizes ", opinion, " in date ==> ", item );
+                                  let resultObject = {
+                                    opinionsize:(typeof(opinion) === 'undefined')?0:opinion,
+                                    date:item,
+                                    dateName: moment(item,"YYYY-MM-DD HH:mm a").format('dddd')
+                                  }
+                                  console.log("Insert object in search ",resultObject );
+                                  cantDayResult.push(resultObject )
+
+                          }));
+
+                           cantDayResult = cantDayResult.sort((a, b) =>moment(a.date,"YYYY-MM-DD HH:mm a").diff(moment(b.date,"YYYY-MM-DD HH:mm a")))
+
+                            console.log("Data to send ", cantDayResult)
+                          return {
+                              'data': cantDayResult,
+                            }
+
+    },
+
     getIntervalInADay:async (req, res)=>{
 
 
-        let dayInterval = [{init:'2:00 PM',
-                            interval:60},
+        let dayInterval = [{init:'12:00 AM',
+                            interval:2},
                             {
                             end:'10:00 PM',
-                              interval:60
+                              interval:2
                             }]
+        let initTime = '12:00 AM'
+        let intervalInHour = 12;
         let campaign;
         let cantDay = [1, 2, 3, 4, 5, 6, 7];
         let cantDayResult = [];
@@ -505,15 +567,68 @@ module.exports = {
                         }
                         else {
                              campaign = doc;
-                              //1- Compute all interval between init and interval
+                             let hourInDayInterval = [];
+                             let hourInYesterdayInterval = [];
+                             let cantDayResult = [];
+                             let initData = aDate.hour(12).format("YYYY-MM-DD HH:mm a");
 
-                              //2- Find yesterday date
+                             //2- Find yesterday date
+                             let yesterDay = aDate.clone();
+                             yesterDay = yesterDay.subtract(1,'days');
+
+                             hourInDayInterval.push(initData)
+                             hourInYesterdayInterval.push(yesterDay);
+                              //1- Compute all interval between init and interval
+                              let dateInMoment = aDate;
+                              for ( var i = 0; i < intervalInHour; i++ ){
+                                 let dayForSearch = dateInMoment.add(2, 'hour').format("YYYY-MM-DD HH:mm a");
+                                 hourInDayInterval.push(dayForSearch)
+                              }
+
+                              dateInMoment = yesterDay;
+                              for ( var i = 0; i < intervalInHour; i++ ){
+                                let dayYesterdaySearch = dateInMoment.add(2, 'hour').format("YYYY-MM-DD HH:mm a");
+                                hourInYesterdayInterval.push(dayYesterdaySearch)
+                             }
+
+
+
 
                               //3- Compute in parallel all opinion inner echa interval (today, yesterday)
                               // var queryObj = {date: {'>=': begin, '<': end}};
                               // Day.count(queryObj, newDay).exec(function(err, day) {
                               //     console.log(day)
                               // });
+
+                              await Promise.all(hourInDayInterval.map(async (item) => {
+                                console.log("<--- Execute query ---->||| <--- ")
+                                console.log(" Hour start ", item)
+                                let endMoment = moment(item,"YYYY-MM-DD HH:mm a").add(60,"minutes").format("YYYY-MM-DD HH:mm a")
+                                console.log(" Hour end ", endMoment)
+                                let opinion =  await Opinion.count({
+                                          campaign: campaign.id,
+                                          fecha:  {'>=': item, '<': endMoment},
+                                          idioma: 'ingles'
+                                });
+
+                                  console.log("=== In these ===")
+                                  console.log("Opinion sizes ", opinion, " in date ==> ", item );
+                                  let resultObject = {
+                                    opinionsize:(typeof(opinion) === 'undefined')?0:opinion,
+                                    date:item,
+                                    dateName: moment(item,"YYYY-MM-DD HH:mm a").format('dddd')
+                                  }
+                                  console.log("Insert object in search ",resultObject );
+                                  cantDayResult.push(resultObject )
+
+                          }));
+
+                           cantDayResult = cantDayResult.sort((a, b) =>moment(a.date,"YYYY-MM-DD HH:mm a").diff(moment(b.date,"YYYY-MM-DD HH:mm a")))
+
+                            console.log("Data to send ", cantDayResult)
+                            return res.send({
+                              'data': cantDayResult,
+                            })
 
                          }
                      })

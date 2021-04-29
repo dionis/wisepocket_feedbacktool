@@ -52,7 +52,7 @@ module.exports.routes = {
   //DE MOMENTO SE DEJAN LOS SERVICIOS PARA CREAR BASE DE DATOS TEMPORAL
   "POST /campaign/create": "CampaignController.create",
   //"PATCH /campaign/editCampaign": "CampaignController.editCampaign",
- // "DELETE /campaign/deleteCampaign": "CampaignController.deleteCampaign",
+  // "DELETE /campaign/deleteCampaign": "CampaignController.deleteCampaign",
   "GET /campaign/getCampaign": "CampaignController.getCampaign",
   "GET /campaign/getCampaignbyUser/_id": "CampaignController.getCampaignbyUser", //DEJAR ESTE SERVICE
 
@@ -65,6 +65,8 @@ module.exports.routes = {
   "POST /registro/create": "RegistroController.create",
   "POST /aspectoopinion/create": "AspectoOpinionController.create",
   "POST /entidadopinion/create": "EntidadOpinionController.create",
+  "POST /userInvitado/create": "UserInvitadoController.create",
+  "POST /userInvitado/addCampaigns": "UserInvitadoController.addCampaigns",
 
   //DELETE
   //'DELETE /opinion/deleteOpinion': 'OpinionController.deleteOpinion',
@@ -76,6 +78,7 @@ module.exports.routes = {
   "DELETE /aspectoopinion/deleteAllAspecto": "AspectoOpinionController.deleteAllAspecto",
   "DELETE /entidadopinion/deleteAllEntidad": "EntidadOpinionController.deleteAllEntidad",
   "DELETE /userend/deleteAllUserEnd": "UserEndController.deleteAllUserEnd",
+  "DELETE /userInvitado/deleteUserInvitado": "UserInvitadoController.deleteUserInvitado",
 
   //GET and for Pages
   "GET /opinion/getOpinion": "OpinionController.getOpinion",
@@ -91,11 +94,15 @@ module.exports.routes = {
   "GET /estadisticaByTipo/getCPostivaXDia": "EstadisticaByTipoController.getCPostivaXDia",
   "GET /estadisticaByTipo/getCNegativaXDia": "EstadisticaByTipoController.getCNegativaXDia",
   "GET /estadisticaByTipo/getCNeutraXDia": "EstadisticaByTipoController.getCNeutraXDia",
-  "GET /estadisticaByTipo/getCantTotalXDia":"EstadisticaByTipoController.getCantTotalXDia",
-
+  "GET /estadisticaByTipo/getCantTotalXDia": "EstadisticaByTipoController.getCantTotalXDia",
   "GET /estadisticaByidioma/getCantENXDiaEx": "EstadisticaByidiomaController.getCantENXDiaEx",
+  "GET /userInvitado/getUserandCamps": "UserInvitadoController.getUserandCamps",
+  "GET /userInvitado/getUsers": "UserInvitadoController.getUsers",
+ 
 
-
+  //PATCH
+  "PATCH /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
+  "PATCH /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
 
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

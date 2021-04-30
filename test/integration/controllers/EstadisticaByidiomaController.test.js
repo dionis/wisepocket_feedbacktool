@@ -1,6 +1,7 @@
 var supertest = require('supertest');
 var faker = require('faker');
 var moment = require('moment'); // require
+var assert = require('assert');
 ///// SE INYECTA EN LA BASE DE DATOS AUTOMATICAMENTE
 describe('EstadisticaByidiomaController.getCantENXDia', function () {
   before(function () {
@@ -140,7 +141,9 @@ describe('EstadisticaByidiomaController.getCantENXDia', function () {
           .then(response => {
             ///EJEMPLO DE COMO VALIDAR LA RESPUESTA DEL SERVICIO
             // assert(response.body.email, 'foo@bar.com')
-            console.log("Service OK:" + response.text)
+            console.log("Service OK ==> " + response.text)
+            console.log("Service OK ==> " + response.body.data)
+            assert.equal( response.body.data.length, 2)
             /// response.text >>>>> total de opiniones en ingles por dia de una Campaña
             done();
           })

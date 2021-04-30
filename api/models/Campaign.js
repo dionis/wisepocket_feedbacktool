@@ -61,6 +61,11 @@ module.exports = {
       allowNull: true
     },
 
+    userInvitado:{
+      collection: 'userInvitado',
+      via:'campInvitado'
+    }
+
     /*logo: {
       model: 'imagen',
       //unique: true,

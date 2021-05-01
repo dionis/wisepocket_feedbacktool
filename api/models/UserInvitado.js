@@ -20,7 +20,7 @@ module.exports = {
     },
 
     telefono: {
-      type:'number'
+      type:'string'
     },
 
     direccion: {
@@ -37,7 +37,11 @@ module.exports = {
       defaultsTo: false,
     },
 
-    campInvitado: {
+    invitadoBY:{
+      model:'user'
+    },
+
+    campaigns: {
       collection: 'campaign',
       via: 'userInvitado'
     }

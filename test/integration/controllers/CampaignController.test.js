@@ -29,7 +29,7 @@ describe('CampaignController.getCampaignbyUser', function () {
             ///EJEMPLO DE COMO VALIDAR LA RESPUESTA DEL SERVICIO
             // assert(response.body.email, 'foo@bar.com')
             console.log("Service OK:" + response.text)
-               /// response.text >>>>> Lista de Campañas del usuario correspondiente
+            /// response.text >>>>> Lista de Campañas del usuario correspondiente
             done();
           })
           .catch(err => done(err))
@@ -44,6 +44,7 @@ describe('CampaignController.getCampaignbyUser', function () {
     });
   })
 });
+
 
 ///  MUSALA TEST EXAMPLE
 

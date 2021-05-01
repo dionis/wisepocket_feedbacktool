@@ -37,6 +37,7 @@ module.exports.policies = {
     '*': 'isAuthenticated',
     create:true,
     getCampaignbyUser:true,
+    getInvitadoXCamp:true
    // editCampaign: true,
    // getCampaign:true,
    // deleteCampaign:true,

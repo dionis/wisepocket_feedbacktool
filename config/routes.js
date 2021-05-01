@@ -54,6 +54,7 @@ module.exports.routes = {
   //"PATCH /campaign/editCampaign": "CampaignController.editCampaign",
   // "DELETE /campaign/deleteCampaign": "CampaignController.deleteCampaign",
   "GET /campaign/getCampaign": "CampaignController.getCampaign",
+  "GET /campaign/getInvitadoXCamp": "CampaignController.getInvitadoXCamp",
   "GET /campaign/getCampaignbyUser/_id": "CampaignController.getCampaignbyUser", //DEJAR ESTE SERVICE
 
   //Services Requests
@@ -96,8 +97,9 @@ module.exports.routes = {
   "GET /estadisticaByTipo/getCNeutraXDia": "EstadisticaByTipoController.getCNeutraXDia",
   "GET /estadisticaByTipo/getCantTotalXDia": "EstadisticaByTipoController.getCantTotalXDia",
   "GET /estadisticaByidioma/getCantENXDiaEx": "EstadisticaByidiomaController.getCantENXDiaEx",
-  "GET /userInvitado/getUserandCamps": "UserInvitadoController.getUserandCamps",
-  "GET /userInvitado/getUsers": "UserInvitadoController.getUsers",
+  "GET /userInvitado/getCampXInvitado": "UserInvitadoController.getCampXInvitado",
+  "GET /userInvitado/getInvitados": "UserInvitadoController.getInvitados",
+  "GET /userInvitado/getInvXUserChief": "UserInvitadoController.getInvXUserChief",
  
 
   //PATCH

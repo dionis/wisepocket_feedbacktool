@@ -7,30 +7,42 @@
 
 module.exports = {
 
-    create: async function (req, res) {
+    //requiere User_ID, id del usuario admin que lo invito
+    create: async (req, res) => {
+        let userChief
+        await User.findOne({
+            id: req.param('id'),
+        }).then(async (doc) => {
+            if (!doc) {
+                console.log("No encontrado")
+            } else {
+                console.log("Encontrado")
+                userChief = doc
+                await UserInvitado.create({
+                    nombre: req.param('nombre'),
+                    correo: req.param('correo'),
+                    telefono: req.param('telefono'),
+                    direccion: req.param('direccion'),
+                    isAdmin: req.param('isAdmin'),
+                    acceso: req.param('acceso'),
+                    invitadoBY: userChief.id
+                }, (err) => {
+                    if (err) {
+                        sails.log.debug(err);
+                        return res.sendStatus(500);
+                    }
+                    else {
+                        return res.send(
+                            'Invitado registrado con éxito'
+                        )
+                    }
+                })
+            }
+        });
 
-        await UserInvitado.create({
-            nombre: req.param('nombre'),
-            correo: req.param('correo'),
-            telefono: req.param('telefono'),
-            direccion: req.param('direccion'),
-            isAdmin: req.param('isAdmin'),
-            acceso: req.param('acceso')
-        }, (err) => {
-            if (err) {
-                sails.log.debug(err);
-                return res.sendStatus(500);
-            }
-            else {
-                return res.send(
-                    'Invitado registrado con éxito'
-                )
-            }
-        })
     },
 
-
-    addCampaigns: async function (req, res) {
+    addCampaigns: async (req, res) => {
         let camp
         await Campaign.findOne({
             nombre: req.param('nombre'),
@@ -49,9 +61,9 @@ module.exports = {
                 console.log("No encontrado")
             } else {
                 console.log("Encontrado")
-                await UserInvitado.addToCollection(doc.id, 'campInvitado', camp).then(campInv => {
+                await UserInvitado.addToCollection(doc.id, 'campaigns', camp).then(campInv => {
                     return res.send({
-                        'success': true,
+                        'message': 'Asociado a la Campaña con éxito',
                         'data': campInv
                     })
                 })
@@ -66,26 +78,59 @@ module.exports = {
         });
     },
 
-    //AUN SE ESTA TRABAJANDO
-    getUserandCamps: async function (req, res) {
-        await UserInvitado.find({
-            id: req.param('id') 
-        }).populate('campInvitado'), (err, docs) => {
-            if (err) {
-                console.log(`Error: ` + err)
-            } else {
-                if (docs.length === 0) {
-                    console.log("Vacio")
-                } else {
-                    res.send({
-                        'data': docs
-                    })
-                }
-            }
-        };
+   
+    getCampXInvitado: async (req, res) => {
+        await UserInvitado.findOne({
+            id: req.param('id')
+        }
+        ).populate('campaigns').then((doc) => {
+            return res.send({
+                'message': 'Campañas asociadas',
+                'data': doc.campaigns
+            })
+        })
+            .catch(err => {
+                sails.log.debug(err);
+                return res.send({
+                    'success': false,
+                    'message': 'Falló la operación'
+                })
+            })
     },
 
-    getUsers: async function (req, res) {
+    //requiere User_ID, id del usuario admin que lo invito
+    getInvXUserChief: async (req, res) => {
+        let userID
+        await User.findOne({
+            id: req.param('id')
+        }).then(async (doc) => {
+            if (!doc) {
+                console.log("No encontrado")
+            } else {
+                console.log("Encontrado")
+                userID = doc
+                await UserInvitado.find({
+                    invitadoBY: userID.id
+                }
+                ).then((data) => {
+                    return res.send({
+                        'message': 'Tus Invitados',
+                        'data': data
+                    })
+                })
+                    .catch(err => {
+                        sails.log.debug(err);
+                        return res.send({
+                            'success': false,
+                            'message': 'Falló la operación'
+                        })
+                    })
+            }
+
+        })
+    },
+
+    getInvitados: async (req, res) => {
         await UserInvitado.find().then(doc => {
             return res.send({
                 'success': true,
@@ -101,7 +146,7 @@ module.exports = {
             })
     },
 
-    updateAcces: async function (req, res) {
+    updateAcces: async (req, res) => {
         UserInvitado.updateOne({
             id: req.param('id')
         }, {
@@ -110,12 +155,12 @@ module.exports = {
             if (err) {
                 console.log(`Error: ` + err)
             } else {
-                return res.send('Actualizado con éxito')
+                return res.send('Acceso actualizado')
             }
         });
     },
 
-    updateisAdmin: async function (req, res) {
+    updateisAdmin: async (req, res) => {
         UserInvitado.updateOne({
             id: req.param('id')
         }, {
@@ -124,12 +169,12 @@ module.exports = {
             if (err) {
                 console.log(`Error: ` + err)
             } else {
-                return res.send('Actualizado con éxito')
+                return res.send('Privilegio actualizado')
             }
         });
     },
 
-    deleteUserInvitado: async function (req, res) {
+    deleteUserInvitado: async (req, res) => {
         UserInvitado.destroy({
             id: req.param('id')
         }, (err) => {

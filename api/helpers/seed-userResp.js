@@ -57,7 +57,7 @@ module.exports = {
       let users = await Respuesta.count({ 'userRes': userEndObjet.id })
       let pregunta = await Respuesta.count({ 'ques': pregObjet.id })
       let campPreg = await Respuesta.count({ 'campaign': campOgjet.id })
-      if (users < 10 || pregunta < 10 || campPreg < 51) {
+      if (users < 10 || pregunta < 10 || campPreg < 25) {
         gateWayArray.push({
           texto: faker.lorem.sentences(6, ''),
           fecha: faker.date.recent(7),

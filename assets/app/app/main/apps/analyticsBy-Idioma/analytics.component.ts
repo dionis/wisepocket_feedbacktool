@@ -7,6 +7,7 @@ import { UserService } from '../../../services/user.service';
 import { takeUntil } from 'rxjs/operators';
 
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import * as moment from 'moment';
 //import { AnalyticsDashboardService } from './analytics.service';
 
 @Component({
@@ -274,6 +275,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     temp: any;
 
     dateForm: FormGroup;
+    maxDate: Date;
     /**
      * Constructor
      *
@@ -291,6 +293,19 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         this._registerCustomChartJSPlugin();
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
+        this.maxDate =  new Date();
+
+        /*
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+         OOOOOOOJJJJJJOOOOOOOO
+         minDate find the start camapingDate
+       */
 
     }
 
@@ -332,17 +347,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
 
         ///Read all Stadistics
-        this._estadPrueba.getAllStadistics()
-           .pipe(takeUntil(this._unsubscribeAll))
-           .subscribe(([englishData, spanishData, allData]) => {
-              console.log("<--- Get my data Spanish ---> ", spanishData);
-              this.widget3.datasets[0].data = spanishData;
-              console.log("<--- Get my data English ---> ", englishData);
-              this.widget2.datasets[0].data = englishData;
-              console.log("<--- Get my data All ---> ", allData);
-              this.widget4.datasets[0].data = allData;
 
-           })
+
         /// Widget 2 Data
         // this._estadPrueba.getDataEn().pipe(takeUntil(this._unsubscribeAll)).subscribe(newdata => {
         //     console.log("<--- Get my data ---> ", newdata);
@@ -360,6 +366,10 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         // })
         this.campaigns = this._camapignService.getMyCamps();
         console.log(this.campaigns);
+
+        let currentDate =  moment().format("YYYY-MM-DD HH:mm a");
+
+        this.getAllStadisticsFromBackend(currentDate);
 
         /*console.log("TO SEE DATA IN CHART");
         console.log("WIDGET 5");
@@ -452,8 +462,30 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     }
 
      /* Date */
-     date(e) {
-      var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
+     date(eDate) {
+      // var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
+      var convertDate = new Date(eDate.target.value)
+      let currentDate =  moment(convertDate).format("YYYY-MM-DD HH:mm a");
+      console.log("Find statdistics to ", currentDate);
+
+      this.getAllStadisticsFromBackend(currentDate);
+
+    }
+
+
+    getAllStadisticsFromBackend(currentDate:string){
+
+      this._estadPrueba.getAllStadistics(currentDate)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(([englishData, spanishData, allData, byIntervalData]) => {
+         console.log("<--- Get my data Spanish ---> ", spanishData);
+         this.widget3.datasets[0].data = spanishData;
+         console.log("<--- Get my data English ---> ", englishData);
+         this.widget2.datasets[0].data = englishData;
+         console.log("<--- Get my data All ---> ", allData);
+         this.widget4.datasets[0].data = allData;
+
+      })
 
     }
 }

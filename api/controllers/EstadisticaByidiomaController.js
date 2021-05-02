@@ -543,7 +543,7 @@ module.exports = {
 
         //let temp = [221, 428, 492, 471, 413, 344, 294]
         console.log("Client time is : ", clientTimestamp)
-        var aDate  = moment(clientTimestamp, 'YYYY-MM-DD', true);
+        var aDate  = moment(clientTimestamp, 'YYYY-MM-DD HH:mm a', true);
 
         let dateNewObjetc = new Date(clientTimestamp);
         if ( !(aDate.isValid()) || typeof(clientTimestamp) === 'undefined') {

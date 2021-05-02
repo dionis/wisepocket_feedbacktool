@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -88,8 +88,35 @@ export class EstadXidiomaService {
       }))
   }
 
-  getAllStadistics(): Observable<any[]>{
-     return combineLatest([ this.getDataEn() , this.getDataEs(),this.getDataTotal()]);
+  getIntervalDataTotal(currentDate:string): Observable<any>{
+
+    let campaign_id = '';
+
+    //if currentDate is a date
+    if (typeof (this.currentCamapingId) !== 'undefined' && this.currentCamapingId !== "") {
+      campaign_id = this.currentCamapingId;
+      console.log(" Use a campaing id to ", campaign_id);
+    }
+
+    let httpParams = new HttpParams()
+    .append("id", campaign_id)
+    .append("client_timestamp", currentDate)
+    ///estadisticaByidioma/getCantTotalXDia?id=' + campaign_id
+    return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getIntervalInADay', {params:httpParams})
+
+      .pipe(map((responseData: any) => {
+
+
+        if (responseData.data) {
+          this.dataTotal = responseData.data;
+          console.log("******* DATA in USE *********")
+          console.log(this.dataTotal);
+          return this.dataTotal
+        }
+      }))
+  }
+  getAllStadistics(currentDate:string): Observable<any[]>{
+     return combineLatest([ this.getDataEn() , this.getDataEs(),this.getDataTotal(), this.getIntervalDataTotal(currentDate)]);
 
   }
 

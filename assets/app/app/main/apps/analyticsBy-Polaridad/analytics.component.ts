@@ -420,12 +420,13 @@ export class AnalyticsDashboardComponent implements OnInit {
         this._campaignService.getCampaignbyUser(this._userService.user.id);
 
         if (typeof (this._campaignService.campaign) !== 'undefined' && this._campaignService.campaign.length > 0) {
-            //Seleccionar un id de camapana aleatoriamente
-            let camapIgnObjet = this._campaignService.campaign[0];
+            //Selecciona el id de la capana escogida por el usuario
+            let camapIgnObjet = this._campaignService.campaign;
 
+            console.log("Campaign ID", this._campaignService.getCampaignId)
             console.log("Campaingn list ", this._campaignService.campaign);
 
-            currentCamapingId = camapIgnObjet.id;
+            currentCamapingId = camapIgnObjet.getCampaignId;
             this._estadPrueba.setCurrentCamaignId(currentCamapingId);
         }
 

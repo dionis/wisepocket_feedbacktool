@@ -1,3 +1,4 @@
+import { CampaignService } from './campaign.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -9,6 +10,7 @@ import { BehaviorSubject, Observable,  combineLatest ,Subject} from 'rxjs';
   providedIn: 'root'
 })
 export class EstadTipoService {
+  campaign: CampaignService
   dataPos: any = []
   dataNeg: any = []
   dataNeu: any = []
@@ -114,6 +116,12 @@ export class EstadTipoService {
   getAllStadistics(): Observable<any[]>{
      return combineLatest([ this.getDataPos(),this.getDataNeg(),this.getDataNeu,this.getDataTotal()]);
 
+  }
+
+  getEstPolyById(id){
+    if(id==this.campaign.getCampaignId){
+      return combineLatest([this.getDataPos(), this.getDataNeg(), this.getDataNeu(), this.getDataTotal()]);
+    }
   }
 
 }

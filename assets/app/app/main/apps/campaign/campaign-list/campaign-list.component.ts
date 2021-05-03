@@ -67,7 +67,7 @@ export class CampaignListComponent implements OnInit, OnDestroy
     {
         this.dataSource = new FilesDataSource(this._campaignService);
 
-        this._campaignService.onCampaignChanged
+        this._campaignService.onCampaignsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(campaigns => {
                 this.campaigns = campaigns;
@@ -78,7 +78,7 @@ export class CampaignListComponent implements OnInit, OnDestroy
                 });
             });
 
-        this._campaignService.onSelectedCampaignChanged
+        this._campaignService.onSelectedCampaignsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedCampaigns => {
                 for ( const nombre in this.checkboxes )
@@ -212,7 +212,7 @@ export class CampaignListComponent implements OnInit, OnDestroy
             this.camp.starred.push(campaignNombre);
         }
 
-        this._campaignService.updateCampData(this.camp);
+      //  this._campaignService.updateCampData(this.camp);
     }
 }
 
@@ -236,7 +236,7 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._campaignService.onCampaignChanged;
+        return this._campaignService.onCampaignsChanged;
     }
 
     /**

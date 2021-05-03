@@ -1,3 +1,5 @@
+import { CampaignService } from '../../../../.tmp/public/app/app/services/campaign.service';
+import { Campaign } from '../models/campaing.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -5,10 +7,12 @@ import { environment } from '../../environments/environment';
 import { AnalyticsXIdiomaDashboardDb } from '../fake-db/dashboard-analyticsXIdioma';
 import { BehaviorSubject, Observable,  combineLatest ,Subject} from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class EstadXidiomaService {
+  campaign: CampaignService
   dataEn: any = []
   dataEs: any = []
   dataTotal: any = []
@@ -91,6 +95,12 @@ export class EstadXidiomaService {
   getAllStadistics(): Observable<any[]>{
      return combineLatest([ this.getDataEn() , this.getDataEs(),this.getDataTotal()]);
 
+  }
+
+  getEstLangById(id){
+    if(id==this.campaign.getCampaignId){
+      return combineLatest([this.getDataEn(), this.getDataEs(), this.getDataTotal()]);
+    }
   }
 
 }

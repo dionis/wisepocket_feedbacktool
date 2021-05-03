@@ -1,14 +1,14 @@
 <mat-table #table [dataSource]="dataSource"
            [@animateStagger]="{value:'50'}">
     <!-- Checkbox Column -->
-    <ng-container matColumnDef="checkbox">
+   <!-- <ng-container matColumnDef="checkbox">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let campaign">
             <mat-checkbox [(ngModel)]="checkboxes[campaign.nombre]" (ngModelChange)="onSelectedChange(campaign.nombre)"
                           (click)="$event.stopPropagation()">
             </mat-checkbox>
         </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <!-- Avatar Column -->
  <!-- <ng-container matColumnDef="avatar">

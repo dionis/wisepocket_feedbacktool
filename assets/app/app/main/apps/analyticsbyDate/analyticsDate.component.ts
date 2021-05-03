@@ -3,6 +3,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '../../../../@fuse/animations';
 
 import { AnalyticsDateDashboardService } from '../analyticsbyDate/analyticsDate.service';
+import { CampaignService } from '../../../services/campaign.service';
+import { EstadXidiomaService } from '../../../services/estad-xidioma.service';
 @Component({
     selector     : 'date-dashboard-analytics',
     templateUrl  : './analyticsDate.component.html',
@@ -22,7 +24,9 @@ export class AnalyticsDateDashboardComponent implements OnInit
      * @param {AnalyticsDateDashboardService} _analyticsDateDashboardService
      */
     constructor(
-        private _analyticsDateDashboardService: AnalyticsDateDashboardService
+        private _analyticsDateDashboardService: AnalyticsDateDashboardService,
+        private _campaignService :CampaignService,
+        private _estadPrueba: EstadXidiomaService,
     )
     {
         // Register the custom chart.js plugin
@@ -40,6 +44,18 @@ export class AnalyticsDateDashboardComponent implements OnInit
     {
         // Get the widgets from the service
         this.widgets = this._analyticsDateDashboardService.widgets;
+
+        let currentCamapingId: string = "";
+        if (typeof (this._campaignService.campaign) !== 'undefined' && this._campaignService.campaign.length > 0) {
+            //Selecciona el id de la capana escogida por el usuario
+            let camapIgnObjet = this._campaignService.campaign;
+
+            console.log("Campaign ID", this._campaignService.getCampaignId)
+            console.log("Campaingn list ", this._campaignService.campaign);
+
+            currentCamapingId = camapIgnObjet.getCampaignId;
+            this._estadPrueba.setCurrentCamaignId(currentCamapingId);
+        }
 
 
         console.log("TO SEE DATA IN CHART");

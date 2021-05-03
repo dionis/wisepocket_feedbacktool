@@ -6,13 +6,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import {FuseUtils} from '../../@fuse/utils';
 
 import { Opinion } from '../models/opinion.model';
-
+import { CampaignService } from '../services/campaign.service';
+ 
 @Injectable()
 export class OpinionService implements Resolve<any>
 {
     deleteSelectedOpinions() {
         throw new Error('Method not implemented.');
     }
+    campaign: CampaignService;
     opinions: Opinion[];
     user: string;
     selectedOpinions: Opinion[];
@@ -178,6 +180,27 @@ export class OpinionService implements Resolve<any>
       }
 
       return this.getOpinionsByFolder(this.routeParams.folderHandle);
+
+    }
+
+    getOpinionById(id){
+        if(id==this.campaign.getCampaignId){
+            {
+
+                if ( this.routeParams.labelHandle )
+                {
+                    return this.getOpinionsByLabel(this.routeParams.labelHandle);
+                }
+          
+                if ( this.routeParams.filterHandle )
+                {
+                    return this.getOpinionsByFilter(this.routeParams.filterHandle);
+                }
+          
+                return this.getOpinionsByFolder(this.routeParams.folderHandle);
+          
+              }
+        }
 
     }
 

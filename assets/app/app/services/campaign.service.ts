@@ -14,6 +14,7 @@ import { WeekDay } from '@angular/common';
 })
 
 export class CampaignService {
+  Campaign: Campaign;
   campaign: any = []
   onCampaignsChanged: BehaviorSubject<any>;
   onSelectedCampaignsChanged: BehaviorSubject<any>;
@@ -23,6 +24,7 @@ export class CampaignService {
 
   filterBy: string;
   selectedCampaigns: string[] = [];
+  selectedCampaign: Campaign;
 
 
   constructor(private _http: HttpClient
@@ -53,6 +55,12 @@ export class CampaignService {
           this.campaign = null;
         })
   }
+
+  getCampaignId(){ //Devuelve el id de la campaña
+   return this.campaign.map(campaign => {
+      this.selectedCampaign.id;
+  });
+}
 
   getMyCamps() {
     const date = new Date()
@@ -113,6 +121,39 @@ export class CampaignService {
         this.onCampaignsChanged.next(this.campaign);
         this.deselectCampaigns();
     }
+
+    toggleSelectedCampaign(id): void
+    {
+        // First, check if we already have that contact as selected...
+        if ( this.selectedCampaigns.length > 0 )
+        {
+            const index = this.selectedCampaigns.indexOf(id);
+
+            if ( index !== -1 )
+            {
+                this.selectedCampaigns.splice(index, 1);
+
+                // Trigger the next event
+                this.onSelectedCampaignsChanged.next(this.selectedCampaigns);
+
+                // Return
+                return;
+            }
+        }
+
+        // If we don't have it, push as selected
+        this.selectedCampaigns.push(id);
+
+        // Trigger the next event
+        this.onSelectedCampaignsChanged.next(this.selectedCampaigns);
+    }
+
+    deleteCampaign(campaign): void
+    {
+        const campaignIndex = this.campaign.indexOf(campaign);
+        this.campaign.splice(campaignIndex, 1);
+        this.onCampaignsChanged.next(this.campaign);
+    }    
 
 
 }

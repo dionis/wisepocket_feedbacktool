@@ -175,6 +175,10 @@ const routes = [
         path: 'analyticsDate',
         loadChildren: () => import('../apps/analyticsbyDate/analyticsDate.module').then(m => m.AnalyticsDateDashboardModule)
     },
+    {
+        path: 'campaign',
+        loadChildren: () => import('../apps/campaign/campaign.module').then(m => m.CampaignModule)
+    },
 
     /*{
         path: 'opinionAnalytics',

@@ -74,7 +74,7 @@ module.exports.bootstrap = async function() {
  console.log("--- PUEDE REALIZAR UN TEST de Servicios con: npm test")
  console.log("--- Inyectando database ---")
  await sails.helpers.seedUser()
- console.log("CREATED >>>>>>>> user >>>>>>> Campaign ")
+ console.log("CREATED >>>>>>>> user >>>>>>> Campaign >>>>>> userInvitado")
  await sails.helpers.seedUserend()
  await sails.helpers.seedUserenden()
  console.log("CREATED >>>>>> userEnd >>>>>> opinion (aspectos y entidades) >>>>> pregunta ")

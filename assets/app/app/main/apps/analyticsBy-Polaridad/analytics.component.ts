@@ -7,6 +7,8 @@ import { UserService } from '../../../services/user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
+
+import * as moment from 'moment';
 //import { AnalyticsDashboardService } from './analytics.service';
 
 @Component({
@@ -380,8 +382,8 @@ export class AnalyticsDashboardComponent implements OnInit {
             }
         }
     }
-    
 
+    maxDate: Date;
     /**
      * Constructor
      *
@@ -396,9 +398,9 @@ export class AnalyticsDashboardComponent implements OnInit {
     ) {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
-        
+
         this._unsubscribeAll = new Subject();
-        
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -430,23 +432,28 @@ export class AnalyticsDashboardComponent implements OnInit {
             this._estadPrueba.setCurrentCamaignId(currentCamapingId);
         }
 
+
+        let currentDate =  moment().format("YYYY-MM-DD HH:mm a");
+
+        this.getAllStadisticsFromBackend(currentDate);
+
                 ///Read all Stadistics
-                this._estadPrueba.getAllStadistics()
-                .pipe(takeUntil(this._unsubscribeAll))
-                .subscribe(([ positiveData, negativeData, neutralData, allData]) => {
-                   console.log("<--- Get my data Positive ---> ", positiveData);
-                   this.widget3.datasets[0].data = positiveData;
-                   console.log("<--- Get my data Negative ---> ", negativeData);
-                   this.widget2.datasets[0].data = negativeData;
-                   console.log("<--- Get my data Neutral ---> ", neutralData);
-                   this.widget6.datasets[0].data = neutralData;
-                   console.log("<--- Get my data All ---> ", allData);
-                   this.widget4.datasets[0].data = allData;
-     
-                })
+                // this._estadPrueba.getAllStadistics()
+                // .pipe(takeUntil(this._unsubscribeAll))
+                // .subscribe(([ positiveData, negativeData, neutralData, allData]) => {
+                //    console.log("<--- Get my data Positive ---> ", positiveData);
+                //    this.widget3.datasets[0].data = positiveData;
+                //    console.log("<--- Get my data Negative ---> ", negativeData);
+                //    this.widget2.datasets[0].data = negativeData;
+                //    console.log("<--- Get my data Neutral ---> ", neutralData);
+                //    this.widget6.datasets[0].data = neutralData;
+                //    console.log("<--- Get my data All ---> ", allData);
+                //    this.widget4.datasets[0].data = allData;
+
+                // })
 
         this.campaign = this._campaignService.getMyCamps();
-        console.log(this.campaign); 
+        console.log(this.campaign);
 
     }
 
@@ -510,6 +517,34 @@ export class AnalyticsDashboardComponent implements OnInit {
                 });
             }
         });
+    }
+
+
+    getAllStadisticsFromBackend(currentDate:string){
+
+      this._estadPrueba.getAllStadistics(currentDate)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(([englishData, spanishData, allData, byIntervalData]) => {
+         console.log("<--- Get my data Spanish ---> ", spanishData);
+         this.widget3.datasets[0].data = spanishData;
+         console.log("<--- Get my data English ---> ", englishData);
+         this.widget2.datasets[0].data = englishData;
+         console.log("<--- Get my data All ---> ", allData);
+         this.widget4.datasets[0].data = allData;
+
+      })
+
+    }
+
+         /* Date */
+    date(eDate) {
+          // var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
+          var convertDate = new Date(eDate.target.value)
+          let currentDate =  moment(convertDate).format("YYYY-MM-DD HH:mm a");
+          console.log("Find statdistics to ", currentDate);
+
+          this.getAllStadisticsFromBackend(currentDate);
+
     }
 }
 

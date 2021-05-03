@@ -80,6 +80,26 @@ module.exports = {
             })
     },*/
 
+    //Requiere ID de la campaña
+    getInvitadoXCamp: async (req, res) => {
+        await Campaign.findOne({
+            id: req.param('id')
+        }
+        ).populate('userInvitado').then((doc) => {
+            return res.send({
+                'message': 'Usuarios Invitados',
+                'data': doc.userInvitado
+            })
+        })
+            .catch(err => {
+                sails.log.debug(err);
+                return res.send({
+                    'success': false,
+                    'message': 'Falló la operación'
+                })
+            })
+    },
+
    getCampaign: (req, res) => {
         Campaign.find().populate('userChief')
             .then(campaign => {

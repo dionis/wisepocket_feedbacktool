@@ -8,7 +8,7 @@
 module.exports = {
 
   attributes: {
-    
+
    /* id: {
       type: 'string',
       unique: true,
@@ -32,7 +32,7 @@ module.exports = {
     },
 
     ///PROVISIONAL
-    polaridad:{             
+    polaridad:{
       type:'string'
     },
     ///PROVISIONAL
@@ -40,6 +40,11 @@ module.exports = {
     fecha: {
       type: 'string', //new Date().toLocaleString('en-US', {weekday:'long'})
       columnType: 'date'
+    },
+
+    createtime: {
+      type: 'ref', //new Date().toLocaleString('en-US', {weekday:'long'})
+      columnType: 'datetime'
     },
 
     idioma:{

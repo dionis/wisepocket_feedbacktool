@@ -19,6 +19,11 @@ module.exports = {
       columnType: 'date'
     },
 
+    createtime: {
+      type: 'ref', //new Date().toLocaleString('en-US', {weekday:'long'})
+      columnType: 'datetime'
+    },
+
     quesUserend: {
       model: 'userend'
     },

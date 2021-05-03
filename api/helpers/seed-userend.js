@@ -72,12 +72,22 @@ module.exports = {
       /*let pregunta = await Pregunta.count({ 'quesUserend': userEndObjet.id })
       let campOp = await Opinion.count({ 'campaign': campOgjet.id })
       let campPreg = await Pregunta.count({ 'campaign': campOgjet.id })*/
+      var currentTime = faker.date.recent(3);
 
+      let dayNameArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+      console.log("Time ====>> " ,  currentTime)
+      var dateObjet = new Date(currentTime);
+      var timestamp =  dateObjet.getTime();
+
+      console.log("# Day ", dateObjet.getDay(), " = Day Name: ",dayNameArray[dateObjet.getDay()] );
+      console.log("TimeStamp ====>> " ,timestamp);
 
       if (opinion < 81) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.recent(3),
+          fecha: currentTime,
+          currentime: String.toString(timestamp),
           idioma: 'español',
           polaridad: 'positiva',
           userend: userEndObjet.id,
@@ -122,9 +132,15 @@ module.exports = {
 
       }
       if (iValue < 10) {
+
+        var currentTime = faker.date.recent(7);
+        var dateObjet = new Date(currentTime);
+        var timestamp =  dateObjet.getTime();
+
         newPregunta = {
           texto: faker.lorem.sentences(4, ''),
-          fecha: faker.date.recent(7),
+          fecha: currentTime,
+          currentime: String.toString(timestamp),
           quesUserend: userEndObjet.id,
           campaign: campOgjet.id
         }

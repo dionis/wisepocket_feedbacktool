@@ -72,11 +72,18 @@ module.exports = {
        let campOp = await Opinion.count({ 'campaign': campOgjet.id })
        let campPreg = await Pregunta.count({ 'campaign': campOgjet.id })*/
 
+      // How  faker.date.recent(5) set a date = "2021-04-23T14:49:00.099Z"
+      //faker.time.recent(7) is a timestamp
 
       if (iValue < 201) {
+        var currentTime =  faker.date.recent(5);
+        var dateObjet = new Date(currentTime);
+        var timestamp =  dateObjet.getTime();
+
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.recent(5),
+          fecha: currentTime,
+          currentime: String.toString(timestamp),
           idioma: 'ingles',
           polaridad: 'positiva',
           userend: userEndObjet.id,
@@ -88,15 +95,19 @@ module.exports = {
       }
 
     }
-  
+
     for (var iValue = 1; iValue < registerSize1; iValue++) {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
 
       if (iValue < 201) {
+        var currentTime =  faker.date.recent(7);
+        var dateObjet = new Date(currentTime);
+        var timestamp =  dateObjet.getTime();
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.recent(7),
+          fecha: currentTime,
+          currentime: String.toString(timestamp),
           idioma: 'ingles',
           polaridad: 'negativa',
           userend: userEndObjet.id,
@@ -111,9 +122,15 @@ module.exports = {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
       if (iValue < 50) {
+
+        var currentTime =  faker.date.recent(4);
+        var dateObjet = new Date(currentTime);
+        var timestamp =  dateObjet.getTime();
+
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: faker.date.recent(4),
+          fecha:currentTime,
+          currentime: String.toString(timestamp),
           idioma: 'ingles',
           polaridad: 'neutra',
           userend: userEndObjet.id,

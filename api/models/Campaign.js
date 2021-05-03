@@ -61,6 +61,11 @@ module.exports = {
       allowNull: true
     },
 
+    userInvitado:{
+      collection: 'userinvitado',
+      via:'campaigns'
+    }
+
     /*logo: {
       model: 'imagen',
       //unique: true,

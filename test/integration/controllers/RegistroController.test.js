@@ -8,8 +8,9 @@ describe('RegistroController.create', function () {
     it('should redirect to /my/page', function (done) {
       supertest(sails.hooks.http.app)
         .post('/registro/create')
-        .query()
-        .send({ texto: 'test', evento: 'test', fecha: 'test' })
+        .field('texto','test')
+        .field('evento', 'test')
+        .field( 'fecha', 'test' )
         .expect(200, function (err, res) {
           console.log('Registro cretaed');
           if (err) return done(err);

@@ -109,9 +109,13 @@ module.exports.routes = {
     
 
 
+  //PATCH
+  "PATCH /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
+  "PATCH /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
 
 
-
+  //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
+  //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
   // …
 

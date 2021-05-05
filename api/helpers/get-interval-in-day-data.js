@@ -53,9 +53,12 @@ module.exports = {
     let aDate =  moment(inputs.date,"YYYY-MM-DD HH:mm a");
     let initData = aDate.hour(12).format("YYYY-MM-DD HH:mm a");
 
+
     //2- Find yesterday date
     hourInDayInterval.push(initData)
     console.log("Find yesterday date ", inputs.language)
+    
+    let language = inputs.language;
 
      //1- Compute all interval between init and interval
      let dateInMoment = aDate;
@@ -87,21 +90,21 @@ module.exports = {
        let opinionPositive =  await Opinion.count({
         campaign: inputs.camapingid,
         fecha:  {'>=': item, '<': endMoment},
-        idioma: 'ingles',
+        idioma:  inputs.language,
         polaridad: 'positiva'
         });
 
         let opinionNegative =  await Opinion.count({
           campaign: inputs.camapingid,
           fecha:  {'>=': item, '<': endMoment},
-          idioma: 'ingles',
+          idioma:  inputs.language,
           polaridad: 'negativa'
           });
 
           let opinionNeutral =  await Opinion.count({
             campaign: inputs.camapingid,
             fecha:  {'>=': item, '<': endMoment},
-            idioma: 'ingles',
+            idioma:  inputs.language,
             polaridad: 'neutral'
             });
 
@@ -114,7 +117,8 @@ module.exports = {
            opinionnegative:(typeof(opinionNegative) === 'undefined')?0:opinionNegative,
            opinionneutral:(typeof(opinionNeutral) === 'undefined')?0:opinionNeutral,
            date:item,
-           dateName: moment(item,"YYYY-MM-DD HH:mm a").format('dddd')
+           dateName: moment(item,"YYYY-MM-DD HH:mm a").format('dddd'),
+           dateHour: moment(item,"YYYY-MM-DD HH:mm a").format('HH a')
          }
         // console.log("Insert object in search ",resultObject );
          cantDayResult.push(resultObject )

@@ -37,10 +37,9 @@ export class EstadXidiomaService {
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getCantENXDia?id=' + campaign_id)
       .pipe(map((responseData: any) => {
 
-
         if (responseData.data) {
           this.dataEn = responseData.data;
-          console.log("******* DATA in USE *********")
+          console.log("******* DATA in USE getDataEn *********")
           console.log(this.dataEn);
           return this.dataEn
         }
@@ -62,7 +61,7 @@ export class EstadXidiomaService {
 
         if (responseData.data) {
           this.dataEs = responseData.data;
-          console.log("******* DATA in USE *********")
+          console.log("******* DATA in USE getDataEs *********")
           console.log(this.dataEs);
           return this.dataEs
         }
@@ -84,14 +83,14 @@ export class EstadXidiomaService {
 
         if (responseData.data) {
           this.dataTotal = responseData.data;
-          console.log("******* DATA in USE *********")
+          console.log("******* DATA in USE getDataTotal *********")
           console.log(this.dataTotal);
           return this.dataTotal
         }
       }))
   }
 
-  getIntervalDataTotal(currentDate:string): Observable<any>{
+  getIntervalDataTotal(currentDate:string, language:string = "ingles"): Observable<any>{
 
     let campaign_id = '';
 
@@ -104,6 +103,7 @@ export class EstadXidiomaService {
     let httpParams = new HttpParams()
     .append("id", campaign_id)
     .append("client_timestamp", currentDate)
+    .append("language", language)
     ///estadisticaByidioma/getCantTotalXDia?id=' + campaign_id
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getIntervalInADay', {params:httpParams})
 
@@ -112,14 +112,14 @@ export class EstadXidiomaService {
 
         if (responseData.data) {
           this.dataTotal = responseData.data;
-          console.log("******* DATA in USE *********")
+          console.log("******* DATA in USE getIntervalDataTotal *********")
           console.log(this.dataTotal);
-          return this.dataTotal
+          return  responseData.data
         }
       }))
   }
   getAllStadistics(currentDate:string): Observable<any[]>{
-     return combineLatest([ this.getDataEn() , this.getDataEs(),this.getDataTotal(), this.getIntervalDataTotal(currentDate)]);
+     return combineLatest([ this.getDataEn() , this.getDataEs(),this.getDataTotal(), this.getIntervalDataTotal(currentDate) ,this.getIntervalDataTotal(currentDate, 'espanol')]);
 
   }
 

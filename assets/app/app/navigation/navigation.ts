@@ -131,6 +131,7 @@ export const navigation: FuseNavigation[] = [
             type: 'item',
             url: '/apps/campaign'
         },
+        
 
         ]
     }

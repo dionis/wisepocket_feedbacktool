@@ -102,9 +102,13 @@ module.exports.routes = {
   "GET /userInvitado/getInvXUserChief": "UserInvitadoController.getInvXUserChief",
 
 
+  //PATCH
+  "PATCH /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
+  "PATCH /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
 
 
-
+  //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
+  //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
   // …
 

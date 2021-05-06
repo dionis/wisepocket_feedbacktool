@@ -468,7 +468,7 @@ module.exports = {
   *  size in campaingid identifier
   *
   */
-  async getIntervalInDayData (campaignid, date) {
+  async getIntervalInDayData (campaignid, date, language) {
 
                              let hourInDayInterval = [];
                              console.log("In function by Interval")
@@ -540,6 +540,10 @@ module.exports = {
         let cantDay = [1, 2, 3, 4, 5, 6, 7];
         let cantDayResult = [];
         let clientTimestamp =  req.param('client_timestamp');
+        let nlanguage = req.param('language');
+
+        if (typeof(nlanguage) === 'undefined' || nlanguage === '')
+                nlanguage = 'ingles';
 
         //let temp = [221, 428, 492, 471, 413, 344, 294]
         console.log("Client time is : ", clientTimestamp)
@@ -622,7 +626,8 @@ module.exports = {
                                   console.log(" Date is ", ndate)
                                   let resultInDay =  await sails.helpers.getIntervalInDayData.with({
                                                               camapingid: campaign.id,
-                                                              date: ndate
+                                                              date: ndate,
+                                                              language:nlanguage
                                                             });
 
                                   console.log("################################################")

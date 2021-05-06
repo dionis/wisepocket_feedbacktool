@@ -335,16 +335,34 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         console.log(" Get information about USER ", this._userService.user.id);
         this._camapignService.getCampaignbyUser(this._userService.user.id);
 
+
         if (typeof (this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0) {
             //Selecciona el id de la campana escogida por el usuario
-            let camapIgnObjet = this._camapignService.campaign;
-            
-            console.log("Campaign ID", this._camapignService.getCampaignId)
-            console.log("Campaingn list ", this._camapignService.campaign);
+          /*************************************************
+             ERASE IN PRODUCTION
+          **************************************************/
+             this._camapignService.testSelectedRandomCamaping()
+                  .then( (_)=>{
+                    const camapIgnObjet = this._camapignService.selectedCampaign;
 
-            currentCamapingId = camapIgnObjet.getCampaignId;
-            this._estadPrueba.setCurrentCamaignId(currentCamapingId);
-        }
+                    console.log("Campaign ID", camapIgnObjet)
+                    console.log("Campaingn list ", this._camapignService.campaign);
+
+                    currentCamapingId = camapIgnObjet.id;
+                    this._estadPrueba.setCurrentCamaignId(currentCamapingId);
+
+                    this.campaigns = this._camapignService.getMyCamps();
+                    console.log(this.campaigns);
+
+                    let currentDate =  moment().format("YYYY-MM-DD HH:mm a");
+
+                    this.getAllStadisticsFromBackend(currentDate);
+
+                  })
+                  .catch(error=>console.error(error))
+
+
+            }
 
 
         ///Read all Stadistics
@@ -365,12 +383,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         //     console.log("<--- Get my data ---> ", newdata);
         //     this.widget4.datasets[0].data = newdata;
         // })
-        this.campaigns = this._camapignService.getMyCamps();
-        console.log(this.campaigns);
 
-        let currentDate =  moment().format("YYYY-MM-DD HH:mm a");
-
-        this.getAllStadisticsFromBackend(currentDate);
 
         /*console.log("TO SEE DATA IN CHART");
         console.log("WIDGET 5");
@@ -478,13 +491,98 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
       this._estadPrueba.getAllStadistics(currentDate)
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(([englishData, spanishData, allData, byIntervalData]) => {
+      .subscribe(([englishData, spanishData, allData, byIntervalDataEnglish, byIntervalDataSpanish]) => {
          console.log("<--- Get my data Spanish ---> ", spanishData);
          this.widget3.datasets[0].data = spanishData;
          console.log("<--- Get my data English ---> ", englishData);
          this.widget2.datasets[0].data = englishData;
          console.log("<--- Get my data All ---> ", allData);
          this.widget4.datasets[0].data = allData;
+         console.log("<--- Get my data in Interval  English---> ",byIntervalDataEnglish[0]);
+         console.log("<--- Get my data in Interval  Spanish---> ",byIntervalDataSpanish[0]);
+
+
+         let labelsTime:any = [];
+
+         let spanishToday:any = [];
+         let spanishYesterday:any = [];
+
+         let englishToday:any = [];
+         let englishYesterday:any = [];
+
+         ///Get labels
+         if (typeof(byIntervalDataEnglish[0]) !== 'undefined'){
+             byIntervalDataEnglish.forEach(element => {
+
+             if (typeof(element.today) !== 'undefined'){
+
+                 element.today.forEach(item =>{
+                     labelsTime.push(item.dateHour);
+                     englishToday.push(parseInt(item.opinionsize, 10));
+                 })
+
+                 console.log("New list of labels ", labelsTime);
+                 this.widget5.labels = labelsTime;
+
+                 if (this.widget5.datasets['Hoy'][0].label == "Inglés"){
+                     this.widget5.datasets['Hoy'][0].data = englishToday;
+                       console.log("Search data for English today ", this.widget5.datasets['Hoy'][0].data);
+                  }
+
+             }
+
+
+             if (typeof(element.yesterday) !== 'undefined'){
+
+                  element.yesterday.forEach(item =>{
+                     englishYesterday.push(parseInt(item.opinionsize, 10));
+                 })
+
+                 if (this.widget5.datasets['Ayer'][0].label == "Inglés"){
+                     this.widget5.datasets['Ayer'][0].data = englishYesterday;
+                     console.log("Search data for English yesterday ", this.widget5.datasets['Ayer'][0].data);
+
+                 }
+             }
+
+             });
+
+         }
+
+
+        if (typeof(byIntervalDataSpanish) !== 'undefined'){
+            byIntervalDataEnglish.forEach(element => {
+             if (typeof(element.today) !== 'undefined'){
+
+                element.today.forEach(item =>{
+                     spanishToday.push(parseInt(item.opinionsize, 10));
+                 })
+
+                if (this.widget5.datasets['Hoy'][1].label == "Español"){
+                     this.widget5.datasets['Hoy'][1].data = spanishToday;
+                       console.log("Search data for Spanish today ", this.widget5.datasets['Hoy'][1].data);
+                  }
+
+             }
+
+
+
+             if (typeof(element.yesterday) !== 'undefined'){
+
+                element.yesterday.forEach(item =>{
+                     spanishYesterday.push(parseInt(item.opinionsize, 10));
+                 })
+
+
+                 if (this.widget5.datasets['Ayer'][1].label == "Español"){
+                     this.widget5.datasets['Ayer'][1].data = spanishYesterday;
+                       console.log("Search data for Spanish yesterday ", this.widget5.datasets['Ayer'][1].data);
+                  }
+              }
+            })
+         }
+
+
 
       })
 

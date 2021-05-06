@@ -8,7 +8,7 @@ import { environment } from './../../environments/environment';
 import { Campaign } from '../models/campaing.model';
 import { weekdays } from 'moment';
 import { WeekDay } from '@angular/common';
-
+import * as faker from 'faker';
 @Injectable({
   providedIn: 'root',
 })
@@ -40,6 +40,7 @@ export class CampaignService {
   getCampaignbyUser(id: String) {  //Recibe el id como parametro
 
     //pagina apartir de 0 //page=0 es de prueba
+    const campaignService = this;
     this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/campaign/getCampaignbyUser/_id?id=' + id + '&page=0')
       .pipe(map((responseData: any) => {
 
@@ -47,6 +48,7 @@ export class CampaignService {
           for (let index = 0; index < responseData.data.length; index++) {
             this.campaign[index] = responseData.data[index]
           }
+
           return this.campaign
         }
       })).subscribe(res => {
@@ -57,10 +59,24 @@ export class CampaignService {
   }
 
   getCampaignId(){ //Devuelve el id de la campaña
-   return this.campaign.map(campaign => {
-      this.selectedCampaign.id;
-  });
-}
+      return this.campaign.map(campaign => {
+          this.selectedCampaign.id;
+      });
+  }
+
+  testSelectedRandomCamaping() : Promise< boolean>{
+    if ( typeof(this.campaign) !== 'undefined' && this.campaign.length > 0){
+      return new Promise (( resolve, reject)=>{
+        this.selectedCampaign = faker.random.arrayElement(this.campaign);
+        console.log("Selected Campaing Data ", this.selectedCampaign );
+        resolve(true);
+      })
+
+    }
+    else
+      return null;
+  }
+
 
   getMyCamps() {
     const date = new Date()
@@ -81,7 +97,7 @@ export class CampaignService {
               });
       });
   }
-  
+
   selectCampaign(filterParameter?, filterValue?): void
     {
         this.selectedCampaigns = [];
@@ -153,7 +169,7 @@ export class CampaignService {
         const campaignIndex = this.campaign.indexOf(campaign);
         this.campaign.splice(campaignIndex, 1);
         this.onCampaignsChanged.next(this.campaign);
-    }    
+    }
 
 
 }

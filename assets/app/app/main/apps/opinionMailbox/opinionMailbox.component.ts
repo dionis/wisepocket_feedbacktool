@@ -9,6 +9,11 @@ import { FuseTranslationLoaderService } from '../../../../@fuse/services/transla
 import { Opinion } from '../../../models/opinion.model';
 import { OpinionService } from '../../../services/opinion-analizer.service';
 
+
+import { CampaignService } from '../../../services/campaign.service';
+import { UserService } from '../../../services/user.service';
+
+
 import { locale as english } from '../../../../app/main/apps/opinionMailbox/i18n/en';
 import { locale as turkish } from '../../../../app/main/apps/opinionMailbox/i18n/tr';
 
@@ -43,7 +48,9 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
     constructor(
         private _opinionService: OpinionService,
         private _fuseSidebarService: FuseSidebarService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService
+        private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+        private _camapignService: CampaignService,
+        private _userService: UserService,
     )
     {
         // Load the translations
@@ -110,9 +117,47 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
             debounceTime(300),
             distinctUntilChanged()
         )
-            .subscribe(searchText => {
+        .subscribe(searchText => {
                 this._opinionService.onSearchTextChanged.next(searchText);
-            });
+        });
+   
+        let currentCamapingId: string = "";
+        console.log(" Get information about USER ", this._userService.user.id);
+        this._camapignService.getCampaignbyUser(this._userService.user.id);
+
+
+        if (typeof (this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0) {
+            //Selecciona el id de la campana escogida por el usuario
+          /*************************************************
+             ERASE IN PRODUCTION
+          **************************************************/
+             this._camapignService.testSelectedRandomCamaping()
+                  .then( (_)=>{
+                    const camapIgnObjet = this._camapignService.selectedCampaign;
+
+                    console.log("Campaign ID", camapIgnObjet)
+                    console.log("Campaingn list ", this._camapignService.campaign);
+
+                    currentCamapingId = camapIgnObjet.id;
+                    this._estadPrueba.setCurrentCamaignId(currentCamapingId);
+
+                    this.campaigns = this._camapignService.getMyCamps();
+                    console.log(this.campaigns);
+
+                    let currentDate =  moment().format("YYYY-MM-DD HH:mm a");
+
+                    this.getAllStadisticsFromBackend(currentDate);
+
+                  })
+                  .catch(error=>console.error(error))
+
+
+            }
+   
+   
+   
+   
+   
     }
 
     /**

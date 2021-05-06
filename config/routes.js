@@ -97,9 +97,16 @@ module.exports.routes = {
   "GET /estadisticaByTipo/getCNeutraXDia": "EstadisticaByTipoController.getCNeutraXDia",
   "GET /estadisticaByTipo/getCantTotalXDia": "EstadisticaByTipoController.getCantTotalXDia",
   "GET /estadisticaByidioma/getCantENXDiaEx": "EstadisticaByidiomaController.getCantENXDiaEx",
+  "GET /estadisticaByidioma/getIntervalInADay": "EstadisticaByidiomaController.getIntervalInAday",
+
   "GET /userInvitado/getCampXInvitado": "UserInvitadoController.getCampXInvitado",
   "GET /userInvitado/getInvitados": "UserInvitadoController.getInvitados",
   "GET /userInvitado/getInvXUserChief": "UserInvitadoController.getInvXUserChief",
+  "GET /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
+  
+   "GET /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
+  
+    
 
 
   //PATCH

@@ -116,7 +116,7 @@ describe('EstadisticaByidiomaController.getCantENXDia', function () {
           console.log(" Find opinions to obtain posible dates");
           let opionObject =   faker.random.arrayElement(opinions);
           let dateToFind = opionObject.fecha;
-          dateToFind =  moment(dateToFind).format('YYYY-MM-DD');
+          dateToFind =  moment(dateToFind).format('YYYY-MM-DD HH:mm a');
           console.log(" Date to find " , dateToFind);
 
           ///Insert Opinion in Campaing for each id

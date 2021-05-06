@@ -108,7 +108,7 @@ module.exports = {
             }
         });
         await Opinion.destroy({
-            where:{campaign: campaign.id},
+            where: { campaign: campaign.id },
             id: req.params.id
         }).then(function (opinion) {
             return res.send({
@@ -151,6 +151,31 @@ module.exports = {
             })
     },
 
+    //Requiere ID de la Campaña, la pagina y el idioma que se quiere
+    getOpinionXIdiomaCamp: async (req, res) => {
+        const page = req.param('page')
+        let campID = await Campaign.findOne({ id: req.param('id') })
+        let idioma = req.param('idioma')
+        await Opinion.find({
+            where: { campaign: campID.id, idioma: idioma },
+        })
+            .paginate(
+                page,
+                10
+            )
+            .then(opinion => {
+                return res.send({
+                    'message': 'Lista de Opiniones en ' + idioma,
+                    'data': opinion,
+                })
+            })
+            .catch(err => {
+                return res.status(500).send({
+                    'message': 'Imposible Mostrar',
+                    'error': err
+                })
+            })
+    },
 }
 
 

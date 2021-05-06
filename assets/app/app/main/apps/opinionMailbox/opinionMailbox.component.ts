@@ -8,11 +8,11 @@ import { FuseTranslationLoaderService } from '../../../../@fuse/services/transla
 
 import { Opinion } from '../../../models/opinion.model';
 import { OpinionService } from '../../../services/opinion-analizer.service';
-
+import { EstadXidiomaService } from '../../../services/estad-xidioma.service';
 
 import { CampaignService } from '../../../services/campaign.service';
 import { UserService } from '../../../services/user.service';
-
+import * as moment from 'moment';
 
 import { locale as english } from '../../../../app/main/apps/opinionMailbox/i18n/en';
 import { locale as turkish } from '../../../../app/main/apps/opinionMailbox/i18n/tr';
@@ -34,6 +34,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
     currentOpinion: Opinion;
 
     showOpinionList:boolean = true;
+    campaigns: any;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -51,6 +52,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _camapignService: CampaignService,
         private _userService: UserService,
+        private _estadPrueba: EstadXidiomaService,
     )
     {
         // Load the translations
@@ -120,7 +122,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
         .subscribe(searchText => {
                 this._opinionService.onSearchTextChanged.next(searchText);
         });
-   
+
         let currentCamapingId: string = "";
         console.log(" Get information about USER ", this._userService.user.id);
         this._camapignService.getCampaignbyUser(this._userService.user.id);
@@ -146,18 +148,18 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
 
                     let currentDate =  moment().format("YYYY-MM-DD HH:mm a");
 
-                    this.getAllStadisticsFromBackend(currentDate);
+
 
                   })
                   .catch(error=>console.error(error))
 
 
             }
-   
-   
-   
-   
-   
+
+
+
+
+
     }
 
     /**

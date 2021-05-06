@@ -515,7 +515,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
              byIntervalDataEnglish.forEach(element => {
 
              if (typeof(element.today) !== 'undefined'){
-              
+
                  element.today.forEach(item =>{
                      labelsTime.push(item.dateHour);
                      englishToday.push(parseInt(item.opinionsize, 10));
@@ -523,7 +523,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
                  console.log("New list of labels ", labelsTime);
                  this.widget5.labels = labelsTime;
-                
+
                  if (this.widget5.datasets['Hoy'][0].label == "Inglés"){
                      this.widget5.datasets['Hoy'][0].data = englishToday;
                        console.log("Search data for English today ", this.widget5.datasets['Hoy'][0].data);
@@ -533,46 +533,46 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
 
              if (typeof(element.yesterday) !== 'undefined'){
-                
-                  element.yesterday.forEach(item =>{                     
+
+                  element.yesterday.forEach(item =>{
                      englishYesterday.push(parseInt(item.opinionsize, 10));
                  })
 
                  if (this.widget5.datasets['Ayer'][0].label == "Inglés"){
                      this.widget5.datasets['Ayer'][0].data = englishYesterday;
                      console.log("Search data for English yesterday ", this.widget5.datasets['Ayer'][0].data);
-             
+
                  }
              }
-                 
+
              });
-            
+
          }
 
 
         if (typeof(byIntervalDataSpanish) !== 'undefined'){
             byIntervalDataEnglish.forEach(element => {
              if (typeof(element.today) !== 'undefined'){
-      
-                element.today.forEach(item =>{                   
+
+                element.today.forEach(item =>{
                      spanishToday.push(parseInt(item.opinionsize, 10));
                  })
 
                 if (this.widget5.datasets['Hoy'][1].label == "Español"){
                      this.widget5.datasets['Hoy'][1].data = spanishToday;
                        console.log("Search data for Spanish today ", this.widget5.datasets['Hoy'][1].data);
-                  }       
+                  }
 
              }
 
 
              if (typeof(element.yesterday) !== 'undefined'){
-                
-                element.yesterday.forEach(item =>{                     
+
+                element.yesterday.forEach(item =>{
                      spanishYesterday.push(parseInt(item.opinionsize, 10));
                  })
-                     
-                     
+
+
                  if (this.widget5.datasets['Ayer'][1].label == "Español"){
                      this.widget5.datasets['Ayer'][1].data = spanishYesterday;
                        console.log("Search data for Spanish yesterday ", this.widget5.datasets['Ayer'][1].data);
@@ -580,7 +580,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
               }
             })
          }
-         
+
 
 
       })

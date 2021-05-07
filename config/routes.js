@@ -83,6 +83,7 @@ module.exports.routes = {
 
   //GET and for Pages
   "GET /opinion/getOpinion": "OpinionController.getOpinion",
+  "GET /opinion/getOpinionXIdiomaCamp": "OpinionController.getOpinionXIdiomaCamp",
   "GET /pregunta/getPregunta": "PreguntaController.getPregunta",
   "GET /respuesta/getRespuesta": "RespuestaController.getRespuesta",
   "GET /registro/getRegistro": "RegistroController.getRegistro",
@@ -103,10 +104,9 @@ module.exports.routes = {
   "GET /userInvitado/getInvitados": "UserInvitadoController.getInvitados",
   "GET /userInvitado/getInvXUserChief": "UserInvitadoController.getInvXUserChief",
   "GET /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
-  
-   "GET /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
-  
-    
+  "GET /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
+
+
 
 
   //PATCH

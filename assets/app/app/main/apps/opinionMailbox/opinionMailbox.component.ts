@@ -14,6 +14,7 @@ import { CampaignService } from '../../../services/campaign.service';
 import { UserService } from '../../../services/user.service';
 import * as moment from 'moment';
 
+
 import { locale as english } from '../../../../app/main/apps/opinionMailbox/i18n/en';
 import { locale as turkish } from '../../../../app/main/apps/opinionMailbox/i18n/tr';
 
@@ -122,7 +123,6 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
         .subscribe(searchText => {
                 this._opinionService.onSearchTextChanged.next(searchText);
         });
-
         let currentCamapingId: string = "";
         console.log(" Get information about USER ", this._userService.user.id);
         this._camapignService.getCampaignbyUser(this._userService.user.id);
@@ -149,38 +149,16 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
                     let currentDate =  moment().format("YYYY-MM-DD HH:mm a");
 
 
-
                   })
                   .catch(error=>console.error(error))
 
 
             }
 
-
-
-
-
     }
 
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void
-    {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
-    }
-
-    // -----------------------------------------------------------------------------------------------------
+    ngOnDestroy(): void{
     // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle select all
-     */
-    toggleSelectAll(): void
-    {
         this._opinionService.toggleSelectAll();
     }
 
@@ -239,5 +217,9 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
     toggleSidebar(name): void
     {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
+    }
+
+    toggleSelectAll():void {
+
     }
 }

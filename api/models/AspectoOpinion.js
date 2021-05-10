@@ -26,5 +26,8 @@ module.exports = {
       model: 'opinion'
     }
   },
+  customToJSON: function () {
+    return _.omit(this, ['id', 'opinion', 'createdAt', 'updatedAt'])
+  }
 };
 

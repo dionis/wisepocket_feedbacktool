@@ -46,5 +46,8 @@ module.exports = {
 
   },
 
+  customToJSON: function () {
+    return _.omit(this, ['id', 'opinion','pregunta', 'createdAt', 'updatedAt'])
+  }
 };
 

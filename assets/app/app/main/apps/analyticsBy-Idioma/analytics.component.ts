@@ -351,7 +351,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                     currentCamapingId = camapIgnObjet.id;
                     this._estadPrueba.setCurrentCamaignId(currentCamapingId);
 
-                    this.campaigns = this._camapignService.getMyCamps();
+                    this.campaigns = this._camapignService.getMyCamps()[0].nombre;
                     console.log(this.campaigns);
 
                     let currentDate =  moment().format("YYYY-MM-DD HH:mm a");

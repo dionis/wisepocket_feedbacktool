@@ -132,7 +132,7 @@ module.exports = {
         let campID = await Campaign.findOne({ id: req.param('id') })
         await Opinion.find({
             where: { campaign: campID.id },
-        })
+        }).populate('userend')
             .paginate(
                 page,
                 5
@@ -158,7 +158,7 @@ module.exports = {
         let idioma = req.param('idioma')
         await Opinion.find({
             where: { campaign: campID.id, idioma: idioma },
-        })
+        }).populate('userend')
             .paginate(
                 page,
                 10

@@ -94,6 +94,25 @@ module.exports = {
 
       }
 
+      opinAll = await Opinion.find({})
+
+      opinObjet = faker.random.arrayElement(opinAll)
+
+      let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
+
+      if (iValue < 61) {
+        newAspect = {
+          texto: faker.lorem.word(1),
+          polaridad: 'negativa',
+          start: 2,
+          end: 5,
+          opinion: opinObjet.id
+        }
+
+        await AspectoOpinion.create(newAspect)
+
+      }
+
     }
 
     for (var iValue = 1; iValue < registerSize1; iValue++) {
@@ -115,6 +134,25 @@ module.exports = {
         }
 
         await Opinion.create(newOpinion)
+
+      }
+
+      opinAll = await Opinion.find({})
+
+      opinObjet = faker.random.arrayElement(opinAll)
+
+      let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
+
+      if (iValue < 61) {
+        newAspect = {
+          texto: faker.lorem.word(1),
+          polaridad: 'negativa',
+          start: 2,
+          end: 5,
+          opinion: opinObjet.id
+        }
+
+        await AspectoOpinion.create(newAspect)
 
       }
     }

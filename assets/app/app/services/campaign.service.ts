@@ -48,7 +48,6 @@ export class CampaignService {
           for (let index = 0; index < responseData.data.length; index++) {
             this.campaign[index] = responseData.data[index]
           }
-
           return this.campaign
         }
       })).subscribe(res => {
@@ -79,11 +78,13 @@ export class CampaignService {
 
 
   getMyCamps() {
-    const date = new Date()
-    console.log(date.toLocaleDateString('en-US', { weekday: 'long' }))
-    //getMyCamps(): Campaign //Camapaign es el modelo creado para la vista
-    console.log(this.campaign[0].nombre)
-    return this.campaign[0].nombre;
+    console.log(this.campaign)
+    return this.campaign;
+  }
+
+  getMyCampsID() {
+    console.log(this.campaign[0].id)
+    return this.campaign[0].id;
   }
 
   updateCampaign(campaign): Promise<any>

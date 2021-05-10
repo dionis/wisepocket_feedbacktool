@@ -112,7 +112,7 @@ module.exports = {
                 await UserInvitado.find({
                     invitadoBY: userID.id
                 }
-                ).then((data) => {
+                ).populate('invitadoBY').then((data) => {
                     return res.send({
                         'message': 'Tus Invitados',
                         'data': data

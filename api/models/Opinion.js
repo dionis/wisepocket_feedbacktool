@@ -9,11 +9,11 @@ module.exports = {
 
   attributes: {
 
-   /* id: {
-      type: 'string',
-      unique: true,
-      columnName: '_id'
-    },*/
+    /* id: {
+       type: 'string',
+       unique: true,
+       columnName: '_id'
+     },*/
 
 
     texto: {
@@ -22,18 +22,18 @@ module.exports = {
     },
 
     aspectos: {
-     collection:'aspectoopinion',
-     via:'opinion'
+      collection: 'aspectoopinion',
+      via: 'opinion'
     },
 
     entidades: {
-      collection:'entidadopinion',
-      via:'opinion'
+      collection: 'entidadopinion',
+      via: 'opinion'
     },
 
     ///PROVISIONAL
-    polaridad:{
-      type:'string'
+    polaridad: {
+      type: 'string'
     },
     ///PROVISIONAL
 
@@ -47,7 +47,7 @@ module.exports = {
       columnType: 'datetime'
     },
 
-    idioma:{
+    idioma: {
       type: 'string'
     },
 
@@ -58,21 +58,10 @@ module.exports = {
     campaign: {
       model: 'campaign'
     },
-    //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
-    //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
-    //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
-
-    //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
-    //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
-    //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
-
-
-    //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
-    //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
-    //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
   },
-
+  customToJSON: function () {
+    return _.omit(this, ['id', 'aspectos', 'entidades', 'createtime', 'campaign', 'polaridad', 'idioma', 'createdAt', 'updatedAt'])
+  }
 };
 

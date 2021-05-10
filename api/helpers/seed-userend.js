@@ -105,7 +105,7 @@ module.exports = {
 
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
-      if (iValue < 50) {
+      if (iValue < 51) {
         newAspect = {
           texto: faker.lorem.word(1),
           polaridad: 'positiva',
@@ -131,7 +131,7 @@ module.exports = {
         await EntidadOpinion.create(newEntidad)
 
       }
-      if (iValue < 10) {
+      /*if (iValue < 10) {
 
         var currentTime = faker.date.recent(7);
         var dateObjet = new Date(currentTime);
@@ -145,7 +145,7 @@ module.exports = {
           campaign: campOgjet.id
         }
         await Pregunta.create(newPregunta)
-      }
+      }*/
 
     }
 

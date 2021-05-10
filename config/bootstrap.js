@@ -78,8 +78,8 @@ module.exports.bootstrap = async function() {
  await sails.helpers.seedUserend()
  await sails.helpers.seedUserenden()
  console.log("CREATED >>>>>> userEnd >>>>>> opinion (aspectos y entidades) >>>>> pregunta ")
- await sails.helpers.seedUserresp()
- console.log("CREATED >>>> respuesta by userSys ")
+ //await sails.helpers.seedUserresp()
+ //console.log("CREATED >>>> respuesta by userSys ")
  console.log(new Date().toUTCString());
  console.log("--- Database Inyectada ---")
  

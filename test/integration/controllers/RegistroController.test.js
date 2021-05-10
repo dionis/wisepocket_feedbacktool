@@ -1,4 +1,4 @@
-var supertest = require('supertest');
+/*var supertest = require('supertest');
 
 /////Crea un registro de prueba
 
@@ -20,4 +20,4 @@ describe('RegistroController.create', function () {
     });
 
   });
-});
+});*/

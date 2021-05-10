@@ -1,4 +1,5 @@
 export class OpinionTest{
+    id: string
     texto: string
     fecha: string
     userend: {

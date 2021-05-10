@@ -94,7 +94,7 @@ module.exports = {
 
   },
   customToJSON: function () {
-    return _.omit(this, ['id', 'createdAt', 'updatedAt', 'password'])
+    return _.omit(this, ['createdAt', 'updatedAt', 'password'])
   }
 };
 

@@ -110,31 +110,21 @@ export class OpinionService implements Resolve<any>
         });
     }
 
-    getOpinXIdioma(): Observable<OpinionTest[]> {
-
-        console.log('ID de CampaignXIdioma ' + this.campaign.getMyCampsID());
+    getOpinXIdioma(): Observable<any> {
 
         let httpParams = new HttpParams()
             .append("id", this.campaign.getMyCampsID())
             .append("page", '0')
             .append("idioma", 'ingles')
-        return this._httpClient.get<OpinionTest[]>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinionXIdiomaCamp', { params: httpParams })
-
-    }; 
+        return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinionXIdiomaCamp', { params: httpParams })
+       
+    };
 
 
     getOpinion(): Observable<any> {
-
-        console.log('ID de CampaignXIdioma ' + this.campaign.getMyCampsID());
-
         let httpParams = new HttpParams()
             .append("id", this.campaign.getMyCampsID())
         return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion', { params: httpParams })
-            .pipe(map((responseData: any) => {
-                console.log(responseData);
-                return responseData;
-
-            }))
     };
 
 
@@ -145,11 +135,6 @@ export class OpinionService implements Resolve<any>
         let httpParams = new HttpParams()
             .append("id", oPinID)
         return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/aspectoopinion/getAspecto', { params: httpParams })
-            .pipe(map((responseData: any) => {
-                console.log(responseData);
-                return responseData;
-
-            }))
     };
 
     /**

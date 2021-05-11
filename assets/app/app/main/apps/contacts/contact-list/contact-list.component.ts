@@ -26,8 +26,7 @@ import { OpinionTest } from '../../../../models/opinionTest.model';
 export class ContactsContactListComponent implements OnInit, OnDestroy {
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
-    opinion: OpinionTest []
-    public prueba = []
+    pruebas: any 
     prueba2: any
     prueba3: any
     contacts: any;
@@ -70,16 +69,19 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        this._pruebaServOpin.getOpinXIdioma().subscribe(data => this.prueba = data)
-        console.log("ESTOO " + this.prueba);
-      
-        
+        this._pruebaServOpin.getOpinXIdioma().subscribe(data => {
+            this.pruebas = data.data
+            console.log("DataXidioma", this.pruebas)
+            
+        })
+        console.log("DataXidioma", this.pruebas); //NO COGE EL VALOR, DENTRO DE LA FUNCION SI LO HACE
+
         this._prueba2ServOpin.getOpinion().subscribe(data => {
-            console.log("Data Opinion", data);
-            this.prueba2 = data
-            this._prueba3ServOpin.getAspectOpin(this.prueba2.data[0].id).subscribe(data => {
-                console.log("Data Aspect Opinion", data);
-                this.prueba3 = data
+            console.log("Data Opinion", data.data);
+            this.prueba2 = data.data
+            this._prueba3ServOpin.getAspectOpin(this.prueba2[0].id).subscribe(data => {
+                console.log("Data Aspect Opinion", data.data);
+                this.prueba3 = data.data
             })
         })
 

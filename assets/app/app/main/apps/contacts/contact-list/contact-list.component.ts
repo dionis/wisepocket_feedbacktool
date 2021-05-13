@@ -26,8 +26,7 @@ import { OpinionTest } from '../../../../models/opinionTest.model';
 export class ContactsContactListComponent implements OnInit, OnDestroy {
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
-    opinion: OpinionTest []
-    public prueba = []
+    pruebas: any
     prueba2: any
     prueba3: any[]
     contacts: any;

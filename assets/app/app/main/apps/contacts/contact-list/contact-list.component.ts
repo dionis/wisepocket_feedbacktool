@@ -29,7 +29,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     opinion: OpinionTest []
     public prueba = []
     prueba2: any
-    prueba3: any
+    prueba3: any[]
     contacts: any;
     user: any;
     dataSource: FilesDataSource | null;
@@ -70,16 +70,17 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        this._pruebaServOpin.getOpinXIdioma().subscribe(data => this.prueba = data)
+        //this._pruebaServOpin.getOpinXIdioma().subscribe(data => this.prueba = data)
         console.log("ESTOO " + this.prueba);
-      
-        
+
+
         this._prueba2ServOpin.getOpinion().subscribe(data => {
             console.log("Data Opinion", data);
             this.prueba2 = data
-            this._prueba3ServOpin.getAspectOpin(this.prueba2.data[0].id).subscribe(data => {
-                console.log("Data Aspect Opinion", data);
-                this.prueba3 = data
+            this._prueba3ServOpin.getAspectOpin(this.prueba2.data[0].id).subscribe((result:any) => {
+                console.log("Data Aspect Opinion", result);
+                if (typeof(result) !== 'undefined')
+                   this.prueba3 = result.data
             })
         })
 

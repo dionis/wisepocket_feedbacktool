@@ -131,6 +131,13 @@ export const navigation: FuseNavigation[] = [
             type: 'item',
             url: '/apps/campaign'
         },
+        {
+          id:'test6',
+          title:'Prueba de Contactos',
+          translate:'Prueba de Contactos',
+          type: 'item',
+          url: '/apps/contacts'
+      },
 
         
 

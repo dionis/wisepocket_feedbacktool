@@ -1,23 +1,5 @@
 <mat-table #table [dataSource]="dataSource"
            [@animateStagger]="{value:'50'}">
-    <!-- Checkbox Column -->
-   <!-- <ng-container matColumnDef="checkbox">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let campaign">
-            <mat-checkbox [(ngModel)]="checkboxes[campaign.nombre]" (ngModelChange)="onSelectedChange(campaign.nombre)"
-                          (click)="$event.stopPropagation()">
-            </mat-checkbox>
-        </mat-cell>
-    </ng-container> -->
-
-    <!-- Avatar Column -->
- <!-- <ng-container matColumnDef="avatar">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let contact">
-            <img class="avatar" *ngIf="contact.avatar" [alt]="contact.name"
-                 [src]="contact.avatar"/>
-        </mat-cell>
-    </ng-container> -->
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
@@ -56,16 +38,6 @@
             </p>
         </mat-cell>
     </ng-container>
-
-    <!-- Company Column -->
-   <!-- <ng-container matColumnDef="company">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg>Company</mat-header-cell>
-        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-lg>
-            <p class="company text-truncate">
-                {{contact.company}}
-            </p>
-        </mat-cell>
-    </ng-container> -->
 
     <!-- Buttons Column -->
     <ng-container matColumnDef="buttons">

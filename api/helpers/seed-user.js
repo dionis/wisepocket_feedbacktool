@@ -74,7 +74,7 @@ module.exports = {
 
       let campaign = await Campaign.count({ 'userChief': userObjet.id })
 
-      if (campaign < 25) {
+      if (campaign < 21) {
         newCamp = {
           nombre: faker.company.companyName("Test"),
           fecha: faker.date.recent(7),

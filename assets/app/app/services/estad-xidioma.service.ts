@@ -12,8 +12,6 @@ import { CampaignService } from '../services/campaign.service';
 })
 export class EstadXidiomaService {
   campaign: CampaignService
-  dataEn: any = []
-  dataEs: any = []
   dataTotal: any = []
   currentCamapingId: string;
   constructor(private _http: HttpClient) {
@@ -35,15 +33,7 @@ export class EstadXidiomaService {
     }
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getCantENXDia?id=' + campaign_id)
-      .pipe(map((responseData: any) => {
-
-        if (responseData.data) {
-          this.dataEn = responseData.data;
-          console.log("******* DATA in USE getDataEn *********")
-          console.log(this.dataEn);
-          return this.dataEn
-        }
-      }))
+    
   }
 
   getDataEs(): Observable<any> {
@@ -56,16 +46,7 @@ export class EstadXidiomaService {
     }
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getCantESXDia?id=' + campaign_id)
-      .pipe(map((responseData: any) => {
-
-
-        if (responseData.data) {
-          this.dataEs = responseData.data;
-          console.log("******* DATA in USE getDataEs *********")
-          console.log(this.dataEs);
-          return this.dataEs
-        }
-      }))
+    
   }
 
   getDataTotal(): Observable<any> {
@@ -78,16 +59,7 @@ export class EstadXidiomaService {
     }
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getCantTotalXDia?id=' + campaign_id)
-      .pipe(map((responseData: any) => {
-
-
-        if (responseData.data) {
-          this.dataTotal = responseData.data;
-          console.log("******* DATA in USE getDataTotal *********")
-          console.log(this.dataTotal);
-          return this.dataTotal
-        }
-      }))
+      
   }
 
   getIntervalDataTotal(currentDate:string, language:string = "ingles"): Observable<any>{

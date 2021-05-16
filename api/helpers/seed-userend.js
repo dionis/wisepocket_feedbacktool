@@ -59,7 +59,7 @@ module.exports = {
     campAll = await Campaign.find({})
 
 
-    registerSize = 80
+    registerSize = 200
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
 
@@ -76,18 +76,18 @@ module.exports = {
 
       let dayNameArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-      console.log("Time ====>> " ,  currentTime)
+     // console.log("Time ====>> " ,  currentTime)
       var dateObjet = new Date(currentTime);
       var timestamp =  dateObjet.getTime();
 
-      console.log("# Day ", dateObjet.getDay(), " = Day Name: ",dayNameArray[dateObjet.getDay()] );
-      console.log("TimeStamp ====>> " ,timestamp);
+      //console.log("# Day ", dateObjet.getDay(), " = Day Name: ",dayNameArray[dateObjet.getDay()] );
+      //console.log("TimeStamp ====>> " ,timestamp);
 
-      if (opinion < 81) {
+      if (opinion < 201) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
           fecha: currentTime,
-          currentime: String.toString(timestamp),
+          createDay: currentTime.toLocaleString('en-US', {weekday:'long'}),
           idioma: 'español',
           polaridad: 'positiva',
           userend: userEndObjet.id,
@@ -105,7 +105,7 @@ module.exports = {
 
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
-      if (iValue < 51) {
+      if (iValue < 101) {
         newAspect = {
           texto: faker.lorem.word(1),
           polaridad: 'positiva',

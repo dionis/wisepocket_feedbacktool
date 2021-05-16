@@ -18,28 +18,14 @@
                     <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
 
                         <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
-
                             <div class="pr-16">
-                                <div class="h3 secondary-text">Inglés</div>
+                                <div class="h2">Inglés</div>
+                                <div class="h3 secondary-text">Opiniones en la semana</div>
                                 <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                    {{widget2.englishOpin.value}}
+                                    {{widget2.englishOpin[0].value}}
                                 </div>
+                               
                             </div>
-
-                            <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
-                                <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
-                                    *ngIf="widget2.englishOpin.ofTarget > 0">
-                                    <mat-icon class="green-fg mr-4">trending_up</mat-icon>
-                                    <span>{{widget2.englishOpin.ofTarget}}%</span>
-                                </div>
-                                <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
-                                    *ngIf="widget2.englishOpin.ofTarget < 0">
-                                    <mat-icon class="red-fg mr-4">trending_down</mat-icon>
-                                    <span>{{widget2.englishOpin.ofTarget}}%</span>
-                                </div>
-                                <div class="ml-4 text-nowrap">del objetivo</div>
-                            </div>
-
                         </div>
 
                         <div class="h-96 w-100-p">
@@ -61,26 +47,12 @@
                         <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
 
                             <div class="pr-16">
-                                <div class="h3 secondary-text">Español</div>
+                                <div class="h2">Español</div>
+                                <div class="h3 secondary-text">Opiniones en la semana</div>
                                 <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                    {{widget3.spanishOpin.value}}
+                                    {{widget3.spanishOpin[0].value}}
                                 </div>
                             </div>
-
-                            <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
-                                <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
-                                    *ngIf="widget3.spanishOpin.ofTarget > 0">
-                                    <mat-icon class="green-fg mr-4">trending_up</mat-icon>
-                                    <span>{{widget3.spanishOpin.ofTarget}}%</span>
-                                </div>
-                                <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
-                                    *ngIf="widget3.spanishOpin.ofTarget < 0">
-                                    <mat-icon class="red-fg mr-4">trending_down</mat-icon>
-                                    <span>{{widget3.spanishOpin.ofTarget}}%</span>
-                                </div>
-                                <div class="ml-4 text-nowrap">del objetivo</div>
-                            </div>
-
                         </div>
 
                         <div class="h-96 w-100-p">
@@ -102,26 +74,12 @@
                         <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
 
                             <div class="pr-16">
-                                <div class="h3 secondary-text">Total de Opiniones</div>
+                                <div class="h2">Total de Opiniones</div>
+                                <div class="h3 secondary-text">Opiniones en la semana</div>
                                 <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                    {{widget4.totalOpin.value}}
+                                    {{widget4.totalOpin[0].value}}
                                 </div>
                             </div>
-
-                            <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
-                                <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
-                                    *ngIf="widget4.totalOpin.ofTarget > 0">
-                                    <mat-icon class="green-fg mr-4">trending_up</mat-icon>
-                                    <span>{{widget4.totalOpin.ofTarget}}%</span>
-                                </div>
-                                <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
-                                    *ngIf="widget4.totalOpin.ofTarget < 0">
-                                    <mat-icon class="red-fg mr-4">trending_down</mat-icon>
-                                    <span>{{widget4.totalOpin.ofTarget}}%</span>
-                                </div>
-                                <div class="ml-4 text-nowrap">del objetivo</div>
-                            </div>
-
                         </div>
 
                         <div class="h-96 w-100-p">
@@ -150,27 +108,28 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="start center">
 
-                      <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
                             (click)="widget5SelectedDay = 'yesterday'"
                             [ngClass]="{'accent': widget5SelectedDay === 'yesterday'}">
                             Ayer
-                       </div>
-                       <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                        </div>
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
                             (click)="widget5SelectedDay = 'today'"
                             [ngClass]="{'accent': widget5SelectedDay === 'today'}">
                             Hoy
-                       </div>
-                       <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer">
-                        <form [formGroup]="dateForm">
-            <!-- Date picker -->
-                      <mat-form-field>
-                        <input matInput readonly [max]="maxDate" [matDatepicker]="picker" placeholder="Opinion's date" formControlName="usertime"
-                          (dateChange)="date($event)">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
-                      </form>
-                       </div>
+                        </div>
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer">
+                            <form [formGroup]="dateForm">
+                                <!-- Date picker -->
+                                <mat-form-field>
+                                    <input matInput readonly [max]="maxDate" [matDatepicker]="picker"
+                                        placeholder="Opinion's date" formControlName="usertime"
+                                        (dateChange)="date($event)">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </form>
+                        </div>
                     </div>
                 </div>
 

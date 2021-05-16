@@ -76,14 +76,14 @@ module.exports = {
       //faker.time.recent(7) is a timestamp
 
       if (iValue < 201) {
-        var currentTime =  faker.date.recent(5);
+        var currentTime = faker.date.recent(5);
         var dateObjet = new Date(currentTime);
-        var timestamp =  dateObjet.getTime();
+        var timestamp = dateObjet.getTime();
 
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
           fecha: currentTime,
-          currentime: String.toString(timestamp),
+          createDay: currentTime.toLocaleString('en-US', {weekday:'long'}),
           idioma: 'ingles',
           polaridad: 'positiva',
           userend: userEndObjet.id,
@@ -120,13 +120,13 @@ module.exports = {
       campOgjet = faker.random.arrayElement(campAll)
 
       if (iValue < 201) {
-        var currentTime =  faker.date.recent(7);
+        var currentTime = faker.date.recent(7);
         var dateObjet = new Date(currentTime);
-        var timestamp =  dateObjet.getTime();
+        var timestamp = dateObjet.getTime();
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
           fecha: currentTime,
-          currentime: String.toString(timestamp),
+          createDay: currentTime.toLocaleString('en-US', {weekday:'long'}),
           idioma: 'ingles',
           polaridad: 'negativa',
           userend: userEndObjet.id,
@@ -143,7 +143,7 @@ module.exports = {
 
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
-      if (iValue < 61) {
+      if (iValue < 101) {
         newAspect = {
           texto: faker.lorem.word(1),
           polaridad: 'negativa',
@@ -161,14 +161,14 @@ module.exports = {
       campOgjet = faker.random.arrayElement(campAll)
       if (iValue < 50) {
 
-        var currentTime =  faker.date.recent(4);
+        var currentTime = faker.date.recent(4);
         var dateObjet = new Date(currentTime);
-        var timestamp =  dateObjet.getTime();
+        var timestamp = dateObjet.getTime();
 
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha:currentTime,
-          currentime: String.toString(timestamp),
+          fecha: currentTime,
+          createDay: currentTime.toLocaleString('en-US', {weekday:'long'}),
           idioma: 'ingles',
           polaridad: 'neutra',
           userend: userEndObjet.id,
@@ -184,7 +184,7 @@ module.exports = {
 
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
-      if (iValue < 31) {
+      if (iValue < 51) {
         newAspect = {
           texto: faker.lorem.word(1),
           polaridad: 'negativa',
@@ -197,7 +197,7 @@ module.exports = {
 
       }
 
-      if (iValue < 21) {
+      if (iValue < 41) {
         newAspect = {
           texto: faker.lorem.word(1),
           polaridad: 'neutra',

@@ -34,7 +34,9 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     opinion: Opinion;
     labels: any[];
     showDetails: boolean;
-
+    pruebas: any
+    prueba2: any
+    prueba3: any[]
     dataSource: FilesDataSource | null;
     displayedColumns = ['id', 'aspects', 'total', 'polarity'];
     //['id', 'reference', 'customer', 'total', 'payment', 'status', 'date'];
@@ -59,7 +61,10 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     constructor(
         private _opinionService: OpinionService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
-        private _ecommerceOrdersService: EcommerceOrdersService
+        private _ecommerceOrdersService: EcommerceOrdersService,
+        private _pruebaServOpin: OpinionService,
+        private _prueba2ServOpin: OpinionService,
+        private _prueba3ServOpin: OpinionService
 
     )
     {
@@ -84,6 +89,19 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        //this._pruebaServOpin.getOpinXIdioma().subscribe(data => this.prueba = data)
+        console.log("ESTOO " + this.pruebas);
+
+
+        this._prueba2ServOpin.getOpinion().subscribe(data => {
+            console.log("Data Opinion", data);
+            this.prueba2 = data
+            this._prueba3ServOpin.getAspectOpin(this.prueba2.data[0].id).subscribe((result:any) => {
+                console.log("Data Aspect Opinion", result);
+                if (typeof(result) !== 'undefined')
+                   this.prueba3 = result.data
+            })
+        })
        console.log("Is paginator ", this.sort)
        this.dataSource = new FilesDataSource(this._ecommerceOrdersService, this.paginatorDetails, this.sort);
 

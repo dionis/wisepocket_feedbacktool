@@ -6,7 +6,7 @@ import { CampaignService } from '../../../services/campaign.service';
 import { UserService } from '../../../services/user.service';
 import { takeUntil } from 'rxjs/operators';
 
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 //import { AnalyticsDashboardService } from './analytics.service';
 
@@ -22,16 +22,15 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     widget5SelectedDay = 'Ayer';
     data: any;
     campaigns: any;
-    usertime:any;
+    usertime: any;
 
     // Private
     private _unsubscribeAll: Subject<any>;
 
     widget2: any = {
-        englishOpin: {
-            value: 500,
-            ofTarget: 0
-        },
+        englishOpin: [{
+            value: [0]
+        }],
         chartType: 'bar',
         datasets: [
             {
@@ -75,10 +74,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         }
     }
     widget3: any = {
-        spanishOpin: {
-            value: 500,
-            ofTarget: 0
-        },
+        spanishOpin: [{
+            value: [0]
+        }],
         chartType: 'bar',
         datasets: [
             {
@@ -122,10 +120,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         }
     }
     widget4: any = {
-        totalOpin: {
-            value: 600,
-            ofTarget: 0
-        },
+        totalOpin: [{
+            value: [0]
+        }],
         chartType: 'bar',
         datasets: [
             {
@@ -294,7 +291,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
 
-        this.maxDate =  new Date();
+        this.maxDate = new Date();
 
         /*
         <mat-form-field class="example-full-width" appearance="fill">
@@ -338,11 +335,11 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
         if (typeof (this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0) {
             //Selecciona el id de la campana escogida por el usuario
-          /*************************************************
-             ERASE IN PRODUCTION
-          **************************************************/
-             this._camapignService.testSelectedRandomCamaping()
-                  .then( (_)=>{
+            /*************************************************
+               ERASE IN PRODUCTION
+            **************************************************/
+            this._camapignService.testSelectedRandomCamaping()
+                .then((_) => {
                     const camapIgnObjet = this._camapignService.selectedCampaign;
 
                     console.log("Campaign ID", camapIgnObjet)
@@ -354,15 +351,15 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                     this.campaigns = this._camapignService.getMyCamps()[0].nombre;
                     console.log(this.campaigns);
 
-                    let currentDate =  moment().format("YYYY-MM-DD HH:mm a");
+                    let currentDate = moment().format("YYYY-MM-DD HH:mm a");
 
                     this.getAllStadisticsFromBackend(currentDate);
 
-                  })
-                  .catch(error=>console.error(error))
+                })
+                .catch(error => console.error(error))
 
 
-            }
+        }
 
 
         ///Read all Stadistics
@@ -399,7 +396,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         //this.widgets = this._analyticsDashboardService.widgets;
 
         this.dateForm = this._fb.group({
-          usertime: [ '']
+            usertime: ['']
         });
 
     }
@@ -475,115 +472,118 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-     /* Date */
-     date(eDate) {
-      // var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
-      var convertDate = new Date(eDate.target.value)
-      let currentDate =  moment(convertDate).format("YYYY-MM-DD HH:mm a");
-      console.log("Find statdistics to ", currentDate);
+    /* Date */
+    date(eDate) {
+        // var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
+        var convertDate = new Date(eDate.target.value)
+        let currentDate = moment(convertDate).format("YYYY-MM-DD HH:mm a");
+        console.log("Find statdistics to ", currentDate);
 
-      this.getAllStadisticsFromBackend(currentDate);
+        this.getAllStadisticsFromBackend(currentDate);
 
     }
 
 
-    getAllStadisticsFromBackend(currentDate:string){
+    getAllStadisticsFromBackend(currentDate: string) {
 
-      this._estadPrueba.getAllStadistics(currentDate)
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(([englishData, spanishData, allData, byIntervalDataEnglish, byIntervalDataSpanish]) => {
-         console.log("<--- Get my data Spanish ---> ", spanishData);
-         this.widget3.datasets[0].data = spanishData;
-         console.log("<--- Get my data English ---> ", englishData);
-         this.widget2.datasets[0].data = englishData;
-         console.log("<--- Get my data All ---> ", allData);
-         this.widget4.datasets[0].data = allData;
-         console.log("<--- Get my data in Interval  English---> ",byIntervalDataEnglish[0]);
-         console.log("<--- Get my data in Interval  Spanish---> ",byIntervalDataSpanish[0]);
-
-
-         let labelsTime:any = [];
-
-         let spanishToday:any = [];
-         let spanishYesterday:any = [];
-
-         let englishToday:any = [];
-         let englishYesterday:any = [];
-
-         ///Get labels
-         if (typeof(byIntervalDataEnglish[0]) !== 'undefined'){
-             byIntervalDataEnglish.forEach(element => {
-
-             if (typeof(element.today) !== 'undefined'){
-
-                 element.today.forEach(item =>{
-                     labelsTime.push(item.dateHour);
-                     englishToday.push(parseInt(item.opinionsize, 10));
-                 })
-
-                 console.log("New list of labels ", labelsTime);
-                 this.widget5.labels = labelsTime;
-
-                 if (this.widget5.datasets['Hoy'][0].label == "Inglés"){
-                     this.widget5.datasets['Hoy'][0].data = englishToday;
-                       console.log("Search data for English today ", this.widget5.datasets['Hoy'][0].data);
-                  }
-
-             }
+        this._estadPrueba.getAllStadistics(currentDate)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(([englishData, spanishData, allData, byIntervalDataEnglish, byIntervalDataSpanish]) => {
+                console.log("<--- Get my data English ---> ", englishData);
+                this.widget2.englishOpin[0].value = englishData.data[7];
+                this.widget2.datasets[0].data = englishData.data;
+                console.log("<--- Get my data Spanish ---> ", spanishData);
+                this.widget3.spanishOpin[0].value = spanishData.data[7];
+                this.widget3.datasets[0].data = spanishData.data;
+                console.log("<--- Get my data All ---> ", allData);
+                this.widget4.totalOpin[0].value = allData.data[7];
+                this.widget4.datasets[0].data = allData.data;
+                console.log("<--- Get my data in Interval  English---> ", byIntervalDataEnglish[0]);
+                console.log("<--- Get my data in Interval  Spanish---> ", byIntervalDataSpanish[0]);
 
 
-             if (typeof(element.yesterday) !== 'undefined'){
+                let labelsTime: any = [];
 
-                  element.yesterday.forEach(item =>{
-                     englishYesterday.push(parseInt(item.opinionsize, 10));
-                 })
+                let spanishToday: any = [];
+                let spanishYesterday: any = [];
 
-                 if (this.widget5.datasets['Ayer'][0].label == "Inglés"){
-                     this.widget5.datasets['Ayer'][0].data = englishYesterday;
-                     console.log("Search data for English yesterday ", this.widget5.datasets['Ayer'][0].data);
+                let englishToday: any = [];
+                let englishYesterday: any = [];
 
-                 }
-             }
+                ///Get labels
+                if (typeof (byIntervalDataEnglish[0]) !== 'undefined') {
+                    byIntervalDataEnglish.forEach(element => {
 
-             });
+                        if (typeof (element.today) !== 'undefined') {
 
-         }
+                            element.today.forEach(item => {
+                                labelsTime.push(item.dateHour);
+                                englishToday.push(parseInt(item.opinionsize, 10));
+                            })
 
+                            console.log("New list of labels ", labelsTime);
+                            this.widget5.labels = labelsTime;
 
-        if (typeof(byIntervalDataSpanish) !== 'undefined'){
-            byIntervalDataEnglish.forEach(element => {
-             if (typeof(element.today) !== 'undefined'){
+                            if (this.widget5.datasets['Hoy'][0].label == "Inglés") {
+                                this.widget5.datasets['Hoy'][0].data = englishToday;
+                                console.log("Search data for English today ", this.widget5.datasets['Hoy'][0].data);
+                            }
 
-                element.today.forEach(item =>{
-                     spanishToday.push(parseInt(item.opinionsize, 10));
-                 })
-
-                if (this.widget5.datasets['Hoy'][1].label == "Español"){
-                     this.widget5.datasets['Hoy'][1].data = spanishToday;
-                       console.log("Search data for Spanish today ", this.widget5.datasets['Hoy'][1].data);
-                  }
-
-             }
+                        }
 
 
-             if (typeof(element.yesterday) !== 'undefined'){
+                        if (typeof (element.yesterday) !== 'undefined') {
 
-                element.yesterday.forEach(item =>{
-                     spanishYesterday.push(parseInt(item.opinionsize, 10));
-                 })
+                            element.yesterday.forEach(item => {
+                                englishYesterday.push(parseInt(item.opinionsize, 10));
+                            })
+
+                            if (this.widget5.datasets['Ayer'][0].label == "Inglés") {
+                                this.widget5.datasets['Ayer'][0].data = englishYesterday;
+                                console.log("Search data for English yesterday ", this.widget5.datasets['Ayer'][0].data);
+
+                            }
+                        }
+
+                    });
+
+                }
 
 
-                 if (this.widget5.datasets['Ayer'][1].label == "Español"){
-                     this.widget5.datasets['Ayer'][1].data = spanishYesterday;
-                       console.log("Search data for Spanish yesterday ", this.widget5.datasets['Ayer'][1].data);
-                  }
-              }
+                if (typeof (byIntervalDataSpanish) !== 'undefined') {
+                    byIntervalDataEnglish.forEach(element => {
+                        if (typeof (element.today) !== 'undefined') {
+
+                            element.today.forEach(item => {
+                                spanishToday.push(parseInt(item.opinionsize, 10));
+                            })
+
+                            if (this.widget5.datasets['Hoy'][1].label == "Español") {
+                                this.widget5.datasets['Hoy'][1].data = spanishToday;
+                                console.log("Search data for Spanish today ", this.widget5.datasets['Hoy'][1].data);
+                            }
+
+                        }
+
+
+                        if (typeof (element.yesterday) !== 'undefined') {
+
+                            element.yesterday.forEach(item => {
+                                spanishYesterday.push(parseInt(item.opinionsize, 10));
+                            })
+
+
+                            if (this.widget5.datasets['Ayer'][1].label == "Español") {
+                                this.widget5.datasets['Ayer'][1].data = spanishYesterday;
+                                console.log("Search data for Spanish yesterday ", this.widget5.datasets['Ayer'][1].data);
+                            }
+                        }
+                    })
+                }
+
+
+
             })
-         }
-
-
-
-      })
 
     }
 }

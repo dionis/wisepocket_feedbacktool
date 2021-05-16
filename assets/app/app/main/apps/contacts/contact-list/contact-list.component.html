@@ -1,8 +1,4 @@
-<div class="content">
- <ul>
-  <li *ngFor="let opinion of prueba3; let i = index "> {{i+1}} --- {{opinion.texto}}-{{opinion.polaridad}}</li>
-</ul>
-</div>
+
 <mat-table #table [dataSource]="dataSource"
            [@animateStagger]="{value:'50'}">
     <!-- Checkbox Column -->

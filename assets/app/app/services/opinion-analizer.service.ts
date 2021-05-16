@@ -112,9 +112,11 @@ export class OpinionService implements Resolve<any>
 
     getOpinXIdioma(): Observable<any> {
 
+        let page = 0
+
         let httpParams = new HttpParams()
             .append("id", this.campaign.getMyCampsID())
-            .append("page", '0')
+            .append("page", page.toString())
             .append("idioma", 'ingles')
         return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinionXIdiomaCamp', { params: httpParams })
        
@@ -122,8 +124,10 @@ export class OpinionService implements Resolve<any>
 
 
     getOpinion(): Observable<any> {
+        let page = 0
         let httpParams = new HttpParams()
             .append("id", this.campaign.getMyCampsID())
+            .append("page", page.toString())
         return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion', { params: httpParams })
     };
 
@@ -145,7 +149,7 @@ export class OpinionService implements Resolve<any>
     getFolders(): Promise<any> {
         return new Promise((resolve, reject) => {
             this._httpClient.get('api/opinion-folders')
-                .subscribe((response: any) => {
+                .subscribe((response: any) => { 
                     this.folders = response;
                     this.onFoldersChanged.next(this.folders);
                     resolve(this.folders);

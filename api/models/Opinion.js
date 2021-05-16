@@ -42,7 +42,7 @@ module.exports = {
       columnType: 'date'
     },
 
-    createtime: {
+    createDay: {
       type: 'ref', //new Date().toLocaleString('en-US', {weekday:'long'})
       columnType: 'datetime'
     },
@@ -61,7 +61,7 @@ module.exports = {
 
   },
   customToJSON: function () {
-    return _.omit(this, [ 'aspectos', 'entidades', 'createtime', 'campaign', 'polaridad', 'idioma', 'createdAt', 'updatedAt'])
+    return _.omit(this, [ 'aspectos', 'entidades', 'createDay', 'campaign', 'polaridad', 'idioma', 'createdAt', 'updatedAt'])
   }
 };
 

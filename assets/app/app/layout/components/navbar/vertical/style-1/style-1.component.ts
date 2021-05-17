@@ -7,8 +7,8 @@ import { FuseConfigService } from '../../../../../../@fuse/services/config.servi
 import { FuseNavigationService } from '../../../../../../@fuse/components/navigation/navigation.service';
 import { FusePerfectScrollbarDirective } from '../../../../../../@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { FuseSidebarService } from '../../../../../../@fuse/components/sidebar/sidebar.service';
-import { User } from '../../../../../models/user.model';
 import { UserService } from '../../../../../services/user.service';
+import { User } from '../../../../../models/user.model';
 
 @Component({
     selector     : 'navbar-vertical-style-1',

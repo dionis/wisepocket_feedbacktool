@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../models/user.model';
 import * as moment from 'moment';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { map } from 'rxjs/operators';
 
 import { environment } from './../../environments/environment';
 import { CampaignService } from './campaign.service';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',

@@ -6,9 +6,9 @@ import * as _ from 'lodash';
 
 import { FuseConfigService } from '../../../../@fuse/services/config.service';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
-import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
 import { navigation } from '../../../../app/navigation/navigation';
+import { User } from '../../../models/user.model';
 
 @Component({
     selector     : 'toolbar',

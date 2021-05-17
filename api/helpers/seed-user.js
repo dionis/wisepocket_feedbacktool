@@ -66,7 +66,7 @@ module.exports = {
 
     allGateway = await User.find({})
 
-    registerSize = 25
+    registerSize = 21
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
 
@@ -85,12 +85,12 @@ module.exports = {
       }
     }
 
-    registerSize = 40
+    registerSize = 41
     for (var iValue = 1; iValue < registerSize; iValue++) {
       userObjet = faker.random.arrayElement(allGateway)
       let userInv = await UserInvitado.count({ 'invitadoBY': userObjet.id })
 
-      if (userInv < 40) {
+      if (userInv < 41) {
         newInv = {
           nombre: faker.name.firstName(),
           correo: faker.internet.exampleEmail(faker.name.firstName()),

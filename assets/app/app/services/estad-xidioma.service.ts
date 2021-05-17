@@ -80,8 +80,6 @@ export class EstadXidiomaService {
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getIntervalInADay', {params:httpParams})
 
       .pipe(map((responseData: any) => {
-
-
         if (responseData.data) {
           this.dataTotal = responseData.data;
           console.log("******* DATA in USE getIntervalDataTotal *********")

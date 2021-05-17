@@ -17,7 +17,7 @@ export class UserInvService {
   addInvUser(invitado): Observable<any> {
     let userID = this.user.getMyUser().id
     console.log(userID);
-    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create?id=' + userID + '&', invitado)
+    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create?id=' + userID, invitado)
 
   }
   /*  .pipe(map((responseData: any) => {

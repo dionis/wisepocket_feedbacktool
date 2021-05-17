@@ -74,7 +74,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
         console.log(data);
         this.invService.addInvUser(data).subscribe(dataINv =>{
             if(dataINv){
-                alert("Invitado registrado")
+                confirm("Invitado registrado")
             }
         })
 

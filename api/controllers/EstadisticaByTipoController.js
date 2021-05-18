@@ -19,7 +19,7 @@ module.exports = {
                         campaign = doc
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Monday',
+                        createDay: 'Monday',
                         polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[0] = opinion
@@ -32,7 +32,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Tuesday',
+                        createDay: 'Tuesday',
                         polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[1] = opinion
@@ -45,7 +45,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Wednesday',
+                        createDay: 'Wednesday',
                         polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[2] = opinion
@@ -58,7 +58,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Thursday',
+                        createDay: 'Thursday',
                         polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[3] = opinion
@@ -71,7 +71,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Friday',
+                        createDay: 'Friday',
                         polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[4] = opinion
@@ -84,7 +84,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Saturday',
+                        createDay: 'Saturday',
                         polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[5] = opinion
@@ -97,7 +97,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Sunday',
+                        createDay: 'Sunday',
                         polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[6] = opinion
@@ -129,7 +129,7 @@ module.exports = {
                         campaign = doc
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Monday',
+                        createDay: 'Monday',
                         polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[0] = opinion
@@ -142,7 +142,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Tuesday',
+                        createDay: 'Tuesday',
                         polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[1] = opinion
@@ -155,7 +155,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Wednesday',
+                        createDay: 'Wednesday',
                         polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[2] = opinion
@@ -168,7 +168,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Thursday',
+                        createDay: 'Thursday',
                         polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[3] = opinion
@@ -181,7 +181,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Friday',
+                        createDay: 'Friday',
                         polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[4] = opinion
@@ -194,7 +194,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Saturday',
+                        createDay: 'Saturday',
                         polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[5] = opinion
@@ -207,7 +207,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Sunday',
+                        createDay: 'Sunday',
                         polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[6] = opinion
@@ -239,7 +239,7 @@ module.exports = {
                         campaign = doc
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Monday',
+                        createDay: 'Monday',
                         polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[0] = opinion
@@ -252,7 +252,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Tuesday',
+                        createDay: 'Tuesday',
                         polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[1] = opinion
@@ -265,7 +265,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Wednesday',
+                        createDay: 'Wednesday',
                         polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[2] = opinion
@@ -278,7 +278,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Thursday',
+                        createDay: 'Thursday',
                         polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[3] = opinion
@@ -291,7 +291,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Friday',
+                        createDay: 'Friday',
                         polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[4] = opinion
@@ -304,7 +304,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Saturday',
+                        createDay: 'Saturday',
                         polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[5] = opinion
@@ -317,7 +317,7 @@ module.exports = {
                         })
                     await Opinion.count({
                         campaign: campaign.id,
-                        fecha: 'Sunday',
+                        createDay: 'Sunday',
                         polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[6] = opinion
@@ -366,7 +366,7 @@ module.exports = {
                               campaign = doc
                           await Opinion.count({
                               campaign: campaign.id,
-                              fecha: 'Monday',
+                              createDay: 'Monday',
                           }).then((opinion) => {
                               cantDay[0] = opinion
                           })
@@ -378,7 +378,7 @@ module.exports = {
                               })
                           await Opinion.count({
                               campaign: campaign.id,
-                              fecha: 'Tuesday',
+                              createDay: 'Tuesday',
                           }).then((opinion) => {
                               cantDay[1] = opinion
                           })
@@ -390,7 +390,7 @@ module.exports = {
                               })
                           await Opinion.count({
                               campaign: campaign.id,
-                              fecha: 'Wednesday',
+                              createDay: 'Wednesday',
                           }).then((opinion) => {
                               cantDay[2] = opinion
                           })
@@ -402,7 +402,7 @@ module.exports = {
                               })
                           await Opinion.count({
                               campaign: campaign.id,
-                              fecha: 'Thursday',
+                              createDay: 'Thursday',
                           }).then((opinion) => {
                               cantDay[3] = opinion
                           })
@@ -414,7 +414,7 @@ module.exports = {
                               })
                           await Opinion.count({
                               campaign: campaign.id,
-                              fecha: 'Friday',
+                              createDay: 'Friday',
                           }).then((opinion) => {
                               cantDay[4] = opinion
                           })
@@ -426,7 +426,7 @@ module.exports = {
                               })
                           await Opinion.count({
                               campaign: campaign.id,
-                              fecha: 'Saturday',
+                              createDay: 'Saturday',
                           }).then((opinion) => {
                               cantDay[5] = opinion
                           })
@@ -438,7 +438,7 @@ module.exports = {
                               })
                           await Opinion.count({
                               campaign: campaign.id,
-                              fecha: 'Sunday',
+                              createDay: 'Sunday',
                           }).then((opinion) => {
                               cantDay[6] = opinion
                               return res.send({

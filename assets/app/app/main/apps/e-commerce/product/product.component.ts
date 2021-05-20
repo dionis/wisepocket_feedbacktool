@@ -4,15 +4,14 @@ import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 import { fuseAnimations } from '../../../../../@fuse/animations';
 import { FuseUtils } from '../../../../../@fuse/utils';
-
 import { Product } from '../../../../../app/main/apps/e-commerce/product/product.model';
 import { EcommerceProductService } from '../../../../../app/main/apps/e-commerce/product/product.service';
 import { UserInv } from '../../../../models/userInv.model';
 import { Router } from '@angular/router';
 import { UserInvService } from '../../../../services/user-inv.service';
+import swal from "sweetalert2";
 
 @Component({
     selector: 'e-commerce-product',
@@ -25,6 +24,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
     product: Product;
     pageType: string;
     invUserForm: FormGroup;
+    //alertShow: String = ''
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -72,10 +72,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
     onSave() {
         const data = this.invUserForm.getRawValue();
         console.log(data);
-        this.invService.addInvUser(data).subscribe(dataINv =>{
-            if(dataINv){
-                confirm("Invitado registrado")
-            }
+        swal.fire('Invitado registrado')
+        this.invService.addInvUser(data).subscribe(dataINv => {
         })
 
     }

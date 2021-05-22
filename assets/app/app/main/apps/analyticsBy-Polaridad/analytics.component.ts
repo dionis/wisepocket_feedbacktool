@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 
 
 import * as moment from 'moment';
+import { EstadTipoService } from '../../../services/estad-tipo.service';
 //import { AnalyticsDashboardService } from './analytics.service';
 
 @Component({
@@ -22,25 +23,22 @@ export class AnalyticsDashboardComponent implements OnInit {
     //widgets: any;
     widget5SelectedDay = 'Ayer';
     data: any;
-    campaign:any;
-    usertime:any;
+    campaign: any;
+    usertime: any;
     private _unsubscribeAll: Subject<any>;
 
     widget2: any = {
-        negativaOpin: {
-            value: 500,
-            ofTarget: 0
-        },
+        negativaOpin: [{
+            value: [0]
+        }],
         chartType: 'bar',
         datasets: [
             {
-                label: 'Opiniones Negativas',
+                label: 'Cantidad',
                 data: []
-                // data: [281, 468, 490, 371, 480, 44, 194],
-                // fill: false
             }
         ],
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
         colors: [
             {
                 borderColor: '#2de000',
@@ -70,30 +68,23 @@ export class AnalyticsDashboardComponent implements OnInit {
                 yAxes: [
                     {
                         display: false,
-                        ticks: {
-                            min: 100,
-                            max: 500
-                        }
                     }
                 ]
             }
         }
     }
     widget3: any = {
-        positivaOpin: {
-            value: 400,
-            ofTarget: 0
-        },
+        positivaOpin: [{
+            value: [0]
+        }],
         chartType: 'bar',
         datasets: [
             {
-                label: 'Opiniones Positivas',
+                label: 'Cantidad',
                 data: []
-                // data: [221, 428, 492, 471, 413, 344, 294],
-                // fill: false
             }
         ],
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
         colors: [
             {
                 borderColor: '#5c84f1',
@@ -134,29 +125,23 @@ export class AnalyticsDashboardComponent implements OnInit {
                 yAxes: [
                     {
                         display: false,
-                        ticks: {
-                            // min: 100,
-                            // max: 500
-                        }
                     }
                 ]
             }
         }
     }
     widget4: any = {
-        totalOpin: {
-            value: 600,
-            ofTarget: 0
-        },
+        totalOpin: [{
+            value: [0]
+        }],
         chartType: 'bar',
         datasets: [
             {
-                label: 'Total de Opiniones',
-                // data: [271, 408, 494, 471, 413, 344, 294]
+                label: 'Cantidad',
                 data: []
             }
         ],
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
         colors: [
             {
                 borderColor: '#f44336',
@@ -186,10 +171,64 @@ export class AnalyticsDashboardComponent implements OnInit {
                 yAxes: [
                     {
                         display: false,
-                        ticks: {
-                            min: 150,
-                            max: 500
-                        }
+                    }
+                ]
+            }
+        }
+    }
+
+    widget6: any = {
+        neutraOpin: [{
+            value: [0]
+        }],
+        chartType: 'bar',
+        datasets: [
+            {
+                label: 'Cantidad',
+                data: []
+            }
+        ],
+        labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+        colors: [
+            {
+                borderColor: '#6e076e',
+                backgroundColor: '#6e076e'
+            }
+        ],
+        options: {
+            spanGaps: false,
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+            elements: {
+                point: {
+                    radius: 2,
+                    borderWidth: 1,
+                    hoverRadius: 2,
+                    hoverBorderWidth: 1
+                },
+                line: {
+                    tension: 0
+                }
+            },
+            layout: {
+                padding: {
+                    top: 24,
+                    left: 16,
+                    right: 16,
+                    bottom: 16
+                }
+            },
+            scales: {
+                xAxes: [
+                    {
+                        display: false
+                    }
+                ],
+                yAxes: [
+                    {
+                        display: false,
                     }
                 ]
             }
@@ -263,7 +302,7 @@ export class AnalyticsDashboardComponent implements OnInit {
                 pointHoverBorderColor: '#ffffff'
             },
         ],
-        options: {
+        options:  {
             spanGaps: false,
             legend: {
                 display: false
@@ -318,70 +357,7 @@ export class AnalyticsDashboardComponent implements OnInit {
         }
     }
 
-    widget6: any = {
-        positivaOpin: {
-            value: 200,
-            ofTarget: 0
-        },
-        chartType: 'bar',
-        datasets: [
-            {
-                label: 'Opiniones Neutrales',
-                // data: [221, 428, 492, 471, 413, 344, 294],
-                // fill: false
-                data: []
-            }
-        ],
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        colors: [
-            {
-                borderColor: '#6e076e',
-                backgroundColor: '#6e076e'
-            }
-        ],
-        options: {
-            spanGaps: false,
-            legend: {
-                display: false
-            },
-            maintainAspectRatio: false,
-            elements: {
-                point: {
-                    radius: 2,
-                    borderWidth: 1,
-                    hoverRadius: 2,
-                    hoverBorderWidth: 1
-                },
-                line: {
-                    tension: 0
-                }
-            },
-            layout: {
-                padding: {
-                    top: 24,
-                    left: 16,
-                    right: 16,
-                    bottom: 16
-                }
-            },
-            scales: {
-                xAxes: [
-                    {
-                        display: false
-                    }
-                ],
-                yAxes: [
-                    {
-                        display: false,
-                        ticks: {
-                            // min: 100,
-                            // max: 500
-                        }
-                    }
-                ]
-            }
-        }
-    }
+
 
     maxDate: Date;
     /**
@@ -392,12 +368,12 @@ export class AnalyticsDashboardComponent implements OnInit {
      */
     constructor(
         //private _analyticsDashboardService: AnalyticsDashboardService,
-        private _estadPrueba: EstadXidiomaService,
-        private _campaignService :CampaignService,
+        private _estadPrueba: EstadTipoService,
+        private _campaignService: CampaignService,
         private _userService: UserService
     ) {
         // Register the custom chart.js plugin
-        this._registerCustomChartJSPlugin();
+        //this._registerCustomChartJSPlugin();
 
         this._unsubscribeAll = new Subject();
 
@@ -411,11 +387,6 @@ export class AnalyticsDashboardComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // Get the widgets from the service
-        console.log("TO SEE DATA IN CHART");
-        console.log("WIDGET 2");
-        console.log("Datasets ", this.widget2.datasets[0].data)
-        //this.widgets = this._analyticsDashboardService.widgets;
 
         let currentCamapingId: string = "";
         console.log(" Get information about USER ", this._userService.user.id);
@@ -423,37 +394,68 @@ export class AnalyticsDashboardComponent implements OnInit {
 
         if (typeof (this._campaignService.campaign) !== 'undefined' && this._campaignService.campaign.length > 0) {
             //Selecciona el id de la capana escogida por el usuario
-            let camapIgnObjet = this._campaignService.campaign;
+            this._campaignService.testSelectedRandomCamaping()
+                .then((_) => {
+                    const camapIgnObjet = this._campaignService.selectedCampaign;
 
-            console.log("Campaign ID", this._campaignService.getCampaignId)
-            console.log("Campaingn list ", this._campaignService.campaign);
+                    console.log("Campaign ID", camapIgnObjet)
+                    console.log("Campaingn list ", this._campaignService.campaign);
 
-            currentCamapingId = camapIgnObjet.getCampaignId;
-            this._estadPrueba.setCurrentCamaignId(currentCamapingId);
+                    currentCamapingId = camapIgnObjet.id;
+                    this._estadPrueba.setCurrentCamaignId(currentCamapingId);
+
+                    this.campaign = this._campaignService.getMyCamps()[0].nombre;
+                    console.log(this.campaign);
+
+                    this.getAllStadisticsFromBackend()
+                })
+                .catch(error => console.error(error))
+
+
         }
 
+        // this.getAllStadisticsFromBackend(currentDate);
 
-        let currentDate =  moment().format("YYYY-MM-DD HH:mm a");
-
-        this.getAllStadisticsFromBackend(currentDate);
-
-                ///Read all Stadistics
-                // this._estadPrueba.getAllStadistics()
-                // .pipe(takeUntil(this._unsubscribeAll))
-                // .subscribe(([ positiveData, negativeData, neutralData, allData]) => {
-                //    console.log("<--- Get my data Positive ---> ", positiveData);
-                //    this.widget3.datasets[0].data = positiveData;
-                //    console.log("<--- Get my data Negative ---> ", negativeData);
-                //    this.widget2.datasets[0].data = negativeData;
-                //    console.log("<--- Get my data Neutral ---> ", neutralData);
-                //    this.widget6.datasets[0].data = neutralData;
-                //    console.log("<--- Get my data All ---> ", allData);
-                //    this.widget4.datasets[0].data = allData;
-
-                // })
+        ///Read all Stadistics
+        /* this._estadPrueba.getAllStadistics().subscribe(([positiveData, negativeData, neutralData, allData]) => {
+             console.log("<--- Get my data Positive ---> ", positiveData);
+             this.widget3.datasets[0].data = positiveData;
+             console.log("<--- Get my data Negative ---> ", negativeData);
+             this.widget2.datasets[0].data = negativeData;
+             console.log("<--- Get my data Neutral ---> ", neutralData);
+             this.widget6.datasets[0].data = neutralData;
+             console.log("<--- Get my data All ---> ", allData);
+             this.widget4.datasets[0].data = allData;
+ 
+         })*/
 
         this.campaign = this._campaignService.getMyCamps();
         console.log(this.campaign);
+
+
+
+    }
+
+
+    getAllStadisticsFromBackend() {
+
+        this._estadPrueba.getAllStadistics()
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(([posData, negData, neuData, allData]) => {
+                console.log("<--- Get my data Negativa ---> ", negData);
+                this.widget2.negativaOpin[0].value = negData.data[7];
+                this.widget2.datasets[0].data = negData.data;
+                console.log("<--- Get my data Positiva---> ", posData);
+                this.widget3.positivaOpin[0].value = posData.data[7];
+                this.widget3.datasets[0].data = posData.data;
+                console.log("<--- Get my data Neutra---> ", neuData);
+                this.widget6.neutraOpin[0].value = neuData.data[7];
+                this.widget6.datasets[0].data = neuData.data;
+                console.log("<--- Get my data All ---> ", allData);
+                this.widget4.totalOpin[0].value = allData.data[7];
+                this.widget4.datasets[0].data = allData.data;
+
+            })
 
     }
 
@@ -519,32 +521,5 @@ export class AnalyticsDashboardComponent implements OnInit {
         });
     }
 
-
-    getAllStadisticsFromBackend(currentDate:string){
-
-      this._estadPrueba.getAllStadistics(currentDate)
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(([englishData, spanishData, allData, byIntervalData]) => {
-         console.log("<--- Get my data Spanish ---> ", spanishData);
-         this.widget3.datasets[0].data = spanishData;
-         console.log("<--- Get my data English ---> ", englishData);
-         this.widget2.datasets[0].data = englishData;
-         console.log("<--- Get my data All ---> ", allData);
-         this.widget4.datasets[0].data = allData;
-
-      })
-
-    }
-
-         /* Date */
-    date(eDate) {
-          // var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
-          var convertDate = new Date(eDate.target.value)
-          let currentDate =  moment(convertDate).format("YYYY-MM-DD HH:mm a");
-          console.log("Find statdistics to ", currentDate);
-
-          this.getAllStadisticsFromBackend(currentDate);
-
-    }
 }
 

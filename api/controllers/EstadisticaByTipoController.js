@@ -6,10 +6,10 @@
  */
 
 module.exports = {
-  
+
     getCPostivaXDia: async (req, res) => {
         let campaign
-        let cantDay = [1, 2, 3, 4, 5, 6, 7]
+        let cantDay = [1, 2, 3, 4, 5, 6, 7, 8]
         await Campaign.findOne({ id: req.param('id') })
             .then(async (doc) => {
                 if (!doc) {
@@ -101,6 +101,12 @@ module.exports = {
                         polaridad: 'positiva'
                     }).then((opinion) => {
                         cantDay[6] = opinion
+                        let sum = 0
+                        for (let index = 0; index < 7; index++) {
+                            sum = sum + cantDay[index]
+
+                        }
+                        cantDay[7] = sum
                         return res.send({
                             'data': cantDay,
                         })
@@ -119,7 +125,7 @@ module.exports = {
 
     getCNegativaXDia: async (req, res) => {
         let campaign
-        let cantDay = [1, 2, 3, 4, 5, 6, 7]
+        let cantDay = [1, 2, 3, 4, 5, 6, 7, 8]
         await Campaign.findOne({ id: req.param('id') })
             .then(async (doc) => {
                 if (!doc) {
@@ -211,6 +217,12 @@ module.exports = {
                         polaridad: 'negativa'
                     }).then((opinion) => {
                         cantDay[6] = opinion
+                        let sum = 0
+                        for (let index = 0; index < 7; index++) {
+                            sum = sum + cantDay[index]
+
+                        }
+                        cantDay[7] = sum
                         return res.send({
                             'data': cantDay,
                         })
@@ -229,7 +241,7 @@ module.exports = {
 
     getCNeutraXDia: async (req, res) => {
         let campaign
-        let cantDay = [1, 2, 3, 4, 5, 6, 7]
+        let cantDay = [1, 2, 3, 4, 5, 6, 7, 8]
         await Campaign.findOne({ id: req.param('id') })
             .then(async (doc) => {
                 if (!doc) {
@@ -321,6 +333,12 @@ module.exports = {
                         polaridad: 'neutra'
                     }).then((opinion) => {
                         cantDay[6] = opinion
+                        let sum = 0
+                        for (let index = 0; index < 7; index++) {
+                            sum = sum + cantDay[index]
+
+                        }
+                        cantDay[7] = sum
                         return res.send({
                             'data': cantDay,
                         })
@@ -337,126 +355,132 @@ module.exports = {
             )
     },
 
-        //Requiere ID de la Campaña
-        getCantTotalXDia: async (req, res) => {
+    //Requiere ID de la Campaña
+    getCantTotalXDia: async (req, res) => {
 
-            ///Compute all element in a array (summ all)
-            ///Bibliografy: https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
-      
-                // const array1 = [1, 2, 3, 4];
-                // const reducer = (accumulator, currentValue) => accumulator + currentValue;
-      
-                // // 1 + 2 + 3 + 4
-                // console.log(array1.reduce(reducer));
-                // // expected output: 10
-      
-                // // 5 + 1 + 2 + 3 + 4
-                // console.log(array1.reduce(reducer, 5));
-                // // expected output: 15
-      
-              let campaign
-              let cantDay = [1, 2, 3, 4, 5, 6, 7]
-              let clientTimestamp =  req.param('client_timestamp');
-              await Campaign.findOne({ id: req.param('id') })
-                  .then(async (doc) => {
-                      if (!doc) {
-                          console.log("No encontrado")
-                      } else {
-                          console.log("Encontrado"),
-                              campaign = doc
-                          await Opinion.count({
-                              campaign: campaign.id,
-                              createDay: 'Monday',
-                          }).then((opinion) => {
-                              cantDay[0] = opinion
-                          })
-                              .catch(err => {
-                                  return res.status(500).send({
-                                      'message': 'Imposible Mostrar',
-                                      'error': err
-                                  })
-                              })
-                          await Opinion.count({
-                              campaign: campaign.id,
-                              createDay: 'Tuesday',
-                          }).then((opinion) => {
-                              cantDay[1] = opinion
-                          })
-                              .catch(err => {
-                                  return res.status(500).send({
-                                      'message': 'Imposible Mostrar',
-                                      'error': err
-                                  })
-                              })
-                          await Opinion.count({
-                              campaign: campaign.id,
-                              createDay: 'Wednesday',
-                          }).then((opinion) => {
-                              cantDay[2] = opinion
-                          })
-                              .catch(err => {
-                                  return res.status(500).send({
-                                      'message': 'Imposible Mostrar',
-                                      'error': err
-                                  })
-                              })
-                          await Opinion.count({
-                              campaign: campaign.id,
-                              createDay: 'Thursday',
-                          }).then((opinion) => {
-                              cantDay[3] = opinion
-                          })
-                              .catch(err => {
-                                  return res.status(500).send({
-                                      'message': 'Imposible Mostrar',
-                                      'error': err
-                                  })
-                              })
-                          await Opinion.count({
-                              campaign: campaign.id,
-                              createDay: 'Friday',
-                          }).then((opinion) => {
-                              cantDay[4] = opinion
-                          })
-                              .catch(err => {
-                                  return res.status(500).send({
-                                      'message': 'Imposible Mostrar',
-                                      'error': err
-                                  })
-                              })
-                          await Opinion.count({
-                              campaign: campaign.id,
-                              createDay: 'Saturday',
-                          }).then((opinion) => {
-                              cantDay[5] = opinion
-                          })
-                              .catch(err => {
-                                  return res.status(500).send({
-                                      'message': 'Imposible Mostrar',
-                                      'error': err
-                                  })
-                              })
-                          await Opinion.count({
-                              campaign: campaign.id,
-                              createDay: 'Sunday',
-                          }).then((opinion) => {
-                              cantDay[6] = opinion
-                              return res.send({
-                                  'data': cantDay,
-                              })
-                          })
-                              .catch(err => {
-                                  return res.status(500).send({
-                                      'message': 'Imposible Mostrar',
-                                      'error': err
-                                  })
-                              })
-                      }
-      
-                  }
-                  )
-          },
+        ///Compute all element in a array (summ all)
+        ///Bibliografy: https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
 
-    
+        // const array1 = [1, 2, 3, 4];
+        // const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+        // // 1 + 2 + 3 + 4
+        // console.log(array1.reduce(reducer));
+        // // expected output: 10
+
+        // // 5 + 1 + 2 + 3 + 4
+        // console.log(array1.reduce(reducer, 5));
+        // // expected output: 15
+
+        let campaign
+        let cantDay = [1, 2, 3, 4, 5, 6, 7, 8]
+        let clientTimestamp = req.param('client_timestamp');
+        await Campaign.findOne({ id: req.param('id') })
+            .then(async (doc) => {
+                if (!doc) {
+                    console.log("No encontrado")
+                } else {
+                    console.log("Encontrado"),
+                        campaign = doc
+                    await Opinion.count({
+                        campaign: campaign.id,
+                        createDay: 'Monday',
+                    }).then((opinion) => {
+                        cantDay[0] = opinion
+                    })
+                        .catch(err => {
+                            return res.status(500).send({
+                                'message': 'Imposible Mostrar',
+                                'error': err
+                            })
+                        })
+                    await Opinion.count({
+                        campaign: campaign.id,
+                        createDay: 'Tuesday',
+                    }).then((opinion) => {
+                        cantDay[1] = opinion
+                    })
+                        .catch(err => {
+                            return res.status(500).send({
+                                'message': 'Imposible Mostrar',
+                                'error': err
+                            })
+                        })
+                    await Opinion.count({
+                        campaign: campaign.id,
+                        createDay: 'Wednesday',
+                    }).then((opinion) => {
+                        cantDay[2] = opinion
+                    })
+                        .catch(err => {
+                            return res.status(500).send({
+                                'message': 'Imposible Mostrar',
+                                'error': err
+                            })
+                        })
+                    await Opinion.count({
+                        campaign: campaign.id,
+                        createDay: 'Thursday',
+                    }).then((opinion) => {
+                        cantDay[3] = opinion
+                    })
+                        .catch(err => {
+                            return res.status(500).send({
+                                'message': 'Imposible Mostrar',
+                                'error': err
+                            })
+                        })
+                    await Opinion.count({
+                        campaign: campaign.id,
+                        createDay: 'Friday',
+                    }).then((opinion) => {
+                        cantDay[4] = opinion
+                    })
+                        .catch(err => {
+                            return res.status(500).send({
+                                'message': 'Imposible Mostrar',
+                                'error': err
+                            })
+                        })
+                    await Opinion.count({
+                        campaign: campaign.id,
+                        createDay: 'Saturday',
+                    }).then((opinion) => {
+                        cantDay[5] = opinion
+                    })
+                        .catch(err => {
+                            return res.status(500).send({
+                                'message': 'Imposible Mostrar',
+                                'error': err
+                            })
+                        })
+                    await Opinion.count({
+                        campaign: campaign.id,
+                        createDay: 'Sunday',
+                    }).then((opinion) => {
+                        cantDay[6] = opinion
+                        let sum = 0
+                        for (let index = 0; index < 7; index++) {
+                            sum = sum + cantDay[index]
+
+                        }
+                        cantDay[7] = sum
+                        return res.send({
+                            'data': cantDay,
+                        })
+                    })
+                        .catch(err => {
+                            return res.status(500).send({
+                                'message': 'Imposible Mostrar',
+                                'error': err
+                            })
+                        })
+                }
+
+            }
+            )
+    },
+
+
 };
 

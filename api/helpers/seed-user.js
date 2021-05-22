@@ -43,7 +43,7 @@ module.exports = {
 
     var gateWayArray = []
 
-    var registerSize = 10;
+    var registerSize = 7;
 
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
@@ -66,7 +66,7 @@ module.exports = {
 
     allGateway = await User.find({})
 
-    registerSize = 21
+    registerSize = 31
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
 
@@ -74,7 +74,7 @@ module.exports = {
 
       let campaign = await Campaign.count({ 'userChief': userObjet.id })
 
-      if (campaign < 21) {
+      if (campaign < 31) {
         newCamp = {
           nombre: faker.company.companyName("Test"),
           fecha: faker.date.recent(7),

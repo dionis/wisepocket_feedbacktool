@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AnalyticsXIdiomaDashboardDb } from '../fake-db/dashboard-analyticsXIdioma';
-import { BehaviorSubject, Observable,  combineLatest ,Subject} from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -35,16 +35,7 @@ export class EstadTipoService {
     }
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCPostivaXDia?id=' + campaign_id)
-      .pipe(map((responseData: any) => {
 
-
-        if (responseData.data) {
-          this.dataPos = responseData.data;
-          console.log("******* DATA in USE *********")
-          console.log(this.dataPos);
-          return this.dataPos
-        }
-      }))
   }
 
   getDataNeg(): Observable<any> {
@@ -57,16 +48,7 @@ export class EstadTipoService {
     }
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCNegativaXDia?id=' + campaign_id)
-      .pipe(map((responseData: any) => {
 
-
-        if (responseData.data) {
-          this.dataNeg = responseData.data;
-          console.log("******* DATA in USE *********")
-          console.log(this.dataNeg);
-          return this.dataNeg
-        }
-      }))
   }
 
   getDataNeu(): Observable<any> {
@@ -79,16 +61,7 @@ export class EstadTipoService {
     }
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCNeutraXDia?id=' + campaign_id)
-      .pipe(map((responseData: any) => {
 
-
-        if (responseData.data) {
-          this.dataNeu = responseData.data;
-          console.log("******* DATA in USE *********")
-          console.log(this.dataNeu);
-          return this.dataNeu
-        }
-      }))
   }
 
   getDataTotal(): Observable<any> {
@@ -101,25 +74,16 @@ export class EstadTipoService {
     }
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCantTotalXDia?id=' + campaign_id)
-      .pipe(map((responseData: any) => {
-
-
-        if (responseData.data) {
-          this.dataTotal = responseData.data;
-          console.log("******* DATA in USE *********")
-          console.log(this.dataTotal);
-          return this.dataTotal
-        }
-      }))
-  }
-
-  getAllStadistics(): Observable<any[]>{
-     return combineLatest([ this.getDataPos(),this.getDataNeg(),this.getDataNeu,this.getDataTotal()]);
 
   }
 
-  getEstPolyById(id){
-    if(id==this.campaign.getCampaignId){
+  getAllStadistics(): Observable<any[]> {
+    return combineLatest([this.getDataPos(), this.getDataNeg(), this.getDataNeu(), this.getDataTotal()]);
+
+  }
+
+  getEstPolyById(id) {
+    if (id == this.campaign.getCampaignId) {
       return combineLatest([this.getDataPos(), this.getDataNeg(), this.getDataNeu(), this.getDataTotal()]);
     }
   }

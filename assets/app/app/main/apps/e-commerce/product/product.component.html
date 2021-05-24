@@ -52,7 +52,7 @@
 
                             <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                 <mat-label>Nombre</mat-label>
-                                <input matInput placeholder="Nombre" name="nombre" formControlName="nombre" required>
+                                <input matInput placeholder="Nombre" name="nombre" formControlName="nombre" required maxlength="50">
                                 <mat-error *ngIf="invUserForm.get('nombre').hasError('required')">
                                     Nombre requerido
                                 </mat-error>
@@ -89,7 +89,7 @@
                             <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                 <mat-label>Dirección</mat-label>
                                 <textarea matInput placeholder="Dirección" name="direccion" formControlName="direccion"
-                                    required rows="5">
+                                    required rows="5" maxlength="350">
                                 </textarea>
                                 <mat-error *ngIf="invUserForm.get('direccion').hasError('required')">
                                     Dirección requerida

@@ -154,6 +154,17 @@ export class AnalyticsDashboardComponent implements OnInit {
                 display: false
             },
             maintainAspectRatio: false,
+            elements: {
+                point: {
+                    radius: 2,
+                    borderWidth: 1,
+                    hoverRadius: 2,
+                    hoverBorderWidth: 1
+                },
+                line: {
+                    tension: 0
+                }
+            },
             layout: {
                 padding: {
                     top: 24,

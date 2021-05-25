@@ -401,7 +401,7 @@ export class AnalyticsDashboardComponent implements OnInit {
 
         let currentCamapingId: string = "";
         console.log(" Get information about USER ", this._userService.user.id);
-        this._campaignService.getCampaignbyUser(this._userService.user.id);
+        this._campaignService.getCampaignbyUser('0','','','');
 
         if (typeof (this._campaignService.campaign) !== 'undefined' && this._campaignService.campaign.length > 0) {
             //Selecciona el id de la capana escogida por el usuario

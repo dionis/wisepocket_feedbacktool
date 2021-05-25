@@ -1,6 +1,7 @@
 
 var faker = require('faker');
 const bcrypt = require('bcrypt');
+const { phone } = require('faker');
 
 module.exports = {
 
@@ -74,9 +75,14 @@ module.exports = {
 
       let campaign = await Campaign.count({ 'userChief': userObjet.id })
 
-      if (iValue < 61) {
+      if (campaign < 61) {
+        let phone_contact = faker.phone.phoneNumber();
         newCamp = {
           nombre: faker.company.companyName("Test"),
+          contactoFacebook: faker.internet.userName(),
+          contactoTelegram: '@test',
+          contanctoTelefono: phone_contact,
+          contactoWhatsapp: phone_contact,
           fecha: faker.date.recent(7),
           userChief: userObjet.id
         }

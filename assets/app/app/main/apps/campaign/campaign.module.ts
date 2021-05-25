@@ -17,28 +17,38 @@ import { FuseConfirmDialogModule, FuseSidebarModule } from '../../../../@fuse/co
 import { CampaignComponent } from '../../../../app/main/apps/campaign/campaign.component';
 import { CampaignService } from '../../../services/campaign.service';
 import { CampaignFormDialogComponent } from './campaign-form/campaign-form.component';
-import { CampaignListComponent } from '../../../../app/main/apps/campaign/campaign-list/campaign-list.component';
+//import { CampaignListComponent } from '../../../../app/main/apps/campaign/campaign-list/campaign-list.component';
 import { CampaignSelectedBarComponent } from '../../../../app/main/apps/campaign/selected-bar/selected-bar.component';
 import { CampaignMainSidebarComponent } from '../../../../app/main/apps/campaign/sidebars/main/main.component';
-
+import {ListCampComponent} from '../campaign/list-camp/list-camp.component'
+import { TranslateModule } from '@ngx-translate/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 const routes: Routes = [
+    
+    {
+        path     : 'myCampaigns',
+        component: ListCampComponent,
+    },
     {
         path     : '**',
         component: CampaignComponent,
         resolve  : {
             campaigns: CampaignService
         }
-    }
+        
+    },
 ];
 
 @NgModule({
     declarations   : [
         CampaignComponent,
         CampaignFormDialogComponent,
-        CampaignListComponent,
         CampaignMainSidebarComponent,
-        CampaignSelectedBarComponent,     
+        CampaignSelectedBarComponent, 
+        ListCampComponent
+            
     ],
     imports        : [
         RouterModule.forChild(routes),
@@ -53,10 +63,13 @@ const routes: Routes = [
         MatRippleModule,
         MatTableModule,
         MatToolbarModule,
+        MatPaginatorModule,
+        MatSortModule,
 
         FuseSharedModule,
         FuseConfirmDialogModule,
-        FuseSidebarModule
+        FuseSidebarModule,
+        TranslateModule,
     ],
     providers      : [
         CampaignService

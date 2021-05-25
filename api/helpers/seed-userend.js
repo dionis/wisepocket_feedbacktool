@@ -59,7 +59,7 @@ module.exports = {
     campAll = await Campaign.find({})
 
 
-    registerSize = 200
+    registerSize = 300
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
 
@@ -83,7 +83,7 @@ module.exports = {
       //console.log("# Day ", dateObjet.getDay(), " = Day Name: ",dayNameArray[dateObjet.getDay()] );
       //console.log("TimeStamp ====>> " ,timestamp);
 
-      if (opinion < 201) {
+      if (iValue < 301) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
           fecha: currentTime,

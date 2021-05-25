@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../../@fuse/animations';
 import { FuseUtils } from '../../../../../@fuse/utils';
 import { Product } from '../../../../../app/main/apps/e-commerce/product/product.model';
@@ -53,7 +53,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
         this.invUserForm = this._formBuilder.group({
             nombre: ['', Validators.required],
             correo: ['', [Validators.required, Validators.email]],
-            telefono: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(8)]],
+            telefono: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
             direccion: ['', Validators.required],
         });
         // Subscribe to update product on changes
@@ -72,11 +72,16 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
     onSave() {
         const data = this.invUserForm.getRawValue();
         console.log(data);
-        swal.fire('Invitado registrado')
-        this.invService.addInvUser(data).subscribe(dataINv => {
+        this.invService.addInvUser(data).subscribe(res => {
+            if (res.success)
+                swal.fire('Invitado registrado')
+            else {
+                swal.fire('Este usuario ya está registrado')
+            }
         })
-
     }
+
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------

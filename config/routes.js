@@ -74,45 +74,56 @@ module.exports.routes = {
   "DELETE /opinion/deleteAllOpinion": "OpinionController.deleteAllOpinion",
   "DELETE /pregunta/deletePregunta": "PreguntaController.deletePregunta",
   "DELETE /pregunta/deleteAllPregunta": "PreguntaController.deleteAllPregunta",
-  "DELETE /respuesta/deleteAllRespuesta": "RespuestaController.deleteAllRespuesta",
+  "DELETE /respuesta/deleteAllRespuesta":
+    "RespuestaController.deleteAllRespuesta",
   "DELETE /registro/deleteAllRegistro": "RegistroController.deleteAllRegistro",
-  "DELETE /aspectoopinion/deleteAllAspecto": "AspectoOpinionController.deleteAllAspecto",
-  "DELETE /entidadopinion/deleteAllEntidad": "EntidadOpinionController.deleteAllEntidad",
+  "DELETE /aspectoopinion/deleteAllAspecto":
+    "AspectoOpinionController.deleteAllAspecto",
+  "DELETE /entidadopinion/deleteAllEntidad":
+    "EntidadOpinionController.deleteAllEntidad",
   "DELETE /userend/deleteAllUserEnd": "UserEndController.deleteAllUserEnd",
-  "DELETE /userInvitado/deleteUserInvitado": "UserInvitadoController.deleteUserInvitado",
+  "DELETE /userInvitado/deleteUserInvitado":
+    "UserInvitadoController.deleteUserInvitado",
 
   //GET and for Pages
   "GET /opinion/getOpinion": "OpinionController.getOpinion",
-  "GET /opinion/getOpinionXIdiomaCamp": "OpinionController.getOpinionXIdiomaCamp",
+  "GET /opinion/getOpinionXIdiomaCamp":
+    "OpinionController.getOpinionXIdiomaCamp",
   "GET /pregunta/getPregunta": "PreguntaController.getPregunta",
   "GET /respuesta/getRespuesta": "RespuestaController.getRespuesta",
   "GET /registro/getRegistro": "RegistroController.getRegistro",
   "GET /aspectoopinion/getAspecto": "AspectoOpinionController.getAspecto",
   "GET /entidadopinion/getEntidad": "EntidadOpinionController.getEntidad",
   "GET /registro/getAllRegistro": "RegistroController.getAllRegistro",
-  "GET /estadisticaByidioma/getCantENXDia": "EstadisticaByidiomaController.getCantENXDia",
-  "GET /estadisticaByidioma/getCantESXDia": "EstadisticaByidiomaController.getCantESXDia",
-  "GET /estadisticaByidioma/getCantTotalXDia": "EstadisticaByidiomaController.getCantTotalXDia",
-  "GET /estadisticaByTipo/getCPostivaXDia": "EstadisticaByTipoController.getCPostivaXDia",
-  "GET /estadisticaByTipo/getCNegativaXDia": "EstadisticaByTipoController.getCNegativaXDia",
-  "GET /estadisticaByTipo/getCNeutraXDia": "EstadisticaByTipoController.getCNeutraXDia",
-  "GET /estadisticaByTipo/getCantTotalXDia": "EstadisticaByTipoController.getCantTotalXDia",
+  "GET /estadisticaByidioma/getCantENXDia":
+    "EstadisticaByidiomaController.getCantENXDia",
+  "GET /estadisticaByidioma/getCantESXDia":
+    "EstadisticaByidiomaController.getCantESXDia",
+  "GET /estadisticaByidioma/getCantTotalXDia":
+    "EstadisticaByidiomaController.getCantTotalXDia",
+  "GET /estadisticaByTipo/getCPostivaXDia":
+    "EstadisticaByTipoController.getCPostivaXDia",
+  "GET /estadisticaByTipo/getCNegativaXDia":
+    "EstadisticaByTipoController.getCNegativaXDia",
+  "GET /estadisticaByTipo/getCNeutraXDia":
+    "EstadisticaByTipoController.getCNeutraXDia",
+  "GET /estadisticaByTipo/getCantTotalXDia":
+    "EstadisticaByTipoController.getCantTotalXDia",
   //"GET /estadisticaByidioma/getCantENXDiaEx": "EstadisticaByidiomaController.getCantENXDiaEx",
-  "GET /estadisticaByidioma/getIntervalInADay": "EstadisticaByidiomaController.getIntervalInAday",
+  "GET /estadisticaByidioma/getIntervalInADay":
+    "EstadisticaByidiomaController.getIntervalInAday",
 
-  "GET /userInvitado/getCampXInvitado": "UserInvitadoController.getCampXInvitado",
+  "GET /userInvitado/getCampXInvitado":
+    "UserInvitadoController.getCampXInvitado",
   "GET /userInvitado/getInvitados": "UserInvitadoController.getInvitados",
-  "GET /userInvitado/getInvXUserChief": "UserInvitadoController.getInvXUserChief",
-  "GET /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
-  "GET /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
-
-
-
+  "GET /userInvitado/getInvXUserChief":
+    "UserInvitadoController.getInvXUserChief",
 
   //PATCH
+  "PATCH /userInvitado/updateInfo": "UserInvitadoController.updateInfo",
+  "PATCH /userInvitado/updatePass": "UserInvitadoController.updatePass",
   "PATCH /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
-  "PATCH /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
-
+  //"PATCH /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

@@ -59,9 +59,9 @@ module.exports = {
     campAll = await Campaign.find({})
 
 
-    registerSize = 201
-    registerSize1 = 201
-    registerSize2 = 50
+    registerSize = 300
+    registerSize1 = 300
+    registerSize2 = 70
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
       userEndObjet = faker.random.arrayElement(allGateway)
@@ -75,7 +75,7 @@ module.exports = {
       // How  faker.date.recent(5) set a date = "2021-04-23T14:49:00.099Z"
       //faker.time.recent(7) is a timestamp
 
-      if (iValue < 201) {
+      if (iValue < 301) {
         var currentTime = faker.date.recent(5);
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
@@ -100,7 +100,7 @@ module.exports = {
 
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
-      if (iValue < 61) {
+      if (iValue < 101) {
         newAspect = {
           texto: faker.lorem.word(1),
           polaridad: 'negativa',
@@ -119,7 +119,7 @@ module.exports = {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
 
-      if (iValue < 201) {
+      if (iValue < 301) {
         var currentTime = faker.date.recent(7);
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
@@ -159,7 +159,7 @@ module.exports = {
     for (var iValue = 1; iValue < registerSize2; iValue++) {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
-      if (iValue < 50) {
+      if (iValue < 71) {
 
         var currentTime = faker.date.recent(4);
         var dateObjet = new Date(currentTime);
@@ -184,7 +184,7 @@ module.exports = {
 
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
-      if (iValue < 51) {
+      if (iValue < 70) {
         newAspect = {
           texto: faker.lorem.word(1),
           polaridad: 'negativa',

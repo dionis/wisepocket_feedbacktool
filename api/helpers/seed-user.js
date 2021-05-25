@@ -54,7 +54,7 @@ module.exports = {
       gateWayArray.push({
         name: faker.name.firstName(),
         email: faker.internet.exampleEmail(faker.name.firstName()),
-        phone: faker.phone.phoneFormats(),
+        phone: faker.phone.phoneNumber("5#######"),
         password: hashpass
 
       })
@@ -74,7 +74,7 @@ module.exports = {
 
       let campaign = await Campaign.count({ 'userChief': userObjet.id })
 
-      if (campaign < 61) {
+      if (iValue < 61) {
         newCamp = {
           nombre: faker.company.companyName("Test"),
           fecha: faker.date.recent(7),
@@ -94,7 +94,7 @@ module.exports = {
         newInv = {
           nombre: faker.name.firstName(),
           correo: faker.internet.exampleEmail(faker.name.firstName()),
-          telefono: faker.phone.phoneFormats(),
+          telefono: faker.phone.phoneNumber("5#######"),
           direccion: faker.lorem.sentences(3, ''),
           invitadoBY: userObjet.id
         }

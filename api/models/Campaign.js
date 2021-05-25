@@ -37,7 +37,7 @@ module.exports = {
     },
 
     contanctoTelefono: {
-      type: 'number',
+      type: 'string',
       //required: true,
       columnName: 'contanctoTelefono'
     },

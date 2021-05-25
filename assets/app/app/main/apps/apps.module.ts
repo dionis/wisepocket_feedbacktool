@@ -4,6 +4,9 @@ import { RouterModule } from '@angular/router';
 
 
 import { FuseSharedModule } from '../../../@fuse/shared.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 //<<<<<<< HEAD
 // const routes = [
@@ -189,7 +192,10 @@ const routes = [
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        FuseSharedModule
+        FuseSharedModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatSortModule
     ]
 })
 export class AppsModule {

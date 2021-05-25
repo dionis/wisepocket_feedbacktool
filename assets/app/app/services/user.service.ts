@@ -45,11 +45,12 @@ export class UserService {
     return new Promise((resolve, reject) => {
       console.log("Url to call " + environment.sails_services_urlpath + ":" + environment.sails_services_urlport)
       this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/user/singIn', { email: user.email, password: user.password },
-      ).subscribe((res: any) => {
+      ).subscribe(async (res: any) => {
         const expiresAt = moment().add(res.expiresIn, 'second');
         localStorage.setItem('id_token', res.idToken);
         localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-        this.getUserById();
+        await this.getUserById();
+        //console.log(localStorage.getItem('user_id'))
         resolve(res);
       }, error => {
         reject(error);
@@ -60,6 +61,7 @@ export class UserService {
   logout() {
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
+    //localStorage.removeItem("user_id");
     this.user = null
   }
 
@@ -97,8 +99,7 @@ export class UserService {
           console.log("********* Current User data *******")
           console.log(this.user);
 
-          this._userCamp.getCampaignbyUser(this.user.id) //SE LLAMA A la FUNCION para mandar el idUser LOGUEADO a CampaignService
-
+          this._userCamp.getCampaignbyUser('0','','','') //SE LLAMA A la FUNCION para mandar el idUser LOGUEADO a CampaignService
           return this.user;
         } else {
           return responseData;

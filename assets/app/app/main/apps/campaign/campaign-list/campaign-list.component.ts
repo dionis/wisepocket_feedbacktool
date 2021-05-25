@@ -29,7 +29,17 @@ export class CampaignListComponent implements OnInit, OnDestroy
     campaigns: Campaign;
     camp: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'avatar', 'name', 'email', 'phone', 'jobTitle', 'buttons'];
+    displayedColumns = 
+    ['checkbox', 
+    'avatar', 
+    'name', 
+    'date',
+    'phone', 
+    'jobTitle',
+    'facebook',
+    'telegram',
+    'whatsapp', 
+    'buttons'];
     selectedCampaigns: any[];
     checkboxes: {};
     dialogRef: any;

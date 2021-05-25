@@ -4,16 +4,14 @@ import { MatSort } from '@angular/material/sort';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
-import { fuseAnimations } from '../../../../@fuse/animations';
-import { FuseUtils } from '../../../../@fuse/utils';
+import { fuseAnimations } from '../../../../../@fuse/animations';
+import { FuseUtils } from '../../../../../@fuse/utils';
 import { takeUntil } from 'rxjs/internal/operators';
-import { CampaignService } from '../../../services/campaign.service';
-import { Campaign } from '../../../models/campaign.model';
-import { EcommerceProductsService } from '../../apps/e-commerce/products/products.service';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
-import { locale as english } from '../../../main/campaigns/list-camp/i18n/en';
-import { locale as spanish } from '../../../main/campaigns/list-camp/i18n/es';
-import { ImageService } from '../../../services/image.service';
+import { CampaignService } from '../../../../services/campaign.service';
+import { FuseTranslationLoaderService } from '../../../../../@fuse/services/translation-loader.service';
+import { locale as english } from '../../../apps/campaign/list-camp/i18n/en';
+import { locale as spanish } from '../../../apps/campaign/list-camp/i18n/es';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector     : 'campaign-list',
@@ -24,15 +22,17 @@ import { ImageService } from '../../../services/image.service';
 })
 export class ListCampComponent implements AfterViewInit,OnInit {
     dataSource: CampaignDataSource | null;
-    displayedColumns = ['id',
-        'logo',
-        'titulo',
-        'phone',
+    displayedColumns = [
+        'id',
+        'nombre',
+        'contanctoTelefono',
         'direccionPostal',
-        'contactoEmail',
-        //'contactoTelegram',
+        'contactoFacebook',
+        'contactoTelegram',
+        'contactoWhatsapp',
         'active'
     ];
+   // private user_id = localStorage.getItem('user_id');
 
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;
@@ -59,7 +59,8 @@ export class ListCampComponent implements AfterViewInit,OnInit {
        // private _ecommerceProductsService: EcommerceProductsService,
         private campService: CampaignService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
-        private imageService: ImageService
+        private userService: UserService
+        //private imageService: ImageService
     )
     {
         // Load the translations
@@ -81,8 +82,7 @@ export class ListCampComponent implements AfterViewInit,OnInit {
         //console.log(this._ecommerceProductsService.products)
         console.log( 'OnInit',this.filter.nativeElement.value);
         this.dataSource = new CampaignDataSource(this.campService);
-        console.log(this.dataSource)
-        this.dataSource.loadUserCampaigns(0,10,this.criteria,'');
+        this.dataSource.loadUserCampaigns(0,5,this.criteria,'');
         // fromEvent(this.filter.nativeElement, 'keyup')
         //     .pipe(
         //         takeUntil(this._unsubscribeAll),
@@ -142,23 +142,23 @@ export class ListCampComponent implements AfterViewInit,OnInit {
         console.log(event)
     }
 
-    async loadImage(idImg){
-        console.log(idImg.id);
-        let src = '';
-        await this.imageService.getImage(idImg.id)
-        .pipe(takeUntil(this._unsubscribeAll))
-        .toPromise()
-        .then(res=>{
-            src = res;
-            console.log('Dentro',src) 
-        })
-        // .subscribe(res=>{
-        //     src = res;
-        //     console.log('Dentro',src)
-        // })
-        console.log('Fuera',src)
-        return src;
-    }
+    // async loadImage(idImg){
+    //     console.log(idImg.id);
+    //     let src = '';
+    //     await this.imageService.getImage(idImg.id)
+    //     .pipe(takeUntil(this._unsubscribeAll))
+    //     .toPromise()
+    //     .then(res=>{
+    //         src = res;
+    //         console.log('Dentro',src) 
+    //     })
+    //     // .subscribe(res=>{
+    //     //     src = res;
+    //     //     console.log('Dentro',src)
+    //     // })
+    //     console.log('Fuera',src)
+    //     return src;
+    // }
 }
 export class CampaignDataSource extends DataSource<any>{
     private campagainsSubject= new BehaviorSubject<any[]>([]);
@@ -203,7 +203,7 @@ export class CampaignDataSource extends DataSource<any>{
     }
 
     loadUserCampaigns(page:number,limit:number,criteria:string,filter:string){
-        this.campService.getCampaignUser(page.toString(),limit.toString(),criteria,filter)
+        this.campService.getCampaignbyUser(page.toString(),limit.toString(),criteria,filter)
         .subscribe(campaigns=>{
             console.log(campaigns);
             this.campagainsSubject.next(campaigns)
@@ -213,15 +213,15 @@ export class CampaignDataSource extends DataSource<any>{
         console.log(this.campagainsSubject.value)
     }
 
-    loadCampaigns(page:number,limit:number){
+    // loadCampaigns(page:number,limit:number){
 
-        this.campService.fetchCampagins(page.toString(),limit.toString())
-        .subscribe(campaigns=>{
-            console.log(campaigns);
-            this.campagainsSubject.next(campaigns)
-        } );
-        console.log(this.campagainsSubject.value)
-    }
+    //     this.campService.fetchCampagins(page.toString(),limit.toString())
+    //     .subscribe(campaigns=>{
+    //         console.log(campaigns);
+    //         this.campagainsSubject.next(campaigns)
+    //     } );
+    //     console.log(this.campagainsSubject.value)
+    // }
     // /**
     //  * Filter data
     //  *

@@ -22,6 +22,9 @@ import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './main/authentication/auth.interceptors.service';
 import { Error404Module } from './main/errors/404/error-404.module';
 import { Error500Module } from './main/errors/500/error-500.module'
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 const appRoutes: Routes = [
     {
@@ -69,6 +72,9 @@ const appRoutes: Routes = [
         // Material
         MatButtonModule,
         MatIconModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatSortModule,
 
         // Fuse modules
         FuseModule.forRoot(fuseConfig),

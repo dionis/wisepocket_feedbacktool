@@ -330,7 +330,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
         let currentCamapingId: string = "";
         console.log(" Get information about USER ", this._userService.user.id);
-        this._camapignService.getCampaignbyUser(this._userService.user.id);
+        this._camapignService.getCampaignbyUser('0','','','');
 
 
         if (typeof (this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0) {

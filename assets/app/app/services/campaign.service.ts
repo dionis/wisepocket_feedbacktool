@@ -25,6 +25,7 @@ export class CampaignService {
   filterBy: string;
   selectedCampaigns: string[] = [];
   selectedCampaign: Campaign;
+  campaignsofUserTotal: any;
 
 
   constructor(private _http: HttpClient
@@ -37,24 +38,27 @@ export class CampaignService {
   }
 
 
-  getCampaignbyUser(id: String) {  //Recibe el id como parametro
+  getCampaignbyUser(page:string, limit:string,sortCriteria:string,filter:string) {  //Recibe el id como parametro
 
     //pagina apartir de 0 //page=0 es de prueba
+    console.log(limit);
     const campaignService = this;
-    this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/campaign/getCampaignbyUser/_id?id=' + id + '&page=0')
+    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/campaign/getCampaignbyUser/',
+    {params: {
+              'page': page,
+              'limit':limit,
+              'criteria': sortCriteria,
+              'filter':filter}})
       .pipe(map((responseData: any) => {
-
         if (responseData.data) {
-          for (let index = 0; index < responseData.data.length; index++) {
-            this.campaign[index] = responseData.data[index]
-          }
-          return this.campaign
+          let arrayCamps: any[] = [];
+            if(responseData.length !== 0){
+              arrayCamps = responseData['data'];
+            }
+            this.campaignsofUserTotal = arrayCamps.length;
+            return arrayCamps;
         }
-      })).subscribe(res => {
-      },
-        error => {
-          this.campaign = null;
-        })
+      }))
   }
 
   getCampaignId(){ //Devuelve el id de la campaña
@@ -93,7 +97,7 @@ export class CampaignService {
 
           this._http.post('api/contacts-contacts/' + campaign.nombre, {...campaign})
               .subscribe(response => {
-                  this.getCampaignbyUser(campaign.id);
+                  //this.getCampaignbyUser(campaign.id);
                   resolve(response);
               });
       });
@@ -170,6 +174,20 @@ export class CampaignService {
         const campaignIndex = this.campaign.indexOf(campaign);
         this.campaign.splice(campaignIndex, 1);
         this.onCampaignsChanged.next(this.campaign);
+    }
+
+    countUserCampaigns(){
+      return this._http.get(
+        environment.sails_services_urlpath+":"+environment.sails_services_urlport+
+        '/campaign/countUserCampaigns',
+        )
+        .pipe(
+          map((responseData:any)=>{
+            this.campaignsofUserTotal = responseData['data'];
+           // console.log(this.campaignsofUserTotal)
+            return responseData;
+          })
+        )
     }
 
 

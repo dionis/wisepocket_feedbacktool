@@ -26,7 +26,7 @@ import { OpinionTest } from '../../../../models/opinionTest.model';
 export class ContactsContactListComponent implements OnInit, OnDestroy {
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
-    
+
     contacts: any;
     user: any;
     dataSource: FilesDataSource | null;
@@ -67,7 +67,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        
 
         this.dataSource = new FilesDataSource(this._contactsService);
 

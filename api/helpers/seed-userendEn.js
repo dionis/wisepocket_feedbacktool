@@ -1,4 +1,5 @@
 var faker = require('faker');
+var moment = require('moment'); // require
 
 module.exports = {
 
@@ -62,6 +63,31 @@ module.exports = {
     registerSize = 300
     registerSize1 = 300
     registerSize2 = 70
+    let data = new Date()
+    console.log("Data to show ", data);
+    let dateWithMomentParser = moment().format('YYYY-MM-DD');
+    console.log("Date parser ===> " + dateWithMomentParser);
+    let dateToFind =  moment(data, 'YYYY-MM-DD HH:mm a', true);
+
+    //console.log(" Date to find ", dateToFind);
+    let yesterDay = dateToFind.clone();
+
+    let yesterDayTemp = dateToFind.clone();
+
+    yesterDayTemp = yesterDay.subtract(1 , 'days').add(5, 'hours').clone();
+
+    let arrayInDays = [];
+    let arrayToDayYestDay = [];
+
+    arrayToDayYestDay.push(dateToFind);
+    arrayToDayYestDay.push(yesterDayTemp);
+
+    let dayLength = 7;
+    arrayInDays.push(yesterDay.clone());
+    for (var iDayValue = 1; iDayValue < dayLength; iDayValue++ ){
+      var date = yesterDay.subtract(1 , 'days').add(iDayValue, 'hours');
+      arrayInDays.push(date.clone());
+    }
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
       userEndObjet = faker.random.arrayElement(allGateway)
@@ -76,14 +102,37 @@ module.exports = {
       //faker.time.recent(7) is a timestamp
 
       if (iValue < 301) {
-        var currentTime = faker.date.recent(5);
+        // var currentTime = faker.date.recent(5);
+        //************************************************* */
+        //Select some date since current time to seven days before
+        //*********************************************************** */
+        var currentTime =faker.random.arrayElement(arrayInDays)
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
+        console.log("Date day ", currentTime.toLocaleString('en-US', {weekday:'long'}));
+  //currentTime.toLocaleString('en-US', {weekday:'long'}),
+
+        var toDayCurrentTime = faker.random.arrayElement(arrayToDayYestDay);
+        var dateObjetToday = new Date(toDayCurrentTime);
+        var timestampToDay = dateObjet.getTime();
 
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: currentTime,
-          createDay: currentTime.toLocaleString('en-US', {weekday:'long'}),
+          fecha: dateObjet,
+          createDay: currentTime.format('dddd'),
+          idioma: 'ingles',
+          polaridad: 'positiva',
+          userend: userEndObjet.id,
+          campaign: campOgjet.id
+        }
+
+        await Opinion.create(newOpinion)
+
+
+        newOpinion = {
+          texto: faker.lorem.sentences(6, ''),
+          fecha: dateObjetToday,
+          createDay: toDayCurrentTime.format('dddd'),
           idioma: 'ingles',
           polaridad: 'positiva',
           userend: userEndObjet.id,
@@ -120,13 +169,31 @@ module.exports = {
       campOgjet = faker.random.arrayElement(campAll)
 
       if (iValue < 301) {
-        var currentTime = faker.date.recent(7);
+        var currentTime = faker.random.arrayElement(arrayInDays)
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
+
+        var toDayCurrentTime = faker.random.arrayElement(arrayToDayYestDay);
+        var dateObjetToday = new Date(toDayCurrentTime);
+        var timestampToDay = dateObjet.getTime();
+
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: currentTime,
-          createDay: currentTime.toLocaleString('en-US', {weekday:'long'}),
+          fecha: dateObjet,
+          createDay:  currentTime.format('dddd'),
+          idioma: 'ingles',
+          polaridad: 'negativa',
+          userend: userEndObjet.id,
+          campaign: campOgjet.id
+        }
+
+        await Opinion.create(newOpinion)
+
+
+        newOpinion = {
+          texto: faker.lorem.sentences(6, ''),
+          fecha: dateObjetToday,
+          createDay: toDayCurrentTime.format('dddd'),
           idioma: 'ingles',
           polaridad: 'negativa',
           userend: userEndObjet.id,
@@ -155,20 +222,38 @@ module.exports = {
         await AspectoOpinion.create(newAspect)
 
       }
+
     }
+
     for (var iValue = 1; iValue < registerSize2; iValue++) {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
       if (iValue < 71) {
 
-        var currentTime = faker.date.recent(4);
+        var currentTime = faker.random.arrayElement(arrayInDays)
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
 
+        var toDayCurrentTime = faker.random.arrayElement(arrayToDayYestDay);
+        var dateObjetToday = new Date(toDayCurrentTime);
+        var timestampToDay = dateObjet.getTime();
+
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: currentTime,
-          createDay: currentTime.toLocaleString('en-US', {weekday:'long'}),
+          fecha: dateObjet,
+          createDay: currentTime.format('dddd'),
+          idioma: 'ingles',
+          polaridad: 'neutra',
+          userend: userEndObjet.id,
+          campaign: campOgjet.id
+        }
+
+        await Opinion.create(newOpinion)
+
+        newOpinion = {
+          texto: faker.lorem.sentences(6, ''),
+          fecha: dateObjetToday,
+          createDay: toDayCurrentTime.format('dddd'),
           idioma: 'ingles',
           polaridad: 'neutra',
           userend: userEndObjet.id,
@@ -233,6 +318,7 @@ module.exports = {
          await Pregunta.create(newPregunta)
        }*/
     }
+
     return exits.success("OK");
   }
 };

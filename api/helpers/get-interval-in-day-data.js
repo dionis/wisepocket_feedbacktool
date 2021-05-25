@@ -57,7 +57,9 @@ module.exports = {
     //2- Find yesterday date
     hourInDayInterval.push(initData)
     console.log("Find yesterday date ", inputs.language)
-    
+    console.log("Find campaing id ",  inputs.camapingid)
+
+
     let language = inputs.language;
 
      //1- Compute all interval between init and interval

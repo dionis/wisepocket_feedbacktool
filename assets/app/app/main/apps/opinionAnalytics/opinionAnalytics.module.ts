@@ -14,12 +14,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FuseSharedModule } from '../../../../@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '../../../../@fuse/components';
 
-import { OpinionAnalyticsComponent } from './opinionAnalytics.component';
+import { OpinionAnalyticsComponent } from '../opinionAnalytics/opinionAnalytics.component';
 import { OpinionService } from '../../../services/opinion-analizer.service';
-import { OpinionAnalyticsListComponent } from './opinionAnalytics-list/opinionAnalytics-list';
-import { OpinionAnalyticsSelectedBarComponent } from './selected-bar/selected-bar.component';
-import { OpinionAnalyticsMainSidebarComponent } from './sidebars/main/main.component';
-import { OpinionAnalyticsFormDialogComponent } from './opinionAnalytics-form/opinionAnalytics-form.component';
+import { OpinionAnalyticsListComponent } from '../opinionAnalytics/opinionAnalytics-list/opinionAnalytics-list';
+import { OpinionAnalyticsSelectedBarComponent } from '../opinionAnalytics/selected-bar/selected-bar.component';
+import { OpinionAnalyticsMainSidebarComponent } from '../opinionAnalytics/sidebars/main/main.component';
+import { OpinionAnalyticsFormDialogComponent } from '../opinionAnalytics/opinionAnalytics-form/opinionAnalytics-form.component';
 
 
 const routes: Routes = [

@@ -8,7 +8,7 @@ import { fuseAnimations } from '../../../../@fuse/animations';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
 
 import { OpinionService } from '../../../services/opinion-analizer.service'
-import { OpinionAnalyticsFormDialogComponent } from './opinionAnalytics-form/opinionAnalytics-form.component';
+import { OpinionAnalyticsFormDialogComponent } from '../opinionAnalytics/opinionAnalytics-form/opinionAnalytics-form.component'
 
 @Component({
     selector     : 'opinions',

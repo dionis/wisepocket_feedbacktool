@@ -112,7 +112,7 @@ export class ContactsComponent implements OnInit, OnDestroy
             }
         });
 
-        this.dialogRef.afterClosed()
+        /*this.dialogRef.afterClosed()
             .subscribe((response: FormGroup) => {
                 if ( !response )
                 {
@@ -120,18 +120,10 @@ export class ContactsComponent implements OnInit, OnDestroy
                 }
 
                 this._contactsService.updateContact(response.getRawValue());
-            });
+            });*/
     }
 
-    /**
-     * Toggle the sidebar
-     *
-     * @param name
-     */
-    toggleSidebar(name): void
-    {
-        this._fuseSidebarService.getSidebar(name).toggleOpen();
-    }
+    
 
 
 }

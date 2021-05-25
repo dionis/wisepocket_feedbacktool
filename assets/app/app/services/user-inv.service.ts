@@ -20,24 +20,13 @@ export class UserInvService {
     return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create?id=' + userID, invitado)
 
   }
-  /*  .pipe(map((responseData: any) => {
 
-        if (responseData.data) {
-          console.log(responseData.data.name)
-          this.invitado.id = responseData.data.id;
-          this.invitado.nombre = responseData.data.nombre;
-          this.invitado.correo = responseData.data.correo;
-          this.invitado.telefono = responseData.data.telefono;
-          this.invitado.isAdmin = responseData.data.isAdmin;
-          this.invitado.acceso = responseData.data.acceso;
-          this.invitado.invitadoBY = responseData.data.invitadoBY;
-          console.log("********* Current UserINVITADO data *******")
-          console.log(this.invitado);
+  getInvitados(): Observable<any> {
+    let userID = this.user.getMyUser().id
+    console.log(userID);
+    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/getInvXUserChief?id=' + userID)
 
-          return this.invitado;
-        } else {
-          return responseData;
-        }
-      }))*/
+  }
+
 }
 

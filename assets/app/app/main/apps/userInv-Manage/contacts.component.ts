@@ -7,7 +7,7 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
 
-
+import { UserInvService } from '../../../services/user-inv.service';
 import { ContactsService } from '../../../../app/main/apps/userInv-Manage/contacts.service';
 import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component';
 
@@ -37,6 +37,7 @@ export class ContactsComponent implements OnInit, OnDestroy
      * @param {MatDialog} _matDialog
      */
     constructor(
+        private invService: UserInvService,
         private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
@@ -64,6 +65,10 @@ export class ContactsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this.invService.getInvitados().subscribe(data =>{
+            console.log(data);
+            
+        })
         this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
@@ -127,4 +132,6 @@ export class ContactsComponent implements OnInit, OnDestroy
     {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
+
+
 }

@@ -14,31 +14,30 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FuseSharedModule } from '../../../../@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '../../../../@fuse/components';
 
-import { OpinionAnalyticsComponent } from './opinionAnalytics.component';
-import { OpinionService } from '../../../services/opinion-analizer.service';
-import { OpinionAnalyticsListComponent } from './opinionAnalytics-list/opinionAnalytics-list';
-import { OpinionAnalyticsSelectedBarComponent } from './selected-bar/selected-bar.component';
-import { OpinionAnalyticsMainSidebarComponent } from './sidebars/main/main.component';
-import { OpinionAnalyticsFormDialogComponent } from './opinionAnalytics-form/opinionAnalytics-form.component';
-
+import { ContactsComponent } from '../../../../app/main/apps/contacts/contacts.component';
+import { ContactsService } from '../../../../app/main/apps/contacts/contacts.service';
+import { ContactsContactListComponent } from '../../../../app/main/apps/contacts/contact-list/contact-list.component';
+import { ContactsSelectedBarComponent } from '../../../../app/main/apps/contacts/selected-bar/selected-bar.component';
+import { ContactsMainSidebarComponent } from '../../../../app/main/apps/contacts/sidebars/main/main.component';
+import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/contacts/contact-form/contact-form.component';
 
 const routes: Routes = [
     {
         path     : '**',
-        component: OpinionAnalyticsComponent,
+        component: ContactsComponent,
         resolve  : {
-            opinions: OpinionService
+            contacts: ContactsService
         }
     }
 ];
 
 @NgModule({
     declarations   : [
-        OpinionAnalyticsComponent,
-        OpinionAnalyticsListComponent,
-        OpinionAnalyticsSelectedBarComponent,
-        OpinionAnalyticsMainSidebarComponent,
-        OpinionAnalyticsFormDialogComponent
+        ContactsComponent,
+        ContactsContactListComponent,
+        ContactsSelectedBarComponent,
+        ContactsMainSidebarComponent,
+        ContactsContactFormDialogComponent
     ],
     imports        : [
         RouterModule.forChild(routes),
@@ -59,12 +58,12 @@ const routes: Routes = [
         FuseSidebarModule
     ],
     providers      : [
-        OpinionService
+        ContactsService
     ],
     entryComponents: [
-        OpinionAnalyticsFormDialogComponent
+        ContactsContactFormDialogComponent
     ]
 })
-export class OpinionAnalyticsModule
+export class UserInvModule
 {
 }

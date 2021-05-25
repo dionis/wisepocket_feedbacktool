@@ -7,20 +7,21 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar.service';
 
-import { OpinionService } from '../../../services/opinion-analizer.service'
-import { OpinionAnalyticsFormDialogComponent } from './opinionAnalytics-form/opinionAnalytics-form.component';
+
+import { ContactsService } from '../../../../app/main/apps/contacts/contacts.service';
+import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/contacts/contact-form/contact-form.component';
 
 @Component({
-    selector     : 'opinions',
-    templateUrl  : './opinionAnalytics.component.html',
-    styleUrls    : ['./opinionAnalytics.component.scss'],
+    selector     : 'contacts',
+    templateUrl  : './contacts.component.html',
+    styleUrls    : ['./contacts.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class OpinionAnalyticsComponent implements OnInit, OnDestroy
+export class ContactsComponent implements OnInit, OnDestroy
 {
     dialogRef: any;
-    hasSelectedOpinions: boolean;
+    hasSelectedContacts: boolean;
     searchInput: FormControl;
     ListaCampanaService: any;
 
@@ -31,12 +32,12 @@ export class OpinionAnalyticsComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {OpinionService} _opinionService
+     * @param {ContactsService} _contactsService
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _opinionService: OpinionService,
+        private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
         //public campaingService: CampaingService
@@ -63,10 +64,10 @@ export class OpinionAnalyticsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._opinionService.onSelectedOpinionsChanged
+        this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
-                this.hasSelectedOpinions = selectedContacts.length > 0;
+                this.hasSelectedContacts = selectedContacts.length > 0;
             });
 
         this.searchInput.valueChanges
@@ -76,18 +77,8 @@ export class OpinionAnalyticsComponent implements OnInit, OnDestroy
                 distinctUntilChanged()
             )
             .subscribe(searchText => {
-                this._opinionService.onSearchTextChanged.next(searchText);
-            });
-
-        /*this.campaingService.getCampaignbyUser().then(res=>{
-            this.ListaCampanaService=res;
-              console.log(res)
-            })
-            .catch(err=>{
-                console.log("Error", Error);
-<<<<<<< HEAD
-            }); */
-
+                this._contactsService.onSearchTextChanged.next(searchText);
+            });   
     }
 
     /**
@@ -107,10 +98,10 @@ export class OpinionAnalyticsComponent implements OnInit, OnDestroy
     /**
      * New contact
      */
-    newOpinion(): void
+    newContact(): void
     {
-        this.dialogRef = this._matDialog.open(OpinionAnalyticsFormDialogComponent, {
-            panelClass: 'opinionsAnalytics-form-dialog',
+        this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
+            panelClass: 'contact-form-dialog',
             data      : {
                 action: 'new'
             }
@@ -123,7 +114,7 @@ export class OpinionAnalyticsComponent implements OnInit, OnDestroy
                     return;
                 }
 
-                this._opinionService.updateOpinion(response.getRawValue());
+                this._contactsService.updateContact(response.getRawValue());
             });
     }
 

@@ -103,13 +103,13 @@ export const navigation: FuseNavigation[] = [
             type : 'item',
             url : '/apps/opinionMailbox'
         },
-        // {
-        //     id:'test2',
-        //     title:'Prueba del OpinionAnalytics',
-        //     translate:'Prueba del OpinionAnalytics',
-        //     type: 'item',
-        //     url: '/apps/opinionAnalytics'
-        // },
+         {
+             id:'userInv',
+             title:'Administrar Invitados',
+             translate:'Manage Guest',
+             type: 'item',
+             url: '/apps/userInv-Administrar'
+         },
         // {
         //     id:'test3',
         //     title:'Prueba del AnalyticsPolarity',

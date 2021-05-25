@@ -62,6 +62,10 @@ const routes = [
         path: 'campaign',
         loadChildren: () => import('../apps/campaign/campaign.module').then(m => m.CampaignModule)
     },
+    {
+        path: 'userInvManage',
+        loadChildren: () => import('../apps/userInv-Manage/contacts.module').then(m =>m.ContactsModule)
+    },
 
     /*{
         path: 'opinionAnalytics',

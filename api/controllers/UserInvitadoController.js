@@ -160,6 +160,20 @@ module.exports = {
       });
   },
 
+  getInvitadoById: (req, res) => {
+    UserInvitado.findOne({ id: req.param('id') })
+        .then(user => {
+            return res.send({
+                'data': user
+            });
+        })
+        .catch(err => {
+            return res.sendStatus(500, {
+                'error': err
+            });
+        })
+},
+
   updateInfo: async (req, res) => {
     UserInvitado.updateOne(
       {

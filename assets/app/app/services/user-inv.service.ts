@@ -12,9 +12,11 @@ import { UserInv } from '../models/userInv.model';
 })
 export class UserInvService {
   onContactsChanged: BehaviorSubject<any>;
+  onUserDataChanged: BehaviorSubject<any>;
   contacts: UserInv[];
   constructor(private _http: HttpClient, private user: UserService,) {
     this.onContactsChanged = new BehaviorSubject([]);
+    this.onUserDataChanged = new BehaviorSubject([]);
   }
 
   addInvUser(invitado): Observable<any> {
@@ -32,11 +34,34 @@ export class UserInvService {
   }
 
   getUsers(dataInv) {
-   
+
     this.contacts = dataInv.map(data => {
       return new UserInv(data);
     })
     this.onContactsChanged.next(this.contacts);
+  }
+
+  updateInfo(invitado): Observable<any> {
+
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateInfo', invitado)
+
+  }
+
+  deleteUserInv(invitado): Observable<any> {
+
+    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado', invitado)
+
+  }
+
+  getInvitadXID(invitado): Observable<any> {
+
+    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/getInvitadoById', invitado)/*.pipe(map((responseData: any)=>{
+      this.contacts = responseData
+      this.onContactsChanged.next(this.contacts);
+      console.log(this.contacts);
+      
+    }))*/
+
   }
 }
 

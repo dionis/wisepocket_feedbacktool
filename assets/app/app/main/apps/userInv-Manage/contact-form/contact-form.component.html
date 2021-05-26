@@ -20,6 +20,7 @@
         [src]="'assets/images/Icons-Añadidos/user-192.png'"
         class="avatar contact-avatar huge m-0"
       />
+      <div *ngIf="action === 'edit'" class="contact-name mt-8">{{contact.nombre}}</div>
     </mat-toolbar-row>
   </mat-toolbar>
 
@@ -141,7 +142,7 @@
     <button
       *ngIf="action != 'edit'"
       mat-raised-button
-      class="save-product-button"
+      class="save-button"
       [disabled]="invUserForm.invalid"
       (click)="onSave()"
     >

@@ -119,6 +119,8 @@ module.exports.routes = {
   "GET /userInvitado/getInvitados": "UserInvitadoController.getInvitados",
   "GET /userInvitado/getInvXUserChief":
     "UserInvitadoController.getInvXUserChief",
+    "GET /userInvitado/getInvitadoById":
+    "UserInvitadoController.getInvitadoById",
 
   //PATCH
   "PATCH /userInvitado/updateInfo": "UserInvitadoController.updateInfo",

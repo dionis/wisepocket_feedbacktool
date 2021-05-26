@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '../../../../../@fuse/animations';
 import { FuseConfirmDialogComponent } from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
@@ -50,11 +50,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     constructor(
         private _contactsService: UserInvService,
         public _matDialog: MatDialog,
-        private _pruebaServOpin: OpinionService,
-        private _prueba2ServOpin: OpinionService,
-        private _prueba3ServOpin: OpinionService
-        //  public campaingService: CampaingService,
-        // public campaingModel: CampaingModel
+
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -78,6 +74,11 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
         this.dataSource = new FilesDataSource(this._contactsService);
         console.log(this.dataSource);
+        this.dataSource.connect().subscribe(data => {
+            console.log(data);
+            //console.log(this._contactsService.getInvitadXID(data[0].id))
+
+        })
 
         this._contactsService.onContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -156,7 +157,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                      */
                     case 'save':
 
-                        // this._contactsService.updateContact(formData.getRawValue());
+                        this._contactsService.updateInfo(formData.getRawValue());
 
                         break;
                     /**
@@ -164,7 +165,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                      */
                     case 'delete':
 
-                        this.deleteContact(contact);
+                        this._contactsService.deleteUserInv(contact.id);
 
                         break;
                 }

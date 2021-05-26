@@ -39,7 +39,7 @@ export class ContactsContactFormDialogComponent {
 
         if (this.action === 'edit') {
             this.dialogTitle = 'Editar Invitado';
-
+            this.contact = _data.contact;
         }
         else {
             this.dialogTitle = 'Nuevo Invitado';
@@ -50,7 +50,7 @@ export class ContactsContactFormDialogComponent {
             telefono: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
             direccion: ['', Validators.required],
         });
-         
+        // this.contactForm = this.createContactForm();
     }
 
     onSave() {
@@ -58,36 +58,40 @@ export class ContactsContactFormDialogComponent {
         console.log(data);
         this.invService.addInvUser(data).subscribe(res => {
             if (res.autorizado) {
-                if (res.success)
+                if (res.success) {
                     swal.fire('Invitado registrado')
+                    this.createContactForm();
+                }
                 else {
                     swal.fire('Este usuario ya está registrado')
                 }
-            } else{
+            } else {
                 swal.fire('No está autorizado')
             }
 
         })
-        // -----------------------------------------------------------------------------------------------------
-        // @ Public methods
-        // -----------------------------------------------------------------------------------------------------
-
-        /**
-         * Create contact form
-         *
-         * @returns {FormGroup}
-         */
-        /*createContactForm(): FormGroup {
-            return this._formBuilder.group({
-                id: [this.contact.id],
-                nombre: [this.contact.nombre],
-                correo: [this.contact.correo],
-                telefono: [this.contact.telefono],
-                direccion: [this.contact.direccion],
-                acceso: [this.contact.acceso]
-            });
-        }*/
     }
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Create contact form
+     *
+     * @returns {FormGroup}
+     */
+    createContactForm(): FormGroup {
+        return this._formBuilder.group({
+            id: [this.contact.id],
+            nombre: [this.contact.nombre],
+            correo: [this.contact.correo],
+            telefono: [this.contact.telefono],
+            direccion: [this.contact.direccion],
+            acceso: [this.contact.acceso],
+
+        });
+    }
+
 }
 
 

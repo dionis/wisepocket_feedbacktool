@@ -39,7 +39,7 @@ export class ContactsContactFormDialogComponent {
 
         if (this.action === 'edit') {
             this.dialogTitle = 'Editar Invitado';
-
+            this.contact = _data.contact;
         }
         else {
             this.dialogTitle = 'Nuevo Invitado';
@@ -60,6 +60,7 @@ export class ContactsContactFormDialogComponent {
 
             if (res.success && res.autorizado) {
                 swal.fire('Invitado registrado')
+                this.createContactForm();
             }
             else if (res.success === false) {
                 swal.fire('Este usuario ya está registrado')
@@ -79,7 +80,7 @@ export class ContactsContactFormDialogComponent {
      *
      * @returns {FormGroup}
      */
-    /*createContactForm(): FormGroup {
+    createContactForm(): FormGroup {
         return this._formBuilder.group({
             id: [this.contact.id],
             nombre: [this.contact.nombre],
@@ -89,7 +90,7 @@ export class ContactsContactFormDialogComponent {
             acceso: [this.contact.acceso],
 
         });
-    }*/
+    }
 
 }
 

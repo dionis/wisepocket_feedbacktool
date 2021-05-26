@@ -96,6 +96,7 @@ export class UserService {
           this.user.phone = responseData.data.phone;
           this.user.organization = responseData.data.organization;
           this.user.cargo = responseData.data.cargo;
+          this.user.isAdmin = responseData.data.isAdmin;
           console.log("********* Current User data *******")
           console.log(this.user);
 

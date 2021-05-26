@@ -5,6 +5,7 @@ export class User{
     phone:number;
     organization: string;
     cargo:string;
+    isAdmin:boolean
 
     constructor(){}
 }

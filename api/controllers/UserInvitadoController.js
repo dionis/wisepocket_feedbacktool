@@ -4,8 +4,8 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
- var bcrypt = require('bcrypt');
- var jwt = require('jsonwebtoken');
+var bcrypt = require("bcrypt");
+var jwt = require("jsonwebtoken");
 module.exports = {
   //requiere User_ID, id del usuario admin que lo invito
   create: async (req, res) => {
@@ -199,7 +199,7 @@ module.exports = {
 
   updatePass: async (req, res) => {
     let salt = await bcrypt.genSalt(10);
-    let hashpass = await bcrypt.hash(req.param('password'), salt);
+    let hashpass = await bcrypt.hash(req.param("password"), salt);
     UserInvitado.updateOne(
       {
         id: req.param("id"),

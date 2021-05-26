@@ -14,41 +14,30 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FuseSharedModule } from '../../../../@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '../../../../@fuse/components';
 
-import { CampaignComponent } from '../../../../app/main/apps/campaign/campaign.component';
-import { CampaignService } from '../../../services/campaign.service';
-import { CampaignFormDialogComponent } from './campaign-form/campaign-form.component';
-//import { CampaignListComponent } from '../../../../app/main/apps/campaign/campaign-list/campaign-list.component';
-import { CampaignSelectedBarComponent } from '../../../../app/main/apps/campaign/selected-bar/selected-bar.component';
-import { CampaignMainSidebarComponent } from '../../../../app/main/apps/campaign/sidebars/main/main.component';
-import {ListCampComponent} from '../campaign/list-camp/list-camp.component'
-import { TranslateModule } from '@ngx-translate/core';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
+import { ContactsComponent } from '../../../../app/main/apps/userInv-Manage/contacts.component';
+import { ContactsService } from '../../../../app/main/apps/userInv-Manage/contacts.service';
+import { ContactsContactListComponent } from '../../../../app/main/apps/userInv-Manage/contact-list/contact-list.component';
+import { ContactsSelectedBarComponent } from '../../../../app/main/apps/userInv-Manage/selected-bar/selected-bar.component';
+import { ContactsMainSidebarComponent } from '../../../../app/main/apps/userInv-Manage/sidebars/main/main.component';
+import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component';
 
 const routes: Routes = [
-    
-    {
-        path     : 'myCampaigns',
-        component: ListCampComponent,
-    },
     {
         path     : '**',
-        component: CampaignComponent,
+        component: ContactsComponent,
         resolve  : {
-            campaigns: CampaignService
+            contacts: ContactsService
         }
-        
-    },
+    }
 ];
 
 @NgModule({
     declarations   : [
-        CampaignComponent,
-        CampaignFormDialogComponent,
-        CampaignMainSidebarComponent,
-        CampaignSelectedBarComponent, 
-        ListCampComponent
-            
+        ContactsComponent,
+        ContactsContactListComponent,
+        ContactsSelectedBarComponent,
+        ContactsMainSidebarComponent,
+        ContactsContactFormDialogComponent
     ],
     imports        : [
         RouterModule.forChild(routes),
@@ -63,21 +52,18 @@ const routes: Routes = [
         MatRippleModule,
         MatTableModule,
         MatToolbarModule,
-        MatPaginatorModule,
-        MatSortModule,
 
         FuseSharedModule,
         FuseConfirmDialogModule,
-        FuseSidebarModule,
-        TranslateModule,
+        FuseSidebarModule
     ],
     providers      : [
-        CampaignService
+        ContactsService
     ],
     entryComponents: [
-        CampaignFormDialogComponent
+        ContactsContactFormDialogComponent
     ]
 })
-export class CampaignModule
+export class ContactsModule
 {
 }

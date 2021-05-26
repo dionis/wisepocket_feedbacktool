@@ -86,7 +86,7 @@ module.exports = {
     campAll = await Campaign.find({})
 
 
-    registerSize = 200
+    registerSize = 300
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
 

@@ -14,7 +14,7 @@ export const navigation: FuseNavigation[] = [
                 translate: 'NAV.CampaignList.TITLE',
                 type: 'item',
                 icon: '',
-                url: '/apps/e-commerce/products',
+                url: '/apps/campaign/myCampaigns',
             }
         ]
     },
@@ -103,6 +103,13 @@ export const navigation: FuseNavigation[] = [
             type : 'item',
             url : '/apps/opinionMailbox'
         },
+         {
+            id    :'userInv',
+            title : 'Administrar Invitados',
+            translate : '',
+            type : 'item',
+            url : '/apps/userInvManage'
+        },
         // {
         //     id:'test2',
         //     title:'Prueba del OpinionAnalytics',
@@ -124,13 +131,13 @@ export const navigation: FuseNavigation[] = [
         //     type: 'item',
         //     url: '/apps/analyticsDate'
         // },
-        {
-            id:'test5',
-            title:'Prueba del Campaign',
-            translate:'Prueba del Campaign',
-            type: 'item',
-            url: '/apps/campaign'
-        },
+        // {
+        //     id:'test5',
+        //     title:'Prueba del Campaign',
+        //     translate:'Prueba del Campaign',
+        //     type: 'item',
+        //     url: '/apps/campaign'
+        // },
         {
           id:'test6',
           title:'Prueba de Contactos',

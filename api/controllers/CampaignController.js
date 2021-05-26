@@ -118,27 +118,70 @@ module.exports = {
     },
 
     getCampaignbyUser: async (req, res) => {
-        if (!req.param('id')) {
-            return res.sendStatus({
-                'error': 'User ID no encontrado en el Request'
-            })
-        }
-        const page = req.param('page')
-        let userID = await User.findOne({ id: req.param('id') })
-        await Campaign.find({
-            where: { userChief: userID.id  },
-        }).paginate(
-            page,
-            5
-        ).then(data => {
-                return res.send({
-                    'message': 'Lista de tus Campañas',
-                    'data': data
+        const page = req.param('page');
+        const limit  = Number(req.param('limit'));
+        const sortCriteria  = req.param('criteria');
+        const filter = req.param('filter');
+        const token = req.header('Authorization').split('Bearer ')[1];
+        sails.log.debug(limit);
+        await jwt.verify(token,'hjghdvdfjvnishvishr4oo', async (err,payload)=>{
+            if(err) return res.status(500).send({'error': err});
+            if(!filter || filter===''){
+                await Campaign.find({
+                    userChief: payload._id,
+                    })
+                  .sort(`${sortCriteria?sortCriteria:'id ASC'}`)
+                  .paginate(
+                    page?page:'',
+                    limit?limit:99999999)
+                .then(data => {
+                        return res.send({
+                            'message': 'Lista de tus Campañas',
+                            'data': data,
+                            'count': data.length
+    
+                        })
+                    })
+                .catch(err => {
+                    return res.sendStatus(500);
+                });
+              }else{
+                await Campaign.find({
+                    userChief: payload._id,
+                  })
+                .where({
+                  or:[
+                    { nombre: { startsWith: filter } },
+                    { contanctoTelefono: { startsWith: filter } },
+                    { direccionPostal: { startsWith: filter } },
+                    { contactoTelegram: { startsWith: filter } },
+                    { contactoFacebook: { startsWith: filter } },
+                    { contactoWhatsapp: { startsWith: filter } }
+                  ]
                 })
-            })
-            .catch(err => {
-                return res.sendStatus(500);
-            })
+                .sort(`${sortCriteria?sortCriteria:'id ASC'}`)
+                .paginate(
+                  page?page:'',
+                  limit?limit:99999999)
+                .then(campaigns => {
+                  return res.send({
+                    'success': true,
+                    'message': 'Records Fetched',
+                    //'files': images,
+                    'data': campaigns,
+                    'count': campaigns.length
+                  })
+                })
+                .catch(err=>{
+                  return res.status(500).send({'error': err});
+                });
+              }
+    
+        })
+        //const page = req.param('page')
+        //let user = await User.findOne({ id: req.param('id') })
+        
+       
 
         // User.findOne(req.param('_id'), (err,user)=>{
         //     if(err){
@@ -161,6 +204,27 @@ module.exports = {
         //     })
         // })
 
+    },
+    countUserCampaigns: async (req,res)=>{
+        const token = req.header('Authorization').split('Bearer ')[1];
+        await jwt.verify(token,'hjghdvdfjvnishvishr4oo', async (err,payload)=>{
+            if(err) return res.status(500).send({'error': err});
+            await Campaign.count({
+            where: { userChief: payload._id},
+            })
+            .then(result => {
+            return res.send({
+                'success': true,
+                'message': 'Records Counted',
+                //'files': images,
+                'data': result
+            })
+            })
+            .catch(err=>{
+            return res.status(500).send({'error': err});
+            });
+
+        });
     }
 };
 

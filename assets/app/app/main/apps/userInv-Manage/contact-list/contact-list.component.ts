@@ -1,5 +1,4 @@
-
-import { Campaign } from '../../../../models/campaing.model';
+//import { Campaing } from '../../../../models/campaing.model';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -10,41 +9,33 @@ import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../../@fuse/animations';
 import { FuseConfirmDialogComponent } from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
 
-import { CampaignFormDialogComponent } from '../../../../../app/main/apps/campaign/campaign-form/campaign-form.component';
-import {CampaignService} from '../../../../services/campaign.service';
+import { ContactsService } from '../../../../../app/main/apps/userInv-Manage/contacts.service';
+import { ContactsContactFormDialogComponent } from '../../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component';
+import { OpinionService } from '../../../../services/opinion-analizer.service';
+import { OpinionTest } from '../../../../models/opinionTest.model';
+//import {CampaingService} from '../../../../services/campaing.service';
 
 
 @Component({
-    selector     : 'campaigns-campaign-list',
-    templateUrl  : './campaign-list.component.html',
-    styleUrls    : ['./campaign-list.component.scss'],
+    selector: 'contacts-contact-list',
+    templateUrl: './contact-list.component.html',
+    styleUrls: ['./contact-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations
 })
-export class CampaignListComponent implements OnInit, OnDestroy
-{
+export class ContactsContactListComponent implements OnInit, OnDestroy {
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
-
-    campaigns: Campaign;
-    camp: any;
+    
+    contacts: any;
+    user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = 
-    ['checkbox', 
-    'avatar', 
-    'name', 
-    'date',
-    'phone', 
-    'jobTitle',
-    'facebook',
-    'telegram',
-    'whatsapp', 
-    'buttons'];
-    selectedCampaigns: any[];
+    displayedColumns = ['checkbox', 'avatar', 'name', 'email', 'phone', 'jobTitle', 'buttons'];
+    selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    //ListaCampanaService: any;
+    ListaCampanaService: any;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -52,16 +43,18 @@ export class CampaignListComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {CampaignService} _campaignService
+     * @param {ContactsService} _contactsService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _campaignService: CampaignService,
+        private _contactsService: ContactsService,
         public _matDialog: MatDialog,
-       
-       // public campaingModel: CampaingModel
-    )
-    {
+        private _pruebaServOpin: OpinionService,
+        private _prueba2ServOpin: OpinionService,
+        private _prueba3ServOpin: OpinionService
+        //  public campaingService: CampaingService,
+        // public campaingModel: CampaingModel
+    ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -73,54 +66,52 @@ export class CampaignListComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
-        this.dataSource = new FilesDataSource(this._campaignService);
+    ngOnInit(): void {
+        
 
-        this._campaignService.onCampaignsChanged
+        this.dataSource = new FilesDataSource(this._contactsService);
+
+        this._contactsService.onContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(campaigns => {
-                this.campaigns = campaigns;
+            .subscribe(contacts => {
+                this.contacts = contacts;
 
                 this.checkboxes = {};
-                campaigns.map(campaigns => {
-                    this.checkboxes[campaigns.nombre] = false;
+                contacts.map(contact => {
+                    this.checkboxes[contact.id] = false;
                 });
             });
 
-        this._campaignService.onSelectedCampaignsChanged
+        this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedCampaigns => {
-                for ( const nombre in this.checkboxes )
-                {
-                    if ( !this.checkboxes.hasOwnProperty(nombre) )
-                    {
+            .subscribe(selectedContacts => {
+                for (const id in this.checkboxes) {
+                    if (!this.checkboxes.hasOwnProperty(id)) {
                         continue;
                     }
 
-                    this.checkboxes[nombre] = this.selectedCampaigns.includes(nombre);
+                    this.checkboxes[id] = selectedContacts.includes(id);
                 }
-                this.selectedCampaigns = this.selectedCampaigns;
+                this.selectedContacts = selectedContacts;
             });
 
-        this._campaignService.onCampDataChanged
+        this._contactsService.onUserDataChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(camp => {
-                this.camp = camp;
+            .subscribe(user => {
+                this.user = user;
             });
 
-        this._campaignService.onFilterChanged
+        this._contactsService.onFilterChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this._campaignService.deselectCampaigns();
+                this._contactsService.deselectContacts();
             });
     }
 
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -131,36 +122,33 @@ export class CampaignListComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Edit campaign
+     * Edit contact
      *
-     * @param campaign
+     * @param contact
      */
-    editCampaign(campaign): void
-    {
-        this.dialogRef = this._matDialog.open(CampaignFormDialogComponent, {
-            panelClass: 'campaign-form-dialog',
-            data      : {
-                campaign: campaign,
-                action : 'edit'
+    editContact(contact): void {
+        this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
+            panelClass: 'contact-form-dialog',
+            data: {
+                contact: contact,
+                action: 'edit'
             }
         });
 
         this.dialogRef.afterClosed()
             .subscribe(response => {
-                if ( !response )
-                {
+                if (!response) {
                     return;
                 }
                 const actionType: string = response[0];
                 const formData: FormGroup = response[1];
-                switch ( actionType )
-                {
+                switch (actionType) {
                     /**
                      * Save
                      */
                     case 'save':
 
-                        this._campaignService.updateCampaign(formData.getRawValue());
+                        this._contactsService.updateContact(formData.getRawValue());
 
                         break;
                     /**
@@ -168,7 +156,7 @@ export class CampaignListComponent implements OnInit, OnDestroy
                      */
                     case 'delete':
 
-                        this.deleteCampaign(campaign);
+                        this.deleteContact(contact);
 
                         break;
                 }
@@ -176,10 +164,9 @@ export class CampaignListComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Delete Campaign
+     * Delete Contact
      */
-    deleteCampaign(campaign): void
-    {
+    deleteContact(contact): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
@@ -187,9 +174,8 @@ export class CampaignListComponent implements OnInit, OnDestroy
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            if ( result )
-            {
-                this._campaignService.deleteCampaign(campaign);
+            if (result) {
+                this._contactsService.deleteContact(contact);
             }
             this.confirmDialogRef = null;
         });
@@ -199,30 +185,26 @@ export class CampaignListComponent implements OnInit, OnDestroy
     /**
      * On selected change
      *
-     * @param campaignNombre
+     * @param contactId
      */
-    onSelectedChange(campaignNombre): void
-    {
-        this._campaignService.toggleSelectedCampaign(campaignNombre);
+    onSelectedChange(contactId): void {
+        this._contactsService.toggleSelectedContact(contactId);
     }
 
     /**
      * Toggle star
      *
-     * @param campaignNombre
+     * @param contactId
      */
-    toggleStar(campaignNombre): void
-    {
-        if ( this.camp.starred.includes(campaignNombre) )
-        {
-            this.camp.starred.splice(this.camp.starred.indexOf(campaignNombre), 1);
+    toggleStar(contactId): void {
+        if (this.user.starred.includes(contactId)) {
+            this.user.starred.splice(this.user.starred.indexOf(contactId), 1);
         }
-        else
-        {
-            this.camp.starred.push(campaignNombre);
+        else {
+            this.user.starred.push(contactId);
         }
 
-      //  this._campaignService.updateCampData(this.camp);
+        this._contactsService.updateUserData(this.user);
     }
 }
 
@@ -231,12 +213,11 @@ export class FilesDataSource extends DataSource<any>
     /**
      * Constructor
      *
-     * @param {CampaignService} _campaignService
+     * @param {ContactsService} _contactsService
      */
     constructor(
-        private _campaignService: CampaignService
-    )
-    {
+        private _contactsService: ContactsService
+    ) {
         super();
     }
 
@@ -244,15 +225,13 @@ export class FilesDataSource extends DataSource<any>
      * Connect function called by the table to retrieve one stream containing the data to render.
      * @returns {Observable<any[]>}
      */
-    connect(): Observable<any[]>
-    {
-        return this._campaignService.onCampaignsChanged;
+    connect(): Observable<any[]> {
+        return this._contactsService.onContactsChanged;
     }
 
     /**
      * Disconnect
      */
-    disconnect(): void
-    {
+    disconnect(): void {
     }
 }

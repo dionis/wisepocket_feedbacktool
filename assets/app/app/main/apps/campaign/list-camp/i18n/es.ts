@@ -10,6 +10,9 @@ export const locale = {
             PHONE_CONTACT       : 'Contacto de Telefono',
             POSTAL_CODE         : 'Codigo Postal',
             EMAIL               : 'Correo',
+            FACEBOOK            : 'Facebook',
+            TELEGRAM            : 'Telegram',
+            WHATSAPP            : 'WhatsApp',
             ACTIVE              : 'Activo',
             ITEMS               : 'Articulos por paginas'
         }

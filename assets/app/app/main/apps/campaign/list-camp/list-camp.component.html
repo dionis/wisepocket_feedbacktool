@@ -48,7 +48,8 @@
         <div class="content-card">
 
             <mat-table class="products-table"
-                       #table [dataSource]="dataSource"
+                       #table 
+                       [dataSource]="dataSource"
                        matSort
                        (matSortChange)="sortData($event)"
                        [@animateStagger]="{value:'50'}"
@@ -57,13 +58,13 @@
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
-                    <mat-cell *matCellDef="let product">
-                        <p class="text-truncate">{{product.id}}</p>
+                    <mat-cell *matCellDef="let campaign">
+                        <p class="text-truncate">{{campaign.id}}</p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Icon Column -->
-                <ng-container matColumnDef="logo">
+                <!-- <ng-container matColumnDef="logo">
                     <mat-header-cell *matHeaderCellDef>{{'LIST.ICON' | translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let product">
                         <img class="product-image"
@@ -72,72 +73,77 @@
                         <img *ngIf="product.logo === null"
                              [src]="'assets/images/ecommerce/product-image-placeholder.png'">
                     </mat-cell>
-                </ng-container>
+                </ng-container> -->
                 <!-- Title Column-->
-                <ng-container matColumnDef="titulo">
+                <ng-container matColumnDef="nombre">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LIST.TITLE' | translate}}</mat-header-cell>
-                    <mat-cell *matCellDef="let product">
-                        <p class="text-truncate">{{product.titulo}}</p>
+                    <mat-cell *matCellDef="let campaign">
+                        <p class="text-truncate">{{campaign.nombre}}</p>
                     </mat-cell>
                 </ng-container>
                 <!-- Contanct Phone Column -->
-                <ng-container matColumnDef="phone">
+                <ng-container matColumnDef="contanctoTelefono">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LIST.PHONE_CONTACT' | translate}}</mat-header-cell>
-                    <mat-cell *matCellDef="let product">
-                        <p class="text-truncate">{{product.phone}}</p>
+                    <mat-cell *matCellDef="let campaign">
+                        <p class="text-truncate">{{campaign.contanctoTelefono}}</p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Code Postal Column -->
                 <ng-container matColumnDef="direccionPostal">
                     <mat-header-cell *matHeaderCellDef mat-sort-header >{{'LIST.POSTAL_CODE' | translate}}</mat-header-cell>
-                    <mat-cell *matCellDef="let product">
+                    <mat-cell *matCellDef="let campaign">
                         <p class="category text-truncate">
-                            {{product.direccionPostal}}
+                            {{campaign.direccionPostal}}
                         </p>
                     </mat-cell>
                 </ng-container>
 
-                <!-- Contact Email Column -->
-                <ng-container matColumnDef="contactoEmail">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>{{'LIST.EMAIL' | translate}}</mat-header-cell>
-                    <mat-cell *matCellDef="let product" fxHide fxShow.gt-xs>
+                <!-- Contact Facebook Column -->
+                <ng-container matColumnDef="contactoFacebook">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>{{'LIST.FACEBOOK' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let campaign" fxHide fxShow.gt-xs>
                         <p class="price text-truncate">
-                            {{product.contactoEmail}}
+                            {{campaign.contactoFacebook}}
                         </p>
                     </mat-cell>
                 </ng-container>
 
-                <!-- Quantity Column
-                <ng-container matColumnDef="contactoTelegram">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Telegram</mat-header-cell>
-                    <mat-cell *matCellDef="let product" fxHide fxShow.gt-sm>
-
-                        <span class="quantity-indicator text-truncate"
-                              [ngClass]="{'red-500':product.quantity <= 5, 'amber-500':product.quantity > 5 && product.quantity <= 25,'green-600':product.quantity > 25}">
-                        </span>
-                        <span>
-                            {{product.contactoTelegram}}
-                        </span>
-
+                 <!-- Contact Telegram Column -->
+                 <ng-container matColumnDef="contactoTelegram">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>{{'LIST.TELEGRAM' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let campaign" fxHide fxShow.gt-xs>
+                        <p class="price text-truncate">
+                            {{campaign.contactoTelegram}}
+                        </p>
                     </mat-cell>
-                </ng-container> -->
+                </ng-container>
+
+                 <!-- Contact WhatsApp Column -->
+                 <ng-container matColumnDef="contactoWhatsapp">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>{{'LIST.WHATSAPP' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let campaign" fxHide fxShow.gt-xs>
+                        <p class="price text-truncate">
+                            {{campaign.contactoWhatsapp}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
 
                 <!-- Active Column -->
                 <ng-container matColumnDef="active">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>{{'LIST.ACTIVE' | translate}}</mat-header-cell>
-                    <mat-cell *matCellDef="let product" fxHide fxShow.gt-xs>
-                        <mat-icon *ngIf="product.active" class="active-icon green-600 s-16">check</mat-icon>
-                        <mat-icon *ngIf="!product.active" class="active-icon red-500 s-16">close</mat-icon>
+                    <mat-cell *matCellDef="let campaign" fxHide fxShow.gt-xs>
+                        <mat-icon *ngIf="campaign.active" class="active-icon green-600 s-16">check</mat-icon>
+                        <mat-icon *ngIf="!campaign.active" class="active-icon red-500 s-16">close</mat-icon>
                     </mat-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
 
-                <mat-row *matRowDef="let product; columns: displayedColumns;"
+                <mat-row *matRowDef="let campaign; columns: displayedColumns;"
                          class="product"
                          matRipple
-                         [routerLink]="'/campaigns/campaigns-detail/'+product.id">
+                         [routerLink]="'/campaigns/campaigns-detail/'+campaign.id">
                 </mat-row>
 
             </mat-table>

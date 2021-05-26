@@ -1,6 +1,7 @@
 
 var faker = require('faker');
 const bcrypt = require('bcrypt');
+const { phone } = require('faker');
 
 module.exports = {
 
@@ -54,7 +55,7 @@ module.exports = {
       gateWayArray.push({
         name: faker.name.firstName(),
         email: faker.internet.exampleEmail(faker.name.firstName()),
-        phone: faker.phone.phoneFormats(),
+        phone: faker.phone.phoneNumber("5#######"),
         password: hashpass
 
       })
@@ -75,8 +76,13 @@ module.exports = {
       let campaign = await Campaign.count({ 'userChief': userObjet.id })
 
       if (campaign < 61) {
+        let phone_contact = faker.phone.phoneNumber();
         newCamp = {
           nombre: faker.company.companyName("Test"),
+          contactoFacebook: faker.internet.userName(),
+          contactoTelegram: '@test',
+          contanctoTelefono: phone_contact,
+          contactoWhatsapp: phone_contact,
           fecha: faker.date.recent(7),
           userChief: userObjet.id
         }
@@ -94,7 +100,7 @@ module.exports = {
         newInv = {
           nombre: faker.name.firstName(),
           correo: faker.internet.exampleEmail(faker.name.firstName()),
-          telefono: faker.phone.phoneFormats(),
+          telefono: faker.phone.phoneNumber("5#######"),
           direccion: faker.lorem.sentences(3, ''),
           invitadoBY: userObjet.id
         }

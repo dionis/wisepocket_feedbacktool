@@ -1,3 +1,4 @@
+
 import { UserInvService } from '../../../../services/user-inv.service';
 //import { Campaing } from '../../../../models/campaing.model';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
@@ -14,6 +15,7 @@ import { ContactsService } from '../../../../../app/main/apps/userInv-Manage/con
 import { ContactsContactFormDialogComponent } from '../../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component';
 import { OpinionService } from '../../../../services/opinion-analizer.service';
 import { OpinionTest } from '../../../../models/opinionTest.model';
+import { ChangeDetectorRef } from '@angular/core';
 //import {CampaingService} from '../../../../services/campaing.service';
 
 
@@ -27,6 +29,7 @@ import { OpinionTest } from '../../../../models/opinionTest.model';
 export class ContactsContactListComponent implements OnInit, OnDestroy {
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
+
 
     contacts: any;
     user: any;

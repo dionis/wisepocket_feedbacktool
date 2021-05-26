@@ -15,9 +15,13 @@ contacts-contact-list {
             padding-left: 18px;
         }
 
-        .mat-column-Teléfono {
-            flex: 0 1 64px;
-            padding-left: 25px;
+        .mat-column-Correo {
+            flex: 2 2 0;
+        }
+
+
+        .mat-column-Nombre {
+            flex: 1 0 0;
         }
 
         .mat-column-avatar {

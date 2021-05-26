@@ -22,7 +22,7 @@
 
   <!-- Email Column -->
   <ng-container matColumnDef="Correo">
-    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm
+    <mat-header-cell id="textCorreo" *matHeaderCellDef fxHide fxShow.gt-sm
       >Correo</mat-header-cell
     >
     <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
@@ -38,7 +38,7 @@
       >Phone</mat-header-cell
     >
     <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
-      <p class="phone text-truncate">
+      <p class="Teléfono text-truncate">
         {{ contact.telefono }}
       </p>
     </mat-cell>

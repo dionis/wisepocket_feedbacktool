@@ -1,3 +1,4 @@
+const { variance } = require('d3-array');
 var faker = require('faker');
 var moment = require('moment'); // require
 
@@ -67,7 +68,7 @@ module.exports = {
     console.log("Data to show ", data);
     let dateWithMomentParser = moment().format('YYYY-MM-DD');
     console.log("Date parser ===> " + dateWithMomentParser);
-    let dateToFind =  moment(data, 'YYYY-MM-DD HH:mm a', true);
+    let dateToFind =  moment(data, 'YYYY-MM-DD hh:mm a', true);
 
     //console.log(" Date to find ", dateToFind);
     let yesterDay = dateToFind.clone();
@@ -79,8 +80,42 @@ module.exports = {
     let arrayInDays = [];
     let arrayToDayYestDay = [];
 
+    let hourInDayIntervalToday = [];
+    let hourInDayIntervalYesterday = [];
+
+
+    let intervalInHour = 12;
+    console.log("In function by Interval")
+
+
+    let initDataToday = dateToFind.hour(0)
+    //.format("YYYY-MM-DD HH:mm a");
+    let initDataYesterday = yesterDay.hour(0)
+    //.format("YYYY-MM-DD HH:mm a");
+
     arrayToDayYestDay.push(dateToFind);
     arrayToDayYestDay.push(yesterDayTemp);
+
+    let dateInMoment = initDataToday;
+    hourInDayIntervalToday.push(initDataToday)
+    for ( var i = 0; i < intervalInHour; i++ ){
+       //console.log("Hour interval ", dateToFind)
+       //let dayForSearch = dateToFind.add(2, 'hour').format("YYYY-MM-DD HH:mm a");
+       var dayForSearch = initDataToday.add(faker.random.arrayElement([30,50]),"minutes")
+       //.add(2, 'hour');
+       console.log("Date internval Today ", dayForSearch.format("YYYY-MM-DD hh:mm a"));
+       hourInDayIntervalToday.push(dayForSearch.clone())
+    }
+
+
+    dateInMoment = initDataYesterday;
+    hourInDayIntervalYesterday.push(initDataYesterday)
+    for ( var i = 0; i < intervalInHour; i++ ){
+       var dayForSearch = initDataYesterday.add(faker.random.arrayElement([30,50]),"minutes")
+       //.add(2, 'hour')
+       console.log("Date internval Yesterday ", dayForSearch.format("YYYY-MM-DD hh:mm a"));
+       hourInDayIntervalYesterday.push(dayForSearch.clone())
+    }
 
     let dayLength = 7;
     arrayInDays.push(yesterDay.clone());
@@ -109,10 +144,10 @@ module.exports = {
         var currentTime =faker.random.arrayElement(arrayInDays)
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
-        console.log("Date day ", currentTime.toLocaleString('en-US', {weekday:'long'}));
+        // console.log("Date day ", currentTime.toLocaleString('en-US', {weekday:'long'}));
   //currentTime.toLocaleString('en-US', {weekday:'long'}),
 
-        var toDayCurrentTime = faker.random.arrayElement(arrayToDayYestDay);
+        var toDayCurrentTime = (faker.random.arrayElement([true,false]))? faker.random.arrayElement(hourInDayIntervalToday):faker.random.arrayElement(hourInDayIntervalYesterday);
         var dateObjetToday = new Date(toDayCurrentTime);
         var timestampToDay = dateObjet.getTime();
 
@@ -173,7 +208,7 @@ module.exports = {
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
 
-        var toDayCurrentTime = faker.random.arrayElement(arrayToDayYestDay);
+        var toDayCurrentTime = (faker.random.arrayElement([true,false]))? faker.random.arrayElement(hourInDayIntervalToday):faker.random.arrayElement(hourInDayIntervalYesterday);
         var dateObjetToday = new Date(toDayCurrentTime);
         var timestampToDay = dateObjet.getTime();
 
@@ -234,7 +269,7 @@ module.exports = {
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
 
-        var toDayCurrentTime = faker.random.arrayElement(arrayToDayYestDay);
+        var toDayCurrentTime = (faker.random.arrayElement([true,false]))? faker.random.arrayElement(hourInDayIntervalToday):faker.random.arrayElement(hourInDayIntervalYesterday);
         var dateObjetToday = new Date(toDayCurrentTime);
         var timestampToDay = dateObjet.getTime();
 

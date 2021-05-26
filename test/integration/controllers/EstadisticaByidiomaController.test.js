@@ -54,14 +54,14 @@ describe('EstadisticaByidiomaController.getCantENXDia', function () {
         console.log("<<<--- FIND Campaign BY NAME --->>>", campaign.nombre);
         let data = new Date().toDateString();
         console.log("Data to show ", data);
-        let dateWithMomentParser = moment().format('YYYY-MM-DD HH:mm a');
+        let dateWithMomentParser = moment().format('YYYY-MM-DD hh:mm a');
         console.log("Date parser ===> " + dateWithMomentParser);
 
         Opinion.find({ campaign: zookeepers[0].id }).then(opinions => {
           //console.log(" Find opinions to obtain posible dates");
           let opionObject = faker.random.arrayElement(opinions);
           let dateToFind = opionObject.fecha;
-          //dateToFind = moment(dateToFind).format('YYYY-MM-DD HH:mm a');
+          //dateToFind = moment(dateToFind).format('YYYY-MM-DD hh:mm a');
           //console.log(" Date to find ", dateToFind);
 
           supertest(sails.hooks.http.app)

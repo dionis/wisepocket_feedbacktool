@@ -50,8 +50,8 @@ module.exports = {
     let intervalInHour = 12;
     console.log("In function by Interval")
     let cantDayResult = [];
-    let aDate =  moment(inputs.date,"YYYY-MM-DD HH:mm a");
-    let initData = aDate.hour(12).format("YYYY-MM-DD HH:mm a");
+    let aDate =  moment(inputs.date,"YYYY-MM-DD hh:mm a");
+    let initData = aDate.hour(0).format("YYYY-MM-DD hh:mm a");
 
 
     //2- Find yesterday date
@@ -65,7 +65,7 @@ module.exports = {
      //1- Compute all interval between init and interval
      let dateInMoment = aDate;
      for ( var i = 0; i < intervalInHour; i++ ){
-        let dayForSearch = dateInMoment.add(2, 'hour').format("YYYY-MM-DD HH:mm a");
+        let dayForSearch = dateInMoment.add(2, 'hour').format("YYYY-MM-DD hh:mm a");
         hourInDayInterval.push(dayForSearch)
      }
 
@@ -81,7 +81,7 @@ module.exports = {
      await Promise.all(hourInDayInterval.map(async (item) => {
        console.log("<--- Execute query ---->||| <--- ")
        console.log(" Hour start ", item)
-       let endMoment = moment(item,"YYYY-MM-DD HH:mm a").add(60,"minutes").format("YYYY-MM-DD HH:mm a")
+       let endMoment = moment(item,"YYYY-MM-DD hh:mm a").add(60,"minutes").format("YYYY-MM-DD hh:mm a")
        console.log(" Hour end ", endMoment)
        let opinion =  await Opinion.count({
                  campaign: inputs.camapingid,
@@ -119,15 +119,15 @@ module.exports = {
            opinionnegative:(typeof(opinionNegative) === 'undefined')?0:opinionNegative,
            opinionneutral:(typeof(opinionNeutral) === 'undefined')?0:opinionNeutral,
            date:item,
-           dateName: moment(item,"YYYY-MM-DD HH:mm a").format('dddd'),
-           dateHour: moment(item,"YYYY-MM-DD HH:mm a").format('HH a')
+           dateName: moment(item,"YYYY-MM-DD hh:mm a").format('dddd'),
+           dateHour: moment(item,"YYYY-MM-DD hh:mm a").format('hh a')
          }
         // console.log("Insert object in search ",resultObject );
          cantDayResult.push(resultObject )
 
     }));
 
-      cantDayResult = cantDayResult.sort((a, b) =>moment(a.date,"YYYY-MM-DD HH:mm a").diff(moment(b.date,"YYYY-MM-DD HH:mm a")))
+      cantDayResult = cantDayResult.sort((a, b) =>moment(a.date,"YYYY-MM-DD hh:mm a").diff(moment(b.date,"YYYY-MM-DD hh:mm a")))
 
      // console.log("Data to send ", cantDayResult)
 

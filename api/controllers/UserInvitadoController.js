@@ -4,8 +4,8 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
- var bcrypt = require('bcrypt');
- var jwt = require('jsonwebtoken');
+var bcrypt = require("bcrypt");
+var jwt = require("jsonwebtoken");
 module.exports = {
   //requiere User_ID, id del usuario admin que lo invito
   create: async (req, res) => {
@@ -18,30 +18,38 @@ module.exports = {
       } else {
         console.log("Encontrado");
         userChief = doc;
-        await UserInvitado.create(
-          {
-            nombre: req.param("nombre"),
-            correo: req.param("correo"),
-            telefono: req.param("telefono"),
-            direccion: req.param("direccion"),
-            //isAdmin: req.param("isAdmin"),
-            acceso: req.param("acceso"),
-            invitadoBY: userChief.id,
-          },
-          (err) => {
-            if (err) {
-              return res.send({
-                success: false,
-                message: "Falló la operación",
-              });
-            } else {
-              return res.send({
-                success: true,
-                message: "Invitado registrado con éxito",
-              });
+        if (userChief.isAdmin) {
+          await UserInvitado.create(
+            {
+              nombre: req.param("nombre"),
+              correo: req.param("correo"),
+              telefono: req.param("telefono"),
+              direccion: req.param("direccion"),
+              //isAdmin: req.param("isAdmin"),
+              acceso: req.param("acceso"),
+              invitadoBY: userChief.id,
+            },
+            (err) => {
+              if (err) {
+                return res.send({
+                  success: false,
+                  message: "Falló la operación",
+                });
+              } else {
+                return res.send({
+                  autorizado: true,
+                  success: true,
+                  message: "Invitado registrado con éxito",
+                });
+              }
             }
-          }
-        );
+          );
+        } else {
+          return res.send({
+            autorizado: false,
+            message: "No está autorizado",
+          });
+        }
       }
     });
   },
@@ -199,7 +207,7 @@ module.exports = {
 
   updatePass: async (req, res) => {
     let salt = await bcrypt.genSalt(10);
-    let hashpass = await bcrypt.hash(req.param('password'), salt);
+    let hashpass = await bcrypt.hash(req.param("password"), salt);
     UserInvitado.updateOne(
       {
         id: req.param("id"),

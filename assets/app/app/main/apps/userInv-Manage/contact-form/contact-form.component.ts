@@ -1,3 +1,4 @@
+import { UserInv } from '../../../../models/userInv.model';
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -15,7 +16,7 @@ import swal from "sweetalert2";
 
 export class ContactsContactFormDialogComponent {
     action: string;
-    contact: Contact;
+    contact: UserInv;
     //contactForm: FormGroup;
     invUserForm: FormGroup;
     dialogTitle: string;
@@ -49,7 +50,7 @@ export class ContactsContactFormDialogComponent {
             telefono: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
             direccion: ['', Validators.required],
         });
-        // this.contactForm = this.createContactForm();
+         
     }
 
     onSave() {
@@ -79,18 +80,14 @@ export class ContactsContactFormDialogComponent {
         /*createContactForm(): FormGroup {
             return this._formBuilder.group({
                 id: [this.contact.id],
-                name: [this.contact.name],
-                lastName: [this.contact.lastName],
-                avatar: [this.contact.avatar],
-                nickname: [this.contact.nickname],
-                company: [this.contact.company],
-                jobTitle: [this.contact.jobTitle],
-                email: [this.contact.email],
-                phone: [this.contact.phone],
-                address: [this.contact.address],
-                birthday: [this.contact.birthday],
-                notes: [this.contact.notes]
+                nombre: [this.contact.nombre],
+                correo: [this.contact.correo],
+                telefono: [this.contact.telefono],
+                direccion: [this.contact.direccion],
+                acceso: [this.contact.acceso]
             });
         }*/
     }
 }
+
+

@@ -1,3 +1,4 @@
+import { UserInvService } from '../../../../services/user-inv.service';
 //import { Campaing } from '../../../../models/campaing.model';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -26,11 +27,11 @@ import { OpinionTest } from '../../../../models/opinionTest.model';
 export class ContactsContactListComponent implements OnInit, OnDestroy {
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
-    
+
     contacts: any;
     user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'avatar', 'name', 'email', 'phone', 'jobTitle', 'buttons'];
+    displayedColumns = ['checkbox', 'Nombre', 'Correo', 'Teléfono'];
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
@@ -43,11 +44,11 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {UserInvService} _contactsService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContactsService,
+        private _contactsService: UserInvService,
         public _matDialog: MatDialog,
         private _pruebaServOpin: OpinionService,
         private _prueba2ServOpin: OpinionService,
@@ -67,9 +68,16 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        
+
+        this._contactsService.getInvitados().subscribe(data => {
+            console.log(data);
+            this._contactsService.getUsers(data.data)
+
+        })
+
 
         this.dataSource = new FilesDataSource(this._contactsService);
+        console.log(this.dataSource);
 
         this._contactsService.onContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -82,7 +90,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                 });
             });
 
-        this._contactsService.onSelectedContactsChanged
+        /*this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
                 for (const id in this.checkboxes) {
@@ -105,7 +113,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
                 this._contactsService.deselectContacts();
-            });
+            });*/
     }
 
     /**
@@ -148,7 +156,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                      */
                     case 'save':
 
-                        this._contactsService.updateContact(formData.getRawValue());
+                        // this._contactsService.updateContact(formData.getRawValue());
 
                         break;
                     /**
@@ -175,7 +183,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this._contactsService.deleteContact(contact);
+                //this._contactsService.deleteContact(contact);
             }
             this.confirmDialogRef = null;
         });
@@ -188,7 +196,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
      * @param contactId
      */
     onSelectedChange(contactId): void {
-        this._contactsService.toggleSelectedContact(contactId);
+        //this._contactsService.toggleSelectedContact(contactId);
     }
 
     /**
@@ -204,7 +212,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             this.user.starred.push(contactId);
         }
 
-        this._contactsService.updateUserData(this.user);
+        // this._contactsService.updateUserData(this.user);
     }
 }
 
@@ -213,10 +221,10 @@ export class FilesDataSource extends DataSource<any>
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     *
      */
     constructor(
-        private _contactsService: ContactsService
+        private _contactsService: UserInvService
     ) {
         super();
     }

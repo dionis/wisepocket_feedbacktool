@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserService } from './user.service';
 import { UserInv } from '../models/userInv.model';
 
@@ -11,8 +11,11 @@ import { UserInv } from '../models/userInv.model';
   providedIn: 'root'
 })
 export class UserInvService {
-
-  constructor(private _http: HttpClient, private user: UserService) { }
+  onContactsChanged: BehaviorSubject<any>;
+  contacts: UserInv[];
+  constructor(private _http: HttpClient, private user: UserService,) {
+    this.onContactsChanged = new BehaviorSubject([]);
+  }
 
   addInvUser(invitado): Observable<any> {
     let userID = this.user.getMyUser().id
@@ -28,5 +31,12 @@ export class UserInvService {
 
   }
 
+  getUsers(dataInv) {
+   
+    this.contacts = dataInv.map(data => {
+      return new UserInv(data);
+    })
+    this.onContactsChanged.next(this.contacts);
+  }
 }
 

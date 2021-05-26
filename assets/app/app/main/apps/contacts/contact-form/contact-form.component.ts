@@ -45,7 +45,7 @@ export class ContactsContactFormDialogComponent
             this.contact = new Contact({});
         }
 
-        this.contactForm = this.createContactForm();
+
     }
 
     // -----------------------------------------------------------------------------------------------------

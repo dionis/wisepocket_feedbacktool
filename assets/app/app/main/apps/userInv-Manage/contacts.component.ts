@@ -65,10 +65,10 @@ export class ContactsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this.invService.getInvitados().subscribe(data =>{
+        /*this.invService.getInvitados().subscribe(data =>{
             console.log(data);
             
-        })
+        })*/
         this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {

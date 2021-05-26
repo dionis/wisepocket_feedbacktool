@@ -154,7 +154,7 @@ describe("UserInvitadoController.updateAcces", function () {
           console.log("---- New Test execution data ----", zookeepers[0].id);
           console.log("FIND Invitado BY NAME ", userInv.nombre);
           supertest(sails.hooks.http.app)
-            .get("/userInvitado/updateAcces")
+            .patch("/userInvitado/updateAcces")
             .query({ acceso: true, id: userInv.id })
             .expect(200)
             .then((response) => {
@@ -188,7 +188,7 @@ describe("UserInvitadoController.updateAcces", function () {
                 console.log("---- New Test execution data ----", zookeepers[0].id)
                 console.log("FIND Invitado BY NAME ", userInv.nombre);
                 supertest(sails.hooks.http.app)
-                    .get('/userInvitado/updateisAdmin').query({ isAdmin: true, id: userInv.id })
+                    .patch('/userInvitado/updateisAdmin').query({ isAdmin: true, id: userInv.id })
                     .expect(200)
                     .then(response => {
                         console.log("Service OK:" + response.text)

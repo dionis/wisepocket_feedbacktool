@@ -38,7 +38,7 @@ export class ContactsContactFormDialogComponent {
 
         if (this.action === 'edit') {
             this.dialogTitle = 'Editar Invitado';
-           
+
         }
         else {
             this.dialogTitle = 'Nuevo Invitado';
@@ -56,11 +56,16 @@ export class ContactsContactFormDialogComponent {
         const data = this.invUserForm.getRawValue();
         console.log(data);
         this.invService.addInvUser(data).subscribe(res => {
-            if (res.success)
-                swal.fire('Invitado registrado')
-            else {
-                swal.fire('Este usuario ya está registrado')
+            if (res.autorizado) {
+                if (res.success)
+                    swal.fire('Invitado registrado')
+                else {
+                    swal.fire('Este usuario ya está registrado')
+                }
+            } else{
+                swal.fire('No está autorizado')
             }
+
         })
         // -----------------------------------------------------------------------------------------------------
         // @ Public methods

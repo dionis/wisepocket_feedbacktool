@@ -18,30 +18,38 @@ module.exports = {
       } else {
         console.log("Encontrado");
         userChief = doc;
-        await UserInvitado.create(
-          {
-            nombre: req.param("nombre"),
-            correo: req.param("correo"),
-            telefono: req.param("telefono"),
-            direccion: req.param("direccion"),
-            //isAdmin: req.param("isAdmin"),
-            acceso: req.param("acceso"),
-            invitadoBY: userChief.id,
-          },
-          (err) => {
-            if (err) {
-              return res.send({
-                success: false,
-                message: "Falló la operación",
-              });
-            } else {
-              return res.send({
-                success: true,
-                message: "Invitado registrado con éxito",
-              });
+        if (userChief.isAdmin) {
+          await UserInvitado.create(
+            {
+              nombre: req.param("nombre"),
+              correo: req.param("correo"),
+              telefono: req.param("telefono"),
+              direccion: req.param("direccion"),
+              //isAdmin: req.param("isAdmin"),
+              acceso: req.param("acceso"),
+              invitadoBY: userChief.id,
+            },
+            (err) => {
+              if (err) {
+                return res.send({
+                  success: false,
+                  message: "Falló la operación",
+                });
+              } else {
+                return res.send({
+                  autorizado: true,
+                  success: true,
+                  message: "Invitado registrado con éxito",
+                });
+              }
             }
-          }
-        );
+          );
+        } else {
+          return res.send({
+            autorizado: false,
+            message: "No está autorizado",
+          });
+        }
       }
     });
   },

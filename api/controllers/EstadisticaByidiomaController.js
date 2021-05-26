@@ -9,7 +9,7 @@ var moment = require('moment'); // require
 
 module.exports = {
 
-    
+
     getCantENXDia: async (req, res) => {
         let campaign
         let clientTimestamp = req.param('client_timestamp');
@@ -370,7 +370,7 @@ module.exports = {
         let hourInDayInterval = [];
         console.log("In function by Interval")
         let cantDayResult = [];
-        let initData = moment(date, "YYYY-MM-DD HH:mm a").hour(12).format("YYYY-MM-DD HH:mm a");
+        let initData = moment(date, "YYYY-MM-DD hh:mm a").hour(12).format("YYYY-MM-DD hh:mm a");
 
         //2- Find yesterday date
         hourInDayInterval.push(initData)
@@ -379,7 +379,7 @@ module.exports = {
         //1- Compute all interval between init and interval
         let dateInMoment = aDate;
         for (var i = 0; i < intervalInHour; i++) {
-            let dayForSearch = dateInMoment.add(2, 'hour').format("YYYY-MM-DD HH:mm a");
+            let dayForSearch = dateInMoment.add(2, 'hour').format("YYYY-MM-DD hh:mm a");
             hourInDayInterval.push(dayForSearch)
         }
 
@@ -395,7 +395,7 @@ module.exports = {
         await Promise.all(hourInDayInterval.map(async (item) => {
             console.log("<--- Execute query ---->||| <--- ")
             console.log(" Hour start ", item)
-            let endMoment = moment(item, "YYYY-MM-DD HH:mm a").add(60, "minutes").format("YYYY-MM-DD HH:mm a")
+            let endMoment = moment(item, "YYYY-MM-DD hh:mm a").add(60, "minutes").format("YYYY-MM-DD hh:mm a")
             console.log(" Hour end ", endMoment)
             let opinion = await Opinion.count({
                 campaign: campaignid,
@@ -408,14 +408,14 @@ module.exports = {
             let resultObject = {
                 opinionsize: (typeof (opinion) === 'undefined') ? 0 : opinion,
                 date: item,
-                dateName: moment(item, "YYYY-MM-DD HH:mm a").format('dddd')
+                dateName: moment(item, "YYYY-MM-DD hh:mm a").format('dddd')
             }
             console.log("Insert object in search ", resultObject);
             cantDayResult.push(resultObject)
 
         }));
 
-        cantDayResult = cantDayResult.sort((a, b) => moment(a.date, "YYYY-MM-DD HH:mm a").diff(moment(b.date, "YYYY-MM-DD HH:mm a")))
+        cantDayResult = cantDayResult.sort((a, b) => moment(a.date, "YYYY-MM-DD hh:mm a").diff(moment(b.date, "YYYY-MM-DD hh:mm a")))
 
         console.log("Data to send ", cantDayResult)
         return cantDayResult;
@@ -447,7 +447,7 @@ module.exports = {
 
         //let temp = [221, 428, 492, 471, 413, 344, 294]
         console.log("Client time is : ", clientTimestamp)
-        var aDate = moment(clientTimestamp, 'YYYY-MM-DD HH:mm a', true);
+        var aDate = moment(clientTimestamp, 'YYYY-MM-DD hh:mm a', true);
 
         let dateNewObjetc = new Date(clientTimestamp);
         if (!(aDate.isValid()) || typeof (clientTimestamp) === 'undefined') {
@@ -478,7 +478,7 @@ module.exports = {
                         let cantDayResult = [];
 
                         let todayAndYesterdayResult = []
-                        let initData = aDate.hour(12).format("YYYY-MM-DD HH:mm a");
+                        let initData = aDate.hour(12).format("YYYY-MM-DD hh:mm a");
 
                         todayAndYesterdayResult.push({
                             'today': initData
@@ -490,7 +490,7 @@ module.exports = {
                         yesterDay = yesterDay.subtract(1, 'days');
 
                         todayAndYesterdayResult.push({
-                            'yesterday': yesterDay.format("YYYY-MM-DD HH:mm a")
+                            'yesterday': yesterDay.format("YYYY-MM-DD hh:mm a")
                         })
 
                         console.log("Find in parallel for today and yesterday")
@@ -520,7 +520,7 @@ module.exports = {
 
                         console.log("Data to send ", cantDayResult.length)
                         let endResult = {
-                            'date': aDate.format("YYYY-MM-DD HH:mm a"),
+                            'date': aDate.format("YYYY-MM-DD hh:mm a"),
                             'data': cantDayResult,
                         }
                         console.log("En date to return ", endResult.date)

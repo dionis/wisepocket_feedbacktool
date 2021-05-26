@@ -47,18 +47,51 @@ module.exports = {
     console.log("Data to show ", data);
     let dateWithMomentParser = moment().format('YYYY-MM-DD');
     console.log("Date parser ===> " + dateWithMomentParser);
-    let dateToFind =  moment(data, 'YYYY-MM-DD HH:mm a', true);
+    let dateToFind =  moment(data, 'YYYY-MM-DD hh:mm a', true);
 
-    //console.log(" Date to find ", dateToFind);
     let yesterDay = dateToFind.clone();
 
-    let yesterDayTemp = yesterDay.subtract(1 , 'days').add(5, 'hours').clone();
+    let yesterDayTemp = dateToFind.clone();
+
+    yesterDayTemp = yesterDay.subtract(1 , 'days').add(5, 'hours').clone();
 
     let arrayInDays = [];
     let arrayToDayYestDay = [];
 
+    let hourInDayIntervalToday = [];
+    let hourInDayIntervalYesterday = [];
+
+
+    let intervalInHour = 12;
+    console.log("In function by Interval")
+
+
+    let initDataToday = dateToFind.hour(0)
+    //.format("YYYY-MM-DD HH:mm a");
+    let initDataYesterday = yesterDay.hour(0)
+    //.format("YYYY-MM-DD HH:mm a");
+
     arrayToDayYestDay.push(dateToFind);
     arrayToDayYestDay.push(yesterDayTemp);
+
+    let dateInMoment = initDataToday;
+    hourInDayIntervalToday.push(initDataToday)
+    for ( var i = 0; i < intervalInHour; i++ ){
+       //console.log("Hour interval ", dateToFind)
+       //let dayForSearch = dateToFind.add(2, 'hour').format("YYYY-MM-DD HH:mm a");
+       var dayForSearch = initDataToday.add(2, 'hour');
+       console.log("Date internval Today ", dayForSearch.format("YYYY-MM-DD hh:mm a"));
+       hourInDayIntervalToday.push(dayForSearch.clone())
+    }
+
+
+    dateInMoment = initDataYesterday;
+    hourInDayIntervalYesterday.push(initDataYesterday)
+    for ( var i = 0; i < intervalInHour; i++ ){
+       var dayForSearch = initDataYesterday.add(2, 'hour')
+       console.log("Date internval Yesterday ", dayForSearch.format("YYYY-MM-DD hh:mm a"));
+       hourInDayIntervalYesterday.push(dayForSearch.clone())
+    }
 
     let dayLength = 7;
     arrayInDays.push(yesterDay.clone());
@@ -66,6 +99,7 @@ module.exports = {
       var date = yesterDay.subtract(1 , 'days').add(iDayValue, 'hours');
       arrayInDays.push(date.clone());
     }
+
     // arrayInDays.forEach(item=>{
     //   console.log("Several times ",  moment(item).format('YYYY-MM-DD HH:mm a') );
     // })
@@ -109,7 +143,7 @@ module.exports = {
       var timestampToDay = dateObjet.getTime();
 
       let dayNameArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-      console.log("Date day ", currentTime.toLocaleString('en-US', {weekday:'long'}));
+      //console.log("Date day ", currentTime.toLocaleString('en-US', {weekday:'long'}));
 
      // console.log("Time ====>> " ,  currentTime)
 

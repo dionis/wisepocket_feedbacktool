@@ -351,7 +351,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                     this.campaigns = this._camapignService.getMyCamps()[0].nombre;
                     console.log(this.campaigns);
 
-                    let currentDate = moment().format("YYYY-MM-DD HH:mm a");
+                    let currentDate = moment().format("YYYY-MM-DD hh:mm a");
 
                     this.getAllStadisticsFromBackend(currentDate);
 
@@ -476,7 +476,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     date(eDate) {
         // var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
         var convertDate = new Date(eDate.target.value)
-        let currentDate = moment(convertDate).format("YYYY-MM-DD HH:mm a");
+        let currentDate = moment(convertDate).format("YYYY-MM-DD hh:mm a");
         console.log("Find statdistics to ", currentDate);
 
         this.getAllStadisticsFromBackend(currentDate);

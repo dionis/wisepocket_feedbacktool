@@ -146,7 +146,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
                     this.campaigns = this._camapignService.getMyCamps();
                     console.log(this.campaigns);
 
-                    let currentDate =  moment().format("YYYY-MM-DD HH:mm a");
+                    let currentDate =  moment().format("YYYY-MM-DD hh:mm a");
 
 
                   })

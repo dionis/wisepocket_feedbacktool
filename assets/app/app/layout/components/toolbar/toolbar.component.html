@@ -25,6 +25,30 @@
 
         <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
 
+            
+            <button #spn mat-button [matMenuTriggerFor]="selectedCampMenu"
+                    class="user-button">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <span #spn class="username mr-12" fxHide fxShow.gt-sm>{{selectedCampaign?selectedCampaign.nombre:'Campaign'}}</span>
+                    <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
+                </div>
+            </button>
+
+            <mat-menu #selectedCampMenu="matMenu" [overlapTrigger]="false">
+
+                <button mat-menu-item>
+                    <mat-icon>insert_chart</mat-icon>
+                    <span>Estadisticas</span>
+                </button>
+
+                <button mat-menu-item>
+                    <mat-icon>comment</mat-icon>
+                    <span>Opiniones</span>
+                </button>
+
+            </mat-menu>
+            <div class="toolbar-separator"></div>
+
             <button mat-button [matMenuTriggerFor]="userMenu"
                     class="user-button">
                 <div fxLayout="row" fxLayoutAlign="center center">
@@ -78,7 +102,7 @@
 
             <div class="toolbar-separator" fxHide fxShow.gt-xs></div>
 
-            <button mat-menu-item  class="link" [routerLink]="'/auth/login'" aria-label="Logout">
+            <button mat-menu-item  class="link" (click)= "onExit()" aria-label="Logout">
               <mat-icon  class="secondary-text">exit_to_app</mat-icon>
               <span>Logout</span>
            </button>

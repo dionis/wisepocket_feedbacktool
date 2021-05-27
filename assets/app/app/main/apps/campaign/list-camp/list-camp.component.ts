@@ -12,6 +12,7 @@ import { FuseTranslationLoaderService } from '../../../../../@fuse/services/tran
 import { locale as english } from '../../../apps/campaign/list-camp/i18n/en';
 import { locale as spanish } from '../../../apps/campaign/list-camp/i18n/es';
 import { UserService } from '../../../../services/user.service';
+import { SharedVariablesService } from '../../../../services/shared-variables.service';
 
 @Component({
   selector     : 'campaign-list',
@@ -59,7 +60,8 @@ export class ListCampComponent implements AfterViewInit,OnInit {
        // private _ecommerceProductsService: EcommerceProductsService,
         private campService: CampaignService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
-        private userService: UserService
+        private userService: UserService,
+        private sharedVarService: SharedVariablesService
         //private imageService: ImageService
     )
     {
@@ -140,6 +142,15 @@ export class ListCampComponent implements AfterViewInit,OnInit {
 
     sortData(event){
         console.log(event)
+    }
+
+    onSelectCamp(campaign){
+        console.log('Campaign Selected', localStorage.getItem('campaign_selected'));
+        if(true){
+            localStorage.setItem('campaign_selected',JSON.stringify(campaign));
+            this.sharedVarService.campaignSelected.next(localStorage.getItem('campaign_selected'));
+        }
+        console.log('Campaign Selected', JSON.parse(localStorage.getItem('campaign_selected')))
     }
 
     // async loadImage(idImg){

@@ -54,6 +54,7 @@ module.exports.routes = {
   //"PATCH /campaign/editCampaign": "CampaignController.editCampaign",
   // "DELETE /campaign/deleteCampaign": "CampaignController.deleteCampaign",
   "GET /campaign/getCampaign": "CampaignController.getCampaign",
+  "GET /campaign/getCampaignById": "CampaignController.getCampaignById",
   "GET /campaign/getInvitadoXCamp": "CampaignController.getInvitadoXCamp",
   "GET /campaign/countUserCampaigns": "CampaignController.countUserCampaigns",
   "GET /campaign/getCampaignbyUser": "CampaignController.getCampaignbyUser", //DEJAR ESTE SERVICE

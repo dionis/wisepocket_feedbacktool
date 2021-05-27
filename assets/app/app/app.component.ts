@@ -15,6 +15,8 @@ import { FuseTranslationLoaderService } from '../@fuse/services/translation-load
 import { navigation } from '../app/navigation/navigation';
 import { locale as navigationEnglish } from '../app/navigation/i18n/en';
 import { locale as navigationSpanish } from '../app/navigation/i18n/es';
+import { UserService } from './services/user.service';
+import { Router } from '@angular/router';
 
 
 
@@ -51,7 +53,9 @@ export class AppComponent implements OnInit, OnDestroy {
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _platform: Platform
+        private _platform: Platform,
+        private userService: UserService,
+        private router: Router
     ) {
         // Get default navigation
         this.navigation = navigation;
@@ -151,6 +155,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
                 this.document.body.classList.add(this.fuseConfig.colorTheme);
             });
+        setInterval(()=>{
+            let i=0;
+            console.log(i++);
+            if(this.userService.isLoggedOut()){
+                this.userService.logout();
+                this.router.navigate(["'/auth/login'"]);
+                return 
+            }
+        },1000)    
     }
 
     /**

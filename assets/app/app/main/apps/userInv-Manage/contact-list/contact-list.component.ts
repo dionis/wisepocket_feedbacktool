@@ -35,7 +35,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     contacts: any;
     user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'Nombre', 'Correo', 'Teléfono', 'boton'];
+    displayedColumns = ['Nombre', 'Correo', 'Teléfono', 'boton'];
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
@@ -84,7 +84,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
         })
 
-        this._contactsService.onContactsChanged
+       /* this._contactsService.onContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(contacts => {
                 this.contacts = contacts;

@@ -1,17 +1,4 @@
 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{ value: '50' }">
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="checkbox">
-    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let contact">
-      <mat-checkbox
-        [(ngModel)]="checkboxes[contact.id]"
-        (ngModelChange)="onSelectedChange(contact.id)"
-        (click)="$event.stopPropagation()"
-      >
-      </mat-checkbox>
-    </mat-cell>
-  </ng-container>
-
   <!-- Name Column -->
   <ng-container matColumnDef="Nombre">
     <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
@@ -58,11 +45,7 @@
           >
             Editar
           </button>
-          <button
-            id="botonEditar"
-            mat-button
-            (click)="asociarCamp()"
-          >
+          <button id="botonEditar" mat-button (click)="asociarCamp()">
             Asociar
           </button>
         </div>
@@ -73,7 +56,6 @@
   <mat-row
     *matRowDef="let contact; columns: displayedColumns"
     class="contact"
-    [ngClass]="{ 'accent-50': checkboxes[contact.id] }"
     [@animate]="{ value: '*', params: { y: '100%' } }"
   >
   </mat-row>

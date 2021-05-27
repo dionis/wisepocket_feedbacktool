@@ -42,14 +42,19 @@ export class UserInvService {
   }
 
   updateInfo(invitado): Observable<any> {
-
-    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateInfo', invitado)
+    console.log(invitado.nombre);
+    let httpParams = new HttpParams()
+      .append("nombre", invitado.nombre)
+      .append("correo", invitado.correo)
+      .append("telefono", invitado.telefono)
+      .append("direccion", invitado.direccion)
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateInfo?id=' + invitado.id, { params: httpParams })
 
   }
 
   deleteUserInv(invitado): Observable<any> {
-
-    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado', invitado)
+    console.log(invitado.id);
+    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado?id=', invitado.id)
 
   }
 

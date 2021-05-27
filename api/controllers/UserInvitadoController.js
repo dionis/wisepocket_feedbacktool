@@ -177,7 +177,7 @@ module.exports = {
   updateInfo: async (req, res) => {
     UserInvitado.updateOne(
       {
-        id: req.param("id"),
+        where: {id: req.param("id")},
       },
       {
         nombre: req.param("nombre"),

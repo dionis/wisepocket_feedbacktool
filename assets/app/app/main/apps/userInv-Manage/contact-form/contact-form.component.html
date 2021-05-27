@@ -132,6 +132,7 @@
       *ngIf="action === 'edit'"
       mat-button
       class="mr-8"
+      (click)="matDialogRef.close(['delete',invUserForm])"
       [disabled]="invUserForm.invalid"
       aria-label="Delete"
       matTooltip="Delete"
@@ -140,7 +141,7 @@
     </button>
 
     <button
-      *ngIf="action != 'edit'"
+      *ngIf="action === 'new'"
       mat-raised-button
       class="save-button"
       [disabled]="invUserForm.invalid"
@@ -153,6 +154,7 @@
       *ngIf="action === 'edit'"
       mat-button
       class="save-button"
+      (click)="matDialogRef.close(['save',invUserForm])"
       [disabled]="invUserForm.invalid"
       aria-label="SAVE"
     >

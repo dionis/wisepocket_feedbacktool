@@ -20,7 +20,9 @@
         [src]="'assets/images/Icons-Añadidos/user-192.png'"
         class="avatar contact-avatar huge m-0"
       />
-      <div *ngIf="action === 'edit'" class="contact-name mt-8">{{contact.nombre}}</div>
+      <div *ngIf="action === 'edit'" class="contact-name mt-8">
+        {{ contact.nombre }}
+      </div>
     </mat-toolbar-row>
   </mat-toolbar>
 
@@ -34,6 +36,7 @@
         >
           <mat-label>Nombre</mat-label>
           <input
+            #nombre
             matInput
             placeholder="Nombre"
             name="nombre"
@@ -132,31 +135,33 @@
       *ngIf="action === 'edit'"
       mat-button
       class="mr-8"
+      (click)="matDialogRef.close(['delete', invUserForm])"
       [disabled]="invUserForm.invalid"
       aria-label="Delete"
       matTooltip="Delete"
     >
-      DELETE
+      Eliminar
     </button>
 
     <button
-      *ngIf="action != 'edit'"
+      *ngIf="action === 'new'"
       mat-raised-button
       class="save-button"
       [disabled]="invUserForm.invalid"
       (click)="onSave()"
     >
-      ADD
+      Agregar
     </button>
 
     <button
       *ngIf="action === 'edit'"
       mat-button
       class="save-button"
+      (click)="matDialogRef.close(['save', invUserForm])"
       [disabled]="invUserForm.invalid"
       aria-label="SAVE"
     >
-      SAVE
+      Guardar
     </button>
   </div>
 </div>

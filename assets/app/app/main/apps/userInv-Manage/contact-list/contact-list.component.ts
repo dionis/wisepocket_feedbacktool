@@ -145,36 +145,50 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                 contact: contact,
                 action: 'edit'
             }
+
         });
+        console.log(contact);
 
         this.dialogRef.afterClosed()
             .subscribe(response => {
-                if (!response) {
-                    return;
-                }
+
                 const actionType: string = response[0];
                 const formData: FormGroup = response[1];
+
+
                 switch (actionType) {
                     /**
                      * Save
                      */
+
                     case 'save':
+                        console.log(formData.getRawValue());
+                        formData.getRawValue()
+                        this._contactsService.updateInfo(contact).subscribe(data => {
+                            console.log(data);
+                        });
+                        this._contactsService.getInvitados().subscribe(data => {
+                            console.log(data);
+                            this._contactsService.getUsers(data.data)
 
-                        this._contactsService.updateInfo(formData.getRawValue());
-
+                        })
                         break;
                     /**
                      * Delete
                      */
                     case 'delete':
 
-                        this._contactsService.deleteUserInv(contact.id);
-
+                        this.deleteContact(contact)
                         break;
                 }
             });
     }
-
+    /*getDatosEdit(nombre: any, correo: any, telefono: any, direccion: any) {
+        nombre.value = this.contact.nombre
+        correo.value = this.contact.correo
+        telefono.value = this.contact.telefono
+        direccion.value = this.contact.direccion
+    }*/
     /**
      * Delete Contact
      */
@@ -183,11 +197,18 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             disableClose: false
         });
 
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea eliminarlo?';
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                //this._contactsService.deleteContact(contact);
+                this._contactsService.deleteUserInv(contact).subscribe(data => {
+                    console.log(data);
+                });
+                this._contactsService.getInvitados().subscribe(data => {
+                    console.log(data);
+                    this._contactsService.getUsers(data.data)
+
+                })
             }
             this.confirmDialogRef = null;
         });

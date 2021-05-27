@@ -12,14 +12,13 @@ import { ContactsService } from '../../../../app/main/apps/userInv-Manage/contac
 import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component';
 
 @Component({
-    selector     : 'contacts',
-    templateUrl  : './contacts.component.html',
-    styleUrls    : ['./contacts.component.scss'],
+    selector: 'contacts',
+    templateUrl: './contacts.component.html',
+    styleUrls: ['./contacts.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations
 })
-export class ContactsComponent implements OnInit, OnDestroy
-{
+export class ContactsComponent implements OnInit, OnDestroy {
     dialogRef: any;
     hasSelectedContacts: boolean;
     searchInput: FormControl;
@@ -42,8 +41,7 @@ export class ContactsComponent implements OnInit, OnDestroy
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
         //public campaingService: CampaingService
-    )
-    {
+    ) {
 
 
         // Set the defaults
@@ -52,9 +50,9 @@ export class ContactsComponent implements OnInit, OnDestroy
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
-   /* constructor(){
-
-    }*/
+    /* constructor(){
+ 
+     }*/
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -63,8 +61,7 @@ export class ContactsComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         /*this.invService.getInvitados().subscribe(data =>{
             console.log(data);
             
@@ -83,14 +80,13 @@ export class ContactsComponent implements OnInit, OnDestroy
             )
             .subscribe(searchText => {
                 this._contactsService.onSearchTextChanged.next(searchText);
-            });   
+            });
     }
 
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -103,27 +99,27 @@ export class ContactsComponent implements OnInit, OnDestroy
     /**
      * New contact
      */
-    newContact(): void
-    {
+    newContact(): void {
         this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
             panelClass: 'contact-form-dialog',
-            data      : {
+            data: {
                 action: 'new'
             }
         });
 
-        /*this.dialogRef.afterClosed()
+        this.dialogRef.afterClosed()
             .subscribe((response: FormGroup) => {
-                if ( !response )
-                {
-                    return;
-                }
+            
+               
+                this.invService.getInvitados().subscribe(data => {
+                    console.log(data);
+                    this.invService.getUsers(data.data)
 
-                this._contactsService.updateContact(response.getRawValue());
-            });*/
+                })
+            });
     }
 
-    
+
 
 
 }

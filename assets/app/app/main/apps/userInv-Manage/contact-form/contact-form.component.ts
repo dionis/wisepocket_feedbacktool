@@ -43,6 +43,7 @@ export class ContactsContactFormDialogComponent {
         }
         else {
             this.dialogTitle = 'Nuevo Invitado';
+            
         }
         this.invUserForm = this._formBuilder.group({
             nombre: ['', Validators.required],
@@ -53,6 +54,8 @@ export class ContactsContactFormDialogComponent {
         // this.contactForm = this.createContactForm();
     }
 
+    
+
     onSave() {
         const data = this.invUserForm.getRawValue();
         console.log(data);
@@ -60,6 +63,7 @@ export class ContactsContactFormDialogComponent {
 
             if (res.success && res.autorizado) {
                 swal.fire('Invitado registrado')
+                this.contact = data
                 this.createContactForm();
             }
             else if (res.success === false) {

@@ -46,7 +46,7 @@
   <!-- Buttons Column -->
   <div>
     <ng-container matColumnDef="boton">
-      <mat-header-cell id="editar" *matHeaderCellDef>Editar</mat-header-cell>
+      <mat-header-cell id="editar" *matHeaderCellDef>Opciones</mat-header-cell>
       <mat-cell *matCellDef="let contact">
         <div fxFlex="row" fxLayoutAlign="end center">
           <button
@@ -58,25 +58,12 @@
           >
             Editar
           </button>
-        </div>
-      </mat-cell>
-    </ng-container>
-  </div>
-  <!-- Buttons Column -->
-  <div>
-    <ng-container matColumnDef="editar">
-      <mat-header-cell id="editar" *matHeaderCellDef>Editar</mat-header-cell>
-      <mat-cell *matCellDef="let contact">
-        <div fxFlex="row" fxLayoutAlign="end">
           <button
             id="botonEditar"
             mat-button
-            fxHide
-            fxShow.gt-md
             (click)="asociarCamp()"
-           
           >
-            Editar
+            Asociar
           </button>
         </div>
       </mat-cell>

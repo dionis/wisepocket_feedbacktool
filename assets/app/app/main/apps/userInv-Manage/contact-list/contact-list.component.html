@@ -43,12 +43,49 @@
       </p>
     </mat-cell>
   </ng-container>
-
+  <!-- Buttons Column -->
+  <div>
+    <ng-container matColumnDef="boton">
+      <mat-header-cell id="editar" *matHeaderCellDef>Editar</mat-header-cell>
+      <mat-cell *matCellDef="let contact">
+        <div fxFlex="row" fxLayoutAlign="end center">
+          <button
+            id="botonAsociar"
+            mat-button
+            fxHide
+            fxShow.gt-md
+            (click)="editContact(contact)"
+          >
+            Editar
+          </button>
+        </div>
+      </mat-cell>
+    </ng-container>
+  </div>
+  <!-- Buttons Column -->
+  <div>
+    <ng-container matColumnDef="editar">
+      <mat-header-cell id="editar" *matHeaderCellDef>Editar</mat-header-cell>
+      <mat-cell *matCellDef="let contact">
+        <div fxFlex="row" fxLayoutAlign="end">
+          <button
+            id="botonEditar"
+            mat-button
+            fxHide
+            fxShow.gt-md
+            (click)="asociarCamp()"
+           
+          >
+            Editar
+          </button>
+        </div>
+      </mat-cell>
+    </ng-container>
+  </div>
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row
     *matRowDef="let contact; columns: displayedColumns"
     class="contact"
-    (click)="editContact(contact)"
     [ngClass]="{ 'accent-50': checkboxes[contact.id] }"
     [@animate]="{ value: '*', params: { y: '100%' } }"
   >

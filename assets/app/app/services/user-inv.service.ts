@@ -52,6 +52,32 @@ export class UserInvService {
 
   }
 
+  updatePass(pass, invitado): Observable<any> {
+    console.log(invitado.nombre);
+    let httpParams = new HttpParams()
+      .append("password", pass)
+      .append("id", invitado.id)
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updatePass', { params: httpParams })
+
+  }
+
+  updateAcceso(acceso, invitado): Observable<any> {
+    console.log(invitado.nombre);
+    let httpParams = new HttpParams()
+      .append("acceso", acceso)
+      .append("id", invitado.id)
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateAcces', { params: httpParams })
+
+  }
+
+  AddCampInv(campName, invitado): Observable<any> {
+    console.log(invitado.nombre);
+    let httpParams = new HttpParams()
+      .append("nombre", campName)
+      .append("id", invitado.id)
+    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/addCampaigns', { params: httpParams })
+
+  }
   deleteUserInv(invitado): Observable<any> {
     console.log(invitado.id);
     return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado?id=', invitado.id)

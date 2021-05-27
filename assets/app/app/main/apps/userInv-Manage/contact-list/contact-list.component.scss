@@ -10,6 +10,14 @@ contacts-contact-list {
         background: transparent;
         box-shadow: none;
 
+        mat-header-cell {
+            text-align: center !important;
+        }
+
+        mat-cell {
+            text-align: center;
+        }
+
         .mat-column-checkbox {
             flex: 0 1 64px;
             padding-left: 18px;
@@ -18,6 +26,21 @@ contacts-contact-list {
         .mat-column-Correo {
             flex: 2 5 0;
         }
+
+        #asociar {
+            text-align: end;
+        }
+
+        .mat-column-boton {
+
+            justify-content: center !important;
+        }
+
+        .mat-column-editar {
+            justify-content: center !important;
+
+        }
+
 
 
         .mat-column-Nombre {
@@ -37,6 +60,7 @@ contacts-contact-list {
             cursor: pointer;
             padding: 8px;
 
+          
             .mat-cell {
                 min-width: 0;
 

@@ -10,6 +10,7 @@ import { FuseSidebarService } from '../../../../@fuse/components/sidebar/sidebar
 import { UserInvService } from '../../../services/user-inv.service';
 import { ContactsService } from '../../../../app/main/apps/userInv-Manage/contacts.service';
 import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component';
+import { ContactAsociarComponent } from './contact-asociar/contact-asociar.component';
 
 @Component({
     selector: 'contacts',
@@ -118,6 +119,8 @@ export class ContactsComponent implements OnInit, OnDestroy {
                 })
             });
     }
+
+   
 
 
 

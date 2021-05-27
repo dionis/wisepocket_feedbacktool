@@ -20,6 +20,7 @@ import { ContactsContactListComponent } from '../../../../app/main/apps/userInv-
 import { ContactsSelectedBarComponent } from '../../../../app/main/apps/userInv-Manage/selected-bar/selected-bar.component';
 import { ContactsMainSidebarComponent } from '../../../../app/main/apps/userInv-Manage/sidebars/main/main.component';
 import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component';
+import { ContactAsociarComponent } from './contact-asociar/contact-asociar.component';
 
 const routes: Routes = [
     {
@@ -37,7 +38,8 @@ const routes: Routes = [
         ContactsContactListComponent,
         ContactsSelectedBarComponent,
         ContactsMainSidebarComponent,
-        ContactsContactFormDialogComponent
+        ContactsContactFormDialogComponent,
+        ContactAsociarComponent
     ],
     imports        : [
         RouterModule.forChild(routes),

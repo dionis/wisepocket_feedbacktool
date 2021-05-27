@@ -67,6 +67,17 @@ export class CampaignService {
       });
   }
 
+  getCampaignbyId(id:string){
+    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport +
+    '/campaign/getCampaignById',
+    {params: {'id': id}});
+    // .pipe(map((camp:any)=>{
+    //   if(camp){
+    //     let camp = new Campaign(camp);
+    //   }
+    // }))
+  }
+
   testSelectedRandomCamaping() : Promise< boolean>{
     if ( typeof(this.campaign) !== 'undefined' && this.campaign.length > 0){
       return new Promise (( resolve, reject)=>{

@@ -61,6 +61,7 @@ export class UserService {
   logout() {
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
+    localStorage.removeItem("campaign_selected");
     //localStorage.removeItem("user_id");
     this.user = null
   }
@@ -114,6 +115,10 @@ export class UserService {
 
   getMyUser(): User {
     console.log(this.user)
+    //if(this.user === null){
+    this.getUserById();
+    //}
+    console.log('119',this.user)
     return this.user;
   }
 }

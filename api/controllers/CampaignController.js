@@ -100,6 +100,23 @@ module.exports = {
             })
     },
 
+    getCampaignById(req,res){
+        camp_id = req.param('id');
+        if(!camp_id){
+            return res.status(400).send({'Error': 'Id Most Be Provided'}); 
+        }
+        Campaign.findOne({id:camp_id})
+        .then(campaign=>{
+            return res.send({
+                'message': 'Selected Campaign',
+                'data': campaign,
+            });
+        })
+        .catch(error=>{
+            return res.status(500).send({'error': error});
+        })
+    },
+
    getCampaign: (req, res) => {
         Campaign.find().populate('userChief')
             .then(campaign => {

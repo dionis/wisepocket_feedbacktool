@@ -1,3 +1,3 @@
-/*module.exports = {
-    bootstrapTimeout: 120000,
-};*/
+module.exports = {
+    bootstrapTimeout: 80000,
+};

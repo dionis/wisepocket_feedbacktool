@@ -6,63 +6,62 @@
  */
 
 module.exports = {
-
   attributes: {
-
     nombre: {
-      type: 'string',
+      type: "string",
       unique: true,
-      required: true
+      required: true,
     },
 
     correo: {
-      type: 'string'
+      type: "string",
     },
 
     telefono: {
-      type:'string'
+      type: "string",
     },
 
     direccion: {
-      type: 'string'
+      type: "string",
     },
 
-    isAdmin: {
+    password: {
+      type: "string",
+      //unique: true
+    },
+
+    /*isAdmin: {
       type: 'boolean',
       defaultsTo: false,
-    },
+    },*/
 
     acceso: {
-      type: 'boolean',
+      type: "boolean",
       defaultsTo: false,
     },
 
-    invitadoBY:{
-      model:'user'
+    invitadoBY: {
+      model: "user",
     },
 
     campaigns: {
-      collection: 'campaign',
-      via: 'userInvitado'
-    }
+      collection: "campaign",
+      via: "userInvitado",
+    },
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
 
-
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-
   },
 
   customToJSON: function () {
-    return _.omit(this, ['createdAt', 'updatedAt'])
-  }
+    return _.omit(this, ["createdAt", "updatedAt", "isAdmin"]);
+  },
 };
-

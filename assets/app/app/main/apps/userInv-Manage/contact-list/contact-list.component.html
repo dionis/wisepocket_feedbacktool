@@ -1,0 +1,56 @@
+<mat-table #table [dataSource]="dataSource" [@animateStagger]="{ value: '50' }">
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="checkbox">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let contact">
+      <mat-checkbox
+        [(ngModel)]="checkboxes[contact.id]"
+        (ngModelChange)="onSelectedChange(contact.id)"
+        (click)="$event.stopPropagation()"
+      >
+      </mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="Nombre">
+    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+    <mat-cell *matCellDef="let contact">
+      <p class="text-truncate font-weight-600">{{ contact.nombre }}</p>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="Correo">
+    <mat-header-cell id="textCorreo" *matHeaderCellDef fxHide fxShow.gt-sm
+      >Correo</mat-header-cell
+    >
+    <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
+      <p class="email text-truncate">
+        {{ contact.correo }}
+      </p>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Phone Column -->
+  <ng-container matColumnDef="Teléfono">
+    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md
+      >Phone</mat-header-cell
+    >
+    <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
+      <p class="Teléfono text-truncate">
+        {{ contact.telefono }}
+      </p>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row
+    *matRowDef="let contact; columns: displayedColumns"
+    class="contact"
+    (click)="editContact(contact)"
+    [ngClass]="{ 'accent-50': checkboxes[contact.id] }"
+    [@animate]="{ value: '*', params: { y: '100%' } }"
+  >
+  </mat-row>
+</mat-table>

@@ -109,7 +109,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
         this.dialogRef.afterClosed()
             .subscribe((response: FormGroup) => {
-               console.log(response);
+            
                
                 this.invService.getInvitados().subscribe(data => {
                     console.log(data);

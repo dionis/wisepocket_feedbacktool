@@ -151,23 +151,27 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
         this.dialogRef.afterClosed()
             .subscribe(response => {
-                if (!response) {
-                    return;
-                }
+
                 const actionType: string = response[0];
                 const formData: FormGroup = response[1];
-                console.log(formData.getRawValue());
+
 
                 switch (actionType) {
                     /**
                      * Save
                      */
-                    case 'save':
 
+                    case 'save':
+                        console.log(formData.getRawValue());
+                        formData.getRawValue()
                         this._contactsService.updateInfo(contact).subscribe(data => {
                             console.log(data);
                         });
+                        this._contactsService.getInvitados().subscribe(data => {
+                            console.log(data);
+                            this._contactsService.getUsers(data.data)
 
+                        })
                         break;
                     /**
                      * Delete
@@ -175,8 +179,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                     case 'delete':
 
                         this.deleteContact(contact)
-
-
                         break;
                 }
             });
@@ -202,6 +204,11 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                 this._contactsService.deleteUserInv(contact).subscribe(data => {
                     console.log(data);
                 });
+                this._contactsService.getInvitados().subscribe(data => {
+                    console.log(data);
+                    this._contactsService.getUsers(data.data)
+
+                })
             }
             this.confirmDialogRef = null;
         });

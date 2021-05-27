@@ -85,27 +85,27 @@ module.exports = {
        console.log(" Hour end ", endMoment)
        let opinion =  await Opinion.count({
                  campaign: inputs.camapingid,
-                 fecha:  {'>=': item, '<': endMoment},
+                 fecha:  {'>=': new Date(item), '<': new Date(endMoment)},
                  idioma: inputs.language
        });
 
        let opinionPositive =  await Opinion.count({
         campaign: inputs.camapingid,
-        fecha:  {'>=': item, '<': endMoment},
+        fecha:  {'>=': new Date( item), '<': new Date(endMoment)},
         idioma:  inputs.language,
         polaridad: 'positiva'
         });
 
         let opinionNegative =  await Opinion.count({
           campaign: inputs.camapingid,
-          fecha:  {'>=': item, '<': endMoment},
+          fecha:  {'>=': new Date( item), '<': new Date (endMoment)},
           idioma:  inputs.language,
           polaridad: 'negativa'
           });
 
           let opinionNeutral =  await Opinion.count({
             campaign: inputs.camapingid,
-            fecha:  {'>=': item, '<': endMoment},
+            fecha:  {'>=': new Date(item), '<': new Date(endMoment)},
             idioma:  inputs.language,
             polaridad: 'neutral'
             });

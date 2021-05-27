@@ -166,7 +166,8 @@ module.exports = {
 
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha: dateObjetToday,
+          fecha:
+          ,
           createDay: toDayCurrentTime.format('dddd'),
           idioma: 'ingles',
           polaridad: 'positiva',

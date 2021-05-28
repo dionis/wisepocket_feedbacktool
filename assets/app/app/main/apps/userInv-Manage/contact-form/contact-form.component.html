@@ -135,7 +135,7 @@
       *ngIf="action === 'edit'"
       mat-button
       class="mr-8"
-      (click)="matDialogRef.close(['delete', invUserForm])"
+      (click)="onDelete(contact)"
       [disabled]="invUserForm.invalid"
       aria-label="Delete"
       matTooltip="Delete"
@@ -157,7 +157,7 @@
       *ngIf="action === 'edit'"
       mat-button
       class="save-button"
-      (click)="matDialogRef.close(['save', invUserForm])"
+      (click)="onSaveEdit(contact)"
       [disabled]="invUserForm.invalid"
       aria-label="SAVE"
     >

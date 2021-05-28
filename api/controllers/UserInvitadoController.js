@@ -161,41 +161,42 @@ module.exports = {
   },
 
   getInvitadoById: (req, res) => {
-    UserInvitado.findOne({ id: req.param('id') })
-        .then(user => {
-            return res.send({
-                'data': user
-            });
-        })
-        .catch(err => {
-            return res.sendStatus(500, {
-                'error': err
-            });
-        })
-},
+    UserInvitado.findOne({ id: req.param("id") })
+      .then((user) => {
+        return res.send({
+          data: user,
+        });
+      })
+      .catch((err) => {
+        return res.sendStatus(500, {
+          error: err,
+        });
+      });
+  },
 
   updateInfo: async (req, res) => {
     UserInvitado.updateOne(
       {
-        where: {id: req.param("id")},
+        where: { id: req.param("id") },
       },
       {
         nombre: req.param("nombre"),
         correo: req.param("correo"),
         telefono: req.param("telefono"),
         direccion: req.param("direccion"),
-      },
-      (err) => {
-        if (err) {
-          console.log(`Error: ` + err);
-        } else {
-          return res.send({
-            success: true,
-            message: "Informacion actualizada",
-          });
-        }
       }
-    );
+    )
+      .then((user) => {
+        return res.send({
+          data: user,
+        });
+      })
+      .catch((err) => {
+        return res.send({
+          success: false,
+          message: "Falló la operación",
+        });
+      });
   },
 
   updateAcces: async (req, res) => {
@@ -205,18 +206,18 @@ module.exports = {
       },
       {
         acceso: req.param("acceso"),
-      },
-      (err) => {
-        if (err) {
-          console.log(`Error: ` + err);
-        } else {
-          return res.send({
-            success: true,
-            message: "Acceso actualizado",
-          });
-        }
-      }
-    );
+      })
+      .then((user) => {
+        return res.send({
+          data: user,
+        });
+      })
+      .catch((err) => {
+        return res.send({
+          success: false,
+          message: "Falló la operación",
+        });
+      })
   },
 
   updatePass: async (req, res) => {
@@ -228,18 +229,18 @@ module.exports = {
       },
       {
         password: hashpass,
-      },
-      (err) => {
-        if (err) {
-          console.log(`Error: ` + err);
-        } else {
-          return res.send({
-            success: true,
-            message: "Password actualizado",
-          });
-        }
-      }
-    );
+      })
+      .then((user) => {
+        return res.send({
+          data: user,
+        });
+      })
+      .catch((err) => {
+        return res.send({
+          success: false,
+          message: "Falló la operación",
+        });
+      });
   },
 
   /*updateisAdmin: async (req, res) => {
@@ -264,20 +265,19 @@ module.exports = {
   },*/
 
   deleteUserInvitado: async (req, res) => {
-    UserInvitado.destroy(
-      {
-        id: req.param("id"),
-      },
-      (err) => {
-        if (err) {
-          console.log(`Error: ` + err);
-        } else {
-          return res.send({
-            success: true,
-            message: "Eliminado con éxito",
-          });
-        }
-      }
-    );
+    UserInvitado.destroy({
+      id: req.param("id"),
+    })
+      .then((user) => {
+        return res.send({
+          data: user,
+        });
+      })
+      .catch((err) => {
+        return res.send({
+          success: false,
+          message: "Falló la operación",
+        });
+      });
   },
 };

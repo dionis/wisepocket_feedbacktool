@@ -148,43 +148,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             }
 
         });
-
-
-
-        this.dialogRef.afterClosed()
-            .subscribe(response => {
-                console.log("Response Edit " + response);
-
-                const actionType: string = response[0];
-                const formData: FormGroup = response[1];
-
-
-                switch (actionType) {
-                    /**
-                     * Save
-                     */
-
-                    case 'save':
-                        console.log(formData.getRawValue());
-                        formData.getRawValue()
-                        this._contactsService.updateInfo(contact).subscribe(data => {
-                            console.log(data);
-                        });
-                        this._contactsService.getInvitados().subscribe(data => {
-                            console.log(data);
-                            this._contactsService.getUsers(data.data)
-
-                        })
-                        break;
-                    /**
-                     * Delete
-                     */
-                    case 'delete':
-
-                        this.deleteContact(contact)
-                        break;
-                }
-            });
     }
 
     asociarCamp(): void {
@@ -206,28 +169,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     /**
      * Delete Contact
      */
-    deleteContact(contact): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: false
-        });
-
-        this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea eliminarlo?';
-
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this._contactsService.deleteUserInv(contact).subscribe(data => {
-                    console.log(data);
-                });
-                this._contactsService.getInvitados().subscribe(data => {
-                    console.log(data);
-                    this._contactsService.getUsers(data.data)
-
-                })
-            }
-            this.confirmDialogRef = null;
-        });
-
-    }
 
     /**
      * On selected change

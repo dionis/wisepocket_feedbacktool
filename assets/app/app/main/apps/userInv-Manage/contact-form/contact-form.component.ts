@@ -119,12 +119,7 @@ export class ContactsContactFormDialogComponent {
         });
 
     }
-    /*getDatosEdit(nombre, correo, telefono, direccion) {
-        nombre.value = this.contact.nombre
-        correo.value = this.contact.correo
-        telefono.value = this.contact.telefono
-        direccion.value = this.contact.direccion
-    }
+   
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------

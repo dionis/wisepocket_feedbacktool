@@ -172,6 +172,109 @@ describe("UserInvitadoController.updateAcces", function () {
   });
 });
 
+describe("UserInvitadoController.updateAcces", function () {
+  before(function () {
+    // runs once before the first test in this block
+    //https://mochajs.org/#hooks
+  });
+
+  after(function () {
+    // runs once after the last test in this block
+  });
+  describe("#updateAcces", function () {
+    it("should redirect to /my/page", function (done) {
+      UserInvitado.find()
+        .then((zookeepers) => {
+          let userInv = zookeepers[0];
+          console.log("---- New Test execution data ----", zookeepers[0].id);
+          console.log("FIND Invitado BY NAME ", userInv.nombre);
+          supertest(sails.hooks.http.app)
+            .patch("/userInvitado/updateAcces")
+            .query({ acceso: true, id: userInv.id })
+            .expect(200)
+            .then((response) => {
+              console.log("Service OK:" + response.text);
+              /// response.text >>>>> Dar acceso o no a una Campaña
+              // ( Se pensara en una funcion que antes de entrar evalue el valor del acceso, por defecto es false)
+              done();
+            })
+            .catch((err) => done(err));
+        })
+        .catch((error) => {
+          throw Error(error);
+        });
+    });
+  });
+});
+
+describe("UserInvitadoController.updatePass", function () {
+  before(function () {
+    // runs once before the first test in this block
+    //https://mochajs.org/#hooks
+  });
+
+  after(function () {
+    // runs once after the last test in this block
+  });
+  describe("Asignar una Contraseña al usuario", function () {
+    it("should redirect to /my/page", function (done) {
+      UserInvitado.find()
+        .then((zookeepers) => {
+          let userInv = zookeepers[0];
+          console.log("---- New Test execution data ----", zookeepers[0].id);
+          console.log("FIND Invitado BY NAME ", userInv.nombre);
+          supertest(sails.hooks.http.app)
+            .patch("/userInvitado/updatePass")
+            .query({ id: userInv.id, password: "12345678" })
+            .expect(200)
+            .then((response) => {
+              console.log("Service OK:" + response.text);
+              /// response.text >>>>> Dar acceso o no a una Campaña
+              // ( Se pensara en una funcion que antes de entrar evalue el valor del acceso, por defecto es false)
+              done();
+            })
+            .catch((err) => done(err));
+        })
+        .catch((error) => {
+          throw Error(error);
+        });
+    });
+  });
+});
+
+describe("UserInvitadoController.updateInfo", function () {
+  before(function () {
+    // runs once before the first test in this block
+    //https://mochajs.org/#hooks
+  });
+
+  after(function () {
+    // runs once after the last test in this block
+  });
+  describe("#updateInfo", function () {
+    it("should redirect to /my/page", function (done) {
+      UserInvitado.find()
+        .then((zookeepers) => {
+          let userInv = zookeepers[0];
+          console.log("---- New Test execution data ----", zookeepers[0].id);
+          console.log("FIND Invitado BY NAME ", userInv.nombre);
+          supertest(sails.hooks.http.app)
+            .patch("/userInvitado/updateInfo")
+            .query({ id: userInv.id, nombre: "TEST-NAME", correo:"test@nauta.cu" })
+            .expect(200)
+            .then((response) => {
+              console.log("Service OK:" + response.text);
+              /// response.text >>>>> Actualiza los datos de un invitado
+              done();
+            })
+            .catch((err) => done(err));
+        })
+        .catch((error) => {
+          throw Error(error);
+        });
+    });
+  });
+});
 /*describe('UserInvitadoController.updateisAdmin', function () {
     before(function () {
         // runs once before the first test in this block

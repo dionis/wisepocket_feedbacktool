@@ -84,41 +84,41 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
         })
 
-       /* this._contactsService.onContactsChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(contacts => {
-                this.contacts = contacts;
-
-                this.checkboxes = {};
-                contacts.map(contact => {
-                    this.checkboxes[contact.id] = false;
-                });
-            });
-
-        /*this._contactsService.onSelectedContactsChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
-                for (const id in this.checkboxes) {
-                    if (!this.checkboxes.hasOwnProperty(id)) {
-                        continue;
-                    }
-
-                    this.checkboxes[id] = selectedContacts.includes(id);
-                }
-                this.selectedContacts = selectedContacts;
-            });
-
-        this._contactsService.onUserDataChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(user => {
-                this.user = user;
-            });
-
-        this._contactsService.onFilterChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(() => {
-                this._contactsService.deselectContacts();
-            });*/
+        /* this._contactsService.onContactsChanged
+             .pipe(takeUntil(this._unsubscribeAll))
+             .subscribe(contacts => {
+                 this.contacts = contacts;
+ 
+                 this.checkboxes = {};
+                 contacts.map(contact => {
+                     this.checkboxes[contact.id] = false;
+                 });
+             });
+ 
+         /*this._contactsService.onSelectedContactsChanged
+             .pipe(takeUntil(this._unsubscribeAll))
+             .subscribe(selectedContacts => {
+                 for (const id in this.checkboxes) {
+                     if (!this.checkboxes.hasOwnProperty(id)) {
+                         continue;
+                     }
+ 
+                     this.checkboxes[id] = selectedContacts.includes(id);
+                 }
+                 this.selectedContacts = selectedContacts;
+             });
+ 
+         this._contactsService.onUserDataChanged
+             .pipe(takeUntil(this._unsubscribeAll))
+             .subscribe(user => {
+                 this.user = user;
+             });
+ 
+         this._contactsService.onFilterChanged
+             .pipe(takeUntil(this._unsubscribeAll))
+             .subscribe(() => {
+                 this._contactsService.deselectContacts();
+             });*/
     }
 
     /**
@@ -148,10 +148,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             }
 
         });
-        console.log(contact);
+
+
 
         this.dialogRef.afterClosed()
             .subscribe(response => {
+                console.log("Response Edit " + response);
 
                 const actionType: string = response[0];
                 const formData: FormGroup = response[1];
@@ -195,17 +197,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
         this.dialogRef.afterClosed()
             .subscribe((response: FormGroup) => {
-            
-               
-                
+
+
+
             });
     }
-    /*getDatosEdit(nombre: any, correo: any, telefono: any, direccion: any) {
-        nombre.value = this.contact.nombre
-        correo.value = this.contact.correo
-        telefono.value = this.contact.telefono
-        direccion.value = this.contact.direccion
-    }*/
+
     /**
      * Delete Contact
      */

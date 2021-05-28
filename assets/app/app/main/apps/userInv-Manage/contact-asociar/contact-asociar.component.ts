@@ -24,12 +24,13 @@ export class ContactAsociarComponent implements OnInit {
 
     if (this.action === 'asociar') {
       this.dialogTitle = 'Asociar a Campaña';
-
+      this.contact = _data.contact;
     }
     this.invUserForm = this._formBuilder.group({
       contraseña: ['', Validators.required],
     });
     this.nameCamp = this.servCamp.getName()
+   
   }
 
   ngOnInit(): void {
@@ -39,5 +40,17 @@ export class ContactAsociarComponent implements OnInit {
   asociarAcamp() {
 
   }
+  createContactForm(): FormGroup {
+    console.log("New Form");
 
+    return this._formBuilder.group({
+      id: [this.contact.id],
+      nombre: [this.contact.nombre],
+      correo: [this.contact.correo],
+      telefono: [this.contact.telefono],
+      direccion: [this.contact.direccion],
+      acceso: [this.contact.acceso],
+
+    });
+  }
 }

@@ -1,11 +1,12 @@
 import { UserInv } from '../../../../models/userInv.model';
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 import { Contact } from '../../../../../app/main/apps/userInv-Manage/contact.model';
 import { UserInvService } from '../../../../services/user-inv.service';
 import swal from "sweetalert2";
+import { FuseConfirmDialogComponent } from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     selector: 'contacts-contact-form-dialog',
@@ -20,6 +21,7 @@ export class ContactsContactFormDialogComponent {
     //contactForm: FormGroup;
     invUserForm: FormGroup;
     dialogTitle: string;
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
     /**
      * Constructor
@@ -32,7 +34,8 @@ export class ContactsContactFormDialogComponent {
         private invService: UserInvService,
         public matDialogRef: MatDialogRef<ContactsContactFormDialogComponent>,
         @Inject(MAT_DIALOG_DATA) private _data: any,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        public _matDialog: MatDialog,
     ) {
         // Set the defaults
         this.action = _data.action;
@@ -51,7 +54,9 @@ export class ContactsContactFormDialogComponent {
             telefono: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
             direccion: ['', Validators.required],
         });
-        // this.contactForm = this.createContactForm();
+
+        this.invUserForm = this.createContactForm();
+
     }
 
 
@@ -64,7 +69,6 @@ export class ContactsContactFormDialogComponent {
             if (res.success && res.autorizado) {
                 swal.fire('Invitado registrado')
                 this.contact = data
-                this.createContactForm();
                 this.invService.getInvitados().subscribe(data => {
                     console.log(data);
                     this.invService.getUsers(data.data)
@@ -80,6 +84,47 @@ export class ContactsContactFormDialogComponent {
 
         })
     }
+
+    onSaveEdit(contact) {
+        this.invService.updateInfo(contact).subscribe(data => {
+            console.log(data);
+            swal.fire('Usuario actualizado')
+            this.invService.getInvitados().subscribe(data => {
+                console.log(data);
+                this.invService.getUsers(data.data)
+
+            })
+        });
+    }
+
+    onDelete(contact) {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: false
+        });
+
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea eliminarlo?';
+
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.invService.deleteUserInv(contact).subscribe(data => {
+                    console.log(data);
+                });
+                this.invService.getInvitados().subscribe(data => {
+                    console.log(data);
+                    this.invService.getUsers(data.data)
+
+                })
+            }
+            this.confirmDialogRef = null;
+        });
+
+    }
+    /*getDatosEdit(nombre, correo, telefono, direccion) {
+        nombre.value = this.contact.nombre
+        correo.value = this.contact.correo
+        telefono.value = this.contact.telefono
+        direccion.value = this.contact.direccion
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -90,6 +135,8 @@ export class ContactsContactFormDialogComponent {
      * @returns {FormGroup}
      */
     createContactForm(): FormGroup {
+        console.log("New Form");
+
         return this._formBuilder.group({
             id: [this.contact.id],
             nombre: [this.contact.nombre],

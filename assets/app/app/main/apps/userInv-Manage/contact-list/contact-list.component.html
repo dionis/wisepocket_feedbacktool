@@ -1,17 +1,4 @@
 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{ value: '50' }">
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="checkbox">
-    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let contact">
-      <mat-checkbox
-        [(ngModel)]="checkboxes[contact.id]"
-        (ngModelChange)="onSelectedChange(contact.id)"
-        (click)="$event.stopPropagation()"
-      >
-      </mat-checkbox>
-    </mat-cell>
-  </ng-container>
-
   <!-- Name Column -->
   <ng-container matColumnDef="Nombre">
     <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
@@ -43,13 +30,32 @@
       </p>
     </mat-cell>
   </ng-container>
-
+  <!-- Buttons Column -->
+  <div>
+    <ng-container matColumnDef="boton">
+      <mat-header-cell id="editar" *matHeaderCellDef>Opciones</mat-header-cell>
+      <mat-cell *matCellDef="let contact">
+        <div fxFlex="row" fxLayoutAlign="end center">
+          <button
+            id="botonAsociar"
+            mat-button
+            fxHide
+            fxShow.gt-md
+            (click)="editContact(contact)"
+          >
+            Editar
+          </button>
+          <button id="botonEditar" mat-button (click)="asociarCamp()">
+            Asociar
+          </button>
+        </div>
+      </mat-cell>
+    </ng-container>
+  </div>
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row
     *matRowDef="let contact; columns: displayedColumns"
     class="contact"
-    (click)="editContact(contact)"
-    [ngClass]="{ 'accent-50': checkboxes[contact.id] }"
     [@animate]="{ value: '*', params: { y: '100%' } }"
   >
   </mat-row>

@@ -16,6 +16,7 @@ import { ContactsContactFormDialogComponent } from '../../../../../app/main/apps
 import { OpinionService } from '../../../../services/opinion-analizer.service';
 import { OpinionTest } from '../../../../models/opinionTest.model';
 import { ChangeDetectorRef } from '@angular/core';
+import { ContactAsociarComponent } from '../contact-asociar/contact-asociar.component';
 //import {CampaingService} from '../../../../services/campaing.service';
 
 
@@ -34,7 +35,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     contacts: any;
     user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'Nombre', 'Correo', 'Teléfono'];
+    displayedColumns = ['Nombre', 'Correo', 'Teléfono', 'boton'];
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
@@ -83,7 +84,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
         })
 
-        this._contactsService.onContactsChanged
+       /* this._contactsService.onContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(contacts => {
                 this.contacts = contacts;
@@ -181,6 +182,22 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                         this.deleteContact(contact)
                         break;
                 }
+            });
+    }
+
+    asociarCamp(): void {
+        this.dialogRef = this._matDialog.open(ContactAsociarComponent, {
+            panelClass: 'contact-form-dialog',
+            data: {
+                action: 'asociar'
+            }
+        });
+
+        this.dialogRef.afterClosed()
+            .subscribe((response: FormGroup) => {
+            
+               
+                
             });
     }
     /*getDatosEdit(nombre: any, correo: any, telefono: any, direccion: any) {

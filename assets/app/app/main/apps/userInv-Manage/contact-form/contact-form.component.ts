@@ -43,7 +43,7 @@ export class ContactsContactFormDialogComponent {
         }
         else {
             this.dialogTitle = 'Nuevo Invitado';
-            
+
         }
         this.invUserForm = this._formBuilder.group({
             nombre: ['', Validators.required],
@@ -54,7 +54,7 @@ export class ContactsContactFormDialogComponent {
         // this.contactForm = this.createContactForm();
     }
 
-    
+
 
     onSave() {
         const data = this.invUserForm.getRawValue();
@@ -65,6 +65,11 @@ export class ContactsContactFormDialogComponent {
                 swal.fire('Invitado registrado')
                 this.contact = data
                 this.createContactForm();
+                this.invService.getInvitados().subscribe(data => {
+                    console.log(data);
+                    this.invService.getUsers(data.data)
+
+                })
             }
             else if (res.success === false) {
                 swal.fire('Este usuario ya está registrado')

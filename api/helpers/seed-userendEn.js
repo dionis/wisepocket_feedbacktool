@@ -101,18 +101,21 @@ module.exports = {
     for ( var i = 0; i < intervalInHour; i++ ){
        //console.log("Hour interval ", dateToFind)
        //let dayForSearch = dateToFind.add(2, 'hour').format("YYYY-MM-DD HH:mm a");
-       var dayForSearch = initDataToday.add(faker.random.arrayElement([30,50]),"minutes")
+       dateInMoment = initDataToday.clone();
+       var dayForSearch = dateInMoment.add(faker.random.arrayElement([30,50]),"minutes")
        //.add(2, 'hour');
        console.log("Date internval Today ", dayForSearch.format("YYYY-MM-DD hh:mm a"));
        hourInDayIntervalToday.push(dayForSearch.clone())
     }
 
-
-    dateInMoment = initDataYesterday;
+    
+    initDataYesterday.add(5, 'hour')
+   
     hourInDayIntervalYesterday.push(initDataYesterday)
     for ( var i = 0; i < intervalInHour; i++ ){
-       var dayForSearch = initDataYesterday.add(faker.random.arrayElement([30,50]),"minutes")
-       //.add(2, 'hour')
+       dateInMoment = initDataYesterday.clone();
+       var dayForSearch = dateInMoment.add(faker.random.arrayElement([30,50]),"minutes")
+       //
        console.log("Date internval Yesterday ", dayForSearch.format("YYYY-MM-DD hh:mm a"));
        hourInDayIntervalYesterday.push(dayForSearch.clone())
     }
@@ -136,7 +139,7 @@ module.exports = {
       // How  faker.date.recent(5) set a date = "2021-04-23T14:49:00.099Z"
       //faker.time.recent(7) is a timestamp
 
-      if (iValue < 301) {
+      if (iValue < 501) {
         // var currentTime = faker.date.recent(5);
         //************************************************* */
         //Select some date since current time to seven days before
@@ -144,9 +147,7 @@ module.exports = {
         var currentTime =faker.random.arrayElement(arrayInDays)
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
-        // console.log("Date day ", currentTime.toLocaleString('en-US', {weekday:'long'}));
-  //currentTime.toLocaleString('en-US', {weekday:'long'}),
-
+  
         var toDayCurrentTime = (faker.random.arrayElement([true,false]))? faker.random.arrayElement(hourInDayIntervalToday):faker.random.arrayElement(hourInDayIntervalYesterday);
         var dateObjetToday = new Date(toDayCurrentTime);
         var timestampToDay = dateObjet.getTime();
@@ -166,8 +167,7 @@ module.exports = {
 
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
-          fecha:
-          ,
+          fecha:dateObjetToday,
           createDay: toDayCurrentTime.format('dddd'),
           idioma: 'ingles',
           polaridad: 'positiva',
@@ -204,7 +204,7 @@ module.exports = {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
 
-      if (iValue < 301) {
+      if (iValue < 501) {
         var currentTime = faker.random.arrayElement(arrayInDays)
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
@@ -264,7 +264,7 @@ module.exports = {
     for (var iValue = 1; iValue < registerSize2; iValue++) {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
-      if (iValue < 71) {
+      if (iValue < 171) {
 
         var currentTime = faker.random.arrayElement(arrayInDays)
         var dateObjet = new Date(currentTime);

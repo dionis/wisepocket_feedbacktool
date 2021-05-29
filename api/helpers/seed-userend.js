@@ -89,8 +89,7 @@ module.exports = {
     dateInMoment = initDataYesterday;
     hourInDayIntervalYesterday.push(initDataYesterday)
     for ( var i = 0; i < intervalInHour; i++ ){
-       var dayForSearch = initDataYesterday.add(faker.random.arrayElement([30,50]),"minutes")
-       //.add(2, 'hour');
+       var dayForSearch = initDataYesterday.add(2, 'hour');
        console.log("Date internval Yesterday ", dayForSearch.format("YYYY-MM-DD hh:mm a"));
        hourInDayIntervalYesterday.push(dayForSearch.clone())
     }
@@ -123,9 +122,9 @@ module.exports = {
 
 
     registerSize = 300
-
+    var opinionSize = 201;
+    let opinionArray = ['positiva','negativa','neutra']
     for (var iValue = 1; iValue < registerSize; iValue++) {
-
 
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
@@ -144,6 +143,13 @@ module.exports = {
       var dateObjetToday = new Date(toDayCurrentTime);
       var timestampToDay = dateObjet.getTime();
 
+
+      let endMoment = moment(toDayCurrentTime,"YYYY-MM-DD hh:mm a").add(60,"minutes").format("YYYY-MM-DD hh:mm a");
+
+      let dateBetWeen = faker.date.between(toDayCurrentTime, endMoment);
+      let dateBetWeenMoment = moment(dateBetWeen);
+
+
       let dayNameArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
       //console.log("Date day ", currentTime.toLocaleString('en-US', {weekday:'long'}));
 
@@ -153,7 +159,7 @@ module.exports = {
       //console.log("# Day ", dateObjet.getDay(), " = Day Name: ",dayNameArray[dateObjet.getDay()] );
       //console.log("TimeStamp ====>> " ,timestamp);
   //currentTime.toLocaleString('en-US', {weekday:'long'})
-      if (opinion < 201) {
+      if (opinion < opinionSize) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
           fecha: dateObjet,
@@ -166,17 +172,20 @@ module.exports = {
 
         await Opinion.create(newOpinion)
 
-        newOpinion = {
-          texto: faker.lorem.sentences(6, ''),
-          fecha: dateObjetToday,
-          createDay: toDayCurrentTime.format('dddd'),
-          idioma: 'español',
-          polaridad: 'positiva',
-          userend: userEndObjet.id,
-          campaign: campOgjet.id
-        }
+        for ( var iDate = 1; iDate < (registerSize/3); iDate++){
 
-        await Opinion.create(newOpinion)
+          newOpinion = {
+            texto: faker.lorem.sentences(6, ''),
+            fecha: dateBetWeen,
+            createDay: dateBetWeenMoment.format('dddd'),
+            idioma: 'español',
+            polaridad:faker.random.arrayElement(opinionArray),
+            userend: userEndObjet.id,
+            campaign: campOgjet.id
+          }
+
+          await Opinion.create(newOpinion)
+       }
 
       }
 

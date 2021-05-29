@@ -37,7 +37,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     private _unsubscribeAll: Subject<any>;
     user: User;
     selectedCampaign: any;
-    
+
     @ViewChild(MatButton, {static: true})
     spn: MatButton;
 
@@ -99,7 +99,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
                 flag : 'es'
             }
         ];
-        
+
         this.navigation = navigation;
 
         // Set the private defaults
@@ -126,20 +126,31 @@ export class ToolbarComponent implements OnInit, OnDestroy
             });
         //Select Campaign
         this.selectedCampaign = JSON.parse(localStorage.getItem('campaign_selected'));
-        this.sharedVarService.campaignSelected.subscribe( camp=>{
+        this.sharedVarService.campaignSelected.pipe(takeUntil(this._unsubscribeAll)).subscribe( camp=>{
             //await this.campaignService.getCampaignbyId(campId).subscribe(camp=>{
                 this.selectedCampaign = JSON.parse(camp);
            // })
-            
+
         })
 
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
         // Show User Logged
-        this.user = this.userService.getMyUser();
+        // this.user = this.userService.getMyUser();
+
+        /**
+         *  Necesary change to obtein a current user data
+         */
+         this.sharedVarService.userSelected.pipe(takeUntil(this._unsubscribeAll)).subscribe( user=>{
+
+          console.log("!!!!!! Warning current user data was change !!!!!")
+            this.user = user;
+
+         })
+
         console.log(this.spn);
     }
-  
+
     /**
      * On destroy
      */

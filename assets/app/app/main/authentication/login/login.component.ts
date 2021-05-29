@@ -5,6 +5,7 @@ import { FuseConfigService } from '../../../../@fuse/services/config.service';
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { UserService } from '../../../../app/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SharedVariablesService } from '../../../services/shared-variables.service';
 
 @Component({
     selector     : 'login',
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit
         private _formBuilder: FormBuilder,
         private userService: UserService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private _sharedVarService: SharedVariablesService,
     )
     {
         // Configure the layout
@@ -69,8 +71,19 @@ export class LoginComponent implements OnInit
         const data = this.loginForm.getRawValue();
         this.userService.login(data)
         .then( res=>{
-            this.router.navigate(['dashboard/sample']);
-            console.log(res);
+
+           this.userService.getUserByIdWithPromise().then(resultUser=>{
+
+             ///Navigate to Currentuser Campainglist access
+              //this.router.navigate(['dashboard/sample']);
+              this._sharedVarService.campaignSelected.next(resultUser);
+              this.router.navigate(['apps/campaign/myCampaigns']);
+              console.log(res);
+           })
+           .catch(error=>{
+              console.error("ALERT Show message error!!!!!!")
+           })
+
         })
         .catch(err=>{
             if(err.status ===400){

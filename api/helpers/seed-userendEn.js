@@ -102,23 +102,26 @@ module.exports = {
        //console.log("Hour interval ", dateToFind)
        //let dayForSearch = dateToFind.add(2, 'hour').format("YYYY-MM-DD HH:mm a");
        dateInMoment = initDataToday.clone();
-       var dayForSearch = dateInMoment.add(faker.random.arrayElement([30,50]),"minutes")
+       var dayForSearch = dateInMoment.add(2, 'hour')
        //.add(2, 'hour');
        console.log("Date internval Today ", dayForSearch.format("YYYY-MM-DD hh:mm a"));
        hourInDayIntervalToday.push(dayForSearch.clone())
     }
 
-    
+
     initDataYesterday.add(5, 'hour')
-   
+
     hourInDayIntervalYesterday.push(initDataYesterday)
     for ( var i = 0; i < intervalInHour; i++ ){
        dateInMoment = initDataYesterday.clone();
-       var dayForSearch = dateInMoment.add(faker.random.arrayElement([30,50]),"minutes")
+       var dayForSearch = dateInMoment.add(2, 'hour')
        //
        console.log("Date internval Yesterday ", dayForSearch.format("YYYY-MM-DD hh:mm a"));
        hourInDayIntervalYesterday.push(dayForSearch.clone())
     }
+
+
+    ///Compute data for 7 day after current day
 
     let dayLength = 7;
     arrayInDays.push(yesterDay.clone());
@@ -127,6 +130,7 @@ module.exports = {
       arrayInDays.push(date.clone());
     }
 
+    var parcialDataSeed = 501;
     for (var iValue = 1; iValue < registerSize; iValue++) {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
@@ -139,7 +143,7 @@ module.exports = {
       // How  faker.date.recent(5) set a date = "2021-04-23T14:49:00.099Z"
       //faker.time.recent(7) is a timestamp
 
-      if (iValue < 501) {
+      if (iValue < parcialDataSeed) {
         // var currentTime = faker.date.recent(5);
         //************************************************* */
         //Select some date since current time to seven days before
@@ -147,10 +151,21 @@ module.exports = {
         var currentTime =faker.random.arrayElement(arrayInDays)
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
-  
+
         var toDayCurrentTime = (faker.random.arrayElement([true,false]))? faker.random.arrayElement(hourInDayIntervalToday):faker.random.arrayElement(hourInDayIntervalYesterday);
         var dateObjetToday = new Date(toDayCurrentTime);
         var timestampToDay = dateObjet.getTime();
+        let endMoment = moment(toDayCurrentTime,"YYYY-MM-DD hh:mm a").add(60,"minutes").format("YYYY-MM-DD hh:mm a");
+
+
+        //Get a random date between toDayCurrentTime and endMoment
+        //using faker
+
+        let dateBetWeen = faker.date.between(toDayCurrentTime, endMoment);
+        let dateBetWeenMoment = moment(dateBetWeen);
+
+        console.log(" Get a random date from " + toDayCurrentTime.format("YYYY-MM-DD hh:mm a") + " to " + endMoment );
+        console.log(" The date is : ", dateBetWeenMoment.format("YYYY-MM-DD hh:mm a"));
 
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
@@ -164,19 +179,19 @@ module.exports = {
 
         await Opinion.create(newOpinion)
 
+        for ( var iDate = 1; iDate < (parcialDataSeed/3); iDate++){
+              newOpinion = {
+                texto: faker.lorem.sentences(6, ''),
+                fecha: dateBetWeen,
+                createDay: dateBetWeenMoment.format('dddd'),
+                idioma: 'ingles',
+                polaridad: 'positiva',
+                userend: userEndObjet.id,
+                campaign: campOgjet.id
+              }
 
-        newOpinion = {
-          texto: faker.lorem.sentences(6, ''),
-          fecha:dateObjetToday,
-          createDay: toDayCurrentTime.format('dddd'),
-          idioma: 'ingles',
-          polaridad: 'positiva',
-          userend: userEndObjet.id,
-          campaign: campOgjet.id
+              await Opinion.create(newOpinion)
         }
-
-        await Opinion.create(newOpinion)
-
       }
 
       opinAll = await Opinion.find({})
@@ -204,7 +219,7 @@ module.exports = {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
 
-      if (iValue < 501) {
+      if (iValue < parcialDataSeed) {
         var currentTime = faker.random.arrayElement(arrayInDays)
         var dateObjet = new Date(currentTime);
         var timestamp = dateObjet.getTime();
@@ -212,6 +227,15 @@ module.exports = {
         var toDayCurrentTime = (faker.random.arrayElement([true,false]))? faker.random.arrayElement(hourInDayIntervalToday):faker.random.arrayElement(hourInDayIntervalYesterday);
         var dateObjetToday = new Date(toDayCurrentTime);
         var timestampToDay = dateObjet.getTime();
+
+        let endMoment = moment(toDayCurrentTime,"YYYY-MM-DD hh:mm a").add(60,"minutes").format("YYYY-MM-DD hh:mm a");
+
+        let dateBetWeen = faker.date.between(toDayCurrentTime, endMoment);
+        let dateBetWeenMoment = moment(dateBetWeen);
+
+        // console.log(" Get a random date from " + toDayCurrentTime.format("YYYY-MM-DD hh:mm a") + " to " + endMoment );
+        // console.log(" The date is : ", dateBetWeenMoment.format("YYYY-MM-DD hh:mm a"));
+
 
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
@@ -225,18 +249,19 @@ module.exports = {
 
         await Opinion.create(newOpinion)
 
+       for ( var iDate = 1; iDate < (parcialDataSeed/3); iDate++){
+          newOpinion = {
+            texto: faker.lorem.sentences(6, ''),
+            fecha: dateBetWeen,
+            createDay: dateBetWeenMoment.format('dddd'),
+            idioma: 'ingles',
+            polaridad: 'negativa',
+            userend: userEndObjet.id,
+            campaign: campOgjet.id
+          }
 
-        newOpinion = {
-          texto: faker.lorem.sentences(6, ''),
-          fecha: dateObjetToday,
-          createDay: toDayCurrentTime.format('dddd'),
-          idioma: 'ingles',
-          polaridad: 'negativa',
-          userend: userEndObjet.id,
-          campaign: campOgjet.id
-        }
-
-        await Opinion.create(newOpinion)
+          await Opinion.create(newOpinion)
+       }
 
       }
 
@@ -261,10 +286,11 @@ module.exports = {
 
     }
 
+    var lenghtSeedInsert = 171;
     for (var iValue = 1; iValue < registerSize2; iValue++) {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)
-      if (iValue < 171) {
+      if (iValue < lenghtSeedInsert) {
 
         var currentTime = faker.random.arrayElement(arrayInDays)
         var dateObjet = new Date(currentTime);
@@ -273,6 +299,11 @@ module.exports = {
         var toDayCurrentTime = (faker.random.arrayElement([true,false]))? faker.random.arrayElement(hourInDayIntervalToday):faker.random.arrayElement(hourInDayIntervalYesterday);
         var dateObjetToday = new Date(toDayCurrentTime);
         var timestampToDay = dateObjet.getTime();
+
+        let endMoment = moment(toDayCurrentTime,"YYYY-MM-DD hh:mm a").add(60,"minutes").format("YYYY-MM-DD hh:mm a");
+
+        let dateBetWeen = faker.date.between(toDayCurrentTime, endMoment);
+        let dateBetWeenMoment = moment(dateBetWeen);
 
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
@@ -297,6 +328,20 @@ module.exports = {
         }
 
         await Opinion.create(newOpinion)
+
+        for ( var iDate = 1; iDate < (lenghtSeedInsert/3); iDate++){
+
+            newOpinion = {
+              texto: faker.lorem.sentences(6, ''),
+              fecha: dateBetWeen,
+              createDay: dateBetWeenMoment.format('dddd'),
+              idioma: 'ingles',
+              polaridad: 'neutra',
+              userend: userEndObjet.id,
+              campaign: campOgjet.id
+            }
+            await Opinion.create(newOpinion)
+        }
 
       }
       opinAll = await Opinion.find({})

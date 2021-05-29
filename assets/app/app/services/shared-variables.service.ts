@@ -8,12 +8,17 @@ export class SharedVariablesService {
   campaignSelected: Subject<any>;
   //capaign_name: Subject<any>;
   campaignSelectedId : Subject<string>;
-  constructor() { 
-    
+
+  userSelected: Subject<any>;
+  constructor() {
+
     this.campaignSelected = new Subject<any>();
+    this.userSelected = new Subject<any>();
+
     const campaign = JSON.parse(localStorage.getItem('campaign_selected'))
     console.log(campaign)
     this.campaignSelected.next(campaign!==null?campaign:'');
+
   }
 
   getName():string{

@@ -113,6 +113,50 @@ export class UserService {
         })
   }
 
+
+  getUserByIdWithPromise(): Promise<User> {
+    const jwt = new JwtHelperService();
+    let token = jwt.decodeToken(localStorage.getItem('id_token'));
+    let user_id = token._id;
+    console.log(user_id);
+    let idparams = new HttpParams();
+    idparams.append('id', user_id);
+
+    return new Promise ((resolve, reject)=>{
+      this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/user/getUserById/_id?id=' + user_id,
+      { params: idparams }).pipe(map((responseData: any) => {
+
+        if (responseData.data) {
+          console.log(responseData.data.name)
+          this.user.id = responseData.data.id;
+          this.user.name = responseData.data.name;
+          this.user.email = responseData.data.email;
+          this.user.phone = responseData.data.phone;
+          this.user.organization = responseData.data.organization;
+          this.user.cargo = responseData.data.cargo;
+          this.user.isAdmin = responseData.data.isAdmin;
+          console.log("********* Current User data *******")
+          console.log(this.user);
+
+          this._userCamp.getCampaignbyUser('0','','','') //SE LLAMA A la FUNCION para mandar el idUser LOGUEADO a CampaignService
+          return this.user;
+        } else {
+          return responseData;
+        }
+      })).toPromise()
+      .then((result : User) => {
+          resolve(result);
+      })
+      .catch(error=>{
+          console.error(error);
+          reject(error);
+        })
+
+    })
+
+
+  }
+
   getMyUser(): User {
     console.log(this.user)
     //if(this.user === null){

@@ -10,6 +10,8 @@ import { FuseSidebarService } from '../../../../../../@fuse/components/sidebar/s
 import { UserService } from '../../../../../services/user.service';
 import { User } from '../../../../../models/user.model';
 
+import { SharedVariablesService } from '../../../../../services/shared-variables.service';
+
 @Component({
     selector     : 'navbar-vertical-style-1',
     templateUrl  : './style-1.component.html',
@@ -39,7 +41,8 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
         private _router: Router,
-        private userService: UserService
+        private userService: UserService,
+        private sharedVarService: SharedVariablesService,
     )
     {
         // Set the private defaults
@@ -124,7 +127,17 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
                 this.navigation = this._fuseNavigationService.getCurrentNavigation();
             });
 
-        this.user = this.userService.getMyUser();
+             /**
+               *  Necesary change to obtein a current user data
+               */
+              this.sharedVarService.userSelected.pipe(takeUntil(this._unsubscribeAll)).subscribe( user=>{
+
+                console.log("!!!!!! Warning current user data was change !!!!!")
+                  this.user = user;
+
+               })
+
+
     }
 
     /**

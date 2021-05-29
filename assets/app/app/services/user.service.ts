@@ -115,11 +115,9 @@ export class UserService {
     return new Promise ((resolve, reject)=>{
       this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/user/getUserById/_id?id=' + user_id,
       { params: idparams }).pipe(map((responseData: any) => {
-
-
         if (responseData.data) {
-          if (typeof(this.user) === 'undefined' || this.user === null)
-              //this.user = new User();
+          // if (typeof(this.user) === 'undefined' || this.user === null)
+          //     this.user = new User();
           console.log(responseData.data.name)
           return responseData.data;
         } else {

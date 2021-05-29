@@ -30,11 +30,13 @@ import { MailboxMainSidebarComponent } from '../../../../app/main/apps/opinionMa
 import {OpinionComposeDialogComponent}from '../../../../app/main/apps/opinionMailbox/dialogs/compose/compose.component';
 
 import { EcommerceOrdersService } from '../../../../app/main/apps/e-commerce/orders/orders.service';
+import { CampaignSelectGuard } from '../guards/campaign-select.guard';
 
 const routes: Routes = [
     {
         path     : 'label/:labelHandle',
         component: OpinionMailboxComponent,
+        canActivate:[CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService,
             data: EcommerceOrdersService
@@ -43,6 +45,7 @@ const routes: Routes = [
     {
         path     : 'label/:labelHandle/:opinionId',
         component: OpinionMailboxComponent,
+        canActivate:[CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService,
             data: EcommerceOrdersService
@@ -51,6 +54,7 @@ const routes: Routes = [
     {
         path     : 'filter/:filterHandle',
         component: OpinionMailboxComponent,
+        canActivate:[CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService,
             data: EcommerceOrdersService
@@ -59,6 +63,7 @@ const routes: Routes = [
     {
         path     : 'filter/:filterHandle/:opinionId',
         component: OpinionMailboxComponent,
+        canActivate:[CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService,
             data: EcommerceOrdersService
@@ -67,6 +72,7 @@ const routes: Routes = [
     {
         path     : ':folderHandle',
         component: OpinionMailboxComponent,
+        canActivate:[CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService,
             data: EcommerceOrdersService
@@ -75,6 +81,7 @@ const routes: Routes = [
     {
         path     : ':folderHandle/:opinionId',
         component: OpinionMailboxComponent,
+        canActivate:[CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService,
             data: EcommerceOrdersService
@@ -82,6 +89,7 @@ const routes: Routes = [
     },
     {
         path      : '**',
+        canActivate:[CampaignSelectGuard],
         redirectTo: 'inbox'
     }
 ];

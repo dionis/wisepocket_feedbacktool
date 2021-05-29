@@ -23,11 +23,13 @@ import { OpinionDetailsComponent } from '../../../../app/main/apps/opinionMailbo
 import { MailboxMainSidebarComponent } from '../../../../app/main/apps/opinionMailbox/sidebars/main/mailbox-main-sidebar.componet';
 
 import {OpinionComposeDialogComponent}from '../../../../app/main/apps/opinionMailbox/dialogs/compose/compose.component';
+import { CampaignSelectGuard } from '../guards/campaign-select.guard';
 
 const routes: Routes = [
     {
-        path     : 'label/:labelHandle',
+         path     : 'label/:labelHandle',
         component: OpinionMailboxComponent,
+        canActivate: [CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService
         }
@@ -35,6 +37,7 @@ const routes: Routes = [
     {
         path     : 'label/:labelHandle/:opinionId',
         component: OpinionMailboxComponent,
+        canActivate: [CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService
         }
@@ -42,6 +45,7 @@ const routes: Routes = [
     {
         path     : 'filter/:filterHandle',
         component: OpinionMailboxComponent,
+        canActivate: [CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService
         }
@@ -49,6 +53,7 @@ const routes: Routes = [
     {
         path     : 'filter/:filterHandle/:opinionId',
         component: OpinionMailboxComponent,
+        canActivate: [CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService
         }
@@ -56,6 +61,7 @@ const routes: Routes = [
     {
         path     : ':folderHandle',
         component: OpinionMailboxComponent,
+        canActivate: [CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService
         }
@@ -63,6 +69,7 @@ const routes: Routes = [
     {
         path     : ':folderHandle/:opinionId',
         component: OpinionMailboxComponent,
+        canActivate: [CampaignSelectGuard],
         resolve  : {
             opinion: OpinionService
         }

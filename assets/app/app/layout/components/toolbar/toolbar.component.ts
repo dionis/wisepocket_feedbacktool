@@ -141,8 +141,8 @@ export class ToolbarComponent implements OnInit, OnDestroy
         /**
          *  Necesary change to obtein a current user data
          */
-         this.sharedVarService.userSelected.pipe(takeUntil(this._unsubscribeAll)).subscribe( user=>{
-
+         this.sharedVarService.userSelected.pipe(takeUntil(this._unsubscribeAll))
+         .subscribe( user=>{
           console.log("!!!!!! Warning current user data was change !!!!!")
             this.user = user;
 

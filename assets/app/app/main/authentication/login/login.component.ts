@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit
 
              ///Navigate to Currentuser Campainglist access
               //this.router.navigate(['dashboard/sample']);
-              this._sharedVarService.campaignSelected.next(resultUser);
+              this._sharedVarService.userSelected.next(resultUser);
               this.router.navigate(['apps/campaign/myCampaigns']);
               console.log(res);
            })

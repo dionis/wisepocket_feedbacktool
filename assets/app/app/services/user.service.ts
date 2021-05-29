@@ -119,7 +119,7 @@ export class UserService {
 
         if (responseData.data) {
           if (typeof(this.user) === 'undefined' || this.user === null)
-              this.user = new User();
+              //this.user = new User();
           console.log(responseData.data.name)
           return responseData.data;
         } else {

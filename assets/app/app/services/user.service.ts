@@ -91,18 +91,7 @@ export class UserService {
 
         if (responseData.data) {
           console.log(responseData.data.name)
-          this.user.id = responseData.data.id;
-          this.user.name = responseData.data.name;
-          this.user.email = responseData.data.email;
-          this.user.phone = responseData.data.phone;
-          this.user.organization = responseData.data.organization;
-          this.user.cargo = responseData.data.cargo;
-          this.user.isAdmin = responseData.data.isAdmin;
-          console.log("********* Current User data *******")
-          console.log(this.user);
-
-          this._userCamp.getCampaignbyUser('0','','','') //SE LLAMA A la FUNCION para mandar el idUser LOGUEADO a CampaignService
-          return this.user;
+          return responseData.data;
         } else {
           return responseData;
         }
@@ -132,18 +121,7 @@ export class UserService {
           if (typeof(this.user) === 'undefined' || this.user === null)
               this.user = new User();
           console.log(responseData.data.name)
-          this.user.id = responseData.data.id;
-          this.user.name = responseData.data.name;
-          this.user.email = responseData.data.email;
-          this.user.phone = responseData.data.phone;
-          this.user.organization = responseData.data.organization;
-          this.user.cargo = responseData.data.cargo;
-          this.user.isAdmin = responseData.data.isAdmin;
-          console.log("********* Current User data *******")
-          console.log(this.user);
-
-          this._userCamp.getCampaignbyUser('0','','','') //SE LLAMA A la FUNCION para mandar el idUser LOGUEADO a CampaignService
-          return this.user;
+          return responseData.data;
         } else {
           return responseData;
         }

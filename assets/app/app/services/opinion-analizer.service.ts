@@ -119,17 +119,24 @@ export class OpinionService implements Resolve<any>
             .append("page", page.toString())
             .append("idioma", 'ingles')
         return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinionXIdiomaCamp', { params: httpParams })
-       
+
     };
 
 
     getOpinion(): Observable<any> {
-        let page = 0
-        let httpParams = new HttpParams()
-            .append("id", this.campaign.getMyCampsID())
-            .append("page", page.toString())
-        return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion', { params: httpParams })
-    };
+        let page = 0;
+        let campaignid:any = this.campaign.getMyCampsIDEx();
+        console.log("Data campaing info ", campaignid);
+        console.log("Id Data campaing info ", campaignid.id);
+        if (typeof(campaignid) === 'undefined' || campaignid === null || campaignid === '')
+          return null
+        else {
+            let httpParams = new HttpParams()
+                .append("id", campaignid.id)
+                .append("page", page.toString())
+            return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion', { params: httpParams })
+        }
+      };
 
 
     getAspectOpin(oPinID: any): Observable<any> {
@@ -149,7 +156,7 @@ export class OpinionService implements Resolve<any>
     getFolders(): Promise<any> {
         return new Promise((resolve, reject) => {
             this._httpClient.get('api/opinion-folders')
-                .subscribe((response: any) => { 
+                .subscribe((response: any) => {
                     this.folders = response;
                     this.onFoldersChanged.next(this.folders);
                     resolve(this.folders);

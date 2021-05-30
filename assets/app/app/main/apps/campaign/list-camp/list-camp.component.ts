@@ -147,13 +147,17 @@ export class ListCampComponent implements AfterViewInit,OnInit {
     }
 
     onSelectCamp(campaign){
+
         console.log('Campaign Selected', localStorage.getItem('campaign_selected'));
         localStorage.setItem('campaign_selected',JSON.stringify(campaign));
         this.sharedVarService.campaignSelected.next(localStorage.getItem('campaign_selected'));
 
         console.log('Campaign Selected', JSON.parse(localStorage.getItem('campaign_selected')));
         //Gonna to Opinion in a selected campaing
-        this.router.navigate(['/apps/opinionMailbox']);
+        this.router.navigate(['/apps/opinionMailbox'],{
+          queryParams: {campaign_selected:campaign.id}});
+
+
     }
 
     // async loadImage(idImg){

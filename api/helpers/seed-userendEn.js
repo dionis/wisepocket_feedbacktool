@@ -179,7 +179,7 @@ module.exports = {
 
         await Opinion.create(newOpinion)
 
-        for ( var iDate = 1; iDate < (parcialDataSeed/3); iDate++){
+        for ( var iDate = 1; iDate < (4); iDate++){
               newOpinion = {
                 texto: faker.lorem.sentences(6, ''),
                 fecha: dateBetWeen,
@@ -249,7 +249,7 @@ module.exports = {
 
         await Opinion.create(newOpinion)
 
-       for ( var iDate = 1; iDate < (parcialDataSeed/3); iDate++){
+       for ( var iDate = 1; iDate < (4); iDate++){
           newOpinion = {
             texto: faker.lorem.sentences(6, ''),
             fecha: dateBetWeen,
@@ -317,19 +317,8 @@ module.exports = {
 
         await Opinion.create(newOpinion)
 
-        newOpinion = {
-          texto: faker.lorem.sentences(6, ''),
-          fecha: dateObjetToday,
-          createDay: toDayCurrentTime.format('dddd'),
-          idioma: 'ingles',
-          polaridad: 'neutra',
-          userend: userEndObjet.id,
-          campaign: campOgjet.id
-        }
 
-        await Opinion.create(newOpinion)
-
-        for ( var iDate = 1; iDate < (lenghtSeedInsert/3); iDate++){
+        for ( var iDate = 1; iDate < (4); iDate++){
 
             newOpinion = {
               texto: faker.lorem.sentences(6, ''),

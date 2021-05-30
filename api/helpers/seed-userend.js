@@ -172,7 +172,7 @@ module.exports = {
 
         await Opinion.create(newOpinion)
 
-        for ( var iDate = 1; iDate < (registerSize/3); iDate++){
+        for ( var iDate = 1; iDate < (4); iDate++){
 
           newOpinion = {
             texto: faker.lorem.sentences(6, ''),

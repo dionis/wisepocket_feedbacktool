@@ -130,6 +130,7 @@ module.exports = {
     //Requiere ID de la Campaña y la pagina
     getOpinion: async (req, res) => {
         const page = req.param('page')
+        console.log("Find campaing id ===> ", req.param('id'))
         let campID = await Campaign.findOne({ id: req.param('id') })
         await Opinion.find({
             where: { campaign: campID.id },

@@ -108,6 +108,7 @@ export class UserService {
     const jwt = new JwtHelperService();
     let token = jwt.decodeToken(localStorage.getItem('id_token'));
     let user_id = token._id;
+    console.log("<------ Login user id ---->")
     console.log(user_id);
     let idparams = new HttpParams();
     idparams.append('id', user_id);
@@ -115,7 +116,10 @@ export class UserService {
       this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/user/getUserById/_id?id=' + user_id,
       { params: idparams }).pipe(map((responseData: any) => {
 
+
         if (responseData.data) {
+          if (typeof(this.user) === 'undefined' || this.user === null)
+              this.user = new User();
           console.log(responseData.data.name)
           return responseData.data;
         } else {

@@ -13,10 +13,9 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 import { Opinion } from '../../../../models/opinion.model';
 import { OpinionService } from '../../../../services/opinion-analizer.service';
-
-
 import { EcommerceOrdersService } from '../../../../../app/main/apps/e-commerce/orders/orders.service';
 
+import { ActivatedRoute,  RouterEvent, NavigationEnd, ParamMap } from '@angular/router';
 
 import { locale as english } from '../../../../../app/main/apps/opinionMailbox/i18n/en';
 import { locale as turkish } from '../../../../../app/main/apps/opinionMailbox/i18n/tr';
@@ -53,6 +52,9 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     // Private
     private _unsubscribeAll: Subject<any>;
 
+
+    selectedCamapaign:string= '';
+
     /**
      * Constructor
      *
@@ -63,8 +65,7 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _ecommerceOrdersService: EcommerceOrdersService,
         private _pruebaServOpin: OpinionService,
-        private _prueba2ServOpin: OpinionService,
-        private _prueba3ServOpin: OpinionService
+        private router: ActivatedRoute
 
     )
     {
@@ -92,16 +93,25 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
         //this._pruebaServOpin.getOpinXIdioma().subscribe(data => this.prueba = data)
         console.log("ESTOO " + this.pruebas);
 
+        this.router.queryParamMap.pipe( takeUntil(this._unsubscribeAll)).subscribe((paramMap: ParamMap) => {
+          const refresh = paramMap.get('campaign_selected');
+          console.log("Selected Campaign === New call options ",refresh );
+          this.selectedCamapaign = refresh;
 
-        this._prueba2ServOpin.getOpinion().subscribe(data => {
+          this._pruebaServOpin.getOpinion().pipe(takeUntil(this._unsubscribeAll)).subscribe(data => {
             console.log("Data Opinion", data);
             this.prueba2 = data
-            this._prueba3ServOpin.getAspectOpin(this.prueba2.data[0].id).subscribe((result:any) => {
+            this._pruebaServOpin.getAspectOpin(this.prueba2.data[0].id).subscribe((result:any) => {
                 console.log("Data Aspect Opinion", result);
                 if (typeof(result) !== 'undefined')
                    this.prueba3 = result.data
             })
         })
+
+   })
+
+
+
        console.log("Is paginator ", this.sort)
        this.dataSource = new FilesDataSource(this._ecommerceOrdersService, this.paginatorDetails, this.sort);
 

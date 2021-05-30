@@ -102,6 +102,16 @@ export class CampaignService {
     return this.campaign[0].id;
   }
 
+
+  getMyCampsIDEx() {
+    let campaign:any = localStorage.getItem('campaign_selected');
+    console.log('Campaign Selected', campaign );
+    //localStorage.setItem('campaign_selected',JSON.stringify(campaign));
+    return JSON.parse(campaign);
+  }
+
+
+
   updateCampaign(campaign): Promise<any>
   {
       return new Promise((resolve, reject) => {

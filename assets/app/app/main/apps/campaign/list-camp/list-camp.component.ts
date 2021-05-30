@@ -13,6 +13,7 @@ import { locale as english } from '../../../apps/campaign/list-camp/i18n/en';
 import { locale as spanish } from '../../../apps/campaign/list-camp/i18n/es';
 import { UserService } from '../../../../services/user.service';
 import { SharedVariablesService } from '../../../../services/shared-variables.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector     : 'campaign-list',
@@ -61,7 +62,8 @@ export class ListCampComponent implements AfterViewInit,OnInit {
         private campService: CampaignService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private userService: UserService,
-        private sharedVarService: SharedVariablesService
+        private sharedVarService: SharedVariablesService,
+        private router: Router
         //private imageService: ImageService
     )
     {
@@ -145,12 +147,17 @@ export class ListCampComponent implements AfterViewInit,OnInit {
     }
 
     onSelectCamp(campaign){
+
         console.log('Campaign Selected', localStorage.getItem('campaign_selected'));
-        if(true){
-            localStorage.setItem('campaign_selected',JSON.stringify(campaign));
-            this.sharedVarService.campaignSelected.next(localStorage.getItem('campaign_selected'));
-        }
-        console.log('Campaign Selected', JSON.parse(localStorage.getItem('campaign_selected')))
+        localStorage.setItem('campaign_selected',JSON.stringify(campaign));
+        this.sharedVarService.campaignSelected.next(localStorage.getItem('campaign_selected'));
+
+        console.log('Campaign Selected', JSON.parse(localStorage.getItem('campaign_selected')));
+        //Gonna to Opinion in a selected campaing
+        this.router.navigate(['/apps/opinionMailbox'],{
+          queryParams: {campaign_selected:campaign.id}});
+
+
     }
 
     // async loadImage(idImg){
@@ -161,7 +168,7 @@ export class ListCampComponent implements AfterViewInit,OnInit {
     //     .toPromise()
     //     .then(res=>{
     //         src = res;
-    //         console.log('Dentro',src) 
+    //         console.log('Dentro',src)
     //     })
     //     // .subscribe(res=>{
     //     //     src = res;
@@ -293,8 +300,8 @@ export class CampaignDataSource extends DataSource<any>{
              return (valueA < valueB ? -1 : 1) * (matSort.direction === 'asc' ? 1 : -1);
          });
      }
-    
-    
+
+
 
 
 }

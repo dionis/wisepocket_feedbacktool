@@ -19,11 +19,13 @@ import { AnalyticsDashboardComponent } from './analytics.component';
 import { AnalyticsDashboardService } from './analytics.service';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { CampaignSelectGuard } from '../guards/campaign-select.guard';
 
 const routes: Routes = [
     {
         path     : '**',
         component: AnalyticsDashboardComponent,
+        canActivate: [CampaignSelectGuard],
         resolve  : {
             data: AnalyticsDashboardService
         }

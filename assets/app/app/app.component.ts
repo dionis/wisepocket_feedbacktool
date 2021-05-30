@@ -156,16 +156,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
                 this.document.body.classList.add(this.fuseConfig.colorTheme);
             });
-        this.userService.user.next(null);
-        setInterval(()=>{
-            let i=0;
-            console.log(i++);
-            if(this.userService.isLoggedOut()){
-                this.userService.logout();
-                this.router.navigate(["'/auth/login'"]);
-                return 
-            }
-        },1000)    
+        //this.userService.user.next(null);
+        // setInterval(()=>{
+        //     let i=0;
+        //     console.log(i++);
+        //     if(this.userService.isLoggedOut()){
+        //         this.userService.logout();
+        //         this.router.navigate(["'/auth/login'"]);
+        //         return 
+        //     }
+        // },1000)    
     }
 
     /**

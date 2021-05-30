@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,7 @@ export class SharedVariablesService {
   campaignSelected: Subject<any>;
   //capaign_name: Subject<any>;
   campaignSelectedId : Subject<string>;
+  userlogged: BehaviorSubject<boolean>;
 
   userSelected: Subject<any>;
   constructor() {
@@ -18,7 +19,7 @@ export class SharedVariablesService {
     const campaign = JSON.parse(localStorage.getItem('campaign_selected'))
     console.log(campaign)
     this.campaignSelected.next(campaign!==null?campaign:'');
-
+    this.userlogged = new BehaviorSubject<boolean>(localStorage.getItem('id_token')!==null);
   }
 
   getName():string{

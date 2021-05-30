@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseConfigService } from '../../../../@fuse/services/config.service';
 import { navigation } from '../../../../app/navigation/navigation';
+import { SharedVariablesService } from '../../../services/shared-variables.service';
 
 @Component({
     selector     : 'vertical-layout-1',
@@ -15,6 +16,7 @@ export class VerticalLayout1Component implements OnInit, OnDestroy
 {
     fuseConfig: any;
     navigation: any;
+    logged = false;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -25,7 +27,8 @@ export class VerticalLayout1Component implements OnInit, OnDestroy
      * @param {FuseConfigService} _fuseConfigService
      */
     constructor(
-        private _fuseConfigService: FuseConfigService
+        private _fuseConfigService: FuseConfigService,
+        private sahredVar: SharedVariablesService
     )
     {
         // Set the defaults
@@ -50,6 +53,10 @@ export class VerticalLayout1Component implements OnInit, OnDestroy
             .subscribe((config) => {
                 this.fuseConfig = config;
             });
+        this.sahredVar.userlogged.subscribe(flag=>{
+            console.log(flag)
+            this.logged = flag
+        })
     }
 
     /**

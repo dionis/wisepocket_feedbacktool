@@ -73,15 +73,17 @@ export class LoginComponent implements OnInit
         .then( res=>{
 
            this.userService.getUserByIdWithPromise().then(resultUser=>{
-
+            console.error('Result User',resultUser);
              ///Navigate to Currentuser Campainglist access
               //this.router.navigate(['dashboard/sample']);
-              this._sharedVarService.userSelected.next(resultUser);
+              //this._sharedVarService.userSelected.next(resultUser);
+              this.userService.user.next(resultUser);
+              this._sharedVarService.userlogged.next(true);
               this.router.navigate(['apps/campaign/myCampaigns']);
               console.log(res);
            })
            .catch(error=>{
-              console.error("ALERT Show message error!!!!!!")
+              console.error(error);
            })
 
         })

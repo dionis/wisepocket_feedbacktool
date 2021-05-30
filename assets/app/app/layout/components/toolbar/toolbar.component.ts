@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
@@ -35,7 +35,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
     // Private
     private _unsubscribeAll: Subject<any>;
-    user: User;
+    user: any;
     selectedCampaign: any;
 
     @ViewChild(MatButton, {static: true})
@@ -99,6 +99,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
                 flag : 'es'
             }
         ];
+        //this.user = userService.user.asObservable();
 
         this.navigation = navigation;
 
@@ -128,11 +129,15 @@ export class ToolbarComponent implements OnInit, OnDestroy
         /**
          *  Necesary change to obtein a current user data
          */
-         this.sharedVarService.userSelected.pipe(takeUntil(this._unsubscribeAll))
+         console.log('User Subject',this.userService.user)
+         this.userService.user
+         .pipe(takeUntil(this._unsubscribeAll))
          .subscribe( user=>{
-          console.log('User ToolBar',user)
+            console.log('User ToolBar',user)
             this.user = user;
-         })
+         },error=>{
+            console.log(error)
+        })
 
         //Select Campaign
         this.selectedCampaign = JSON.parse(localStorage.getItem('campaign_selected'));
@@ -147,7 +152,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
         // Show User Logged
         // this.user = this.userService.getMyUser();
-        console.log(this.spn);
+        //console.log(this.spn);
     }
 
     /**

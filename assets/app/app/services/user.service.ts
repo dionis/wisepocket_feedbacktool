@@ -7,17 +7,18 @@ import { map } from 'rxjs/operators';
 import { environment } from './../../environments/environment';
 import { CampaignService } from './campaign.service';
 import { User } from '../models/user.model';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  public user: User;
+  public user: BehaviorSubject<any>;
   token: any;
   //SE CREA en el constructor un Objeto  del Servicio de Campaign para acceder a las funciones de esta
   constructor(private _http: HttpClient,
     private _userCamp: CampaignService) {
-    this.user = new User();
+    this.user = new  BehaviorSubject<any>(null);
   }
   //https://www.jvandemo.com/how-to-use-environment-variables-to-configure-your-angular-application-without-a-rebuild/
   getUsers(): Promise<any> {
@@ -49,7 +50,7 @@ export class UserService {
         const expiresAt = moment().add(res.expiresIn, 'second');
         localStorage.setItem('id_token', res.idToken);
         localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-        await this.getUserById();
+        //await this.getUserById();
         //console.log(localStorage.getItem('user_id'))
         resolve(res);
       }, error => {
@@ -110,7 +111,6 @@ export class UserService {
     console.log(user_id);
     let idparams = new HttpParams();
     idparams.append('id', user_id);
-
     return new Promise ((resolve, reject)=>{
       this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/user/getUserById/_id?id=' + user_id,
       { params: idparams }).pipe(map((responseData: any) => {
@@ -122,7 +122,7 @@ export class UserService {
           return responseData;
         }
       })).toPromise()
-      .then((result : User) => {
+      .then((result : any) => {
           resolve(result);
       })
       .catch(error=>{
@@ -141,6 +141,6 @@ export class UserService {
     this.getUserById();
     //}
     console.log('119',this.user)
-    return this.user;
+    return null;
   }
 }

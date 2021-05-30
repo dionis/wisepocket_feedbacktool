@@ -130,12 +130,14 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
              /**
                *  Necesary change to obtein a current user data
                */
-              this.sharedVarService.userSelected.pipe(takeUntil(this._unsubscribeAll)).subscribe( user=>{
-
-                console.log("!!!!!! Warning current user data was change !!!!!")
-                  this.user = user;
-
-               })
+              this.userService.user
+              .pipe(takeUntil(this._unsubscribeAll))
+              .subscribe( user=>{
+                 console.log('User ToolBar',user)
+                 this.user = user;
+              },error=>{
+                 console.log(error)
+             })
 
 
     }

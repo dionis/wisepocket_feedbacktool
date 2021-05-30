@@ -400,7 +400,7 @@ export class AnalyticsDashboardComponent implements OnInit {
     ngOnInit(): void {
 
         let currentCamapingId: string = "";
-        console.log(" Get information about USER ", this._userService.user.id);
+        //console.log(" Get information about USER ", this._userService.user.id);
         this._campaignService.getCampaignbyUser('0','','','');
 
         if (typeof (this._campaignService.campaign) !== 'undefined' && this._campaignService.campaign.length > 0) {

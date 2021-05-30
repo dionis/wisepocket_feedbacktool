@@ -28,6 +28,7 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
+    
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -155,6 +156,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
                 this.document.body.classList.add(this.fuseConfig.colorTheme);
             });
+        this.userService.user.next(null);
         setInterval(()=>{
             let i=0;
             console.log(i++);

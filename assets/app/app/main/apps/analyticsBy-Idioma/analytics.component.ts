@@ -329,7 +329,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         //https://material.angular.io/components/datepicker/overview
 
         let currentCamapingId: string = "";
-        console.log(" Get information about USER ", this._userService.user.id);
+        //console.log(" Get information about USER ", this._userService.user.id);
         this._camapignService.getCampaignbyUser('0','','','');
 
 

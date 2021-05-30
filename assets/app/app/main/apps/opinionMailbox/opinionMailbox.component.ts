@@ -124,7 +124,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
                 this._opinionService.onSearchTextChanged.next(searchText);
         });
         let currentCamapingId: string = "";
-        console.log(" Get information about USER ", this._userService.user.id);
+        //console.log(" Get information about USER ", this._userService.user.id);
         this._camapignService.getCampaignbyUser('0','','','');
 
 

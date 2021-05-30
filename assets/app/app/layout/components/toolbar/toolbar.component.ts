@@ -115,7 +115,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        console.log(this.userService.getExpiration().seconds());
+        //console.log(this.userService.getExpiration().seconds());
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
@@ -124,6 +124,16 @@ export class ToolbarComponent implements OnInit, OnDestroy
                 this.rightNavbar = settings.layout.navbar.position === 'right';
                 this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
+
+        /**
+         *  Necesary change to obtein a current user data
+         */
+         this.sharedVarService.userSelected.pipe(takeUntil(this._unsubscribeAll))
+         .subscribe( user=>{
+          console.log('User ToolBar',user)
+            this.user = user;
+         })
+
         //Select Campaign
         this.selectedCampaign = JSON.parse(localStorage.getItem('campaign_selected'));
         this.sharedVarService.campaignSelected.pipe(takeUntil(this._unsubscribeAll)).subscribe( camp=>{
@@ -137,17 +147,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
         // Show User Logged
         // this.user = this.userService.getMyUser();
-
-        /**
-         *  Necesary change to obtein a current user data
-         */
-         this.sharedVarService.userSelected.pipe(takeUntil(this._unsubscribeAll))
-         .subscribe( user=>{
-          console.log("!!!!!! Warning current user data was change !!!!!")
-            this.user = user;
-
-         })
-
         console.log(this.spn);
     }
 

@@ -34,11 +34,11 @@
             <!-- / SEARCH -->
 
             <!-- ADD BUTTON -->
-            <button mat-raised-button
+            <!-- <button mat-raised-button
                     [routerLink]="'/campaigns/forms'"
                     class="add-product-button fuse-white mt-24 mt-md-0">
                 <span>{{'LIST.NEW_CAMPAIGN' | translate}}</span>
-            </button>
+            </button> -->
             <!-- / ADD BUTTON -->
 
         </div>
@@ -48,7 +48,7 @@
         <div class="content-card">
 
             <mat-table class="products-table"
-                       #table 
+                       #table
                        [dataSource]="dataSource"
                        matSort
                        (matSortChange)="sortData($event)"

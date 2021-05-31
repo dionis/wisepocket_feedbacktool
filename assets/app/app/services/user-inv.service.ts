@@ -22,16 +22,12 @@ export class UserInvService {
   }
 
   addInvUser(invitado): Observable<any> {
-    console.log("UseID>> " + this.user_id);
-    /**let httpParams = new HttpParams()
-      .append("nombre", invitado.nombre)
-      .append("correo", invitado.correo)
-      .append("telefono", invitado.telefono)
-      .append("direccion", invitado.direccion)*/
+    this.user_id = this.user.getMyUserId()
     return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create?id=' + this.user_id, invitado)
   }
 
   getInvitados(): Observable<any> {
+    this.user_id = this.user.getMyUserId()
     return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/getInvXUserChief?id=' + this.user_id)
   }
 
@@ -45,12 +41,7 @@ export class UserInvService {
 
   updateInfo(invitado): Observable<any> {
     console.log(invitado.nombre);
-    let httpParams = new HttpParams()
-      .append("nombre", invitado.nombre)
-      .append("correo", invitado.correo)
-      .append("telefono", invitado.telefono)
-      .append("direccion", invitado.direccion)
-    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateInfo?id=' + invitado.id, { params: httpParams })
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateInfo?id=' + invitado.id, invitado)
 
   }
 
@@ -82,7 +73,9 @@ export class UserInvService {
   }
   deleteUserInv(invitado): Observable<any> {
     console.log(invitado.id);
-    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado?id=', invitado.id)
+    let httpParams = new HttpParams()
+      .append("id", invitado.id)
+    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado',{ params: httpParams })
 
   }
 

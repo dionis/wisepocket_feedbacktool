@@ -202,7 +202,7 @@ module.exports = {
   updateAcces: async (req, res) => {
     UserInvitado.updateOne(
       {
-        id: req.param("id"),
+        where: { id: req.param("id") },
       },
       {
         acceso: req.param("acceso"),
@@ -225,7 +225,7 @@ module.exports = {
     let hashpass = await bcrypt.hash(req.param("password"), salt);
     UserInvitado.updateOne(
       {
-        id: req.param("id"),
+        where: { id: req.param("id") },
       },
       {
         password: hashpass,
@@ -266,7 +266,7 @@ module.exports = {
 
   deleteUserInvitado: async (req, res) => {
     UserInvitado.destroy({
-      id: req.param("id"),
+      where: { id: req.param("id") },
     })
       .then((user) => {
         return res.send({

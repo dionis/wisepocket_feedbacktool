@@ -129,20 +129,28 @@ module.exports = {
 
     //Requiere ID de la Campaña y la pagina
     getOpinion: async (req, res) => {
-        const page = req.param('page')
+        const page = req.param('page');
+        const limit  = Number(req.param('limit'));
+        const sortCriteria  = req.param('criteria');
+        const filter = req.param('filter');
         console.log("Find campaing id ===> ", req.param('id'))
-        let campID = await Campaign.findOne({ id: req.param('id') })
-        await Opinion.find({
-            where: { campaign: campID.id },
-        }).populate('userend')
+        let campID = await Campaign.findOne({ id: req.param('id')})
+        if(!campID){return res.status(400).send({'ERROR': 'Campaign ID not Match'})}
+        if(!filter || filter===''){
+            await Opinion.find(
+                {where: { campaign: campID.id },}
+                )
+            .sort(`${sortCriteria?sortCriteria:'id ASC'}`)
+            .populate('userend')
             .paginate(
-                page,
-                5
+                page?page:'',
+                limit?limit:99999999
             )
             .then(opinion => {
                 return res.send({
                     'message': 'Lista de Opiniones',
                     'data': opinion,
+                    'count': opinion.length
                 })
             })
             .catch(err => {
@@ -150,7 +158,38 @@ module.exports = {
                     'message': 'Imposible Mostrar',
                     'error': err
                 })
+            });
+        }else{
+            await Opinion.find(
+                 { campaign: campID.id }
+                )
+            .where({
+                or:[
+                    { id: { startsWith: filter } },
+                    { fecha: { startsWith: filter } },
+                ]
             })
+            .sort(`${sortCriteria?sortCriteria:'id ASC'}`)
+            .populate('userend')
+            .paginate(
+                page?page:'',
+                limit?limit:99999999
+            )
+            .then(opinion => {
+                return res.send({
+                    'message': 'Lista de Opiniones',
+                    'data': opinion,
+                    'count': opinion.length
+                })
+            })
+            .catch(err => {
+                return res.status(500).send({
+                    'message': 'Imposible Mostrar',
+                    'error': err
+                })
+            });
+        }
+        
     },
 
     //Requiere ID de la Campaña, la pagina y el idioma que se quiere

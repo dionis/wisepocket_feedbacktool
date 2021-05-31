@@ -41,28 +41,29 @@ export class ContactAsociarComponent implements OnInit {
 
   }
 
-  procesarTodo(pass, contact) {
-    this.updatePass(pass, contact)
-    this.asociarAcamp(contact)
-    this.updateAcces(contact)
-  }
   asociarAcamp(contact) {
-    this.invService.AddCampInv(this.nameCamp, contact.id).subscribe(data => {
-      console.log(data);
-      swal.fire('Usuario asociado con éxito')
+    this.invService.AddCampInv(this.nameCamp, contact).subscribe(res => {
+      console.log(res.data);
+      if (res.message === "Asociado a la Campaña con éxito") {
+        this.updatePass(contact)
+        this.updateAcces(contact)
+        swal.fire('Usuario asociado con éxito')
+      }
+      else if (res.success === false) {
+        swal.fire('Fallo la operación')
+      }
 
     });
   }
 
-  updatePass(pass, contact) {
-    this.invService.updatePass(pass.value, contact).subscribe(data => {
+  updatePass(contact) {
+    this.invService.updatePass(contact).subscribe(data => {
       console.log(data);
     });
   }
 
   updateAcces(contact) {
-    let acceso = true
-    this.invService.updateAcceso(acceso, contact).subscribe(data => {
+    this.invService.updateAcceso(contact).subscribe(data => {
       console.log(data);
     });
   }
@@ -72,7 +73,11 @@ export class ContactAsociarComponent implements OnInit {
 
     return this._formBuilder.group({
       id: [this.contact.id],
+      nombre: [this.contact.nombre],
+      correo: [this.contact.correo],
+      telefono: [this.contact.telefono],
       password: [this.contact.password],
+      direccion: [this.contact.direccion],
       acceso: [this.contact.acceso],
     });
   }

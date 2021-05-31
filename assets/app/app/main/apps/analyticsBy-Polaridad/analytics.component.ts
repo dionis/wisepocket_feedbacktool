@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 
 import * as moment from 'moment';
 import { EstadTipoService } from '../../../services/estad-tipo.service';
+import { SharedVariablesService } from '../../../services/shared-variables.service';
 //import { AnalyticsDashboardService } from './analytics.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class AnalyticsDashboardComponent implements OnInit {
     //widgets: any;
     widget5SelectedDay = 'Ayer';
     data: any;
-    campaign: any;
+    campaigns: any;
     usertime: any;
     private _unsubscribeAll: Subject<any>;
 
@@ -313,7 +314,7 @@ export class AnalyticsDashboardComponent implements OnInit {
                 pointHoverBorderColor: '#ffffff'
             },
         ],
-        options:  {
+        options: {
             spanGaps: false,
             legend: {
                 display: false
@@ -381,7 +382,7 @@ export class AnalyticsDashboardComponent implements OnInit {
         //private _analyticsDashboardService: AnalyticsDashboardService,
         private _estadPrueba: EstadTipoService,
         private _campaignService: CampaignService,
-        private _userService: UserService
+        private servCamp: SharedVariablesService,
     ) {
         // Register the custom chart.js plugin
         //this._registerCustomChartJSPlugin();
@@ -399,28 +400,30 @@ export class AnalyticsDashboardComponent implements OnInit {
      */
     ngOnInit(): void {
 
-        let currentCamapingId: string = "";
-        //console.log(" Get information about USER ", this._userService.user.id);
-        this._campaignService.getCampaignbyUser('0','','','');
+        if (this.servCamp.getName() != '') {
 
-        if (typeof (this._campaignService.campaign) !== 'undefined' && this._campaignService.campaign.length > 0) {
-            //Selecciona el id de la capana escogida por el usuario
-            this._campaignService.testSelectedRandomCamaping()
+            console.log("CampNAme " + this.servCamp.getName());
+
+            this.campaigns = this.servCamp.getName();
+            console.log(this.campaigns);
+
+            let currentDate = moment().format("YYYY-MM-DD hh:mm a");
+
+            this.getAllStadisticsFromBackend();
+
+            //Selecciona el id de la campana escogida por el usuario
+            /*************************************************
+               ERASE IN PRODUCTION
+            **************************************************/
+            /*this._camapignService.testSelectedRandomCamaping()
                 .then((_) => {
-                    const camapIgnObjet = this._campaignService.selectedCampaign;
+                    const camapIgnObjet = this._camapignService.selectedCampaign;
 
                     console.log("Campaign ID", camapIgnObjet)
-                    console.log("Campaingn list ", this._campaignService.campaign);
+                    console.log("Campaingn list ", this._camapignService.campaign);
 
                     currentCamapingId = camapIgnObjet.id;
-                    this._estadPrueba.setCurrentCamaignId(currentCamapingId);
-
-                    this.campaign = this._campaignService.getMyCamps()[0].nombre;
-                    console.log(this.campaign);
-
-                    this.getAllStadisticsFromBackend()
-                })
-                .catch(error => console.error(error))
+                    this._estadPrueba.setCurrentCamaignId(currentCamapingId);*/
 
 
         }
@@ -440,8 +443,8 @@ export class AnalyticsDashboardComponent implements OnInit {
  
          })*/
 
-        this.campaign = this._campaignService.getMyCamps();
-        console.log(this.campaign);
+        /*this.campaigns = this._campaignService.getMyCamps();
+        console.log(this.campaigns);*/
 
 
 

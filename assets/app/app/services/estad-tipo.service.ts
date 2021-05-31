@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AnalyticsXIdiomaDashboardDb } from '../fake-db/dashboard-analyticsXIdioma';
 import { BehaviorSubject, Observable, combineLatest, Subject } from 'rxjs';
+import { SharedVariablesService } from './shared-variables.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class EstadTipoService {
   dataNeu: any = []
   dataTotal: any = []
   currentCamapingId: string;
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient,  private servCamp: SharedVariablesService,) {
 
   }
 
@@ -27,12 +28,7 @@ export class EstadTipoService {
 
   getDataPos(): Observable<any> {
 
-    let campaign_id = '';
-
-    if (typeof (this.currentCamapingId) !== 'undefined' && this.currentCamapingId !== "") {
-      campaign_id = this.currentCamapingId;
-      console.log(" Use a campaing id to ", campaign_id);
-    }
+    let campaign_id = this.servCamp.getId();
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCPostivaXDia?id=' + campaign_id)
 
@@ -40,12 +36,7 @@ export class EstadTipoService {
 
   getDataNeg(): Observable<any> {
 
-    let campaign_id = '';
-
-    if (typeof (this.currentCamapingId) !== 'undefined' && this.currentCamapingId !== "") {
-      campaign_id = this.currentCamapingId;
-      console.log(" Use a campaing id to ", campaign_id);
-    }
+    let campaign_id = this.servCamp.getId();
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCNegativaXDia?id=' + campaign_id)
 
@@ -53,12 +44,7 @@ export class EstadTipoService {
 
   getDataNeu(): Observable<any> {
 
-    let campaign_id = '';
-
-    if (typeof (this.currentCamapingId) !== 'undefined' && this.currentCamapingId !== "") {
-      campaign_id = this.currentCamapingId;
-      console.log(" Use a campaing id to ", campaign_id);
-    }
+    let campaign_id = this.servCamp.getId();
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCNeutraXDia?id=' + campaign_id)
 
@@ -66,12 +52,7 @@ export class EstadTipoService {
 
   getDataTotal(): Observable<any> {
 
-    let campaign_id = '';
-
-    if (typeof (this.currentCamapingId) !== 'undefined' && this.currentCamapingId !== "") {
-      campaign_id = this.currentCamapingId;
-      console.log(" Use a campaing id to ", campaign_id);
-    }
+    let campaign_id = this.servCamp.getId();
 
     return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCantTotalXDia?id=' + campaign_id)
 

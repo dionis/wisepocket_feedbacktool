@@ -45,21 +45,25 @@ export class UserInvService {
 
   }
 
-  updatePass(pass, invitado): Observable<any> {
-    console.log(invitado.nombre + "  " + pass);
-    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updatePass?id=' + invitado.id, { params: { 'password': pass } })
+  updatePass(invitado): Observable<any> {
+    console.log(invitado.nombre + "  " + invitado.password);
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updatePass', invitado)
 
   }
 
-  updateAcceso(acceso, invitado): Observable<any> {
-    console.log(invitado.nombre + "  " + acceso);
-    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateAcces?id=' + invitado.id, { params: { 'acceso': acceso } })
+  updateAcceso(invitado): Observable<any> {
+    console.log(invitado.nombre + "  " + invitado.acceso);
+    invitado.acceso = true
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateAcces', invitado)
 
   }
 
   AddCampInv(campName, invitado): Observable<any> {
-    console.log(invitado.nombre + " " + campName);
-    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/addCampaigns?id=' + invitado.id, { params: { 'nombre': campName } })
+    console.log(invitado.id + " " + campName);
+    let httpParams = new HttpParams()
+      .append("id", invitado.id)
+      .append("nombre", campName)
+    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/addCampaigns', { params: httpParams })
 
   }
   deleteUserInv(invitado): Observable<any> {

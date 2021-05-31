@@ -112,7 +112,6 @@ export class ContactsContactFormDialogComponent {
             if (result) {
                 this.invService.deleteUserInv(this.invUserForm.getRawValue()).subscribe(data => {
                     console.log(data);
-                    this.invUserForm.invalid
                 });
                 this.invService.getInvitados().subscribe(data => {
                     console.log(data);

@@ -46,36 +46,27 @@ export class UserInvService {
   }
 
   updatePass(pass, invitado): Observable<any> {
-    console.log(invitado.nombre);
-    let httpParams = new HttpParams()
-      .append("password", pass)
-      .append("id", invitado.id)
-    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updatePass', { params: httpParams })
+    console.log(invitado.nombre + "  " + pass);
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updatePass?id=' + invitado.id, { params: { 'password': pass } })
 
   }
 
   updateAcceso(acceso, invitado): Observable<any> {
-    console.log(invitado.nombre);
-    let httpParams = new HttpParams()
-      .append("acceso", acceso)
-      .append("id", invitado.id)
-    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateAcces', { params: httpParams })
+    console.log(invitado.nombre + "  " + acceso);
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateAcces?id=' + invitado.id, { params: { 'acceso': acceso } })
 
   }
 
   AddCampInv(campName, invitado): Observable<any> {
-    console.log(invitado.nombre);
-    let httpParams = new HttpParams()
-      .append("nombre", campName)
-      .append("id", invitado.id)
-    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/addCampaigns', { params: httpParams })
+    console.log(invitado.nombre + " " + campName);
+    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/addCampaigns?id=' + invitado.id, { params: { 'nombre': campName } })
 
   }
   deleteUserInv(invitado): Observable<any> {
     console.log(invitado.id);
     let httpParams = new HttpParams()
       .append("id", invitado.id)
-    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado',{ params: httpParams })
+    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado', { params: httpParams })
 
   }
 

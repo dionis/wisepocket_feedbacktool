@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { SharedVariablesService } from '../../../services/shared-variables.service';
 //import { AnalyticsDashboardService } from './analytics.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     data: any;
     campaigns: any;
     usertime: any;
-
+    
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -284,6 +285,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         private _estadPrueba: EstadXidiomaService,
         private _camapignService: CampaignService,
         private _userService: UserService,
+        private servCamp: SharedVariablesService,
         private _fb: FormBuilder
     ) {
         // Register the custom chart.js plugin
@@ -330,7 +332,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
         let currentCamapingId: string = "";
         //console.log(" Get information about USER ", this._userService.user.id);
-        this._camapignService.getCampaignbyUser('0','','','');
+        this._camapignService.getCampaignbyUser('0', '', '', '');
 
 
         if (typeof (this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0) {
@@ -348,7 +350,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                     currentCamapingId = camapIgnObjet.id;
                     this._estadPrueba.setCurrentCamaignId(currentCamapingId);
 
-                    this.campaigns = this._camapignService.getMyCamps()[0].nombre;
+                    console.log("CampNAme " + this.servCamp.getName());
+
+                    this.campaigns = this.servCamp.getName();
                     console.log(this.campaigns);
 
                     let currentDate = moment().format("YYYY-MM-DD hh:mm a");

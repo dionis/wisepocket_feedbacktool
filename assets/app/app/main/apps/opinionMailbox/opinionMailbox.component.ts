@@ -128,12 +128,12 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
         this._camapignService.getCampaignbyUser('0','','','');
 
 
-        if (typeof (this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0) {
+        /*if (typeof (this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0) {
             //Selecciona el id de la campana escogida por el usuario
           /*************************************************
              ERASE IN PRODUCTION
           **************************************************/
-             this._camapignService.testSelectedRandomCamaping()
+             /*this._camapignService.testSelectedRandomCamaping()
                   .then( (_)=>{
                     const camapIgnObjet = this._camapignService.selectedCampaign;
 
@@ -153,7 +153,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
                   .catch(error=>console.error(error))
 
 
-            }
+            }*/
 
     }
 

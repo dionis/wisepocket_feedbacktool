@@ -57,7 +57,7 @@ module.exports = {
   addCampaigns: async (req, res) => {
     let camp;
     await Campaign.findOne({
-      where: { nombre: req.param("nombre") },
+      nombre: req.param("nombre"),
     }).then((doc) => {
       if (!doc) {
         console.log("No encontrado");
@@ -67,7 +67,7 @@ module.exports = {
       }
     });
     await UserInvitado.findOne({
-      where: { id: req.param("id") },
+      id: req.param("id"),
     }).then(async (doc) => {
       if (!doc) {
         console.log("No encontrado");
@@ -206,8 +206,7 @@ module.exports = {
       },
       {
         acceso: req.param("acceso"),
-      }
-    )
+      })
       .then((user) => {
         return res.send({
           data: user,
@@ -218,7 +217,7 @@ module.exports = {
           success: false,
           message: "Falló la operación",
         });
-      });
+      })
   },
 
   updatePass: async (req, res) => {
@@ -230,8 +229,7 @@ module.exports = {
       },
       {
         password: hashpass,
-      }
-    )
+      })
       .then((user) => {
         return res.send({
           data: user,

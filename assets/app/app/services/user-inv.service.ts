@@ -46,13 +46,11 @@ export class UserInvService {
   }
 
   updatePass(invitado): Observable<any> {
-    console.log(invitado.nombre + "  " + invitado.password);
     return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updatePass', invitado)
 
   }
 
   updateAcceso(invitado): Observable<any> {
-    console.log(invitado.nombre + "  " + invitado.acceso);
     invitado.acceso = true
     return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateAcces', invitado)
 

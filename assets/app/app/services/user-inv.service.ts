@@ -22,17 +22,11 @@ export class UserInvService {
   }
 
   addInvUser(invitado): Observable<any> {
-    let userID = this.user_id;
-    console.log(userID);
-    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create?id=' + userID, invitado)
-
+    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create?id=' + this.user_id, invitado)
   }
 
   getInvitados(): Observable<any> {
-    let userID = this.user_id;
-    console.log(userID);
-    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/getInvXUserChief?id=' + userID)
-
+    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/getInvXUserChief?id=' + this.user_id)
   }
 
   getUsers(dataInv) {

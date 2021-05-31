@@ -14,20 +14,22 @@ export class UserInvService {
   onContactsChanged: BehaviorSubject<any>;
   onUserDataChanged: BehaviorSubject<any>;
   contacts: UserInv[];
+  user_id: string;
   constructor(private _http: HttpClient, private user: UserService,) {
     this.onContactsChanged = new BehaviorSubject([]);
     this.onUserDataChanged = new BehaviorSubject([]);
+    this.user_id = this.user.getMyUserId(); 
   }
 
   addInvUser(invitado): Observable<any> {
-    let userID = this.user.getMyUser().id
+    let userID = this.user_id;
     console.log(userID);
     return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create?id=' + userID, invitado)
 
   }
 
   getInvitados(): Observable<any> {
-    let userID = this.user.getMyUser().id
+    let userID = this.user_id;
     console.log(userID);
     return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/getInvXUserChief?id=' + userID)
 

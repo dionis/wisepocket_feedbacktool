@@ -120,8 +120,8 @@ module.exports = {
 
     getSessionUser:async (res,req)=> {
         const token = req.header('Authorization').split('Bearer ')[1];
-        await jwt.verify(token,'hjghdvdfjvnishvishr4oo', (payload,error)=>{
-            if(err) return res.status(500).send({'error': error});
+        await jwt.verify(token,'hjghdvdfjvnishvishr4oo', (error,payload)=>{
+            if(error) return res.status(500).send({'error': error});
             user_id = payload._id;
             date_session = payload.date_session;
             exp = payload.expiresIn
@@ -134,8 +134,8 @@ module.exports = {
     },
     getIdUserConnected: async (req,res) =>{
         const token = req.header('Authorization').split('Bearer ')[1];
-        await jwt.verify(token,'hjghdvdfjvnishvishr4oo', (payload,error)=>{
-            if(err) return res.status(500).send({'error': error});
+        await jwt.verify(token,'hjghdvdfjvnishvishr4oo', (error,payload)=>{
+            if(error) return res.status(500).send({'error': error});
             return res.send({
                 'user_id': payload._id,
             })

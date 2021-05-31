@@ -40,7 +40,9 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.filterBy = this._contactsService.filterBy || 'all';
-        this.userService.user.subscribe(user=>{
+        this.userService.user
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(user=>{
             this.user = user;
         })
     }

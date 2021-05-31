@@ -316,8 +316,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        console.log("ENTRE A NGONIT");
-
         // Get the widgets from the service
         ///Actualizar los datos de una de
         ///las camapanas

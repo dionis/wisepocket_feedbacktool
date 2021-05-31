@@ -23,13 +23,12 @@ export class UserInvService {
 
   addInvUser(invitado): Observable<any> {
     console.log("UseID>> " + this.user_id);
-    let httpParams = new HttpParams()
-      .append("id", this.user_id)
+    /**let httpParams = new HttpParams()
       .append("nombre", invitado.nombre)
       .append("correo", invitado.correo)
       .append("telefono", invitado.telefono)
-      .append("direccion", invitado.direccion)
-    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create', { params: httpParams })
+      .append("direccion", invitado.direccion)*/
+    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create?id=' + this.user_id, invitado)
   }
 
   getInvitados(): Observable<any> {

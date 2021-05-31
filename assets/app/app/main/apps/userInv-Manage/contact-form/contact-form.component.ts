@@ -46,8 +46,7 @@ export class ContactsContactFormDialogComponent {
         }
         else {
             this.dialogTitle = 'Nuevo Invitado';
-            this.contact = new UserInv(this.invUserForm.getRawValue())
-            
+
         }
         this.invUserForm = this._formBuilder.group({
             nombre: ['', Validators.required],
@@ -56,7 +55,7 @@ export class ContactsContactFormDialogComponent {
             direccion: ['', Validators.required],
         });
 
-        this.invUserForm = this.createContactForm();
+        //this.invUserForm = this.createContactForm();
 
     }
 

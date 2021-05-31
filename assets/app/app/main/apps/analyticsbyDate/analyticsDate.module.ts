@@ -15,11 +15,14 @@ import { FuseWidgetModule } from '../../../../@fuse/components/widget/widget.mod
 
 import { AnalyticsDateDashboardComponent } from './analyticsDate.component';
 import { AnalyticsDateDashboardService } from './analyticsDate.service';
+import { CampaignSelectGuard } from '../guards/campaign-select.guard';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
     {
         path: '**',
         component: AnalyticsDateDashboardComponent,
+        canActivate: [AuthGuard,CampaignSelectGuard],
         resolve: {
             data: AnalyticsDateDashboardService
         }

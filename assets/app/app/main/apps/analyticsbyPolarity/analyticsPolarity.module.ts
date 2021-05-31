@@ -15,11 +15,14 @@ import { FuseWidgetModule } from '../../../../@fuse/components/widget/widget.mod
 
 import { AnalyticsPolarityDashboardComponent } from './analyticsPolarity.component';
 import { AnalyticsPolarityDashboardService } from './analyticsPolarity.service';
+import { AuthGuard } from '../guards/auth.guard';
+import { CampaignSelectGuard } from '../guards/campaign-select.guard';
 
 const routes: Routes = [
     {
         path     : '**',
         component: AnalyticsPolarityDashboardComponent,
+        canActivate: [AuthGuard,CampaignSelectGuard],
         resolve  : {
             data: AnalyticsPolarityDashboardService
         }

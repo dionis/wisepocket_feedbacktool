@@ -5,12 +5,14 @@ import { routerReducer } from '@ngrx/router-store';
 //import { reject } from 'lodash';
 import { Observable } from 'rxjs';
 import { SharedVariablesService } from '../../../services/shared-variables.service';
+import { UserService } from '../../../services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CampaignSelectGuard implements CanActivate {
   constructor(private sharedvar:SharedVariablesService,
+              private userService: UserService,
               private router:Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -25,11 +27,16 @@ export class CampaignSelectGuard implements CanActivate {
     //   }
     // })
     const camp_id = this.sharedvar.getId()
-    if(camp_id!==''){
+    if(camp_id !=='' && this.userService.isLoggedIn()){
       return true;
     }else{
-      alert('You most Select a Campaign!!!');
-      this.router.navigate(['/apps/campaign/myCampaigns']);
+      if(this.userService.isLoggedOut()){
+        this.userService.logout();
+        this.router.navigate(['/auth/login']);
+      }else{
+        alert('You most Select a Campaign!!!');
+        this.router.navigate(['/apps/campaign/myCampaigns']);
+      }
       return false;
     }
   }

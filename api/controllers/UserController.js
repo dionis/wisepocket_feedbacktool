@@ -6,6 +6,7 @@
  */
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
+var moment = require('moment');
 module.exports = {
 
     singUp: async function (req, res) {
@@ -66,7 +67,9 @@ module.exports = {
             //sails.log.debug('Antes');
             const token = jwt.sign({
                 _id: user.id,
-                rol: user.isAdmin ? 'Admin' : 'Organization'
+                rol: user.isAdmin ? 'Admin' : 'Organization',
+                date_session: moment().toDate(),
+                expiresIn: 900
             },
                 'hjghdvdfjvnishvishr4oo', { expiresIn: 900 });
             req.session.me = token;
@@ -113,6 +116,31 @@ module.exports = {
                     'error': err
                 });
             })
-    }
+    },
+
+    getSessionUser:(res,req)=> {
+        const token = req.header('Authorization').split('Bearer ')[1];
+        await jwt.verify(token,'hjghdvdfjvnishvishr4oo', (payload,error)=>{
+            if(err) return res.status(500).send({'error': err});
+            user_id = payload._id;
+            date_session = payload.date_session;
+            exp = payload.expiresIn
+            return res.send({
+                'user_id': user_id,
+                'date_session': date_session,
+                'exp': exp
+            })
+        }); 
+    },
+    getIdUserConnected: (req,res) =>{
+        const token = req.header('Authorization').split('Bearer ')[1];
+        await jwt.verify(token,'hjghdvdfjvnishvishr4oo', (payload,error)=>{
+            if(err) return res.status(500).send({'error': err});
+            return res.send({
+                'user_id': payload._id,
+            })
+        });
+    },
+    
 };
 

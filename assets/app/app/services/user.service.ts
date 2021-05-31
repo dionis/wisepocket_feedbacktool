@@ -7,7 +7,8 @@ import { map } from 'rxjs/operators';
 import { environment } from './../../environments/environment';
 import { CampaignService } from './campaign.service';
 import { User } from '../models/user.model';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { userError } from '@angular/compiler-cli/src/transformers/util';
 
 @Injectable({
   providedIn: 'root',
@@ -63,8 +64,7 @@ export class UserService {
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
     localStorage.removeItem("campaign_selected");
-    //localStorage.removeItem("user_id");
-    this.user = null
+    this.user.next(null);
   }
 
   public isLoggedIn() {
@@ -87,20 +87,18 @@ export class UserService {
     console.log(user_id);
     let idparams = new HttpParams();
     idparams.append('id', user_id);
-    this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/user/getUserById/_id?id=' + user_id,
+    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/user/getUserById/_id?id=' + user_id,
       { params: idparams }).pipe(map((responseData: any) => {
 
         if (responseData.data) {
           console.log(responseData.data.name)
-          return responseData.data;
+          let user = new User();
+          user = responseData.data;
+          return user;
         } else {
-          return responseData;
+          return null;
         }
-      })).subscribe(res => {
-      },
-        error => {
-          this.user = null;
-        })
+      }))
   }
 
 
@@ -137,12 +135,18 @@ export class UserService {
 
   }
 
-  getMyUser(): User {
-    console.log(this.user)
-    //if(this.user === null){
-    this.getUserById();
-    //}
-    console.log('119',this.user)
-    return null;
+  getMyUser(): Observable<any> {
+    return this.getUserById();
+  }
+
+  getMyUserId(): string {
+    if(localStorage.getItem('id_token')!==null){
+      const jwt = new JwtHelperService();
+      let token = jwt.decodeToken(localStorage.getItem('id_token'));
+      let user_id = token._id;
+      return user_id;
+    }else{
+      return '';
+    }    
   }
 }

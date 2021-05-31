@@ -24,16 +24,19 @@ import {ListCampComponent} from '../campaign/list-camp/list-camp.component'
 import { TranslateModule } from '@ngx-translate/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
     
     {
         path     : 'myCampaigns',
+        canActivate: [AuthGuard],
         component: ListCampComponent,
     },
     {
         path     : '**',
         component: CampaignComponent,
+        canActivate: [AuthGuard],
         resolve  : {
             campaigns: CampaignService
         }

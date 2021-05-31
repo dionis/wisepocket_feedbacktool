@@ -21,11 +21,13 @@ import { ContactsSelectedBarComponent } from '../../../../app/main/apps/userInv-
 import { ContactsMainSidebarComponent } from '../../../../app/main/apps/userInv-Manage/sidebars/main/main.component';
 import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component';
 import { ContactAsociarComponent } from './contact-asociar/contact-asociar.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
     {
         path     : '**',
         component: ContactsComponent,
+        canActivate: [AuthGuard],
         resolve  : {
             contacts: ContactsService
         }

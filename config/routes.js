@@ -43,7 +43,9 @@ module.exports.routes = {
   "POST /user/singUp": "UserController.singUp",
   "POST /user/singIn": "UserController.login",
   "POST /user/logout": "UserController.logout",
+  "PUT /user/getSession": "UserController.getSessionUser",
   "GET /user/getUserById/_id": "UserController.getUserById",
+  "GET /user/getIdUserConnected": "UserController.getIdUserConnected",
 
   //Image's Requests
   "POST /imagen/addImg": "ImagenController.create",
@@ -51,6 +53,7 @@ module.exports.routes = {
   //Campaign Requests //DEJAR SOLO MOSTRAR CAMPAÑA POR USUARIO
   //DE MOMENTO SE DEJAN LOS SERVICIOS PARA CREAR BASE DE DATOS TEMPORAL
   "POST /campaign/create": "CampaignController.create",
+  
   //"PATCH /campaign/editCampaign": "CampaignController.editCampaign",
   // "DELETE /campaign/deleteCampaign": "CampaignController.deleteCampaign",
   "GET /campaign/getCampaign": "CampaignController.getCampaign",

@@ -18,11 +18,18 @@ export class UserInvService {
   constructor(private _http: HttpClient, private user: UserService,) {
     this.onContactsChanged = new BehaviorSubject([]);
     this.onUserDataChanged = new BehaviorSubject([]);
-    this.user_id = this.user.getMyUserId(); 
+    this.user_id = this.user.getMyUserId();
   }
 
   addInvUser(invitado): Observable<any> {
-    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create?id=' + this.user_id, invitado)
+    console.log("UseID>> " + this.user_id);
+    let httpParams = new HttpParams()
+      .append("id", this.user_id)
+      .append("nombre", invitado.nombre)
+      .append("correo", invitado.correo)
+      .append("telefono", invitado.telefono)
+      .append("direccion", invitado.direccion)
+    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create', { params: httpParams })
   }
 
   getInvitados(): Observable<any> {
@@ -89,6 +96,15 @@ export class UserInvService {
       
     }))*/
 
+  }
+
+  fixIDOut() {
+    console.log("Eliminando userID...");
+    this.user_id = ''
+    if (this.user_id === '') {
+      return true
+    }
+    else return false
   }
 }
 

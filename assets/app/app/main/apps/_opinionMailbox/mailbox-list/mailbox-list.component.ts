@@ -8,6 +8,8 @@ import { fuseAnimations } from '../../../../../@fuse/animations';
 
 import {Opinion} from '../../../../models/opinion.model';
 import {OpinionService} from '../../../../services/opinion-analizer.service';
+import { OpinionPruebaService } from '../../../../services/opinion-prueba.service';
+import { OpinionTest } from '../../../../models/opinionTest.model';
 
 @Component({
     selector     : 'mailbox-list',
@@ -19,6 +21,7 @@ import {OpinionService} from '../../../../services/opinion-analizer.service';
 export class MailboxListComponent implements OnInit, OnDestroy
 {
     opinions: Opinion[];
+    opinionstest: OpinionTest[];
     currentOpinion: Opinion;
 
     // Private
@@ -34,6 +37,7 @@ export class MailboxListComponent implements OnInit, OnDestroy
     constructor(
         private _activatedRoute: ActivatedRoute,
         private _opinionService: OpinionService,
+        private _opinionServiceTest: OpinionPruebaService,
         private _location: Location
     )
     {
@@ -56,6 +60,12 @@ export class MailboxListComponent implements OnInit, OnDestroy
             .subscribe(opinions => {
                 this.opinions = opinions;
             });
+        
+        this._opinionServiceTest.onOpinionsChanged
+        .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(opinions => {
+                this.opinionstest = opinions;
+        });
 
         // Subscribe to update current Opinion on changes
         this._opinionService.onCurrentOpinionChanged

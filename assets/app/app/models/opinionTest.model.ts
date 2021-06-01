@@ -7,4 +7,10 @@ export class OpinionTest {
     name_alias: string,
     email: string
   }
+  constructor(opinion:any){
+    this.id = opinion.id;
+    this.texto = opinion.texto;
+    this.fecha = opinion.fecha;
+    this.userend = opinion.userend;
+  }
 }

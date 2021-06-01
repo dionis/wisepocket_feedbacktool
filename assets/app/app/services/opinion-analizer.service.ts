@@ -487,4 +487,29 @@ export class OpinionService implements Resolve<any>
     }
 
     /*deleteAllOpinion():Promise<any>*/
+
+    /*
+    * Getting Opinions from BAckend
+    *
+    */
+   getOpinionsFromBAck(page,limit,criteria,filter){
+       return new Promise((resolve,reject)=>this._httpClient.get(
+           environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion',
+           {params:{'page':page,
+                    'limit': limit,
+                    'criteria':criteria,
+                    'filter': filter}})
+            .subscribe((opinions:any)=>{
+                this.opinions = opinions.map(opinion => {
+                    return new OpinionTest(opinion);
+                });
+
+                this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
+
+                this.onOpinionsChanged.next(this.opinions);
+
+                resolve(this.opinions);
+
+            },reject));
+   }
 }

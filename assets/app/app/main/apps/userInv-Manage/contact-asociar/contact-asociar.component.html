@@ -16,11 +16,7 @@
       fxLayout="column"
       fxLayoutAlign="center center"
     >
-      <img
-        [src]="'assets/images/Icons-Añadidos/wise-pocket.jpg'"
-        class="avatar contact-avatar huge m-0"
-      />
-      <div *ngIf="action === 'edit'" class="contact-name mt-8">
+      <div class="contact-name mt-8">
         {{ nameCamp }}
       </div>
     </mat-toolbar-row>
@@ -28,36 +24,33 @@
 
   <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
     <form [formGroup]="invUserForm">
+      <h3>Invitado: {{ contact.nombre }}</h3>
       <div class="tab-content p-24" fusePerfectScrollbar>
         <mat-form-field
           appearance="outline"
           floatLabel="always"
           class="w-100-p"
         >
-          <mat-label>Contraseña</mat-label>
-          <span>Propuesta de Contraseña</span>
+          <mat-label>Asignar Contraseña</mat-label>
           <input
+            #pass
             type="password"
             matInput
             placeholder="Contraseña"
-            name="contraseña"
-            formControlName="contraseña"
+            name="password"
+            formControlName="password"
             required
             minlength="8"
             maxlength="8"
           />
-          <mat-error *ngIf="invUserForm.get('contraseña').hasError('required')">
+          <mat-error *ngIf="invUserForm.get('password').hasError('required')">
             Contraseña requerida
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field
-          appearance="outline"
-          floatLabel="always"
-          class="w-100-p"
-        >
-          <span>Se envirá un correo de notificación al usuario</span>
-        </mat-form-field>
+        <span>Se envirá un correo notificando al usuario</span>
+        <br />
+        <span>Correo del usuario: {{ contact.correo }}</span>
       </div>
     </form>
   </div>
@@ -72,8 +65,9 @@
       mat-button
       class="mr-8"
       [disabled]="invUserForm.invalid"
-      aria-label="Delete"
-      matTooltip="Delete"
+      aria-label="Asociar"
+      matTooltip="Asociar"
+      (click)="asociarAcamp(contact)"
     >
       Asociar
     </button>

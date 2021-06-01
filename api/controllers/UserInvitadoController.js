@@ -57,7 +57,7 @@ module.exports = {
   addCampaigns: async (req, res) => {
     let camp;
     await Campaign.findOne({
-      nombre: req.param("nombre"),
+      where: { id: req.param('campID') },
     }).then((doc) => {
       if (!doc) {
         console.log("No encontrado");
@@ -67,7 +67,7 @@ module.exports = {
       }
     });
     await UserInvitado.findOne({
-      id: req.param("id"),
+      where: { id: req.param("id") },
     }).then(async (doc) => {
       if (!doc) {
         console.log("No encontrado");
@@ -202,11 +202,12 @@ module.exports = {
   updateAcces: async (req, res) => {
     UserInvitado.updateOne(
       {
-        id: req.param("id"),
+        where: { id: req.param("id") },
       },
       {
         acceso: req.param("acceso"),
-      })
+      }
+    )
       .then((user) => {
         return res.send({
           data: user,
@@ -217,7 +218,7 @@ module.exports = {
           success: false,
           message: "Falló la operación",
         });
-      })
+      });
   },
 
   updatePass: async (req, res) => {
@@ -225,11 +226,12 @@ module.exports = {
     let hashpass = await bcrypt.hash(req.param("password"), salt);
     UserInvitado.updateOne(
       {
-        id: req.param("id"),
+        where: { id: req.param("id") },
       },
       {
         password: hashpass,
-      })
+      }
+    )
       .then((user) => {
         return res.send({
           data: user,
@@ -266,7 +268,7 @@ module.exports = {
 
   deleteUserInvitado: async (req, res) => {
     UserInvitado.destroy({
-      id: req.param("id"),
+      where: { id: req.param("id") },
     })
       .then((user) => {
         return res.send({

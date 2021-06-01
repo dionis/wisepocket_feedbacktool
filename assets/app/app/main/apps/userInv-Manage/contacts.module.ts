@@ -22,20 +22,21 @@ import { ContactsMainSidebarComponent } from '../../../../app/main/apps/userInv-
 import { ContactsContactFormDialogComponent } from '../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component';
 import { ContactAsociarComponent } from './contact-asociar/contact-asociar.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { CampaignSelectGuard } from '../guards/campaign-select.guard';
 
 const routes: Routes = [
     {
-        path     : '**',
+        path: '**',
         component: ContactsComponent,
-        canActivate: [AuthGuard],
-        resolve  : {
+        canActivate: [CampaignSelectGuard],
+        resolve: {
             contacts: ContactsService
         }
     }
 ];
 
 @NgModule({
-    declarations   : [
+    declarations: [
         ContactsComponent,
         ContactsContactListComponent,
         ContactsSelectedBarComponent,
@@ -43,7 +44,7 @@ const routes: Routes = [
         ContactsContactFormDialogComponent,
         ContactAsociarComponent
     ],
-    imports        : [
+    imports: [
         RouterModule.forChild(routes),
 
         MatButtonModule,
@@ -61,13 +62,12 @@ const routes: Routes = [
         FuseConfirmDialogModule,
         FuseSidebarModule
     ],
-    providers      : [
+    providers: [
         ContactsService
     ],
     entryComponents: [
         ContactsContactFormDialogComponent
     ]
 })
-export class ContactsModule
-{
+export class ContactsModule {
 }

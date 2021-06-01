@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserService } from './user.service';
 import { UserInv } from '../models/userInv.model';
+import { SharedVariablesService } from './shared-variables.service';
 
 
 @Injectable({
@@ -15,17 +16,19 @@ export class UserInvService {
   onUserDataChanged: BehaviorSubject<any>;
   contacts: UserInv[];
   user_id: string;
-  constructor(private _http: HttpClient, private user: UserService,) {
+  constructor(private _http: HttpClient, private user: UserService, private servCamp: SharedVariablesService,) {
     this.onContactsChanged = new BehaviorSubject([]);
     this.onUserDataChanged = new BehaviorSubject([]);
-    this.user_id = this.user.getMyUserId(); 
+    this.user_id = this.user.getMyUserId();
   }
 
   addInvUser(invitado): Observable<any> {
+    this.user_id = this.user.getMyUserId()
     return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/create?id=' + this.user_id, invitado)
   }
 
   getInvitados(): Observable<any> {
+    this.user_id = this.user.getMyUserId()
     return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/getInvXUserChief?id=' + this.user_id)
   }
 
@@ -39,44 +42,34 @@ export class UserInvService {
 
   updateInfo(invitado): Observable<any> {
     console.log(invitado.nombre);
-    let httpParams = new HttpParams()
-      .append("nombre", invitado.nombre)
-      .append("correo", invitado.correo)
-      .append("telefono", invitado.telefono)
-      .append("direccion", invitado.direccion)
-    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateInfo?id=' + invitado.id, { params: httpParams })
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateInfo?id=' + invitado.id, invitado)
 
   }
 
-  updatePass(pass, invitado): Observable<any> {
-    console.log(invitado.nombre);
-    let httpParams = new HttpParams()
-      .append("password", pass)
-      .append("id", invitado.id)
-    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updatePass', { params: httpParams })
+  updatePass(invitado): Observable<any> {
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updatePass', invitado)
 
   }
 
-  updateAcceso(acceso, invitado): Observable<any> {
-    console.log(invitado.nombre);
-    let httpParams = new HttpParams()
-      .append("acceso", acceso)
-      .append("id", invitado.id)
-    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateAcces', { params: httpParams })
+  updateAcceso(invitado): Observable<any> {
+    invitado.acceso = true
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateAcces', invitado)
 
   }
 
-  AddCampInv(campName, invitado): Observable<any> {
-    console.log(invitado.nombre);
+  AddCampInv(invitado): Observable<any> {
+    console.log(invitado.id, this.servCamp.getId());
     let httpParams = new HttpParams()
-      .append("nombre", campName)
       .append("id", invitado.id)
+      .append("camp_id", this.servCamp.getId())
     return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/addCampaigns', { params: httpParams })
 
   }
   deleteUserInv(invitado): Observable<any> {
     console.log(invitado.id);
-    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado?id=', invitado.id)
+    let httpParams = new HttpParams()
+      .append("id", invitado.id)
+    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado', { params: httpParams })
 
   }
 
@@ -89,6 +82,15 @@ export class UserInvService {
       
     }))*/
 
+  }
+
+  fixIDOut() {
+    console.log("Eliminando userID...");
+    this.user_id = ''
+    if (this.user_id === '') {
+      return true
+    }
+    else return false
   }
 }
 

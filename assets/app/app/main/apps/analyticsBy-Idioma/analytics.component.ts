@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { SharedVariablesService } from '../../../services/shared-variables.service';
 //import { AnalyticsDashboardService } from './analytics.service';
 
 @Component({
@@ -284,6 +285,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         private _estadPrueba: EstadXidiomaService,
         private _camapignService: CampaignService,
         private _userService: UserService,
+        private servCamp: SharedVariablesService,
         private _fb: FormBuilder
     ) {
         // Register the custom chart.js plugin
@@ -328,17 +330,27 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         //DATEPICKER BIBLIOGRAFY:
         //https://material.angular.io/components/datepicker/overview
 
-        let currentCamapingId: string = "";
+        //let currentCamapingId: string = "";
         //console.log(" Get information about USER ", this._userService.user.id);
-        this._camapignService.getCampaignbyUser('0','','','');
+       // this._camapignService.getCampaignbyUser('0', '', '', '');
 
 
-        if (typeof (this._camapignService.campaign) !== 'undefined' && this._camapignService.campaign.length > 0) {
+        if (this.servCamp.getName() != '') {
+
+            console.log("CampNAme " + this.servCamp.getName());
+
+            this.campaigns = this.servCamp.getName();
+            console.log(this.campaigns);
+
+            let currentDate = moment().format("YYYY-MM-DD hh:mm a");
+
+            this.getAllStadisticsFromBackend(currentDate);
+
             //Selecciona el id de la campana escogida por el usuario
             /*************************************************
                ERASE IN PRODUCTION
             **************************************************/
-            this._camapignService.testSelectedRandomCamaping()
+            /*this._camapignService.testSelectedRandomCamaping()
                 .then((_) => {
                     const camapIgnObjet = this._camapignService.selectedCampaign;
 
@@ -346,20 +358,14 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                     console.log("Campaingn list ", this._camapignService.campaign);
 
                     currentCamapingId = camapIgnObjet.id;
-                    this._estadPrueba.setCurrentCamaignId(currentCamapingId);
-
-                    this.campaigns = this._camapignService.getMyCamps()[0].nombre;
-                    console.log(this.campaigns);
-
-                    let currentDate = moment().format("YYYY-MM-DD hh:mm a");
-
-                    this.getAllStadisticsFromBackend(currentDate);
-
-                })
-                .catch(error => console.error(error))
+                    this._estadPrueba.setCurrentCamaignId(currentCamapingId);*/
 
 
         }
+        /*.catch (error => console.error(error))
+console.log("Sali  D IF NGONIT");*/
+
+
 
 
         ///Read all Stadistics
@@ -398,6 +404,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         this.dateForm = this._fb.group({
             usertime: ['']
         });
+
 
     }
     // -----------------------------------------------------------------------------------------------------

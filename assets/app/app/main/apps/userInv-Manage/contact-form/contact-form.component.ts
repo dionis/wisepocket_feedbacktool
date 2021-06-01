@@ -43,6 +43,7 @@ export class ContactsContactFormDialogComponent {
         if (this.action === 'edit') {
             this.dialogTitle = 'Editar Invitado';
             this.contact = _data.contact;
+
         }
         else {
             this.dialogTitle = 'Nuevo Invitado';
@@ -55,7 +56,10 @@ export class ContactsContactFormDialogComponent {
             direccion: ['', Validators.required],
         });
 
-        this.invUserForm = this.createContactForm();
+        if (this.action === 'edit') {
+            this.invUserForm = this.createContactForm();
+        }
+
 
     }
 
@@ -85,8 +89,8 @@ export class ContactsContactFormDialogComponent {
         })
     }
 
-    onSaveEdit(contact) {
-        this.invService.updateInfo(contact).subscribe(data => {
+    onSaveEdit() {
+        this.invService.updateInfo(this.invUserForm.getRawValue()).subscribe(data => {
             console.log(data);
             swal.fire('Usuario actualizado')
             this.invService.getInvitados().subscribe(data => {
@@ -97,7 +101,7 @@ export class ContactsContactFormDialogComponent {
         });
     }
 
-    onDelete(contact) {
+    onDelete() {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
@@ -106,7 +110,7 @@ export class ContactsContactFormDialogComponent {
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.invService.deleteUserInv(contact).subscribe(data => {
+                this.invService.deleteUserInv(this.invUserForm.getRawValue()).subscribe(data => {
                     console.log(data);
                 });
                 this.invService.getInvitados().subscribe(data => {
@@ -114,12 +118,13 @@ export class ContactsContactFormDialogComponent {
                     this.invService.getUsers(data.data)
 
                 })
+                
             }
             this.confirmDialogRef = null;
         });
 
     }
-   
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -137,9 +142,9 @@ export class ContactsContactFormDialogComponent {
             nombre: [this.contact.nombre],
             correo: [this.contact.correo],
             telefono: [this.contact.telefono],
+            password:[this.contact.password],
             direccion: [this.contact.direccion],
             acceso: [this.contact.acceso],
-
         });
     }
 

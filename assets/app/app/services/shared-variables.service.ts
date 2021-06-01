@@ -29,7 +29,7 @@ export class SharedVariablesService {
 
   getId():string{
     const campaign = JSON.parse(localStorage.getItem('campaign_selected'))
-    return campaign!==null?campaign.nombre:'';
+    return campaign!==null?campaign.id:'';
   }
 
   // setCamp(camp:any){

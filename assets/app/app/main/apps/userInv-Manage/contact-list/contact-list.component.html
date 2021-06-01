@@ -38,14 +38,18 @@
         <div fxFlex="row" fxLayoutAlign="end center">
           <button
             id="botonAsociar"
-            mat-button
+            mat-raised-button
             fxHide
             fxShow.gt-md
             (click)="editContact(contact)"
           >
             Editar
           </button>
-          <button id="botonEditar" mat-button (click)="asociarCamp(contact)">
+          <button
+            id="botonEditar"
+            mat-raised-button
+            (click)="asociarCamp(contact)"
+          >
             Asociar
           </button>
         </div>

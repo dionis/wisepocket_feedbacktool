@@ -42,7 +42,7 @@ export class ContactAsociarComponent implements OnInit {
   }
 
   asociarAcamp(contact) {
-    this.invService.AddCampInv(this.nameCamp, contact).subscribe(res => {
+    this.invService.AddCampInv(contact).subscribe(res => {
       console.log(res.data);
       if (res.message === "Asociado a la Campaña con éxito") {
         this.updatePass(contact)

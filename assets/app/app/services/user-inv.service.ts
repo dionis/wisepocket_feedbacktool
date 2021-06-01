@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserService } from './user.service';
 import { UserInv } from '../models/userInv.model';
+import { SharedVariablesService } from './shared-variables.service';
 
 
 @Injectable({
@@ -15,7 +16,7 @@ export class UserInvService {
   onUserDataChanged: BehaviorSubject<any>;
   contacts: UserInv[];
   user_id: string;
-  constructor(private _http: HttpClient, private user: UserService,) {
+  constructor(private _http: HttpClient, private user: UserService, private servCamp: SharedVariablesService,) {
     this.onContactsChanged = new BehaviorSubject([]);
     this.onUserDataChanged = new BehaviorSubject([]);
     this.user_id = this.user.getMyUserId();
@@ -56,11 +57,11 @@ export class UserInvService {
 
   }
 
-  AddCampInv(campName, invitado): Observable<any> {
-    console.log(invitado.id + " " + campName);
+  AddCampInv(invitado): Observable<any> {
+    console.log(invitado.id, this.servCamp.getId());
     let httpParams = new HttpParams()
       .append("id", invitado.id)
-      .append("nombre", campName)
+      .append("camp_id", this.servCamp.getId())
     return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/addCampaigns', { params: httpParams })
 
   }

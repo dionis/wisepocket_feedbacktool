@@ -22,12 +22,12 @@ describe("UserInvitadoController.addCampaigns", function () {
               let camp = zookeepers[0];
               console.log(
                 "---- New Test execution data ----",
-                zookeepers[0].nombre
+                zookeepers[0].id
               );
               console.log("FIND Campaign BY NAME ", camp.nombre);
               supertest(sails.hooks.http.app)
                 .post("/userInvitado/addCampaigns")
-                .query({ nombre: camp.nombre, id: userInv.id })
+                .query({ campID: camp.id, id: userInv.id })
                 .expect(200)
                 .then((response) => {
                   console.log("Service OK:" + response.text);
@@ -260,7 +260,11 @@ describe("UserInvitadoController.updateInfo", function () {
           console.log("FIND Invitado BY NAME ", userInv.nombre);
           supertest(sails.hooks.http.app)
             .patch("/userInvitado/updateInfo")
-            .query({ id: userInv.id, nombre: "TEST-NAME", correo:"test@nauta.cu" })
+            .query({
+              id: userInv.id,
+              nombre: "TEST-NAME",
+              correo: "test@nauta.cu",
+            })
             .expect(200)
             .then((response) => {
               console.log("Service OK:" + response.text);

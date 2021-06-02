@@ -11,6 +11,7 @@ export const locale = {
             SEARCH_PLACEHOLDER      : 'Buscar por un e-mail o contacto'
         },
         OPINION: {
+          OPINIONS                :'OPINIONES',
           COMPOSE                 : 'Crear',
           FOLDERS                 : 'Carpetas',
           FILTERS                 : 'Filtros',

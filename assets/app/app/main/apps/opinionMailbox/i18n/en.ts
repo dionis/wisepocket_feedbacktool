@@ -11,6 +11,7 @@ export const locale = {
             SEARCH_PLACEHOLDER      : 'Search for an e-mail or contact'
         },
         OPINION: {
+          OPINIONS                :'OPINIONS',
           COMPOSE                 : 'COMPOSE',
           FOLDERS                 : 'FOLDERS',
           FILTERS                 : 'FILTERS',

@@ -7,7 +7,6 @@ export class UserInv {
     telefono: number;
     direccion: string;
     password:string;
-    acceso: false;
 
     constructor(contact)
     {
@@ -17,7 +16,6 @@ export class UserInv {
             this.correo = contact.correo || '';
             this.telefono= contact.telefono || '';
             this.direccion = contact.direccion || '';
-            this.acceso = contact.acceso || ''
             this.password = contact.password || ''
         }
     }

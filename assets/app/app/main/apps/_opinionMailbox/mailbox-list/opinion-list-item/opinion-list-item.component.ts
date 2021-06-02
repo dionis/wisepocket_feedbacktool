@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { OpinionService } from '../../../../../services/opinion-analizer.service';
+import { OpinionPruebaService } from '../../../../../services/opinion-prueba.service';
+import { OpinionTest } from '../../../../../models/opinionTest.model';
 
 @Component({
     selector     : 'opinion-list-item',
@@ -13,7 +15,8 @@ import { OpinionService } from '../../../../../services/opinion-analizer.service
 })
 export class MailboxListItemComponent implements OnInit, OnDestroy
 {
-    @Input() opinion: Opinion;
+    //@Input() opinion: Opinion;
+    @Input() opinion: OpinionTest;
     labels: any[];
 
     @HostBinding('class.selected')
@@ -45,7 +48,7 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Set the initial values
-        this.opinion = new Opinion(this.opinion);
+        this.opinion = new OpinionTest(this.opinion);
 
         // Subscribe to update on selected opinion change
         this._opinionService.onSelectedOpinionsChanged
@@ -105,7 +108,7 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
     {
         event.stopPropagation();
 
-        this.opinion.toggleStar();
+        //this.opinion.toggleStar();
 
         this._opinionService.updateOpinion(this.opinion);
     }
@@ -119,7 +122,7 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
     {
         event.stopPropagation();
 
-        this.opinion.toggleImportant();
+        //this.opinion.toggleImportant();
 
         this._opinionService.updateOpinion(this.opinion);
     }

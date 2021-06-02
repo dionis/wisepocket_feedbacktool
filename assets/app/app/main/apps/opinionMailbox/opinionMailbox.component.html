@@ -63,23 +63,23 @@
                         <mat-icon class="secondary-text">delete</mat-icon>
                     </button>
 
-                    <button mat-icon-button [matMenuTriggerFor]="folderMenu" *ngIf="hasSelectedOpinions">
+                    <!-- <button mat-icon-button [matMenuTriggerFor]="folderMenu" *ngIf="hasSelectedOpinions">
                         <mat-icon class="secondary-text">folder</mat-icon>
                     </button>
                     <mat-menu #folderMenu="matMenu">
                         <button mat-menu-item *ngFor="let folder of folders"
                                 (click)="setFolderOnSelectedOpinions(folder.id)">{{folder.title}}
                         </button>
-                    </mat-menu>
+                    </mat-menu> -->
 
-                    <button mat-icon-button [matMenuTriggerFor]="labelMenu" *ngIf="hasSelectedOpinions">
+                    <!-- <button mat-icon-button [matMenuTriggerFor]="labelMenu" *ngIf="hasSelectedOpinions">
                         <mat-icon class="secondary-text">label</mat-icon>
                     </button>
                     <mat-menu #labelMenu="matMenu">
                         <button mat-menu-item *ngFor="let label of labels"
                                 (click)="toggleLabelOnSelectedOpinions(label.id)">{{label.title}}
                         </button>
-                    </mat-menu>
+                    </mat-menu> -->
                 </div>
 
                 <div *ngIf="currentOpinion" fxHide.gt-xs>

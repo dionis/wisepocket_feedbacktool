@@ -26,7 +26,7 @@ module.exports = {
               telefono: req.param("telefono"),
               direccion: req.param("direccion"),
               //isAdmin: req.param("isAdmin"),
-             // acceso: req.param("acceso"),
+              // acceso: req.param("acceso"),
               invitadoBY: userChief.id,
             },
             (err) => {
@@ -56,39 +56,47 @@ module.exports = {
 
   addCampaigns: async (req, res) => {
     let camp;
-    await Campaign.findOne({
-      id: req.param("campID"),
-    }).then((doc) => {
-      if (!doc) {
-        console.log("No encontrado");
-      } else {
-        console.log("Encontrado");
-        camp = doc.id;
-      }
-    });
-    await UserInvitado.findOne({
-      id: req.param("id"),
-    }).then(async (doc) => {
-      if (!doc) {
-        console.log("No encontrado");
-      } else {
-        console.log("Encontrado");
-        await UserInvitado.addToCollection(doc.id, "campaigns", camp)
-          .then((campInv) => {
-            return res.send({
-              message: "Asociado a la Campaña con éxito",
-              data: campInv,
+    await Campaign.find({
+      where: { id: req.param("campID") },
+    })
+      .limit(1)
+      .then((doc) => {
+        if (!doc) {
+          console.log("No encontrado");
+        } else {
+          console.log("Encontrado");
+          camp = doc.id;
+          console.log(doc);
+          console.log("Id Camp ", camp);
+        }
+      });
+    await UserInvitado.find({
+      where: { id: req.param("id") },
+    })
+      .limit(1)
+      .then(async (doc) => {
+        if (!doc) {
+          console.log("No encontrado");
+        } else {
+          console.log("Encontrado");
+          console.log(doc);
+          console.log("Id userInv ", doc.id);
+          await UserInvitado.addToCollection(doc.id, "campaigns", camp)
+            .then((campInv) => {
+              return res.send({
+                message: "Asociado a la Campaña con éxito",
+                data: campInv,
+              });
+            })
+            .catch((err) => {
+              sails.log.debug(err);
+              return res.send({
+                success: false,
+                message: "Falló la operación",
+              });
             });
-          })
-          .catch((err) => {
-            sails.log.debug(err);
-            return res.send({
-              success: false,
-              message: "Falló la operación",
-            });
-          });
-      }
-    });
+        }
+      });
   },
 
   getCampXInvitado: async (req, res) => {

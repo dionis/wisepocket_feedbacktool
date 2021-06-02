@@ -7,14 +7,14 @@
 
         <div class="row-1" fxLayout="row" fxLayoutAlign="start center">
 
-          <!-- <div class="name" fxLayout="row" fxLayoutAlign="start center" fxFlex>
-            <img class="avatar" *ngIf="opinion.avatar" alt="{{opinion.from?.user}}" src="{{opinion.avatar}}"/>
-            <div class="avatar accent" *ngIf="!opinion.avatar">{{opinion.from?.user[0]}}</div>
-            <span class="text-truncate" *ngIf="opinion?.from">{{opinion.from?.user}}</span>
-            <mat-icon class="s-16 ml-8" *ngIf="opinion.hasAttachments">attachment</mat-icon>
-          </div> -->
+          <div class="name" fxLayout="row" fxLayoutAlign="start center" fxFlex>
+            <!-- <img class="avatar" *ngIf="opinion.avatar" alt="{{opinion.from?.user}}" src="{{opinion.avatar}}"/> -->
+            <!-- <div class="avatar accent" *ngIf="!opinion.userend">{{opinion.userend.name_alias}}</div> -->
+            <span class="text-truncate">{{opinion.userend.name_alias}}</span>
+            <!-- <mat-icon class="s-16 ml-8" *ngIf="opinion.polaridad">{{opinion.polaridad}}</mat-icon> -->
+          </div>
           <div fxLayout="row" fxLayoutAlign="start center">
-                <div class="time">{{opinion.userend.name_alias}}</div>
+                <div class="time">{{opinion.fecha | date: 'MMM d, y'}}</div>
 
             </div>
 
@@ -32,14 +32,13 @@
                     {{opinion.texto | htmlToPlaintext | slice:0:180}}{{opinion.texto.length > 180 ? '...' : ''}}
                 </div>
 
-                <!-- <div class="labels" fxLayout="row wrap" fxHide fxShow.gt-sm>
-                    <div class="label" *ngFor="let labelId of opinion.labels"
-                         fxLayout="row" fxLayoutAlign="start center">
+                <div class="labels" fxLayout="row wrap" fxHide fxShow.gt-sm>
+                    <div class="label" fxLayout="row" fxLayoutAlign="start center">
                         <div class="label-color"
-                             [ngStyle]="{'background-color': labels | getById:labelId:'color'}"></div>
-                        <div class="label-title">{{labels | getById:labelId:'title'}}</div>
+                             [ngStyle]="{'background-color': (opinion.polaridad==='negativa'?'red':'acent')}"></div>
+                        <div class="label-title">{{opinion.polaridad}}</div>
                     </div>
-                </div> -->
+                </div>
 
             </div>
 

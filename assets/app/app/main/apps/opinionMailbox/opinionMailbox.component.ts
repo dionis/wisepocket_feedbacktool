@@ -141,7 +141,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
                     console.log("Campaingn list ", this._camapignService.campaign);
 
                     currentCamapingId = camapIgnObjet.id;
-                    this._estadPrueba.setCurrentCamaignId(currentCamapingId);
+                    //this._estadPrueba.setCurrentCamaignId(currentCamapingId);
 
                     this.campaigns = this._camapignService.getMyCamps();
                     console.log(this.campaigns);

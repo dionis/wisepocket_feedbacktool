@@ -54,7 +54,7 @@ export class AnalyticsDateDashboardComponent implements OnInit
             console.log("Campaingn list ", this._campaignService.campaign);
 
             currentCamapingId = camapIgnObjet.getCampaignId;
-            this._estadPrueba.setCurrentCamaignId(currentCamapingId);
+            //this._estadPrueba.setCurrentCamaignId(currentCamapingId);
         }
 
 

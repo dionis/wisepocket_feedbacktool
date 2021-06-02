@@ -53,7 +53,7 @@ module.exports.routes = {
   //Campaign Requests //DEJAR SOLO MOSTRAR CAMPAÑA POR USUARIO
   //DE MOMENTO SE DEJAN LOS SERVICIOS PARA CREAR BASE DE DATOS TEMPORAL
   "POST /campaign/create": "CampaignController.create",
-  
+
   //"PATCH /campaign/editCampaign": "CampaignController.editCampaign",
   // "DELETE /campaign/deleteCampaign": "CampaignController.deleteCampaign",
   "GET /campaign/getCampaign": "CampaignController.getCampaign",
@@ -73,6 +73,7 @@ module.exports.routes = {
   "POST /entidadopinion/create": "EntidadOpinionController.create",
   "POST /userInvitado/create": "UserInvitadoController.create",
   "POST /userInvitado/addCampaigns": "UserInvitadoController.addCampaigns",
+  "POST /acceso/darAcceso": "AccesoController.darAcceso",
 
   //DELETE
   //'DELETE /opinion/deleteOpinion': 'OpinionController.deleteOpinion',
@@ -123,13 +124,14 @@ module.exports.routes = {
   "GET /userInvitado/getInvitados": "UserInvitadoController.getInvitados",
   "GET /userInvitado/getInvXUserChief":
     "UserInvitadoController.getInvXUserChief",
-    "GET /userInvitado/getInvitadoById":
-    "UserInvitadoController.getInvitadoById",
+  "GET /userInvitado/getInvitadoById": "UserInvitadoController.getInvitadoById",
+  "GET /acceso/getStatusAcceso": "AccesoController.getStatusAcceso",
 
   //PATCH
   "PATCH /userInvitado/updateInfo": "UserInvitadoController.updateInfo",
   "PATCH /userInvitado/updatePass": "UserInvitadoController.updatePass",
   "PATCH /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
+  "PATCH /acceso/quitarAcceso": "AccesoController.quitarAcceso",
   //"PATCH /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

@@ -5,6 +5,7 @@ contacts-contact-list {
     flex: 1 1 auto;
     width: 100%;
 
+
     .mat-table {
         width: 100%;
         background: transparent;
@@ -26,7 +27,7 @@ contacts-contact-list {
         .mat-column-Correo {
             flex: 2 5 0;
         }
-       
+
         .mat-column-boton {
             justify-content: end !important;
         }
@@ -51,7 +52,7 @@ contacts-contact-list {
             cursor: pointer;
             padding: 8px;
 
-          
+
             .mat-cell {
                 min-width: 0;
 

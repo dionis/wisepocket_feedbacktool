@@ -133,7 +133,7 @@
   >
     <button
       *ngIf="action === 'edit'"
-      mat-button
+      mat-raised-button
       class="mr-8"
       (click)="onDelete()"
       [disabled]="invUserForm.invalid"
@@ -155,7 +155,7 @@
 
     <button
       *ngIf="action === 'edit'"
-      mat-button
+      mat-raised-button
       class="save-button"
       (click)="onSaveEdit()"
       [disabled]="invUserForm.invalid"

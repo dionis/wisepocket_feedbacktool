@@ -51,9 +51,33 @@ export class UserInvService {
 
   }
 
-  updateAcceso(invitado): Observable<any> {
+  /*updateAcceso(invitado): Observable<any> {
     invitado.acceso = true
     return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateAcces', invitado)
+
+  }*/
+
+  darAcceso(invitado): Observable<any> {
+    let httpParams = new HttpParams()
+      .append("id", invitado.id)
+      .append("campID", this.servCamp.getId())
+    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/acceso/darAcceso', { params: httpParams })
+
+  }
+
+  quitarAcceso(invitado): Observable<any> {
+    let httpParams = new HttpParams()
+      .append("id", invitado.id)
+      .append("campID", this.servCamp.getId())
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/acceso/quitarAcceso', { params: httpParams })
+
+  }
+
+  getStatusAcceso(invitado): Observable<any> {
+    let httpParams = new HttpParams()
+      .append("id", invitado.id)
+      .append("campID", this.servCamp.getId())
+    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/acceso/getStatusAcceso', { params: httpParams })
 
   }
 
@@ -65,6 +89,7 @@ export class UserInvService {
     return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/addCampaigns', { params: httpParams })
 
   }
+
   deleteUserInv(invitado): Observable<any> {
     console.log(invitado.id);
     let httpParams = new HttpParams()

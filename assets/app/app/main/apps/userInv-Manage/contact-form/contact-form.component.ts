@@ -143,8 +143,7 @@ export class ContactsContactFormDialogComponent {
             correo: [this.contact.correo],
             telefono: [this.contact.telefono],
             password:[this.contact.password],
-            direccion: [this.contact.direccion],
-            acceso: [this.contact.acceso],
+            direccion: [this.contact.direccion]
         });
     }
 

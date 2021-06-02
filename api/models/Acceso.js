@@ -1,5 +1,5 @@
 /**
- * UserInvitado.js
+ * Acceso.js
  *
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -7,47 +7,19 @@
 
 module.exports = {
   attributes: {
-    nombre: {
-      type: "string",
-      unique: true,
-      required: true,
-    },
-
-    correo: {
-      type: "string",
-    },
-
-    telefono: {
-      type: "string",
-    },
-
-    direccion: {
-      type: "string",
-    },
-
-    password: {
-      type: "string",
-      //unique: true
-    },
-
-    /*isAdmin: {
-      type: 'boolean',
-      defaultsTo: false,
-    },*/
-
-    /*acceso: {
+    acceso: {
       type: "boolean",
       defaultsTo: false,
-    },*/
-
-    invitadoBY: {
-      model: "user",
     },
 
-    campaigns: {
-      collection: "campaign",
-      via: "userInvitado",
+    campaign: {
+      model: "campaign",
     },
+
+    userInv: {
+      model: "userinvitado",
+    },
+
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
@@ -60,8 +32,7 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
   },
-
   customToJSON: function () {
-    return _.omit(this, ["createdAt", "updatedAt", "isAdmin"]);
+    return _.omit(this, ["createdAt", "updatedAt"]);
   },
 };

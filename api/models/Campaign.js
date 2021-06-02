@@ -61,9 +61,9 @@ module.exports = {
       allowNull: true
     },
 
-    userInvitado:{
+    userInvitados:{
       collection: 'userinvitado',
-      via:'campaigns'
+      via:'campaigns',
     }
 
     /*logo: {

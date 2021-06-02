@@ -14,10 +14,12 @@ module.exports = {
 
     campaign: {
       model: "campaign",
+      unique: true,
     },
 
     userInv: {
       model: "userinvitado",
+      unique: true,
     },
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗

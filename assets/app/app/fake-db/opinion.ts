@@ -139,20 +139,34 @@ export class OpinionFakeDb{
     public static filters = [
         {
             'id'    : 0,
-            'handle': 'starred',
-            'title' : 'Last 15 days',
+            'handle': 'today',
+            'title' : 'TODAY',
             'icon'  : 'star',
             'color' : 'amber-fg'
         },
         {
             'id'    : 1,
+            'handle': 'yesterday',
+            'title' : 'Yesterday',
+            'icon'  : 'star',
+            'color' : 'amber-fg'
+        },
+        {
+            'id'    : 2,
+            'handle': 'last 15 days',
+            'title' : 'Last 15 days',
+            'icon'  : 'star',
+            'color' : 'amber-fg'
+        },
+        {
+            'id'    : 3,
             'handle': 'positive',
             'title' : 'Positive',
             'icon'  : 'label',
             'color' : 'red-fg'
         },
         {
-            'id'    : 2,
+            'id'    : 4,
             'handle': 'negative',
             'title' : 'Negative',
             'icon'  : 'label',

@@ -5,6 +5,7 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+const moment  = require('moment')
 module.exports = {
 
     //function beta
@@ -190,6 +191,124 @@ module.exports = {
             });
         }
         
+    },
+
+    getOpinionbyFilter: (req,res)=>{
+       const camp_id = req.param('id')
+       const handle = req.param('handle')
+       switch (handle) {
+        case 'today':
+            let date = moment().subtract(1, 'days').format();
+            sails.log.debug(date);
+            Opinion.find({
+                where: {campaign: camp_id, fecha: { '>=': date }}
+            })
+            .sort('fecha ASC')
+            .populate('userend')
+            .then(opinions=>{
+                return res.send({
+                    'data': opinions,
+                    'count': opinions.length
+                })
+            })
+            .catch(error=>{
+                 return res.status(500).send({
+                     'message': 'Imposible Mostrar',
+                     'error': err
+                 })
+            })
+            break;
+            case 'yesterday':
+               let date = moment().subtract(2, 'days').format();
+               sails.log.debug(date);
+               Opinion.find({
+                   where: {campaign: camp_id, fecha: { '>=': date }}
+               })
+               .sort('fecha ASC')
+               .populate('userend')
+               .then(opinions=>{
+                   return res.send({
+                       'data': opinions,
+                       'count': opinions.length
+                   })
+               })
+               .catch(error=>{
+                    return res.status(500).send({
+                        'message': 'Imposible Mostrar',
+                        'error': err
+                    })
+               })
+            break;
+           case 'last 15 days':
+               let date = moment().subtract(15, 'days').format();
+               sails.log.debug(date);
+               Opinion.find({
+                   where: {campaign: camp_id, fecha: { '>=': date }}
+               })
+               .sort('fecha ASC')
+               .populate('userend')
+               .then(opinions=>{
+                   return res.send({
+                       'data': opinions,
+                       'count': opinions.length
+                   })
+               })
+               .catch(error=>{
+                    return res.status(500).send({
+                        'message': 'Imposible Mostrar',
+                        'error': err
+                    })
+               })
+               break;
+            case 'positive':
+                Opinion.find({
+                    where: {campaign: camp_id, or:[
+                        { polaridad: 'positive' },
+                        { polaridad: 'positiva' },
+                        ]}
+                })
+                .sort('fecha ASC')
+                .populate('userend')
+                .then(opinions=>{
+                    return res.send({
+                        'data': opinions,
+                        'count': opinions.length
+                    })
+                })
+                .catch(error=>{
+                     return res.status(500).send({
+                         'message': 'Imposible Mostrar',
+                         'error': err
+                     })
+                })
+                break;
+            case 'negative':
+                Opinion.find({
+                    where: {campaign: camp_id, or:[
+                        { polaridad: 'negative' },
+                        { polaridad: 'negativa' },
+                        ]}
+                })
+                .sort('fecha ASC')
+                .populate('userend')
+                .then(opinions=>{
+                    return res.send({
+                        'data': opinions,
+                        'count': opinions.length
+                    })
+                })
+                .catch(error=>{
+                     return res.status(500).send({
+                         'message': 'Imposible Mostrar',
+                         'error': err
+                     })
+                })
+                break;
+       
+           default:
+               break;
+       }
+
     },
 
     //Requiere ID de la Campaña, la pagina y el idioma que se quiere

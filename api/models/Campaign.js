@@ -63,7 +63,7 @@ module.exports = {
 
     userInvitados:{
       collection: 'userinvitado',
-      via:'campaigns',
+      via:'campaigns'
     }
 
     /*logo: {

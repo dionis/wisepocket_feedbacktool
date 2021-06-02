@@ -80,7 +80,6 @@ module.exports = {
   getStatusAcceso: async (req, res) => {
     let userinv;
     let camp;
-    let status;
     await Campaign.find({
       where: { id: req.param("campID") },
     }).then(async (doc) => {
@@ -103,17 +102,22 @@ module.exports = {
               if (!doc) {
                 console.log("Estado de acceso no determinado");
                 return res.send({
-                  success: false,
+                  determinado: false,
                   message: "Imposible Determinar",
                 });
               } else {
                 console.log("Acceso determinado");
-                status = doc.acceso;
-                return res.send({
-                  success: true,
-                  message: "Estado de Acceso",
-                  data: status,
-                });
+                if (doc.acceso === true) {
+                  return res.send({
+                    success: true,
+                    message: "Tiene Acceso",
+                  });
+                } else {
+                  return res.send({
+                    success: false,
+                    message: "No tiene acceso",
+                  });
+                }
               }
             });
           }

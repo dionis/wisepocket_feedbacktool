@@ -196,9 +196,10 @@ module.exports = {
     getOpinionbyFilter: (req,res)=>{
        const camp_id = req.param('id')
        const handle = req.param('handle')
+       let date
        switch (handle) {
         case 'today':
-            let date = moment().subtract(1, 'days').format();
+            date = moment().subtract(1, 'days').format();
             sails.log.debug(date);
             Opinion.find({
                 where: {campaign: camp_id, fecha: { '>=': date }}
@@ -219,7 +220,7 @@ module.exports = {
             })
             break;
             case 'yesterday':
-               let date = moment().subtract(2, 'days').format();
+               date = moment().subtract(2, 'days').format();
                sails.log.debug(date);
                Opinion.find({
                    where: {campaign: camp_id, fecha: { '>=': date }}
@@ -240,7 +241,7 @@ module.exports = {
                })
             break;
            case 'last 15 days':
-               let date = moment().subtract(15, 'days').format();
+             date = moment().subtract(15, 'days').format();
                sails.log.debug(date);
                Opinion.find({
                    where: {campaign: camp_id, fecha: { '>=': date }}

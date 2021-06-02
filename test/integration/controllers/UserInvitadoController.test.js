@@ -10,7 +10,7 @@ describe("UserInvitadoController.addCampaigns", function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe("#addCampaigns", function () {
+  describe("Se asocia el invitado a una Campaña", function () {
     it("should redirect to /my/page", function (done) {
       UserInvitado.find()
         .then((zookeepers) => {
@@ -80,7 +80,7 @@ describe("UserInvitadoController.getCampXInvitado", function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe("#getCampXInvitado", function () {
+  describe("Campañas asociadas a un invitado o en que campañas esta el invitado colaborando", function () {
     it("should redirect to /my/page", function (done) {
       UserInvitado.find().then((zookeepers) => {
         let userInv = zookeepers[0];
@@ -110,7 +110,7 @@ describe("UserInvitadoController.getInvXUserChief", function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe("#getInvXUserChief", function () {
+  describe("Lista de invitados por Administrador o a quienes invito el admin", function () {
     it("should redirect to /my/page", function (done) {
       User.find()
         .then((zookeepers) => {
@@ -205,7 +205,7 @@ describe("UserInvitadoController.updateAcces", function () {
         });
     });
   });
-});
+});*/
 
 describe("UserInvitadoController.updatePass", function () {
   before(function () {
@@ -229,8 +229,6 @@ describe("UserInvitadoController.updatePass", function () {
             .expect(200)
             .then((response) => {
               console.log("Service OK:" + response.text);
-              /// response.text >>>>> Dar acceso o no a una Campaña
-              // ( Se pensara en una funcion que antes de entrar evalue el valor del acceso, por defecto es false)
               done();
             })
             .catch((err) => done(err));
@@ -240,7 +238,7 @@ describe("UserInvitadoController.updatePass", function () {
         });
     });
   });
-});*/
+});
 
 describe("UserInvitadoController.updateInfo", function () {
   before(function () {
@@ -251,7 +249,7 @@ describe("UserInvitadoController.updateInfo", function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe("#updateInfo", function () {
+  describe("Actualiza los datos de un invitado", function () {
     it("should redirect to /my/page", function (done) {
       UserInvitado.find()
         .then((zookeepers) => {
@@ -321,7 +319,7 @@ describe("CampaignController.getInvitadoXCamp", function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe("#getInvitadoXCamp", function () {
+  describe("Lista de Invitados de una Campaña", function () {
     it("should redirect to /my/page", function (done) {
       Campaign.find()
         .then((zookeepers) => {
@@ -334,7 +332,7 @@ describe("CampaignController.getInvitadoXCamp", function () {
             .expect(200)
             .then((response) => {
               console.log("Service OK:" + response.text);
-              /// response.text >>>>> Lista de Invitados a una Campaña
+              /// response.text >>>>> Lista de Invitados de una Campaña
               done();
             })
             .catch((err) => done(err));

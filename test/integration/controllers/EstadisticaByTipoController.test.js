@@ -11,7 +11,7 @@ describe('EstadisticaByTipoController.getCPostivaXDia', function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe('#getCPostivaXDia', function () {
+  describe('total de opiniones positivas por dia de una Campaña', function () {
     it('should redirect to /my/page', function (done) {
       Campaign.find().then(zookeepers => {
         let campaign = zookeepers[0];
@@ -48,7 +48,7 @@ describe('EstadisticaByTipoController.getCNegativaXDia', function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe('#getCNegativaXDia', function () {
+  describe('total de opiniones negativas por dia de una Campaña', function () {
     it('should redirect to /my/page', function (done) {
       Campaign.find().then(zookeepers => {
         let campaign = zookeepers[0];
@@ -85,7 +85,7 @@ describe('EstadisticaByTipoController.getCNeutraXDia', function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe('#getCNeutraXDia', function () {
+  describe('total de opiniones neutras por dia de una Campaña', function () {
     it('should redirect to /my/page', function (done) {
       Campaign.find().then(zookeepers => {
         let campaign = zookeepers[0];
@@ -124,7 +124,7 @@ describe('EstadisticaByTipoController.getCantTotalXDia', function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe('#getCantTotalXDia', function () {
+  describe('total de opiniones por dia de una Campaña', function () {
     it('should redirect to /my/page', function (done) {
       Campaign.find().then(zookeepers => {
         let campaign = zookeepers[0];

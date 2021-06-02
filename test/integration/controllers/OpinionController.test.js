@@ -1,11 +1,10 @@
-var supertest = require('supertest');
+var supertest = require("supertest");
 //var faker = require('faker');
-
 
 ///// SE INYECTA EN LA BASE DE DATOS AUTOMATICAMENTE
 
-
-describe('OpinionController.getOpinion', function () {
+//FUNCIONA
+/*describe('OpinionController.getOpinion', function () {
   before(function () {
     // runs once before the first test in this block
     //https://mochajs.org/#hooks
@@ -14,7 +13,7 @@ describe('OpinionController.getOpinion', function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe('#getOpinion', function () {
+  describe('Lista de Opiniones del usuario en la campaña correspondiente', function () {
     it('should redirect to /my/page', function (done) {
       Campaign.find().then(zookeepers => {
         let campaign = zookeepers[0];
@@ -31,19 +30,15 @@ describe('OpinionController.getOpinion', function () {
             done();
           })
           .catch(err => done(err))
-
-
       }).catch(error => {
         throw Error(error)
       })
-
-
-
     });
   })
-});
+});*/
 
-describe('OpinionController.getOpinionXIdiomaCamp', function () {
+//FUNCIONA
+/*describe('OpinionController.getOpinionXIdiomaCamp', function () {
   before(function () {
     // runs once before the first test in this block
     //https://mochajs.org/#hooks
@@ -52,7 +47,7 @@ describe('OpinionController.getOpinionXIdiomaCamp', function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe('#getOpinionXIdiomaCamp', function () {
+  describe('Lista de Opiniones por idioma en una campaña', function () {
     it('should redirect to /my/page', function (done) {
       Campaign.find().then(zookeepers => {
         let campaign = zookeepers[0];
@@ -69,17 +64,12 @@ describe('OpinionController.getOpinionXIdiomaCamp', function () {
             done();
           })
           .catch(err => done(err))
-
-
       }).catch(error => {
         throw Error(error)
       })
-
-
-
     });
   })
-});
+});*/
 
 //DELETE TODAS LAS OPINIONES
 /*describe('OpinionController.deleteAllOpinion', function () {
@@ -108,9 +98,5 @@ describe('OpinionController.getOpinionXIdiomaCamp', function () {
         }).catch(error =>{
               throw Error(error)
         })
-
-
-
         });
     })*/
-

@@ -40,6 +40,23 @@ export class UserInvService {
     this.onContactsChanged.next(this.contacts);
   }
 
+  AddCampInv(invitado): Observable<any> {
+    console.log(invitado.id, this.servCamp.getId());
+    let httpParams = new HttpParams()
+      .append("id", invitado.id)
+      .append("campID", this.servCamp.getId())
+    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/addCampaigns', { params: httpParams })
+
+  }
+
+  deleteUserInv(invitado): Observable<any> {
+    console.log(invitado.id);
+    let httpParams = new HttpParams()
+      .append("id", invitado.id)
+    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado', { params: httpParams })
+
+  }
+
   updateInfo(invitado): Observable<any> {
     console.log(invitado.nombre);
     return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/updateInfo?id=' + invitado.id, invitado)
@@ -81,22 +98,6 @@ export class UserInvService {
 
   }
 
-  AddCampInv(invitado): Observable<any> {
-    console.log(invitado.id, this.servCamp.getId());
-    let httpParams = new HttpParams()
-      .append("id", invitado.id)
-      .append("camp_id", this.servCamp.getId())
-    return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/addCampaigns', { params: httpParams })
-
-  }
-
-  deleteUserInv(invitado): Observable<any> {
-    console.log(invitado.id);
-    let httpParams = new HttpParams()
-      .append("id", invitado.id)
-    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado', { params: httpParams })
-
-  }
 
   getInvitadXID(invitado): Observable<any> {
 

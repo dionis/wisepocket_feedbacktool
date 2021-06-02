@@ -10,6 +10,7 @@ import { CampaignService } from '../services/campaign.service';
 import { environment } from '../../environments/environment';
 import { map, takeUntil } from 'rxjs/operators';
 import { OpinionTest } from '../models/opinionTest.model';
+import { SharedVariablesService } from './shared-variables.service';
 
 
 @Injectable({
@@ -20,10 +21,10 @@ export class OpinionService implements Resolve<any>
     deleteSelectedOpinions() {
         throw new Error('Method not implemented.');
     }
-    opinions: Opinion[];
+    opinions: OpinionTest[];
     user: string;
-    selectedOpinions: Opinion[];
-    currentOpinion: Opinion;
+    selectedOpinions: OpinionTest[];
+    currentOpinion: OpinionTest;
     opinionesXidioma: OpinionTest[];
     searchText = '';
     folders: any[];
@@ -49,7 +50,8 @@ export class OpinionService implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient,
-        private campaign: CampaignService
+        private campaign: CampaignService,
+        private sharedVarService: SharedVariablesService
     ) {
         // Set the defaults
         this.selectedOpinions = [];
@@ -77,9 +79,9 @@ export class OpinionService implements Resolve<any>
 
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getFolders(),
+               // this.getFolders(),
                 this.getFilters(),
-                this.getLabels(),
+                //this.getLabels(),
                 this.getOpinions()
             ]).then(
                 () => {
@@ -170,7 +172,7 @@ export class OpinionService implements Resolve<any>
      * @returns {Promise<any>}
      */
     getFilters(): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => { 
             this._httpClient.get('api/opinion-filters')
                 .subscribe((response: any) => {
                     this.filters = response;
@@ -199,19 +201,19 @@ export class OpinionService implements Resolve<any>
     /**
      * Get all opinions
      *
-     * @returns {Promise<Opinion[]>}
+     * @returns {Promise<OpinionTest[]>}
      */
-    getOpinions(): Promise<Opinion[]> {
+    getOpinions(): Promise<OpinionTest[]> {
 
-        if (this.routeParams.labelHandle) {
-            return this.getOpinionsByLabel(this.routeParams.labelHandle);
-        }
+        // if (this.routeParams.labelHandle) {
+        //     return this.getOpinionsByLabel(this.routeParams.labelHandle);
+        // }
 
         if (this.routeParams.filterHandle) {
             return this.getOpinionsByFilter(this.routeParams.filterHandle);
         }
-
-        return this.getOpinionsByFolder(this.routeParams.folderHandle);
+        return this.getOpinionsFromBAck('0','','','');
+        //return this.getOpinionsByFolder(this.routeParams.folderHandle);
 
     }
 
@@ -240,7 +242,7 @@ export class OpinionService implements Resolve<any>
      * @param handle
      * @returns {Promise<Opinion[]>}
      */
-    getOpinionsByFolder(handle): Promise<Opinion[]> {
+    getOpinionsByFolder(handle): Promise<OpinionTest[]> {
         return new Promise((resolve, reject) => {
 
             this._httpClient.get('api/opinion-folders?handle=' + handle)
@@ -276,14 +278,15 @@ export class OpinionService implements Resolve<any>
      * @param handle
      * @returns {Promise<Opinion[]>}
      */
-    getOpinionsByFilter(handle): Promise<Opinion[]> {
+    getOpinionsByFilter(handle): Promise<OpinionTest[]> {
         return new Promise((resolve, reject) => {
 
-            this._httpClient.get('api/opinions-opinions?' + handle + '=true')
+            this._httpClient.get(
+                environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion',
+                {params:{'handle':handle}})
                 .subscribe((opinions: any) => {
-
                     this.opinions = opinions.map(opinion => {
-                        return new Opinion(opinion);
+                        return new OpinionTest(opinion);
                     });
 
                     this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
@@ -302,7 +305,7 @@ export class OpinionService implements Resolve<any>
      * @param handle
      * @returns {Promise<Opinion[]>}
      */
-    getOpinionsByLabel(handle): Promise<Opinion[]> {
+    getOpinionsByLabel(handle): Promise<OpinionTest[]> {
         return new Promise((resolve, reject) => {
             this._httpClient.get('api/opinion-labels?handle=' + handle)
                 .subscribe((labels: any) => {
@@ -430,21 +433,21 @@ export class OpinionService implements Resolve<any>
      *
      * @param labelId
      */
-    toggleLabelOnSelectedOpinions(labelId): void {
-        this.selectedOpinions.map(opinion => {
+    // toggleLabelOnSelectedOpinions(labelId): void {
+    //     this.selectedOpinions.map(opinion => {
 
-            const index = opinion.labels.indexOf(labelId);
+    //         const index = opinion.labels.indexOf(labelId);
 
-            if (index !== -1) {
-                opinion.labels.splice(index, 1);
-            }
-            else {
-                opinion.labels.push(labelId);
-            }
+    //         if (index !== -1) {
+    //             opinion.labels.splice(index, 1);
+    //         }
+    //         else {
+    //             opinion.labels.push(labelId);
+    //         }
 
-            this.updateOpinion(opinion);
-        });
-    }
+    //         this.updateOpinion(opinion);
+    //     });
+    // }
 
     /**
      * Set folder on selected opinions
@@ -453,7 +456,7 @@ export class OpinionService implements Resolve<any>
      */
     setFolderOnSelectedOpinions(folderId): void {
         this.selectedOpinions.map(opinion => {
-            opinion.folder = folderId;
+            //opinion.folder = folderId; //OJO BOTON DELETE IMPLEMNTAR!!!!
 
             this.updateOpinion(opinion);
         });
@@ -493,14 +496,17 @@ export class OpinionService implements Resolve<any>
     *
     */
    getOpinionsFromBAck(page,limit,criteria,filter){
-       return new Promise((resolve,reject)=>this._httpClient.get(
+       return new Promise<OpinionTest[]>((resolve,reject)=>this._httpClient.get(
            environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion',
-           {params:{'page':page,
+           {params:{
+                    'id': this.sharedVarService.getId(),
+                    'page':page,
                     'limit': limit,
                     'criteria':criteria,
                     'filter': filter}})
             .subscribe((opinions:any)=>{
-                this.opinions = opinions.map(opinion => {
+                console.log(opinions);
+                this.opinions = opinions.data.map(opinion => {
                     return new OpinionTest(opinion);
                 });
 

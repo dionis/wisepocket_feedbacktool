@@ -5,10 +5,10 @@
     <div class="logo" fxFlex fxLayout="row" fxLayoutAlign="start center">
         <mat-icon class="logo-icon s-32" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">mail
         </mat-icon>
-        <span class="logo-text" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Mailbox</span>
+        <span class="logo-text" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{'OPINION.OPINIONS' | translate}}</span>
     </div>
 
-    <div class="account" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
+    <!-- <div class="account" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
         <div class="title">John Doe</div>
         <mat-form-field floatLabel="never">
             <mat-select class="account-selection" placeholder="Mail Selection"
@@ -18,7 +18,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-    </div>
+    </div> -->
 
 </div>
 <!-- / SIDEBAR HEADER -->
@@ -37,15 +37,15 @@
 
     <div class="nav material2">
 
-        <div class="nav-subheader">{{ 'OPINION.FOLDERS' | translate }}</div>
+       <!-- <div class="nav-subheader">{{ 'OPINION.FOLDERS' | translate }}</div>
 
-        <div class="nav-item" *ngFor="let folder of folders">
+         <div class="nav-item" *ngFor="let folder of folders">
             <a class="nav-link" matRipple [routerLink]="'/apps/opinionMailbox/folder/' + folder.handle"
                [routerLinkActive]="['active', 'accent']">
                 <mat-icon class="nav-link-icon" *ngIf="folder.icon">{{folder.icon}}</mat-icon>
                 <span>{{folder.title}}</span>
             </a>
-        </div>
+        </div> -->
 
         <div class="nav-subheader">{{ 'OPINION.FILTERS' | translate }}</div>
 
@@ -57,7 +57,7 @@
             </a>
         </div>
 
-        <div class="nav-subheader">{{ 'OPINION.LABELS' | translate }}</div>
+        <!-- <div class="nav-subheader">{{ 'OPINION.LABELS' | translate }}</div>
 
         <div class="nav-item" *ngFor="let label of labels">
             <a class="nav-link" matRipple [routerLink]="'/apps/opinionMailbox/label/' + label.handle"
@@ -65,7 +65,7 @@
                 <mat-icon class="nav-link-icon" [ngStyle]="{'color':label.color}">label</mat-icon>
                 <span>{{label.title}}</span>
             </a>
-        </div>
+        </div> -->
 
     </div>
 

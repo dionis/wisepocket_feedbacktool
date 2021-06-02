@@ -84,11 +84,11 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
                 }, 0);
             });
 
-        this._opinionService.onFoldersChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(folders => {
-                this.folders = this._opinionService.folders;
-            });
+        // this._opinionService.onFoldersChanged
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe(folders => {
+        //         this.folders = this._opinionService.folders;
+        //     });
 
         this._opinionService.onFiltersChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -96,11 +96,11 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
                 this.filters = this._opinionService.filters;
             });
 
-        this._opinionService.onLabelsChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(labels => {
-                this.labels = this._opinionService.labels;
-            });
+        // this._opinionService.onLabelsChanged
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe(labels => {
+        //         this.labels = this._opinionService.labels;
+        //     });
 
         this._opinionService.onCurrentOpinionChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -113,7 +113,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
                 {
                     this.currentOpinion = currentOpinion;
                 }
-            });
+        });
 
         this.searchInput.valueChanges.pipe(
             takeUntil(this._unsubscribeAll),
@@ -194,10 +194,10 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
      *
      * @param labelId
      */
-    toggleLabelOnSelectedOpinions(labelId): void
-    {
-        this._opinionService.toggleLabelOnSelectedOpinions(labelId);
-    }
+    // toggleLabelOnSelectedOpinions(labelId): void
+    // {
+    //     this._opinionService.toggleLabelOnSelectedOpinions(labelId);
+    // }
 
     /**
      * Set folder on selected Opinions

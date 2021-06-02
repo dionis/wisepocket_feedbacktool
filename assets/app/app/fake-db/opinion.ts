@@ -140,14 +140,21 @@ export class OpinionFakeDb{
         {
             'id'    : 0,
             'handle': 'starred',
-            'title' : 'Starred',
+            'title' : 'Last 15 days',
             'icon'  : 'star',
             'color' : 'amber-fg'
         },
         {
             'id'    : 1,
-            'handle': 'important',
-            'title' : 'Important',
+            'handle': 'positive',
+            'title' : 'Positive',
+            'icon'  : 'label',
+            'color' : 'red-fg'
+        },
+        {
+            'id'    : 2,
+            'handle': 'negative',
+            'title' : 'Negative',
             'icon'  : 'label',
             'color' : 'red-fg'
         }

@@ -24,14 +24,15 @@ import { MailboxMainSidebarComponent } from '../../../../app/main/apps/opinionMa
 
 import {OpinionComposeDialogComponent}from '../../../../app/main/apps/opinionMailbox/dialogs/compose/compose.component';
 import { CampaignSelectGuard } from '../guards/campaign-select.guard';
+import { OpinionPruebaService } from '../../../services/opinion-prueba.service';
 
 const routes: Routes = [
     {
-         path     : 'label/:labelHandle',
-        component: OpinionMailboxComponent,
+         path     : 'opiniones',
+        component: MailboxListComponent,
         canActivate: [CampaignSelectGuard],
         resolve  : {
-            opinion: OpinionService
+            opinion: OpinionPruebaService
         }
     },
     {

@@ -75,12 +75,14 @@ export class MailboxMainSidebarComponent implements OnInit, OnDestroy
         this._opinionService.onFoldersChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(folders => {
+                
                 this.folders = folders;
             });
 
         this._opinionService.onFiltersChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(filters => {
+                console.log(filters)
                 this.filters = filters;
             });
 

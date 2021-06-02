@@ -2,6 +2,7 @@ export class OpinionTest {
   id: string
   texto: string
   fecha: string
+  polaridad: string;
   userend: {
     id: string,
     name_alias: string,
@@ -11,6 +12,7 @@ export class OpinionTest {
     this.id = opinion.id;
     this.texto = opinion.texto;
     this.fecha = opinion.fecha;
+    this.polaridad = opinion.polaridad;
     this.userend = opinion.userend;
   }
 }

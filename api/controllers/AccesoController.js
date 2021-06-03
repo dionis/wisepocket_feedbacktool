@@ -104,16 +104,16 @@ module.exports = {
   },
 
   getStatusAcceso: async (req, res) => {
-    await Acceso.findOne(
-      {
-        where: { userInv: req.param("id"), campaign: req.param("campID") },
-      },
-      (err, docs) => {
-        if (err) {
-          console.log(`Error: ` + err);
-        }
-        console.log(docs);
-        if (docs.acceso) {
+    let camp = String(req.param("campID"));
+    let userInv = String(req.param("id"));
+    console.log(userinv);
+    console.log(camp);
+    await Acceso.findOne({
+      where: { userInv: userInv, campaign: camp },
+    })
+      .then((data) => {
+        console.log("StatusAccesData>> ", data);
+        if (data.acceso) {
           return res.send({
             success: true,
             message: "Tiene acceso",
@@ -126,7 +126,51 @@ module.exports = {
             data: false,
           });
         }
+      })
+      .catch((err) => {
+        sails.log.debug(err);
+      });
+  },
+
+  deleteAcces: async (req, res) => {
+    let camp = String(req.param("campID"));
+    let userInv = String(req.param("id"));
+    await Campaign.findOne({
+      where: { id: camp },
+    }).then(async (doc) => {
+      if (!doc) {
+        console.log("No encontrado");
+      } else {
+        console.log("Encontrado");
+        await UserInvitado.findOne({
+          where: { id: userInv },
+        }).then(async (doc) => {
+          if (!doc) {
+            console.log("No encontrado");
+          } else {
+            console.log("Encontrado");
+            userinv = doc.id;
+            await Acceso.destroy(
+              {
+                where: { campaign: camp, userInv: userInv },
+              },
+              (err) => {
+                if (err) {
+                  return res.send({
+                    success: false,
+                    message: "Falló la operación",
+                  });
+                } else {
+                  return res.send({
+                    success: true,
+                    message: "Acceso eliminado",
+                  });
+                }
+              }
+            );
+          }
+        });
       }
-    );
+    });
   },
 };

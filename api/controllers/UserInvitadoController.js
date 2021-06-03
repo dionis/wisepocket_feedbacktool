@@ -55,28 +55,65 @@ module.exports = {
   },
 
   addCampaigns: async (req, res) => {
-    let camp;
+    let camp = String(req.param("campID"));
+    let userInv = String(req.param("id"));
     await Campaign.findOne({
-      where: { id: req.param("campID") },
+      where: { id: camp },
     }).then((doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        camp = doc.id;
       }
     });
     await UserInvitado.findOne({
-      where: { id: req.param("id") },
+      where: { id: userInv },
     }).then(async (doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        await UserInvitado.addToCollection(doc.id, "campaigns", camp)
+        await UserInvitado.addToCollection(userInv, "campaigns", camp)
           .then((campInv) => {
             return res.send({
               message: "Asociado a la Campaña con éxito",
+              data: campInv,
+            });
+          })
+          .catch((err) => {
+            sails.log.debug(err);
+            return res.send({
+              success: false,
+              message: "Falló la operación",
+            });
+          });
+      }
+    });
+  },
+
+  deleteAsociar: async (req, res) => {
+    let camp = String(req.param("campID"));
+    let userInv = String(req.param("id"));
+    await Campaign.findOne({
+      where: { id: camp },
+    }).then((doc) => {
+      if (!doc) {
+        console.log("No encontrado");
+      } else {
+        console.log("Encontrado");
+      }
+    });
+    await UserInvitado.findOne({
+      where: { id: userInv },
+    }).then(async (doc) => {
+      if (!doc) {
+        console.log("No encontrado");
+      } else {
+        console.log("Encontrado");
+        await UserInvitado.removeFromCollection(userInv, "campaigns", camp)
+          .then((campInv) => {
+            return res.send({
+              message: "Eliminado con éxito",
               data: campInv,
             });
           })

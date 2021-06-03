@@ -80,6 +80,7 @@
       Quitar Acceso
     </button>
     <button
+      *ngIf="estadoAcceso != true"
       mat-raised-button
       class="mr-8"
       [disabled]="invUserForm.invalid"
@@ -88,6 +89,17 @@
       (click)="asociarAcamp(contact)"
     >
       Asociar
+    </button>
+    <button
+      *ngIf="estadoAcceso"
+      mat-raised-button
+      class="mr-8"
+      [disabled]="invUserForm.invalid"
+      aria-label="Asociar"
+      matTooltip="Asociar"
+      (click)="desvincular(contact)"
+    >
+      Desvincular
     </button>
   </div>
 </div>

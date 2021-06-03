@@ -91,6 +91,8 @@ module.exports.routes = {
   "DELETE /userend/deleteAllUserEnd": "UserEndController.deleteAllUserEnd",
   "DELETE /userInvitado/deleteUserInvitado":
     "UserInvitadoController.deleteUserInvitado",
+  "DELETE /userInvitado/deleteAsociar": "UserInvitadoController.deleteAsociar",
+  "DELETE /acceso/deleteAcces": "AccesoController.deleteAcces",
 
   //GET and for Pages
   "GET /opinion/getOpinion": "OpinionController.getOpinion",

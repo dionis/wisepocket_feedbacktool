@@ -6,14 +6,14 @@ import { routerReducer } from '@ngrx/router-store';
 import { Observable } from 'rxjs';
 import { SharedVariablesService } from '../../../services/shared-variables.service';
 import { UserService } from '../../../services/user.service';
-
+import swal from "sweetalert2";
 @Injectable({
   providedIn: 'root'
 })
 export class CampaignSelectGuard implements CanActivate {
-  constructor(private sharedvar:SharedVariablesService,
-              private userService: UserService,
-              private router:Router) {}
+  constructor(private sharedvar: SharedVariablesService,
+    private userService: UserService,
+    private router: Router) { }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -27,18 +27,18 @@ export class CampaignSelectGuard implements CanActivate {
     //   }
     // })
     const camp_id = this.sharedvar.getId()
-    if(camp_id !=='' && this.userService.isLoggedIn()){
+    if (camp_id !== '' && this.userService.isLoggedIn()) {
       return true;
-    }else{
-      if(this.userService.isLoggedOut()){
+    } else {
+      if (this.userService.isLoggedOut()) {
         this.userService.logout();
         this.router.navigate(['/auth/login']);
-      }else{
-        alert('You most Select a Campaign!!!');
+      } else {
+        swal.fire('Debe seleccionar una Campaña primero')
         this.router.navigate(['/apps/campaign/myCampaigns']);
       }
       return false;
     }
   }
-  
+
 }

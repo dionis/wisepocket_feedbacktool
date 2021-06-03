@@ -106,7 +106,7 @@ module.exports = {
   getStatusAcceso: async (req, res) => {
     let camp = String(req.param("campID"));
     let userInv = String(req.param("id"));
-    console.log(userinv);
+    console.log(userInv);
     console.log(camp);
     await Acceso.findOne({
       where: { userInv: userInv, campaign: camp },

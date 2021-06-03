@@ -50,7 +50,7 @@
         <div class="nav-subheader">{{ 'OPINION.FILTERS' | translate }}</div>
 
         <div class="nav-item" *ngFor="let filter of filters">
-            <a class="nav-link" matRipple [routerLink]="'/apps/opinionMailbox/filter/' + filter.handle"
+            <a class="nav-link" matRipple [routerLink]="'/apps/opinionMailbox/filter/'+ filter.handle"
                [routerLinkActive]="['active', 'accent']">
                 <mat-icon class="nav-link-icon" [ngClass]="filter.color" *ngIf="filter.icon">{{filter.icon}}</mat-icon>
                 <span>{{filter.title}}</span>

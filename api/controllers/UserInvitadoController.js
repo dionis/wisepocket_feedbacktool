@@ -26,7 +26,7 @@ module.exports = {
               telefono: req.param("telefono"),
               direccion: req.param("direccion"),
               //isAdmin: req.param("isAdmin"),
-             // acceso: req.param("acceso"),
+              // acceso: req.param("acceso"),
               invitadoBY: userChief.id,
             },
             (err) => {
@@ -56,24 +56,24 @@ module.exports = {
 
   addCampaigns: async (req, res) => {
     let camp;
-    await Campaign.findOne({
-      id: req.param("campID"),
+    await Campaign.find({
+      where: { id: req.param("campID") },
     }).then((doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        camp = doc.id;
+        camp = doc[0].id;
       }
     });
-    await UserInvitado.findOne({
-      id: req.param("id"),
+    await UserInvitado.find({
+      where: { id: req.param("id") },
     }).then(async (doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        await UserInvitado.addToCollection(doc.id, "campaigns", camp)
+        await UserInvitado.addToCollection(doc[0].id, "campaigns", camp)
           .then((campInv) => {
             return res.send({
               message: "Asociado a la Campaña con éxito",

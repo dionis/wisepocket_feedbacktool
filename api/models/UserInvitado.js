@@ -46,7 +46,7 @@ module.exports = {
 
     campaigns: {
       collection: "campaign",
-      via: "userInvitado",
+      via: "userInvitados",
     },
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

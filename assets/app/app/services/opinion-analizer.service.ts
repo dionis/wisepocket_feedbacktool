@@ -155,16 +155,16 @@ export class OpinionService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getFolders(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/opinion-folders')
-                .subscribe((response: any) => {
-                    this.folders = response;
-                    this.onFoldersChanged.next(this.folders);
-                    resolve(this.folders);
-                }, reject);
-        });
-    }
+    // getFolders(): Promise<any> {
+    //     return new Promise((resolve, reject) => {
+    //         this._httpClient.get('api/opinion-folders')
+    //             .subscribe((response: any) => {
+    //                 this.folders = response;
+    //                 this.onFoldersChanged.next(this.folders);
+    //                 resolve(this.folders);
+    //             }, reject);
+    //     });
+    // }
 
     /**
      * Get all filters
@@ -187,16 +187,16 @@ export class OpinionService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getLabels(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/opinion-labels')
-                .subscribe((response: any) => {
-                    this.labels = response;
-                    this.onLabelsChanged.next(this.labels);
-                    resolve(this.labels);
-                }, reject);
-        });
-    }
+    // getLabels(): Promise<any> {
+    //     return new Promise((resolve, reject) => {
+    //         this._httpClient.get('api/opinion-labels')
+    //             .subscribe((response: any) => {
+    //                 this.labels = response;
+    //                 this.onLabelsChanged.next(this.labels);
+    //                 resolve(this.labels);
+    //             }, reject);
+    //     });
+    // }
 
     /**
      * Get all opinions
@@ -212,7 +212,7 @@ export class OpinionService implements Resolve<any>
         if (this.routeParams.filterHandle) {
             return this.getOpinionsByFilter(this.routeParams.filterHandle);
         }
-        return this.getOpinionsFromBAck('0','','','');
+        return this.getOpinionsFromBAck('0','','fecha DESC','');
         //return this.getOpinionsByFolder(this.routeParams.folderHandle);
 
     }
@@ -221,15 +221,15 @@ export class OpinionService implements Resolve<any>
         if (id == this.campaign.getCampaignId) {
             {
 
-                if (this.routeParams.labelHandle) {
-                    return this.getOpinionsByLabel(this.routeParams.labelHandle);
-                }
+                // if (this.routeParams.labelHandle) {
+                //     return this.getOpinionsByLabel(this.routeParams.labelHandle);
+                // }
 
                 if (this.routeParams.filterHandle) {
                     return this.getOpinionsByFilter(this.routeParams.filterHandle);
                 }
 
-                return this.getOpinionsByFolder(this.routeParams.folderHandle);
+                return this.getOpinionsFromBAck('0','','fecha DESC','');
 
             }
         }
@@ -242,35 +242,35 @@ export class OpinionService implements Resolve<any>
      * @param handle
      * @returns {Promise<Opinion[]>}
      */
-    getOpinionsByFolder(handle): Promise<OpinionTest[]> {
-        return new Promise((resolve, reject) => {
+    // getOpinionsByFolder(handle): Promise<OpinionTest[]> {
+    //     return new Promise((resolve, reject) => {
 
-            this._httpClient.get('api/opinion-folders?handle=' + handle)
-                .subscribe((folders: any) => {
+    //         this._httpClient.get('api/opinion-folders?handle=' + handle)
+    //             .subscribe((folders: any) => {
 
-                    const folderId = folders[0].id;
+    //                 const folderId = folders[0].id;
 
 
-                    this._httpClient.get('api/opinion-opinions?folder=' + folderId)
+    //                 this._httpClient.get('api/opinion-opinions?folder=' + folderId)
 
-                    this._httpClient.get('api/opinions-opinions?folder=' + folderId)
+    //                 this._httpClient.get('api/opinions-opinions?folder=' + folderId)
 
-                        .subscribe((opinions: any) => {
+    //                     .subscribe((opinions: any) => {
 
-                            this.opinions = opinions.map(opinion => {
-                                return new Opinion(opinion);
-                            });
+    //                         this.opinions = opinions.map(opinion => {
+    //                             return new Opinion(opinion);
+    //                         });
 
-                            this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
+    //                         this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
 
-                            this.onOpinionsChanged.next(this.opinions);
+    //                         this.onOpinionsChanged.next(this.opinions);
 
-                            resolve(this.opinions);
+    //                         resolve(this.opinions);
 
-                        }, reject);
-                });
-        });
-    }
+    //                     }, reject);
+    //             });
+    //     });
+    // }
 
     /**
      * Get opinions by filter
@@ -282,10 +282,12 @@ export class OpinionService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             this._httpClient.get(
-                environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion',
-                {params:{'handle':handle}})
+                environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinionbyFilter',
+                {params:{
+                        'id': this.sharedVarService.getId(),
+                        'handle':handle}})
                 .subscribe((opinions: any) => {
-                    this.opinions = opinions.map(opinion => {
+                    this.opinions = opinions.data.map(opinion => {
                         return new OpinionTest(opinion);
                     });
 
@@ -305,30 +307,30 @@ export class OpinionService implements Resolve<any>
      * @param handle
      * @returns {Promise<Opinion[]>}
      */
-    getOpinionsByLabel(handle): Promise<OpinionTest[]> {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/opinion-labels?handle=' + handle)
-                .subscribe((labels: any) => {
+    // getOpinionsByLabel(handle): Promise<OpinionTest[]> {
+    //     return new Promise((resolve, reject) => {
+    //         this._httpClient.get('api/opinion-labels?handle=' + handle)
+    //             .subscribe((labels: any) => {
 
-                    const labelId = labels[0].id;
+    //                 const labelId = labels[0].id;
 
-                    this._httpClient.get('api/opinions-opinions?labels=' + labelId)
-                        .subscribe((opinions: any) => {
+    //                 this._httpClient.get('api/opinions-opinions?labels=' + labelId)
+    //                     .subscribe((opinions: any) => {
 
-                            this.opinions = opinions.map(opinion => {
-                                return new Opinion(opinion);
-                            });
+    //                         this.opinions = opinions.map(opinion => {
+    //                             return new Opinion(opinion);
+    //                         });
 
-                            this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
+    //                         this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
 
-                            this.onOpinionsChanged.next(this.opinions);
+    //                         this.onOpinionsChanged.next(this.opinions);
 
-                            resolve(this.opinions);
+    //                         resolve(this.opinions);
 
-                        }, reject);
-                });
-        });
-    }
+    //                     }, reject);
+    //             });
+    //     });
+    // }
 
     /**
      * Toggle selected opinion by id

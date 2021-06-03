@@ -137,7 +137,7 @@ describe("UserInvitadoController.getInvXUserChief", function () {
   });
 });
 
-describe("UserInvitadoController.updateAcces", function () {
+/*describe("UserInvitadoController.updateAcces", function () {
   before(function () {
     // runs once before the first test in this block
     //https://mochajs.org/#hooks
@@ -240,7 +240,7 @@ describe("UserInvitadoController.updatePass", function () {
         });
     });
   });
-});
+});*/
 
 describe("UserInvitadoController.updateInfo", function () {
   before(function () {

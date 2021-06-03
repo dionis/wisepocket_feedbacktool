@@ -1,5 +1,5 @@
 <div class="dialog-content-wrapper">
-  <mat-toolbar matDialogTitle class="mat-accent m-0">
+  <mat-toolbar matDialogTitle class="mat-accent m-md-0">
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
       <span class="title dialog-title">{{ dialogTitle }}</span>
       <button
@@ -12,7 +12,7 @@
     </mat-toolbar-row>
 
     <mat-toolbar-row
-      class="toolbar-bottom py-16"
+      class="toolbar-bottom py-14"
       fxLayout="column"
       fxLayoutAlign="center center"
     >
@@ -22,10 +22,10 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+  <div mat-dialog-content class="p-15 pb-0 m-0" fusePerfectScrollbar>
     <form [formGroup]="invUserForm">
       <h3>Invitado: {{ contact.nombre }}</h3>
-      <div class="tab-content p-24" fusePerfectScrollbar>
+      <div class="tab-content p-15" fusePerfectScrollbar>
         <mat-form-field
           appearance="outline"
           floatLabel="always"

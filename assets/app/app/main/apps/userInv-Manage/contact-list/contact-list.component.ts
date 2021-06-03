@@ -152,14 +152,16 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
     asociarCamp(contact): void {
         this.dialogRef = this._matDialog.open(ContactAsociarComponent, {
-            panelClass: 'contact-form-dialog',
+            width: '450px',
+            height: 'auto',
+            panelClass: 'asocia-contact-form-dialog',
             data: {
                 contact: contact,
                 action: 'asociar'
             }
         });
 
-    
+
     }
 
     /**

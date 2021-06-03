@@ -56,24 +56,24 @@ module.exports = {
 
   addCampaigns: async (req, res) => {
     let camp;
-    await Campaign.find({
+    await Campaign.findOne({
       where: { id: req.param("campID") },
     }).then((doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        camp = doc[0].id;
+        camp = doc.id;
       }
     });
-    await UserInvitado.find({
+    await UserInvitado.findOne({
       where: { id: req.param("id") },
     }).then(async (doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        await UserInvitado.addToCollection(doc[0].id, "campaigns", camp)
+        await UserInvitado.addToCollection(doc.id, "campaigns", camp)
           .then((campInv) => {
             return res.send({
               message: "Asociado a la Campaña con éxito",
@@ -199,7 +199,7 @@ module.exports = {
       });
   },
 
-  updateAcces: async (req, res) => {
+  /*updateAcces: async (req, res) => {
     UserInvitado.updateOne(
       {
         where: { id: req.param("id") },
@@ -219,7 +219,7 @@ module.exports = {
           message: "Falló la operación",
         });
       });
-  },
+  },*/
 
   updatePass: async (req, res) => {
     let salt = await bcrypt.genSalt(10);

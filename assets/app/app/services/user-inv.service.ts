@@ -90,6 +90,14 @@ export class UserInvService {
 
   }
 
+  devolverAcceso(invitado): Observable<any> {
+    let httpParams = new HttpParams()
+      .append("id", invitado.id)
+      .append("campID", this.servCamp.getId())
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/acceso/devolverAcceso', { params: httpParams })
+
+  }
+
   getStatusAcceso(invitado): Observable<any> {
     let httpParams = new HttpParams()
       .append("id", invitado.id)

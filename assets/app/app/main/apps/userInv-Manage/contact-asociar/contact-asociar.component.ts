@@ -46,7 +46,7 @@ export class ContactAsociarComponent implements OnInit {
       if (res.message === "Asociado a la Campaña con éxito") {
         this.updatePass(contact)
         this.updateAcces(contact)
-        this.statusAcces(contact)
+        //console.log(this.statusAcces(contact));
         swal.fire('Ahora el usuario tiene acceso a la Campaña: ' + this.servCamp.getName())
       }
       else if (res.success === false) {
@@ -73,15 +73,30 @@ export class ContactAsociarComponent implements OnInit {
       if (res.success === false) {
         swal.fire('Aún no está asociado')
       }
-      else if (res.success === true) {
+      else if (res.success) {
         swal.fire('Acceso deshabilitado')
       }
     });
   }
 
-  statusAcces(contact) {
-    this.invService.getStatusAcceso(contact).subscribe(data => {
-      console.log(data);
+  devolverAcces(contact) {
+    this.invService.devolverAcceso(contact).subscribe(res => {
+      if (res.success === false) {
+        swal.fire('Aún no está asociado')
+      }
+      else if (res.success) {
+        swal.fire('Acceso habilitado')
+      }
+    });
+  }
+
+  statusAcces(contact): any {
+    this.invService.getStatusAcceso(contact).subscribe(res => {
+      if (res.success) {
+        return true
+      } else {
+        return false
+      }
     });
   }
 

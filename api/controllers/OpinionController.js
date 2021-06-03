@@ -196,10 +196,10 @@ module.exports = {
     getOpinionbyFilter: (req,res)=>{
        const camp_id = req.param('id')
        const handle = req.param('handle')
-       let date
+       let date;
        switch (handle) {
         case 'today':
-            date = moment().subtract(1, 'days').format();
+            date = moment().format();
             sails.log.debug(date);
             Opinion.find({
                 where: {campaign: camp_id, fecha: { '>=': date }}
@@ -219,29 +219,29 @@ module.exports = {
                  })
             })
             break;
-            case 'yesterday':
-               date = moment().subtract(2, 'days').format();
-               sails.log.debug(date);
-               Opinion.find({
-                   where: {campaign: camp_id, fecha: { '>=': date }}
-               })
-               .sort('fecha ASC')
-               .populate('userend')
-               .then(opinions=>{
-                   return res.send({
-                       'data': opinions,
-                       'count': opinions.length
-                   })
-               })
-               .catch(error=>{
-                    return res.status(500).send({
-                        'message': 'Imposible Mostrar',
-                        'error': err
-                    })
-               })
-            break;
+        case 'yesterday':
+            date = moment().subtract(1, 'days').format();
+            sails.log.debug(date);
+            Opinion.find({
+                where: {campaign: camp_id, fecha: { '>=': date }}
+            })
+            .sort('fecha ASC')
+            .populate('userend')
+            .then(opinions=>{
+                return res.send({
+                    'data': opinions,
+                    'count': opinions.length
+                })
+            })
+            .catch(error=>{
+                return res.status(500).send({
+                    'message': 'Imposible Mostrar',
+                    'error': err
+                })
+            })
+        break;
            case 'last 15 days':
-             date = moment().subtract(15, 'days').format();
+               date = moment().subtract(15, 'days').format();
                sails.log.debug(date);
                Opinion.find({
                    where: {campaign: camp_id, fecha: { '>=': date }}
@@ -337,6 +337,23 @@ module.exports = {
                 })
             })
     },
+
+    deleteOpinion:async (req,res)=>{
+        const id = req.param('id');
+        if(!id){return res.status(400).send({'error':'Id was provide'})}
+        await Opinion.destroy({id:id})
+        .then(opinion=>{
+            return res.send({
+                'data': opinion
+            });
+        })
+        .catch(err => {
+            return res.status(500).send({
+                'message': 'Imposible Mostrar',
+                'error': err
+            })
+        })
+    }
 }
 
 

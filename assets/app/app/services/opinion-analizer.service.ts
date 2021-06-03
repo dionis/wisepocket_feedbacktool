@@ -459,8 +459,8 @@ export class OpinionService implements Resolve<any>
     setFolderOnSelectedOpinions(folderId): void {
         this.selectedOpinions.map(opinion => {
             //opinion.folder = folderId; //OJO BOTON DELETE IMPLEMNTAR!!!!
-
-            this.updateOpinion(opinion);
+            this.deleteOpinions(opinion.id);    
+            //this.updateOpinion(opinion);
         });
 
         this.deselectOpinions();
@@ -519,5 +519,16 @@ export class OpinionService implements Resolve<any>
                 resolve(this.opinions);
 
             },reject));
+   }
+
+   deleteOpinions(opinionId): Promise<any>{
+        return new Promise((resolve,reject)=>{
+            this._httpClient.delete(
+                environment.sails_services_urlpath + ":" + environment.sails_services_urlport +'/opinion/deleteOpinion',
+                {params:{'id':opinionId}})
+            .subscribe(opinion=>{
+                resolve(opinion);
+            },reject);
+        })
    }
 }

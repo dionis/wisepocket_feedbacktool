@@ -9,6 +9,8 @@ import { fuseAnimations } from '../../../../../../@fuse/animations';
 
 import { OpinionService } from '../../../../../services/opinion-analizer.service';
 import { OpinionComposeDialogComponent } from '../../../../../../app/main/apps/opinionMailbox/dialogs/compose/compose.component';
+import { AdvancedSearchComponent } from '../../../../../../app/main/apps/opinionMailbox/advanced-search/advanced-search.component';
+
 
 
 import { locale as english } from '../../../../../../app/main/apps/opinionMailbox/i18n/en';
@@ -75,7 +77,7 @@ export class MailboxMainSidebarComponent implements OnInit, OnDestroy
         this._opinionService.onFoldersChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(folders => {
-                
+
                 this.folders = folders;
             });
 
@@ -112,6 +114,8 @@ export class MailboxMainSidebarComponent implements OnInit, OnDestroy
      */
     composeDialog(): void
     {
+      /// ====== OOJJOOO =======
+      ///Call de Object AdvancedSearchComponent
         this.dialogRef = this._matDialog.open(OpinionComposeDialogComponent, {
             panelClass: 'mailbox-compose-dialog'
         });

@@ -43,6 +43,7 @@
             fxShow.gt-md
             (click)="editContact(contact)"
           >
+          <mat-icon [ngStyle]="{'color':'red'}" >edit</mat-icon>
             Editar
           </button>
           <button
@@ -50,6 +51,9 @@
             mat-raised-button
             (click)="asociarCamp(contact)"
           >
+            <mat-icon [ngStyle]="{'color':'green'}"><span class="material-icons-outlined">
+                wifi_protected_setup
+             </span></mat-icon>
             Asociar
           </button>
         </div>

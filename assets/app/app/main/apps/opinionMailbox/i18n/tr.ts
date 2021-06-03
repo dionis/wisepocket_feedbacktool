@@ -12,6 +12,7 @@ export const locale = {
         },
         OPINION: {
           COMPOSE                 : 'YENİ E-POSTA',
+          SEARCH                  : 'Advanced Search',
           FOLDERS                 : 'KLASÖRLER',
           FILTERS                 : 'FİLTRELER',
           LABELS                  : 'ETİKETLER',

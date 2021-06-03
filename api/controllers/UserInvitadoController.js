@@ -58,45 +58,37 @@ module.exports = {
     let camp;
     await Campaign.find({
       where: { id: req.param("campID") },
-    })
-      .limit(1)
-      .then((doc) => {
-        if (!doc) {
-          console.log("No encontrado");
-        } else {
-          console.log("Encontrado");
-          camp = doc.id;
-          console.log(doc);
-          console.log("Id Camp ", camp);
-        }
-      });
+    }).then((doc) => {
+      if (!doc) {
+        console.log("No encontrado");
+      } else {
+        console.log("Encontrado");
+        camp = doc[0].id;
+      }
+    });
     await UserInvitado.find({
       where: { id: req.param("id") },
-    })
-      .limit(1)
-      .then(async (doc) => {
-        if (!doc) {
-          console.log("No encontrado");
-        } else {
-          console.log("Encontrado");
-          console.log(doc);
-          console.log("Id userInv ", doc.id);
-          await UserInvitado.addToCollection(doc.id, "campaigns", camp)
-            .then((campInv) => {
-              return res.send({
-                message: "Asociado a la Campaña con éxito",
-                data: campInv,
-              });
-            })
-            .catch((err) => {
-              sails.log.debug(err);
-              return res.send({
-                success: false,
-                message: "Falló la operación",
-              });
+    }).then(async (doc) => {
+      if (!doc) {
+        console.log("No encontrado");
+      } else {
+        console.log("Encontrado");
+        await UserInvitado.addToCollection(doc[0].id, "campaigns", camp)
+          .then((campInv) => {
+            return res.send({
+              message: "Asociado a la Campaña con éxito",
+              data: campInv,
             });
-        }
-      });
+          })
+          .catch((err) => {
+            sails.log.debug(err);
+            return res.send({
+              success: false,
+              message: "Falló la operación",
+            });
+          });
+      }
+    });
   },
 
   getCampXInvitado: async (req, res) => {

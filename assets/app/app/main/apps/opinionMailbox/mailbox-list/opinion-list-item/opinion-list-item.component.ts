@@ -94,6 +94,8 @@ export class MailboxListItemComponent implements OnInit, OnDestroy
      */
     onSelectedChange(): void
     {
+     
+        console.log('Se llama')
         this._opinionService.toggleSelectedOpinion(this.opinion.id);
     }
 

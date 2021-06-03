@@ -78,6 +78,7 @@ module.exports.routes = {
   //DELETE
   //'DELETE /opinion/deleteOpinion': 'OpinionController.deleteOpinion',
   "DELETE /opinion/deleteAllOpinion": "OpinionController.deleteAllOpinion",
+  "DELETE /opinion/deleteOpinion": "OpinionController.deleteOpinion",
   "DELETE /pregunta/deletePregunta": "PreguntaController.deletePregunta",
   "DELETE /pregunta/deleteAllPregunta": "PreguntaController.deleteAllPregunta",
   "DELETE /respuesta/deleteAllRespuesta":

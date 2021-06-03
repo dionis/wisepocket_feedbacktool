@@ -61,7 +61,7 @@ module.exports = {
 
   },
   customToJSON: function () {
-    return _.omit(this, [ 'aspectos', 'entidades', 'createDay', 'campaign', 'polaridad', 'idioma', 'createdAt', 'updatedAt'])
+    return _.omit(this, [ 'aspectos', 'entidades', 'createDay', 'campaign', 'createdAt', 'updatedAt'])
   }
 };
 

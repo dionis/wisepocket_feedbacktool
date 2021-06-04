@@ -137,7 +137,6 @@ describe("UserInvitadoController.getInvXUserChief", function () {
   });
 });
 
-
 describe("UserInvitadoController.updatePass", function () {
   before(function () {
     // runs once before the first test in this block
@@ -157,6 +156,39 @@ describe("UserInvitadoController.updatePass", function () {
           supertest(sails.hooks.http.app)
             .patch("/userInvitado/updatePass")
             .query({ id: userInv.id, password: "12345678" })
+            .expect(200)
+            .then((response) => {
+              console.log("Service OK:" + response.text);
+              done();
+            })
+            .catch((err) => done(err));
+        })
+        .catch((error) => {
+          throw Error(error);
+        });
+    });
+  });
+});
+
+describe("UserInvitadoController.deleteupdatePass", function () {
+  before(function () {
+    // runs once before the first test in this block
+    //https://mochajs.org/#hooks
+  });
+
+  after(function () {
+    // runs once after the last test in this block
+  });
+  describe("Quitar contraseña al desvincular de la Campaña al invitado", function () {
+    it("should redirect to /my/page", function (done) {
+      UserInvitado.find()
+        .then((zookeepers) => {
+          let userInv = zookeepers[0];
+          console.log("---- New Test execution data ----", zookeepers[0].id);
+          console.log("FIND Invitado BY NAME ", userInv.nombre);
+          supertest(sails.hooks.http.app)
+            .patch("/userInvitado/deleteupdatePass")
+            .query({ id: userInv.id })
             .expect(200)
             .then((response) => {
               console.log("Service OK:" + response.text);
@@ -208,7 +240,6 @@ describe("UserInvitadoController.updateInfo", function () {
     });
   });
 });
-
 
 describe("CampaignController.getInvitadoXCamp", function () {
   before(function () {

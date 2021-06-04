@@ -62,6 +62,7 @@
     fxLayoutAlign="end center"
   >
     <button
+      #devolverAcceso
       mat-raised-button
       class="mr-8"
       aria-label="Asociar"
@@ -71,6 +72,7 @@
       Devolver Acceso
     </button>
     <button
+      #quitarAcceso
       mat-raised-button
       class="mr-8"
       aria-label="Asociar"
@@ -80,24 +82,23 @@
       Quitar Acceso
     </button>
     <button
-      *ngIf="estadoAcceso != true"
+      #asociar
       mat-raised-button
       class="mr-8"
       [disabled]="invUserForm.invalid"
       aria-label="Asociar"
       matTooltip="Asociar"
-      (click)="asociarAcamp(contact)"
+      (click)="asociarAcamp(contact, pass)"
+      (click)="asociar.disabled = true"
     >
       Asociar
     </button>
     <button
-      *ngIf="estadoAcceso"
       mat-raised-button
       class="mr-8"
-      [disabled]="invUserForm.invalid"
       aria-label="Asociar"
       matTooltip="Asociar"
-      (click)="desvincular(contact)"
+      (click)="desvincular(contact, pass)"
     >
       Desvincular
     </button>

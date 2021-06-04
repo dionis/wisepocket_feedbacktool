@@ -282,6 +282,28 @@ module.exports = {
       });
   },
 
+  deleteupdatePass: async (req, res) => {
+    UserInvitado.updateOne(
+      {
+        where: { id: req.param("id") },
+      },
+      {
+        password: '',
+      }
+    )
+      .then((user) => {
+        return res.send({
+          data: user,
+        });
+      })
+      .catch((err) => {
+        return res.send({
+          success: false,
+          message: "Falló la operación",
+        });
+      });
+  },
+
   /*updateisAdmin: async (req, res) => {
     UserInvitado.updateOne(
       {

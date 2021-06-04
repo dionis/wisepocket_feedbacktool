@@ -73,6 +73,11 @@ export class UserInvService {
 
   }
 
+  deleteupdatePass(invitado): Observable<any> {
+    return this._http.patch(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteupdatePass', invitado)
+
+  }
+
   darAcceso(invitado): Observable<any> {
     const cammID = this.servCamp.getId()
     return this._http.post(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/acceso/darAcceso', { id: invitado.id, campID: cammID })

@@ -113,12 +113,12 @@ export class ContactsContactFormDialogComponent {
                 this.invService.deleteUserInv(this.invUserForm.getRawValue()).subscribe(data => {
                     console.log(data);
                 });
+                swal.fire('Si el usuario esta vinculado a una Campaña, recuerde desvincularlo', '' + 'Vaya a Invitados de la Campaña')
                 this.invService.getInvitados().subscribe(data => {
                     console.log(data);
                     this.invService.getUsers(data.data)
 
                 })
-                
             }
             this.confirmDialogRef = null;
         });
@@ -142,7 +142,7 @@ export class ContactsContactFormDialogComponent {
             nombre: [this.contact.nombre],
             correo: [this.contact.correo],
             telefono: [this.contact.telefono],
-            password:[this.contact.password],
+            password: [this.contact.password],
             direccion: [this.contact.direccion]
         });
     }

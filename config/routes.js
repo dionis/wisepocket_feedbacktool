@@ -134,6 +134,8 @@ module.exports.routes = {
   //PATCH
   "PATCH /userInvitado/updateInfo": "UserInvitadoController.updateInfo",
   "PATCH /userInvitado/updatePass": "UserInvitadoController.updatePass",
+  "PATCH /userInvitado/deleteupdatePass":
+    "UserInvitadoController.deleteupdatePass",
   //"PATCH /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
   "PATCH /acceso/quitarAcceso": "AccesoController.quitarAcceso",
   "PATCH /acceso/devolverAcceso": "AccesoController.devolverAcceso",

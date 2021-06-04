@@ -43,7 +43,7 @@ export class ContactAsociarComponent implements OnInit {
 
   }
 
-  asociarAcamp(contact) {
+  asociarAcamp(contact, pass) {
     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
       disableClose: false
     });
@@ -56,8 +56,8 @@ export class ContactAsociarComponent implements OnInit {
           if (res.message === "Asociado a la Campaña con éxito") {
             this.updatePass(contact)
             this.updateAcces(contact)
-            this.estadoAcceso = true
             swal.fire('Ahora el usuario tiene acceso a la Campaña: ' + this.servCamp.getName())
+            pass.disabled = true
             this.invService.getInvitados().subscribe(data => {
               console.log(data);
               this.invService.getUsers(data.data)
@@ -67,6 +67,7 @@ export class ContactAsociarComponent implements OnInit {
           else if (res.success === false) {
             swal.fire('Fallo la operación')
           }
+          this.statusAcces(contact)
         });
       }
       this.confirmDialogRef = null;
@@ -137,7 +138,7 @@ export class ContactAsociarComponent implements OnInit {
 
   }
 
-  desvincular(contact) {
+  desvincular(contact, pass) {
     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
       disableClose: false
     });
@@ -152,21 +153,29 @@ export class ContactAsociarComponent implements OnInit {
         this.invService.deleteAcces(contact).subscribe(data => {
           console.log(data);
         });
+        this.invService.deleteupdatePass(contact).subscribe(data => {
+          console.log(data);
+        });
+        pass.value = ''
+        this.contact.password = ""
         swal.fire('Desvinculado con éxito')
       }
       this.confirmDialogRef = null;
     });
   }
 
-  /*statusAcces(contact): any {
+  statusAcces(contact): Boolean {
+    let status: boolean
     this.invService.getStatusAcceso(contact).subscribe(res => {
+      console.log(res);
       if (res.success) {
-        return true
+        status = true
       } else {
-        return false
+        status = false
       }
     });
-  }*/
+    return status
+  }
 
   createContactForm(): FormGroup {
     console.log("New Form");

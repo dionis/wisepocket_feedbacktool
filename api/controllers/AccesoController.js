@@ -108,28 +108,42 @@ module.exports = {
     let userInv = String(req.param("id"));
     console.log(userInv);
     console.log(camp);
-    await Acceso.findOne({
-      where: { userInv: userInv, campaign: camp },
-    })
-      .then((data) => {
-        console.log("StatusAccesData>> ", data);
-        if (data.acceso) {
-          return res.send({
-            success: true,
-            message: "Tiene acceso",
-            data: true,
-          });
-        } else {
-          return res.send({
-            success: false,
-            message: "No tiene acceso",
-            data: false,
-          });
-        }
+    if (Acceso) {
+      await Acceso.findOne({
+        where: { userInv: userInv, campaign: camp },
       })
-      .catch((err) => {
-        sails.log.debug(err);
+        .then((data) => {
+          console.log("StatusAccesData>> ", data);
+          if (data.acceso) {
+            return res.send({
+              success: true,
+              message: "Tiene acceso",
+              data: true,
+            });
+          } else {
+            return res.send({
+              success: false,
+              message: "No tiene acceso",
+              data: false,
+            });
+          }
+        })
+        .catch((err) => {
+          if (err) {
+            return res.send({
+              success: false,
+              message: "No hay asociados",
+              data: false,
+            });
+          }
+        });
+    } else {
+      return res.send({
+        success: false,
+        message: "No hay asociados",
+        data: false,
       });
+    }
   },
 
   deleteAcces: async (req, res) => {

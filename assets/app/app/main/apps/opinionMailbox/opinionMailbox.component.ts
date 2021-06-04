@@ -33,6 +33,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
     labels: any[];
     searchInput: FormControl;
     currentOpinion: Opinion;
+    
 
     showOpinionList:boolean = true;
     campaigns: any;

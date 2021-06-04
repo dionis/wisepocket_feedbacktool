@@ -43,6 +43,15 @@ const routes: Routes = [
         }
     },
     {
+        path     : 'paginate/:pageIndex/:pageSize',
+        component: OpinionMailboxComponent,
+        canActivate:[CampaignSelectGuard],
+        resolve  : {
+            opinion: OpinionService,
+            data: EcommerceOrdersService
+        }
+    },
+    {
         path     : 'label/:labelHandle/:opinionId',
         component: OpinionMailboxComponent,
         canActivate:[CampaignSelectGuard],

@@ -20,6 +20,7 @@ import { ActivatedRoute,  RouterEvent, NavigationEnd, ParamMap } from '@angular/
 import { locale as english } from '../../../../../app/main/apps/opinionMailbox/i18n/en';
 import { locale as turkish } from '../../../../../app/main/apps/opinionMailbox/i18n/tr';
 import { locale as spanish } from '../../../../../app/main/apps/opinionMailbox/i18n/es';
+import { OpinionTest } from '../../../../models/opinionTest.model';
 
 @Component({
     selector     : 'opinion-details',
@@ -30,14 +31,17 @@ import { locale as spanish } from '../../../../../app/main/apps/opinionMailbox/i
 })
 export class OpinionDetailsComponent implements OnInit, OnDestroy
 {
-    opinion: Opinion;
+    opinion: OpinionTest;
     labels: any[];
     showDetails: boolean;
     pruebas: any
     prueba2: any
     prueba3: any[]
     dataSource: FilesDataSource | null;
-    displayedColumns = ['id', 'aspects', 'total', 'polarity'];
+    displayedColumns = ['id', 'aspects', 'polarity', 'actions'];
+    selected= true;
+    pagesize = 0;
+    index = 0;
     //['id', 'reference', 'customer', 'total', 'payment', 'status', 'date'];
 
     @ViewChild(MatPaginator, {static: true})
@@ -92,36 +96,53 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     {
         //this._pruebaServOpin.getOpinXIdioma().subscribe(data => this.prueba = data)
         console.log("ESTOO " + this.pruebas);
-
-        this.router.queryParamMap.pipe( takeUntil(this._unsubscribeAll)).subscribe((paramMap: ParamMap) => {
-          const refresh = paramMap.get('campaign_selected');
-          console.log("Selected Campaign === New call options ",refresh );
-          this.selectedCamapaign = refresh;
-
-          this._pruebaServOpin.getOpinion().pipe(takeUntil(this._unsubscribeAll)).subscribe(data => {
-            console.log("Data Opinion", data);
-            this.prueba2 = data
-            this._pruebaServOpin.getAspectOpin(this.prueba2.data[0].id).subscribe((result:any) => {
-                console.log("Data Aspect Opinion", result);
-                if (typeof(result) !== 'undefined')
-                   this.prueba3 = result.data
-            })
-        })
-
-   })
-
-
-
-       console.log("Is paginator ", this.sort)
-       this.dataSource = new FilesDataSource(this._ecommerceOrdersService, this.paginatorDetails, this.sort);
-
-
         // Subscribe to update the current opinion
         this._opinionService.onCurrentOpinionChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(currentOpinion => {
+                this.index = 0;
                 this.opinion = currentOpinion;
-            });
+                if(this.opinion){
+                    this._pruebaServOpin.getAspectOpin(this.opinion.id)
+                    .then((result:any) => {
+                    console.log("Data Aspect Opinion", result);
+                    if (typeof(result) !== 'undefined')
+                        this.prueba3 = result.data
+                        this.pagesize = result.data?result.data.length:0;
+                        console.log("Is paginator ", this.sort)
+                        //OJO NO ESTA IMPLEMENTADO  
+                    })
+                    .catch(error=>{
+                        //Implementar Error con Dialog
+                        console.log(error);
+                    })
+                }
+                
+        });
+        this._opinionService.onOpinionSelected.pipe( takeUntil(this._unsubscribeAll)).subscribe(flag=>{
+            this.selected = flag
+        })
+        this.router.queryParamMap.pipe( takeUntil(this._unsubscribeAll)).subscribe(async (paramMap: ParamMap) => {
+          const refresh = paramMap.get('campaign_selected');
+          console.log("Selected Campaign === New call options ",refresh );
+          this.selectedCamapaign = refresh;
+          if(this.opinion){
+            await this._pruebaServOpin.getAspectOpin(this.opinion.id)
+            .then((result:any) => {
+                console.log("Data Aspect Opinion", result);
+                if (typeof(result) !== 'undefined')
+                    this.prueba3 = result.data
+                    console.log("Is paginator ", this.sort)
+                    //OJO NO ESTA IMPLEMENTADO
+                   
+            })
+            .catch(error=>{
+                //Implementar Error con Dialog
+                console.log(error);
+            })
+          }   
+        })
+        this.dataSource = new FilesDataSource(this._ecommerceOrdersService,this._pruebaServOpin, this.paginatorDetails, this.sort);
 
         // Subscribe to update on label change
         this._opinionService.onLabelsChanged
@@ -154,7 +175,7 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     {
         event.stopPropagation();
 
-        this.opinion.toggleStar();
+        //this.opinion.toggleStar();
 
         this._opinionService.updateOpinion(this.opinion);
     }
@@ -168,7 +189,7 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     {
         event.stopPropagation();
 
-        this.opinion.toggleImportant();
+        //this.opinion.toggleImportant();
 
         this._opinionService.updateOpinion(this.opinion);
     }
@@ -191,6 +212,7 @@ export class FilesDataSource extends DataSource<any>
      */
     constructor(
         private _ecommerceOrdersService: EcommerceOrdersService,
+        private _opinionServ: OpinionService,
         private _matPaginator: MatPaginator,
         private _matSort: MatSort
 
@@ -208,11 +230,13 @@ export class FilesDataSource extends DataSource<any>
     // Filtered data
     get filteredData(): any
     {
+        
         return this._filteredDataChange.value;
     }
 
     set filteredData(value: any)
     {
+        console.log(value);
         this._filteredDataChange.next(value);
     }
 
@@ -240,6 +264,7 @@ export class FilesDataSource extends DataSource<any>
     {
         const displayDataChanges = [
             this._ecommerceOrdersService.onOrdersChanged,
+            this._opinionServ.oncurrentOpinionAspectsChanged,
             this._matPaginator.page,
             this._filterChange,
             this._matSort.sortChange
@@ -247,18 +272,28 @@ export class FilesDataSource extends DataSource<any>
         ];
 
         return merge(...displayDataChanges).pipe(map(() => {
+                console.log(this._opinionServ.currentOpinionAspects);
+                let data = this._opinionServ.currentOpinionAspects.length>0?this._opinionServ.currentOpinionAspects:[];
+                // this._opinionServ.getAspectOpin(this._opinionServ.currentOpinion.id).then(aspects=>{
+                //     data = aspects;
+                // })
+                if(this._opinionServ.currentOpinionAspects.length>0){
+                    data = this._opinionServ.currentOpinionAspects;
+                    console.log(data);
 
-                let data = this._ecommerceOrdersService.orders.slice();
+                    data = this.filterData(data);    
 
-                data = this.filterData(data);
+                    this.filteredData = [...data];
 
-                this.filteredData = [...data];
+                    data = this.sortData(data);
 
-                data = this.sortData(data);
-
-                // Grab the page's slice of data.
-                const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
-                return data.splice(startIndex, this._matPaginator.pageSize);
+                    // Grab the page's slice of data.
+                    const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
+                    return data.splice(startIndex, this._matPaginator.pageSize);
+                }
+                this.filteredData = [];
+                return data;
+                
             })
         );
 
@@ -301,23 +336,12 @@ export class FilesDataSource extends DataSource<any>
                 case 'id':
                     [propertyA, propertyB] = [a.id, b.id];
                     break;
-                case 'reference':
-                    [propertyA, propertyB] = [a.reference, b.reference];
-                    break;
                 case 'aspects':
-                    [propertyA, propertyB] = [a.customer.firstName, b.customer.firstName];
+                    [propertyA, propertyB] = [a.texto, b.texto];
                     break;
-                case 'total':
-                    [propertyA, propertyB] = [a.total, b.total];
-                    break;
-                case 'payment':
-                    [propertyA, propertyB] = [a.payment.method, b.payment.method];
-                    break;
+                
                 case 'polarity':
-                    [propertyA, propertyB] = [a.status[0].name, b.status[0].name];
-                    break;
-                case 'date':
-                    [propertyA, propertyB] = [a.date, b.date];
+                    [propertyA, propertyB] = [a.polaridad, b.polaridad];
                     break;
             }
 

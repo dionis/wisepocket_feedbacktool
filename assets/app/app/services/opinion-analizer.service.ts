@@ -22,6 +22,7 @@ export class OpinionService implements Resolve<any>
         throw new Error('Method not implemented.');
     }
     opinions: OpinionTest[];
+    currentOpinionAspects: [];
     user: string;
     selectedOpinions: OpinionTest[];
     currentOpinion: OpinionTest;
@@ -31,8 +32,12 @@ export class OpinionService implements Resolve<any>
     filters: any[];
     labels: any[];
     routeParams: any;
+    corrent_page = 0;
+    current_limit = 10;
+    opnionsTotal = 0;
 
     onOpinionsChanged: BehaviorSubject<any>;
+    oncurrentOpinionAspectsChanged: BehaviorSubject<any>;
     onSelectedOpinionsChanged: BehaviorSubject<any>;
     onCurrentOpinionChanged: BehaviorSubject<any>;
     onFoldersChanged: BehaviorSubject<any>;
@@ -40,6 +45,8 @@ export class OpinionService implements Resolve<any>
     onUserDataChanged: BehaviorSubject<any>;
     onLabelsChanged: BehaviorSubject<any>;
     onSearchTextChanged: BehaviorSubject<any>;
+    onOpinionSelected: BehaviorSubject<boolean>;
+
 
     filterBy: string;
 
@@ -56,6 +63,7 @@ export class OpinionService implements Resolve<any>
         // Set the defaults
         this.selectedOpinions = [];
         this.onOpinionsChanged = new BehaviorSubject([]);
+        this.oncurrentOpinionAspectsChanged = new BehaviorSubject([]);
         this.onSelectedOpinionsChanged = new BehaviorSubject([]);
         this.onCurrentOpinionChanged = new BehaviorSubject([]);
         this.onFoldersChanged = new BehaviorSubject([]);
@@ -63,6 +71,8 @@ export class OpinionService implements Resolve<any>
         this.onLabelsChanged = new BehaviorSubject([]);
         this.onUserDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new BehaviorSubject('');
+        this.onOpinionSelected = new BehaviorSubject(false);
+        this.currentOpinionAspects = [];
     }
 
     /**
@@ -74,7 +84,7 @@ export class OpinionService implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         this.routeParams = route.params;
-
+        console.log("Parametros",route.params);
         console.log("Find Information");
 
         return new Promise((resolve, reject) => {
@@ -125,7 +135,7 @@ export class OpinionService implements Resolve<any>
     };
 
 
-    getOpinion(): Observable<any> {
+    getOpinion(): Observable<any>| Promise<any> {
         let page = 0;
         let campaignid:any = this.campaign.getMyCampsIDEx();
         console.log("Data campaing info ", campaignid);
@@ -141,13 +151,21 @@ export class OpinionService implements Resolve<any>
       };
 
 
-    getAspectOpin(oPinID: any): Observable<any> {
-
+    getAspectOpin(oPinID: any): Promise<any>{
         console.log('ID de Opinion ' + oPinID)
-
-        let httpParams = new HttpParams()
-            .append("id", oPinID)
-        return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/aspectoopinion/getAspecto', { params: httpParams })
+        return new Promise((resolve,reject)=>{
+            // let httpParams = new HttpParams()
+            // .append("id", oPinID)
+            this._httpClient.get(
+                environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/aspectoopinion/getAspecto',
+                 { params: {'id':oPinID} }).subscribe((aspects:any)=>{
+                     console.log(aspects.data);
+                     this.currentOpinionAspects = aspects.data;
+                     this.oncurrentOpinionAspectsChanged.next(this.currentOpinionAspects);
+                    resolve(aspects.data)
+                 },reject);
+        });
+        
     };
 
     /**
@@ -212,6 +230,9 @@ export class OpinionService implements Resolve<any>
         if (this.routeParams.filterHandle) {
             return this.getOpinionsByFilter(this.routeParams.filterHandle);
         }
+        if(this.routeParams.pageIndex && this.routeParams.pageSize){
+           return this.getOpinionsByPages(this.routeParams.pageIndex,this.routeParams.pageSize);
+        }
         return this.getOpinionsFromBAck('0','','fecha DESC','');
         //return this.getOpinionsByFolder(this.routeParams.folderHandle);
 
@@ -227,6 +248,9 @@ export class OpinionService implements Resolve<any>
 
                 if (this.routeParams.filterHandle) {
                     return this.getOpinionsByFilter(this.routeParams.filterHandle);
+                }
+                if(this.routeParams.pageIndex && this.routeParams.pageSize){
+                    this.getOpinionsByPages(this.routeParams.pageIndex,this.routeParams.pageSize);
                 }
 
                 return this.getOpinionsFromBAck('0','','fecha DESC','');
@@ -292,13 +316,41 @@ export class OpinionService implements Resolve<any>
                     });
 
                     this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
-
+                    this.opnionsTotal = this.opinions.length;
                     this.onOpinionsChanged.next(this.opinions);
 
                     resolve(this.opinions);
 
                 }, reject);
         });
+    }
+
+     
+    getOpinionsByPages(pageIndex,pageSize): Promise<OpinionTest[]> {
+        return new Promise<OpinionTest[]>((resolve,reject)=>this._httpClient.get(
+            environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion',
+            {params:{
+                     'id': this.sharedVarService.getId(),
+                     'page':'0',
+                     'limit': '',
+                     'criteria':'',
+                     'filter': ''}})
+             .subscribe((opinions:any)=>{
+                 console.log(opinions);
+                 this.opinions = opinions.data.map(opinion => {
+                     return new OpinionTest(opinion);
+                 });
+                 this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
+                 this.opnionsTotal = this.opinions.length;
+                 const startIndex = pageIndex * pageSize;
+                 console.log(startIndex)
+                 this.opinions = this.opinions.slice(startIndex,pageSize);
+                 console.log(this.opinions);
+                 this.onOpinionsChanged.next(this.opinions);
+ 
+                 resolve(this.opinions);
+ 
+             },reject));
     }
 
     /**
@@ -426,7 +478,7 @@ export class OpinionService implements Resolve<any>
         this.currentOpinion = this.opinions.find(opinion => {
             return opinion.id === id;
         });
-
+        this.onOpinionSelected.next(true);
         this.onCurrentOpinionChanged.next(this.currentOpinion);
     }
 
@@ -511,9 +563,10 @@ export class OpinionService implements Resolve<any>
                 this.opinions = opinions.data.map(opinion => {
                     return new OpinionTest(opinion);
                 });
-
+                
                 this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
-
+                this.opnionsTotal = this.opinions.length;
+                this.opinions = this.opinions.slice(undefined,this.current_limit);
                 this.onOpinionsChanged.next(this.opinions);
 
                 resolve(this.opinions);
@@ -527,6 +580,7 @@ export class OpinionService implements Resolve<any>
                 environment.sails_services_urlpath + ":" + environment.sails_services_urlport +'/opinion/deleteOpinion',
                 {params:{'id':opinionId}})
             .subscribe(opinion=>{
+                this.getOpinions().then(opinions=>{}).catch(error=>{})
                 resolve(opinion);
             },reject);
         })

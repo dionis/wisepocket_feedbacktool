@@ -13,11 +13,11 @@
    </ul>
    </div>
 <div fxLayout="row">
-    <div fxFlex="75%" *ngIf="opinion">
+    <div fxFlex="100%" *ngIf="opinion">
 
       <div class="opinion-header" fxLayout="row" fxLayoutAlign="space-between center">
 
-          <div>
+          <!-- <div>
               <div class="subject">{{opinion.subject}}</div>
 
               <div class="labels mt-8" fxLayout="row wrap">
@@ -28,9 +28,9 @@
                   </div>
               </div>
 
-          </div>
+          </div> -->
 
-          <div class="actions" fxLayout="row" fxLayoutAlign="start center">
+          <!-- <div class="actions" fxLayout="row" fxLayoutAlign="start center">
               <button mat-icon-button (click)="toggleStar($event)" aria-label="Toggle star">
                   <mat-icon class="amber-fg" *ngIf="opinion.starred">star</mat-icon>
                   <mat-icon class="secondary-text" *ngIf="!opinion.starred">star_border</mat-icon>
@@ -40,7 +40,7 @@
                   <mat-icon class="red-fg" *ngIf="opinion.important">label</mat-icon>
                   <mat-icon class="secondary-text" *ngIf="!opinion.important">label_outline</mat-icon>
               </button>
-          </div>
+          </div> -->
       </div>
 
       <div class="opinion-content">
@@ -51,24 +51,24 @@
 
                   <div fxLayout="row" fxLayoutAlign="start start">
 
-                      <div>
+                      <!-- <div>
                           <img *ngIf="opinion.avatar" alt="{{opinion.from.user}}"
                               src="{{opinion.avatar}}" class="avatar"/>
 
                           <div *ngIf="!opinion.avatar" class="avatar" ms-random-class="vm.colors">
                               {{opinion.from.user[0]}}
                           </div>
-                      </div>
+                      </div> -->
 
                       <div fxLayout="column" fxLayoutAlign="start start">
 
                           <div class="name">
-                              {{opinion.from.user}}
+                              {{opinion.userend.name_alias}}
                           </div>
 
                           <div class="to" fxLayout="row" fxLayoutAlign="start center">
                               <div class="to-text">to</div>
-                              <div>{{opinion.to[0].user}}</div>
+                              <div>{{opinion.userend.email}}</div>
                           </div>
                       </div>
                   </div>
@@ -81,20 +81,18 @@
                   <div *ngIf="showDetails" class="details" fxLayout="row" fxLayoutAlign="start start">
 
                       <div fxLayout="column">
-                          <span class="title">From:</span>
-                          <span class="title">To:</span>
-                          <span class="title">Date:</span>
+                          <span class="title">Polaridad:</span>
+                          <span class="title">Fecha:</span>
                       </div>
 
                       <div fxLayout="column">
-                          <span class="detail">{{opinion.from.sourceAdrees}}</span>
-                          <span class="detail">{{opinion.to[0].user}}</span>
-                          <span class="detail">{{opinion.arrivetime}}</span>
+                          <span class="detail">{{opinion.polaridad}}</span>
+                          <span class="detail">{{opinion.fecha | date: 'MMM d, y'}}</span>
                       </div>
                   </div>
               </div>
 
-              <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation()">
+              <!-- <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation()">
                   <mat-icon>more_vert</mat-icon>
               </button>
 
@@ -113,15 +111,15 @@
                       <mat-icon>print</mat-icon>
                       <span>Print</span>
                   </button>
-              </mat-menu>
+              </mat-menu> -->
           </div>
 
-          <div [innerHTML]="opinion.opinionText"></div>
+          <div [innerHTML]="opinion.texto"></div>
 
       </div>
 
 
-      <div *ngIf="opinion.attachments" class="opinion-attachments">
+      <!-- <div *ngIf="opinion.attachments" class="opinion-attachments">
 
           <div class="title">
               <span>Attachments</span>
@@ -143,26 +141,31 @@
 
               </div>
           </div>
-      </div>
+      </div> -->
     </div>
 
 <!-- CONTENT CARD -->
-    <div fxFlex="25%" class="content-card" >
+    
+<!-- / CONTENT CARD -->
+
+</div>
+<div fxLayout="row">
+    <div fxFlex="100%" class="content-card" >
 
         <mat-table class="orders-table"
                   #table [dataSource]="dataSource"
                   matSort
                   [@animateStagger]="{value:'50'}"
                   fusePerfectScrollbar>
-
+    
             <!-- ID Column -->
             <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-                <mat-cell *matCellDef="let order">
-                    <p class="text-truncate">{{order.id}}</p>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
+                <mat-cell *matCellDef="let aspect">
+                    <mat-checkbox (click)="$event.stopPropagation();"></mat-checkbox>
                 </mat-cell>
             </ng-container>
-
+    
             <!-- Reference Column -->
             <!-- <ng-container matColumnDef="reference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Reference</mat-header-cell>
@@ -170,28 +173,27 @@
                     <p class="text-truncate">{{order.reference}}</p>
                 </mat-cell>
             </ng-container> -->
-
+    
             <!-- Name Column -->
             <ng-container matColumnDef="aspects">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'OPINION.ASPECT' | translate}}</mat-header-cell>
-                <mat-cell *matCellDef="let order">
+                <mat-cell *matCellDef="let aspect">
                     <p class="text-truncate">
-                        {{order.customer.firstName}}
-                        {{order.customer.lastName}}
+                        {{aspect.texto}}
                     </p>
                 </mat-cell>
             </ng-container>
-
+    
             <!-- Total Price Column -->
-            <ng-container matColumnDef="total">
+            <!-- <ng-container matColumnDef="total">
                 <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Total</mat-header-cell>
-                <mat-cell *matCellDef="let order" fxHide fxShow.gt-md>
+                <mat-cell *matCellDef="let aspect" fxHide fxShow.gt-md>
                     <p class="total-price text-truncate">
                         {{order.total | currency:'USD':'symbol'}}
                     </p>
                 </mat-cell>
-            </ng-container>
-
+            </ng-container> -->
+    
             <!-- Payment Column -->
             <!-- <ng-container matColumnDef="payment">
                 <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Payment</mat-header-cell>
@@ -201,45 +203,54 @@
                     </p>
                 </mat-cell>
             </ng-container> -->
-
+    
             <!-- Status Column -->
             <ng-container matColumnDef="polarity">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'OPINION.POLARITY' | translate}}</mat-header-cell>
-                <mat-cell *matCellDef="let order">
-                    <p class="status text-truncate h6 p-4" [ngClass]="order.status[0].color">
-                        {{order.status[0].name}}
+                <mat-cell *matCellDef="let aspect">
+                    <p class="status text-truncate h6 p-4">
+                        {{aspect.polaridad}}
                     </p>
                 </mat-cell>
             </ng-container>
-
+    
             <!-- Date Column -->
-            <!-- <ng-container matColumnDef="date">
+            <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Date</mat-header-cell>
-                <mat-cell *matCellDef="let order" fxHide fxShow.gt-sm>
-                    <p class="text-truncate">
-                        {{order.date}}
-                    </p>
+                <mat-cell *matCellDef="let aspect" fxHide fxShow.gt-sm>
+                    <div fxLayout="row">
+                        <div fxLayout="column">
+                            <button mat-icon-button>
+                                <mat-icon class="secondary-text">edit</mat-icon>
+                            </button>
+                        </div>
+                        <div fxLayout="column">
+                            <button mat-icon-button>
+                                <mat-icon class="secondary-text">delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    
                 </mat-cell>
-            </ng-container> -->
-
+            </ng-container>
+    
             <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
-
-            <mat-row *matRowDef="let order; columns: displayedColumns;"
+    
+            <mat-row *matRowDef="let aspect; columns: displayedColumns;"
                     class="order"
                     matRipple
                     >
             </mat-row>
         </mat-table>
-
+    
         <mat-paginator #paginatorDetails
-                      [length]="10"
+                      [length]="dataSource.filteredData.length"
                       [pageIndex]="0"
                       [pageSize]="10"
                       [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
-
+    
     </div>
-<!-- / CONTENT CARD -->
-
+    
+    
 </div>
-

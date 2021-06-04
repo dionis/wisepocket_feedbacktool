@@ -24,28 +24,35 @@ export const navigation: FuseNavigation[] = [
         translate: 'NAV.Opinion.TITLE',
         type: 'group',
         children: [
+            // {
+            //     id: 'opinion_mailbox',
+            //     title: 'Opinion Mailbox',
+            //     translate: 'Opinion Mailbox',
+            //     type: 'item',
+            //     icon: 'email',
+            //     url: '/apps/mail',
+            //     badge: {
+            //         title: '25',
+            //         translate: '25',
+            //         bg: '#F44336',
+            //         fg: '#FFFFFF'
+            //     }
+            // },
+            // {
+            //     id: 'opinion_analysis',
+            //     title: 'Opinion Analysis',
+            //     translate: 'Opinion Analysis',
+            //     type: 'item',
+            //     icon: 'email',
+            //     url: '/apps/contacts'
+            // },
             {
-                id: 'opinion_mailbox',
-                title: 'Opinion Mailbox',
-                translate: 'Opinion Mailbox',
-                type: 'item',
-                icon: 'email',
-                url: '/apps/mail',
-                badge: {
-                    title: '25',
-                    translate: '25',
-                    bg: '#F44336',
-                    fg: '#FFFFFF'
-                }
-            },
-            {
-                id: 'opinion_analysis',
-                title: 'Opinion Analysis',
-                translate: 'Opinion Analysis',
-                type: 'item',
-                icon: 'email',
-                url: '/apps/contacts'
-            },
+              id    :'test',
+              title : 'Prueba del OpinionMailbox',
+              translate : 'Prueba del OpinionMailbox',
+              type : 'item',
+              url : '/apps/opinionMailbox'
+          },
         ]
     },
 
@@ -88,22 +95,15 @@ export const navigation: FuseNavigation[] = [
         translate: 'RECORD',
         type     : 'group',
         children : [
+        // {
+        //     id       : 'reg',
+        //     title    : 'Record',
+        //     translate: 'Record',
+        //     type     : 'item',
+        //     icon     : 'send',
+        //     url      : '/apps/todo'
+        // },
         {
-            id       : 'reg',
-            title    : 'Record',
-            translate: 'Record',
-            type     : 'item',
-            icon     : 'send',
-            url      : '/apps/todo'
-        },
-        {
-            id    :'test',
-            title : 'Prueba del OpinionMailbox',
-            translate : 'Prueba del OpinionMailbox',
-            type : 'item',
-            url : '/apps/opinionMailbox'
-        },
-         {
             id    :'userInv',
             title : 'Administrar Invitados',
             translate : '',
@@ -146,7 +146,7 @@ export const navigation: FuseNavigation[] = [
           url: '/apps/contacts'
       },
 
-        
+
 
         ]
     }

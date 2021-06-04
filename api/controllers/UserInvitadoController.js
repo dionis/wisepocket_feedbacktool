@@ -55,28 +55,65 @@ module.exports = {
   },
 
   addCampaigns: async (req, res) => {
-    let camp;
-    await Campaign.find({
-      where: { id: req.param("campID") },
+    let camp = String(req.param("campID"));
+    let userInv = String(req.param("id"));
+    await Campaign.findOne({
+      where: { id: camp },
     }).then((doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        camp = doc[0].id;
       }
     });
-    await UserInvitado.find({
-      where: { id: req.param("id") },
+    await UserInvitado.findOne({
+      where: { id: userInv },
     }).then(async (doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        await UserInvitado.addToCollection(doc[0].id, "campaigns", camp)
+        await UserInvitado.addToCollection(userInv, "campaigns", camp)
           .then((campInv) => {
             return res.send({
               message: "Asociado a la Campaña con éxito",
+              data: campInv,
+            });
+          })
+          .catch((err) => {
+            sails.log.debug(err);
+            return res.send({
+              success: false,
+              message: "Falló la operación",
+            });
+          });
+      }
+    });
+  },
+
+  deleteAsociar: async (req, res) => {
+    let camp = String(req.param("campID"));
+    let userInv = String(req.param("id"));
+    await Campaign.findOne({
+      where: { id: camp },
+    }).then((doc) => {
+      if (!doc) {
+        console.log("No encontrado");
+      } else {
+        console.log("Encontrado");
+      }
+    });
+    await UserInvitado.findOne({
+      where: { id: userInv },
+    }).then(async (doc) => {
+      if (!doc) {
+        console.log("No encontrado");
+      } else {
+        console.log("Encontrado");
+        await UserInvitado.removeFromCollection(userInv, "campaigns", camp)
+          .then((campInv) => {
+            return res.send({
+              message: "Eliminado con éxito",
               data: campInv,
             });
           })
@@ -199,7 +236,7 @@ module.exports = {
       });
   },
 
-  updateAcces: async (req, res) => {
+  /*updateAcces: async (req, res) => {
     UserInvitado.updateOne(
       {
         where: { id: req.param("id") },
@@ -219,7 +256,7 @@ module.exports = {
           message: "Falló la operación",
         });
       });
-  },
+  },*/
 
   updatePass: async (req, res) => {
     let salt = await bcrypt.genSalt(10);
@@ -230,6 +267,28 @@ module.exports = {
       },
       {
         password: hashpass,
+      }
+    )
+      .then((user) => {
+        return res.send({
+          data: user,
+        });
+      })
+      .catch((err) => {
+        return res.send({
+          success: false,
+          message: "Falló la operación",
+        });
+      });
+  },
+
+  deleteupdatePass: async (req, res) => {
+    UserInvitado.updateOne(
+      {
+        where: { id: req.param("id") },
+      },
+      {
+        password: '',
       }
     )
       .then((user) => {

@@ -62,9 +62,19 @@
     fxLayoutAlign="end center"
   >
     <button
+      #devolverAcceso
       mat-raised-button
       class="mr-8"
-      [disabled]="invUserForm.invalid"
+      aria-label="Asociar"
+      matTooltip="Asociar"
+      (click)="devolverAcces(contact)"
+    >
+      Devolver Acceso
+    </button>
+    <button
+      #quitarAcceso
+      mat-raised-button
+      class="mr-8"
       aria-label="Asociar"
       matTooltip="Asociar"
       (click)="quitarAcces(contact)"
@@ -72,14 +82,25 @@
       Quitar Acceso
     </button>
     <button
+      #asociar
       mat-raised-button
       class="mr-8"
       [disabled]="invUserForm.invalid"
       aria-label="Asociar"
       matTooltip="Asociar"
-      (click)="asociarAcamp(contact)"
+      (click)="asociarAcamp(contact, pass)"
+      (click)="asociar.disabled = true"
     >
       Asociar
+    </button>
+    <button
+      mat-raised-button
+      class="mr-8"
+      aria-label="Asociar"
+      matTooltip="Asociar"
+      (click)="desvincular(contact, pass)"
+    >
+      Desvincular
     </button>
   </div>
 </div>

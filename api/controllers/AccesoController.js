@@ -9,22 +9,22 @@ module.exports = {
   darAcceso: async (req, res) => {
     let userinv;
     let camp;
-    await Campaign.find({
+    await Campaign.findOne({
       where: { id: req.param("campID") },
     }).then(async (doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        camp = doc[0].id;
-        await UserInvitado.find({
+        camp = doc.id;
+        await UserInvitado.findOne({
           where: { id: req.param("id") },
         }).then(async (doc) => {
           if (!doc) {
             console.log("No encontrado");
           } else {
             console.log("Encontrado");
-            userinv = doc[0].id;
+            userinv = doc.id;
             await Acceso.create(
               {
                 acceso: true,
@@ -52,7 +52,7 @@ module.exports = {
   },
 
   quitarAcceso: async (req, res) => {
-    await Acceso.update(
+    await Acceso.updateOne(
       {
         where: { userInv: req.param("id"), campaign: req.param("campID") },
       },
@@ -77,49 +77,111 @@ module.exports = {
     );
   },
 
+  devolverAcceso: async (req, res) => {
+    await Acceso.updateOne(
+      {
+        where: { userInv: req.param("id"), campaign: req.param("campID") },
+      },
+      {
+        acceso: true,
+      },
+
+      (err) => {
+        if (err) {
+          sails.log.debug(err);
+          return res.send({
+            success: false,
+            message: "Falló la operación",
+          });
+        } else {
+          return res.send({
+            success: true,
+            message: "Tiene acceso",
+          });
+        }
+      }
+    );
+  },
+
   getStatusAcceso: async (req, res) => {
-    let userinv;
-    let camp;
-    await Campaign.find({
-      where: { id: req.param("campID") },
+    let camp = String(req.param("campID"));
+    let userInv = String(req.param("id"));
+    console.log(userInv);
+    console.log(camp);
+    if (Acceso) {
+      await Acceso.findOne({
+        where: { userInv: userInv, campaign: camp },
+      })
+        .then((data) => {
+          console.log("StatusAccesData>> ", data);
+          if (data.acceso) {
+            return res.send({
+              success: true,
+              message: "Tiene acceso",
+              data: true,
+            });
+          } else {
+            return res.send({
+              success: false,
+              message: "No tiene acceso",
+              data: false,
+            });
+          }
+        })
+        .catch((err) => {
+          if (err) {
+            return res.send({
+              success: false,
+              message: "No hay asociados",
+              data: false,
+            });
+          }
+        });
+    } else {
+      return res.send({
+        success: false,
+        message: "No hay asociados",
+        data: false,
+      });
+    }
+  },
+
+  deleteAcces: async (req, res) => {
+    let camp = String(req.param("campID"));
+    let userInv = String(req.param("id"));
+    await Campaign.findOne({
+      where: { id: camp },
     }).then(async (doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        camp = doc[0].id;
-        await UserInvitado.find({
-          where: { id: req.param("id") },
+        await UserInvitado.findOne({
+          where: { id: userInv },
         }).then(async (doc) => {
           if (!doc) {
             console.log("No encontrado");
           } else {
             console.log("Encontrado");
-            userinv = doc[0].id;
-            await Acceso.find({
-              where: { campaign: camp, userInv: userinv },
-            }).then((doc) => {
-              if (!doc) {
-                console.log("Estado de acceso no determinado");
-                return res.send({
-                  determinado: false,
-                  message: "Imposible Determinar",
-                });
-              } else {
-                console.log("Acceso determinado");
-                if (doc.acceso === true) {
+            userinv = doc.id;
+            await Acceso.destroy(
+              {
+                where: { campaign: camp, userInv: userInv },
+              },
+              (err) => {
+                if (err) {
                   return res.send({
-                    success: true,
-                    message: "Tiene Acceso",
+                    success: false,
+                    message: "Falló la operación",
                   });
                 } else {
                   return res.send({
-                    success: false,
-                    message: "No tiene acceso",
+                    success: true,
+                    message: "Acceso eliminado",
                   });
                 }
               }
-            });
+            );
           }
         });
       }

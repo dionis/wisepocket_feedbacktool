@@ -10,7 +10,7 @@ describe("UserInvitadoController.addCampaigns", function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe("#addCampaigns", function () {
+  describe("Se asocia el invitado a una Campaña", function () {
     it("should redirect to /my/page", function (done) {
       UserInvitado.find()
         .then((zookeepers) => {
@@ -80,7 +80,7 @@ describe("UserInvitadoController.getCampXInvitado", function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe("#getCampXInvitado", function () {
+  describe("Campañas asociadas a un invitado o en que campañas esta el invitado colaborando", function () {
     it("should redirect to /my/page", function (done) {
       UserInvitado.find().then((zookeepers) => {
         let userInv = zookeepers[0];
@@ -110,7 +110,7 @@ describe("UserInvitadoController.getInvXUserChief", function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe("#getInvXUserChief", function () {
+  describe("Lista de invitados por Administrador o a quienes invito el admin", function () {
     it("should redirect to /my/page", function (done) {
       User.find()
         .then((zookeepers) => {
@@ -126,76 +126,6 @@ describe("UserInvitadoController.getInvXUserChief", function () {
             .then((response) => {
               console.log("Service OK:" + response.text);
               /// response.text >>>>> Lista de invitados por Administrador o a quienes invito el admin
-              done();
-            })
-            .catch((err) => done(err));
-        })
-        .catch((error) => {
-          throw Error(error);
-        });
-    });
-  });
-});
-
-/*describe("UserInvitadoController.updateAcces", function () {
-  before(function () {
-    // runs once before the first test in this block
-    //https://mochajs.org/#hooks
-  });
-
-  after(function () {
-    // runs once after the last test in this block
-  });
-  describe("#updateAcces", function () {
-    it("should redirect to /my/page", function (done) {
-      UserInvitado.find()
-        .then((zookeepers) => {
-          let userInv = zookeepers[0];
-          console.log("---- New Test execution data ----", zookeepers[0].id);
-          console.log("FIND Invitado BY NAME ", userInv.nombre);
-          supertest(sails.hooks.http.app)
-            .patch("/userInvitado/updateAcces")
-            .query({ acceso: true, id: userInv.id })
-            .expect(200)
-            .then((response) => {
-              console.log("Service OK:" + response.text);
-              /// response.text >>>>> Dar acceso o no a una Campaña
-              // ( Se pensara en una funcion que antes de entrar evalue el valor del acceso, por defecto es false)
-              done();
-            })
-            .catch((err) => done(err));
-        })
-        .catch((error) => {
-          throw Error(error);
-        });
-    });
-  });
-});
-
-describe("UserInvitadoController.updateAcces", function () {
-  before(function () {
-    // runs once before the first test in this block
-    //https://mochajs.org/#hooks
-  });
-
-  after(function () {
-    // runs once after the last test in this block
-  });
-  describe("#updateAcces", function () {
-    it("should redirect to /my/page", function (done) {
-      UserInvitado.find()
-        .then((zookeepers) => {
-          let userInv = zookeepers[0];
-          console.log("---- New Test execution data ----", zookeepers[0].id);
-          console.log("FIND Invitado BY NAME ", userInv.nombre);
-          supertest(sails.hooks.http.app)
-            .patch("/userInvitado/updateAcces")
-            .query({ acceso: true, id: userInv.id })
-            .expect(200)
-            .then((response) => {
-              console.log("Service OK:" + response.text);
-              /// response.text >>>>> Dar acceso o no a una Campaña
-              // ( Se pensara en una funcion que antes de entrar evalue el valor del acceso, por defecto es false)
               done();
             })
             .catch((err) => done(err));
@@ -229,8 +159,6 @@ describe("UserInvitadoController.updatePass", function () {
             .expect(200)
             .then((response) => {
               console.log("Service OK:" + response.text);
-              /// response.text >>>>> Dar acceso o no a una Campaña
-              // ( Se pensara en una funcion que antes de entrar evalue el valor del acceso, por defecto es false)
               done();
             })
             .catch((err) => done(err));
@@ -240,7 +168,40 @@ describe("UserInvitadoController.updatePass", function () {
         });
     });
   });
-});*/
+});
+
+describe("UserInvitadoController.deleteupdatePass", function () {
+  before(function () {
+    // runs once before the first test in this block
+    //https://mochajs.org/#hooks
+  });
+
+  after(function () {
+    // runs once after the last test in this block
+  });
+  describe("Quitar contraseña al desvincular de la Campaña al invitado", function () {
+    it("should redirect to /my/page", function (done) {
+      UserInvitado.find()
+        .then((zookeepers) => {
+          let userInv = zookeepers[0];
+          console.log("---- New Test execution data ----", zookeepers[0].id);
+          console.log("FIND Invitado BY NAME ", userInv.nombre);
+          supertest(sails.hooks.http.app)
+            .patch("/userInvitado/deleteupdatePass")
+            .query({ id: userInv.id })
+            .expect(200)
+            .then((response) => {
+              console.log("Service OK:" + response.text);
+              done();
+            })
+            .catch((err) => done(err));
+        })
+        .catch((error) => {
+          throw Error(error);
+        });
+    });
+  });
+});
 
 describe("UserInvitadoController.updateInfo", function () {
   before(function () {
@@ -251,7 +212,7 @@ describe("UserInvitadoController.updateInfo", function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe("#updateInfo", function () {
+  describe("Actualiza los datos de un invitado", function () {
     it("should redirect to /my/page", function (done) {
       UserInvitado.find()
         .then((zookeepers) => {
@@ -279,38 +240,6 @@ describe("UserInvitadoController.updateInfo", function () {
     });
   });
 });
-/*describe('UserInvitadoController.updateisAdmin', function () {
-    before(function () {
-        // runs once before the first test in this block
-        //https://mochajs.org/#hooks
-    });
-
-    after(function () {
-        // runs once after the last test in this block
-    });
-    describe('#updateisAdmin', function () {
-        it('should redirect to /my/page', function (done) {
-            UserInvitado.find().then(zookeepers => {
-                let userInv = zookeepers[0];
-                console.log("---- New Test execution data ----", zookeepers[0].id)
-                console.log("FIND Invitado BY NAME ", userInv.nombre);
-                supertest(sails.hooks.http.app)
-                    .patch('/userInvitado/updateisAdmin').query({ isAdmin: true, id: userInv.id })
-                    .expect(200)
-                    .then(response => {
-                        console.log("Service OK:" + response.text)
-                        /// response.text >>>>> El propietario de la campaña puede designar privilegio admin a uno o varios 
-                        //                      invitados de confianza para colaborar totalmente con el 
-                        //                      Puede darse el caso que un compañero que esta preparado incluso más que el, pueda ayudarlo más si es admin
-                        done();
-                    })
-                    .catch(err => done(err))
-            }).catch(error => {
-                throw Error(error)
-            })
-        });
-    })
-});*/
 
 describe("CampaignController.getInvitadoXCamp", function () {
   before(function () {
@@ -321,7 +250,7 @@ describe("CampaignController.getInvitadoXCamp", function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe("#getInvitadoXCamp", function () {
+  describe("Lista de Invitados de una Campaña", function () {
     it("should redirect to /my/page", function (done) {
       Campaign.find()
         .then((zookeepers) => {
@@ -334,10 +263,55 @@ describe("CampaignController.getInvitadoXCamp", function () {
             .expect(200)
             .then((response) => {
               console.log("Service OK:" + response.text);
-              /// response.text >>>>> Lista de Invitados a una Campaña
+              /// response.text >>>>> Lista de Invitados de una Campaña
               done();
             })
             .catch((err) => done(err));
+        })
+        .catch((error) => {
+          throw Error(error);
+        });
+    });
+  });
+});
+
+describe("UserInvitadoController.deleteAsociar", function () {
+  before(function () {
+    // runs once before the first test in this block
+    //https://mochajs.org/#hooks
+  });
+
+  after(function () {
+    // runs once after the last test in this block
+  });
+  describe("Elimina la relacion entre la campaña y el invitado si este ya no existe", function () {
+    it("should redirect to /my/page", function (done) {
+      UserInvitado.find()
+        .then((zookeepers) => {
+          let userInv = zookeepers[0];
+          console.log("---- New Test execution data ----", zookeepers[0].id);
+
+          Campaign.find()
+            .then((zookeepers) => {
+              let camp = zookeepers[0];
+              console.log(
+                "---- New Test execution data ----",
+                zookeepers[0].id
+              );
+              console.log("FIND Campaign BY NAME ", camp.nombre);
+              supertest(sails.hooks.http.app)
+                .delete("/userInvitado/deleteAsociar")
+                .query({ campID: camp.id, id: userInv.id })
+                .expect(200)
+                .then((response) => {
+                  console.log("Service OK:" + response.text);
+                  done();
+                })
+                .catch((err) => done(err));
+            })
+            .catch((error) => {
+              throw Error(error);
+            });
         })
         .catch((error) => {
           throw Error(error);

@@ -31,6 +31,7 @@ import {OpinionComposeDialogComponent}from '../../../../app/main/apps/opinionMai
 
 import { EcommerceOrdersService } from '../../../../app/main/apps/e-commerce/orders/orders.service';
 import { CampaignSelectGuard } from '../guards/campaign-select.guard';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
 const routes: Routes = [
     {
@@ -110,7 +111,8 @@ const routes: Routes = [
         MailboxListItemComponent,
         OpinionDetailsComponent,
         MailboxMainSidebarComponent,
-        OpinionComposeDialogComponent
+        OpinionComposeDialogComponent,
+        AdvancedSearchComponent
     ],
     imports        : [
         RouterModule.forChild(routes),

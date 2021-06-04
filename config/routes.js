@@ -91,10 +91,12 @@ module.exports.routes = {
   "DELETE /userend/deleteAllUserEnd": "UserEndController.deleteAllUserEnd",
   "DELETE /userInvitado/deleteUserInvitado":
     "UserInvitadoController.deleteUserInvitado",
+  "DELETE /userInvitado/deleteAsociar": "UserInvitadoController.deleteAsociar",
+  "DELETE /acceso/deleteAcces": "AccesoController.deleteAcces",
 
   //GET and for Pages
   "GET /opinion/getOpinion": "OpinionController.getOpinion",
-  "GET /opinion/getOpinionbyFilter": "OpinionController.getOpinionbyFilter", 
+  "GET /opinion/getOpinionbyFilter": "OpinionController.getOpinionbyFilter",
   "GET /opinion/getOpinionXIdiomaCamp":
     "OpinionController.getOpinionXIdiomaCamp",
   "GET /pregunta/getPregunta": "PreguntaController.getPregunta",
@@ -132,8 +134,11 @@ module.exports.routes = {
   //PATCH
   "PATCH /userInvitado/updateInfo": "UserInvitadoController.updateInfo",
   "PATCH /userInvitado/updatePass": "UserInvitadoController.updatePass",
-  "PATCH /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
+  "PATCH /userInvitado/deleteupdatePass":
+    "UserInvitadoController.deleteupdatePass",
+  //"PATCH /userInvitado/updateAcces": "UserInvitadoController.updateAcces",
   "PATCH /acceso/quitarAcceso": "AccesoController.quitarAcceso",
+  "PATCH /acceso/devolverAcceso": "AccesoController.devolverAcceso",
   //"PATCH /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

@@ -14,7 +14,7 @@ describe('AspectoOpinionController.getAspecto', function () {
   after(function () {
     // runs once after the last test in this block
   });
-  describe('#getAspecto', function () {
+  describe('Lista de aspectos de la opinion correspondiente', function () {
     it('should redirect to /my/page', function (done) {
       Opinion.find().then(zookeepers => {
         let opinion = zookeepers[0];

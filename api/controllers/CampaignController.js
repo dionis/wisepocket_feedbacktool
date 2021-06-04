@@ -85,10 +85,10 @@ module.exports = {
         await Campaign.findOne({
             id: req.param('id')
         }
-        ).populate('userInvitado').then((doc) => {
+        ).populate('userInvitados').then((doc) => {
             return res.send({
                 'message': 'Usuarios Invitados',
-                'data': doc.userInvitado
+                'data': doc.userInvitados
             })
         })
             .catch(err => {

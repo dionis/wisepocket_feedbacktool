@@ -13,6 +13,7 @@ export const locale = {
         OPINION: {
           OPINIONS                :'OPINIONES',
           COMPOSE                 : 'Crear',
+          SEARCH                  : 'Búsqueda Avanzada',
           FOLDERS                 : 'Carpetas',
           FILTERS                 : 'Filtros',
           LABELS                  : 'Etiquetas',

@@ -2,10 +2,11 @@ import { SharedVariablesService } from '../../../../services/shared-variables.se
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserInv } from '../../../../models/userInv.model';
 import { UserInvService } from '../../../../services/user-inv.service';
 import swal from "sweetalert2";
+import { FuseConfirmDialogComponent } from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-contact-asociar',
@@ -16,13 +17,14 @@ export class ContactAsociarComponent implements OnInit {
   action: string;
   contact: UserInv;
   nameCamp: string
-
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>
   //contactForm: FormGroup;
   invUserForm: FormGroup;
   dialogTitle: string;
-  constructor(public matDialogRef: MatDialogRef<ContactAsociarComponent>, @Inject(MAT_DIALOG_DATA) private _data: any, private _formBuilder: FormBuilder, private invService: UserInvService, private servCamp: SharedVariablesService) {
+  estadoAcceso: boolean
+  constructor(public matDialogRef: MatDialogRef<ContactAsociarComponent>, @Inject(MAT_DIALOG_DATA) private _data: any, private _formBuilder: FormBuilder, private invService: UserInvService, private servCamp: SharedVariablesService, public _matDialog: MatDialog,) {
     this.action = _data.action;
-
+    this.estadoAcceso = false
     if (this.action === 'asociar') {
       this.dialogTitle = 'Asociar a Campaña';
       this.contact = _data.contact;
@@ -41,20 +43,41 @@ export class ContactAsociarComponent implements OnInit {
 
   }
 
-  asociarAcamp(contact) {
-    this.invService.AddCampInv(contact).subscribe(res => {
-      if (res.message === "Asociado a la Campaña con éxito") {
-        this.updatePass(contact)
-        this.updateAcces(contact)
-        this.statusAcces(contact)
-        swal.fire('Ahora el usuario tiene acceso a la Campaña: ' + this.servCamp.getName())
-      }
-      else if (res.success === false) {
-        swal.fire('Fallo la operación')
-      }
-
+  asociarAcamp(contact, pass) {
+    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+      disableClose: false
     });
+
+    this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea vincular a ' + contact.nombre + ' y darle acceso a la campaña ' + this.servCamp.getName() + '?';
+
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.invService.AddCampInv(contact).subscribe(res => {
+          if (res.message === "Asociado a la Campaña con éxito") {
+            this.updatePass(contact)
+            this.updateAcces(contact)
+            swal.fire('Ahora el usuario tiene acceso a la Campaña: ' + this.servCamp.getName())
+            pass.disabled = true
+            this.invService.getInvitados().subscribe(data => {
+              console.log(data);
+              this.invService.getUsers(data.data)
+
+            })
+          }
+          else if (res.success === false) {
+            swal.fire('Fallo la operación')
+          }
+          this.statusAcces(contact)
+        });
+      }
+      this.confirmDialogRef = null;
+    });
+
   }
+
+
+
+
 
   updatePass(contact) {
     this.invService.updatePass(contact).subscribe(data => {
@@ -69,20 +92,89 @@ export class ContactAsociarComponent implements OnInit {
   }
 
   quitarAcces(contact) {
-    this.invService.quitarAcceso(contact).subscribe(res => {
-      if (res.success === false) {
-        swal.fire('Aún no está asociado')
+    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+      disableClose: false
+    });
+
+    this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea quitarle el acceso?';
+
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.invService.quitarAcceso(contact).subscribe(res => {
+          if (res.success === false) {
+            swal.fire('Aún no está asociado')
+          }
+          else if (res.success) {
+            swal.fire('Acceso deshabilitado')
+          }
+        });
       }
-      else if (res.success === true) {
-        swal.fire('Acceso deshabilitado')
+      this.confirmDialogRef = null;
+    });
+
+  }
+
+  devolverAcces(contact) {
+    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+      disableClose: false
+    });
+
+    this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea devolverle el acceso?';
+
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.invService.devolverAcceso(contact).subscribe(res => {
+          if (res.success === false) {
+            swal.fire('Aún no está asociado')
+          }
+          else if (res.success) {
+            swal.fire('Acceso habilitado')
+          }
+        });
       }
+      this.confirmDialogRef = null;
+    });
+
+
+  }
+
+  desvincular(contact, pass) {
+    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+      disableClose: false
+    });
+
+    this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea desvincularlo?';
+
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.invService.deleteRelacion(contact).subscribe(data => {
+          console.log(data);
+        });
+        this.invService.deleteAcces(contact).subscribe(data => {
+          console.log(data);
+        });
+        this.invService.deleteupdatePass(contact).subscribe(data => {
+          console.log(data);
+        });
+        pass.value = ''
+        this.contact.password = ""
+        swal.fire('Desvinculado con éxito')
+      }
+      this.confirmDialogRef = null;
     });
   }
 
-  statusAcces(contact) {
-    this.invService.getStatusAcceso(contact).subscribe(data => {
-      console.log(data);
+  statusAcces(contact): Boolean {
+    let status: boolean
+    this.invService.getStatusAcceso(contact).subscribe(res => {
+      console.log(res);
+      if (res.success) {
+        status = true
+      } else {
+        status = false
+      }
     });
+    return status
   }
 
   createContactForm(): FormGroup {

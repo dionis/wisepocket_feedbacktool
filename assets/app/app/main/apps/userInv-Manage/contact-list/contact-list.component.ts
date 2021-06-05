@@ -71,7 +71,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
         this._contactsService.getInvitados().subscribe(data => {
             console.log(data);
-            this._contactsService.getUsers(data.data)
+            this._contactsService.getUsers(data.data) ///Esta funcion inyecta los usuarios para mostrar en la tabla
 
         })
 

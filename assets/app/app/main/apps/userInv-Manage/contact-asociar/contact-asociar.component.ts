@@ -58,7 +58,7 @@ export class ContactAsociarComponent implements OnInit {
             this.updateAcces(contact)
             swal.fire('Ahora el usuario tiene acceso a la Campaña: ' + this.servCamp.getName())
             pass.disabled = true
-            this.invService.getInvitados().subscribe(data => {
+            this.invService.getFiltersAllInv().then(data => {
               console.log(data);
               this.invService.getUsers(data.data)
 
@@ -158,7 +158,13 @@ export class ContactAsociarComponent implements OnInit {
         });
         pass.value = ''
         this.contact.password = ""
+        this.invService.getFiltersInvCAMP().then(data => {
+          console.log(data);
+          this.invService.getUsers(data.data)
+
+        })
         swal.fire('Desvinculado con éxito')
+
       }
       this.confirmDialogRef = null;
     });

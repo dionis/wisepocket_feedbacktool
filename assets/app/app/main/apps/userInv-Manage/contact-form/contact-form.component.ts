@@ -105,15 +105,12 @@ export class ContactsContactFormDialogComponent {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
-
         this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea eliminarlo?';
-
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.invService.deleteUserInv(this.invUserForm.getRawValue()).subscribe(data => {
                     console.log(data);
                 });
-                swal.fire('Si el usuario esta vinculado a una Campaña, recuerde desvincularlo', '' + 'Vaya a Invitados de la Campaña')
                 this.invService.getInvitados().subscribe(data => {
                     console.log(data);
                     this.invService.getUsers(data.data)
@@ -125,6 +122,11 @@ export class ContactsContactFormDialogComponent {
 
     }
 
+    deleteAcces(invitado) {
+        this.invService.deleteAcces(invitado).subscribe(data => {
+            console.log(data);
+        });
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------

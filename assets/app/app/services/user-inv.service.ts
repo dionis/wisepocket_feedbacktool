@@ -14,11 +14,16 @@ import { SharedVariablesService } from './shared-variables.service';
 export class UserInvService {
   onContactsChanged: BehaviorSubject<any>;
   onUserDataChanged: BehaviorSubject<any>;
+  onFiltersChanged: BehaviorSubject<any>;
+  onFiltersChangedInvAll: BehaviorSubject<any>;
   contacts: UserInv[];
+  filters: any[];
   user_id: string;
   constructor(private _http: HttpClient, private user: UserService, private servCamp: SharedVariablesService,) {
     this.onContactsChanged = new BehaviorSubject([]);
     this.onUserDataChanged = new BehaviorSubject([]);
+    this.onFiltersChanged = new BehaviorSubject([]);
+    this.onFiltersChangedInvAll = new BehaviorSubject([]);
     this.user_id = this.user.getMyUserId();
   }
 
@@ -102,10 +107,33 @@ export class UserInvService {
 
   }
 
-
   getInvitadXID(invitado): Observable<any> {
     return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/getInvitadoById', invitado)
   }
+
+  ///////////// TEST FILTERS ////////////////////
+  getFiltersInvCAMP(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/campaign/getInvitadoXCamp', { params: { 'id': this.servCamp.getId() } })
+        .subscribe((response: any) => {
+          this.filters = response.data;
+          this.onFiltersChanged.next(this.filters);
+          resolve(this.filters);
+        }, reject);
+    });
+  }
+
+  getFiltersAllInv(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/getInvXUserChief?id=' + this.user_id)
+        .subscribe((response: any) => {
+          this.filters = response.data;
+          this.onFiltersChangedInvAll.next(this.filters);
+          resolve(this.filters);
+        }, reject);
+    });
+  }
+  ///////////// TEST FILTERS //////////////////////////////
 
   fixIDOut() {
     console.log("Eliminando userID...");

@@ -75,10 +75,6 @@ export class ContactAsociarComponent implements OnInit {
 
   }
 
-
-
-
-
   updatePass(contact) {
     this.invService.updatePass(contact).subscribe(data => {
       console.log(data);
@@ -88,83 +84,6 @@ export class ContactAsociarComponent implements OnInit {
   updateAcces(contact) {
     this.invService.darAcceso(contact).subscribe(data => {
       console.log(data);
-    });
-  }
-
-  quitarAcces(contact) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea quitarle el acceso?';
-
-    this.confirmDialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.invService.quitarAcceso(contact).subscribe(res => {
-          if (res.success === false) {
-            swal.fire('Aún no está asociado')
-          }
-          else if (res.success) {
-            swal.fire('Acceso deshabilitado')
-          }
-        });
-      }
-      this.confirmDialogRef = null;
-    });
-
-  }
-
-  devolverAcces(contact) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea devolverle el acceso?';
-
-    this.confirmDialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.invService.devolverAcceso(contact).subscribe(res => {
-          if (res.success === false) {
-            swal.fire('Aún no está asociado')
-          }
-          else if (res.success) {
-            swal.fire('Acceso habilitado')
-          }
-        });
-      }
-      this.confirmDialogRef = null;
-    });
-
-
-  }
-
-  desvincular(contact) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea desvincularlo?';
-
-    this.confirmDialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.invService.deleteRelacion(contact).subscribe(data => {
-          console.log(data);
-        });
-        this.invService.deleteAcces(contact).subscribe(data => {
-          console.log(data);
-        });
-        this.invService.deleteupdatePass(contact).subscribe(data => {
-          console.log(data);
-        });
-        this.invService.getFiltersInvCAMP().then(data => {
-          console.log(data);
-          this.invService.getUsers(data.data)
-
-        })
-        swal.fire('Desvinculado con éxito')
-
-      }
-      this.confirmDialogRef = null;
     });
   }
 

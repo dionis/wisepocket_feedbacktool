@@ -91,8 +91,8 @@ export const navigation: FuseNavigation[] = [
 
     {
         id: 'record',
-        title: 'Record',
-        translate: 'RECORD',
+        title: 'Colaboración',
+        translate: 'Colaboration',
         type     : 'group',
         children : [
         // {
@@ -138,13 +138,7 @@ export const navigation: FuseNavigation[] = [
         //     type: 'item',
         //     url: '/apps/campaign'
         // },
-        {
-          id:'test6',
-          title:'Prueba de Contactos',
-          translate:'Prueba de Contactos',
-          type: 'item',
-          url: '/apps/contacts'
-      },
+       
 
 
 

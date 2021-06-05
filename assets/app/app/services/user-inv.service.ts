@@ -52,10 +52,7 @@ export class UserInvService {
   }
 
   deleteUserInv(invitado): Observable<any> {
-    console.log(invitado.id);
-    let httpParams = new HttpParams()
-      .append("id", invitado.id)
-    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado', { params: httpParams })
+    return this._http.delete(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/userInvitado/deleteUserInvitado', { params: { 'id': invitado.id, 'campID': this.servCamp.getId() } })
   }
 
   deleteAcces(invitado): Observable<any> {
@@ -103,7 +100,7 @@ export class UserInvService {
 
   getStatusAcceso(invitado): Observable<any> {
 
-    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/acceso/getStatusAcceso', { params: { 'id': invitado.id, 'campID': this.servCamp.getId() } })
+    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/acceso/isAsociado', { params: { 'id': invitado.id, 'campID': this.servCamp.getId() } })
 
   }
 
@@ -135,6 +132,7 @@ export class UserInvService {
   }
   ///////////// TEST FILTERS //////////////////////////////
 
+  
   fixIDOut() {
     console.log("Eliminando userID...");
     this.user_id = ''

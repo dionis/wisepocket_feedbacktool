@@ -130,6 +130,7 @@ module.exports.routes = {
     "UserInvitadoController.getInvXUserChief",
   "GET /userInvitado/getInvitadoById": "UserInvitadoController.getInvitadoById",
   "GET /acceso/getStatusAcceso": "AccesoController.getStatusAcceso",
+  "GET /acceso/isAsociado": "AccesoController.isAsociado",
 
   //PATCH
   "PATCH /userInvitado/updateInfo": "UserInvitadoController.updateInfo",

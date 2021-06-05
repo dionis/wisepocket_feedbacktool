@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ContactsService } from '../../../../../../app/main/apps/userInv-Manage/contacts.service';
 import { OpinionService } from '../../../../../services/opinion-analizer.service';
 import { UserService } from '../../../../../services/user.service';
-import { ContactsContactListComponent } from '../../../contacts/contact-list/contact-list.component';
+
 
 @Component({
     selector: 'contacts-main-sidebar',

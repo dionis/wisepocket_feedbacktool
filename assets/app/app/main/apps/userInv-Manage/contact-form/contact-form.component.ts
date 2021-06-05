@@ -111,6 +111,7 @@ export class ContactsContactFormDialogComponent {
                 this.invService.deleteUserInv(this.invUserForm.getRawValue()).subscribe(data => {
                     console.log(data);
                 });
+                swal.fire('Usuario eliminado')
                 this.invService.getInvitados().subscribe(data => {
                     console.log(data);
                     this.invService.getUsers(data.data)

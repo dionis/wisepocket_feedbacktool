@@ -1,3 +1,4 @@
+import { Breakpoints } from '@angular/cdk/layout';
 import { SharedVariablesService } from '../../../../services/shared-variables.service';
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
@@ -170,17 +171,16 @@ export class ContactAsociarComponent implements OnInit {
     });
   }
 
-  statusAcces(contact): Boolean {
+  statusAcces(contact): any {
     let status: boolean
     this.invService.getStatusAcceso(contact).subscribe(res => {
       console.log(res);
       if (res.success) {
-        status = true
+        return status = true
       } else {
-        status = false
+        return status = false
       }
     });
-    return status
   }
 
   createContactForm(): FormGroup {

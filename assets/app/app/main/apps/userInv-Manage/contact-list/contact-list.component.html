@@ -33,7 +33,7 @@
   <!-- Buttons Column -->
   <div>
     <ng-container matColumnDef="boton">
-      <mat-header-cell id="editar" *matHeaderCellDef>Opciones</mat-header-cell>
+      <mat-header-cell id="editar" *matHeaderCellDef>Editar - Asociar</mat-header-cell>
       <mat-cell *matCellDef="let contact">
         <div fxFlex="row" fxLayoutAlign="end center">
           <button
@@ -43,7 +43,7 @@
             fxShow.gt-md
             (click)="editContact(contact)"
           >
-          <mat-icon [ngStyle]="{'color':'red'}" >edit</mat-icon>
+            <mat-icon [ngStyle]="{ color: 'red' }">edit</mat-icon>
             Editar
           </button>
           <button
@@ -51,11 +51,54 @@
             mat-raised-button
             (click)="asociarCamp(contact)"
           >
-            <mat-icon [ngStyle]="{'color':'green'}"><span class="material-icons-outlined">
+            <mat-icon [ngStyle]="{ color: 'green' }"
+              ><span class="material-icons-outlined">
                 wifi_protected_setup
-             </span></mat-icon>
+              </span></mat-icon
+            >
             Asociar
           </button>
+        </div>
+      </mat-cell>
+    </ng-container>
+  </div>
+  <!-- Menu Column -->
+  <div>
+    <ng-container matColumnDef="menu">
+      <mat-header-cell *matHeaderCellDef>Campaña</mat-header-cell>
+      <mat-cell *matCellDef="let contact">
+        <div fxFlex="row" fxLayoutAlign="end center">
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="moreMenu"
+            aria-label="More"
+            (click)="$event.stopPropagation()"
+          >
+            <mat-icon class="secondary-text">more_vert</mat-icon>
+          </button>
+          <mat-menu #moreMenu="matMenu">
+            <button
+              mat-menu-item
+              aria-label="remove"
+              (click)="desvincular(contact)"
+            >
+              <span>Desvincular</span>
+            </button>
+            <button
+              mat-menu-item
+              aria-label="remove"
+              (click)="quitarAcces(contact)"
+            >
+              <span>Quitar acceso</span>
+            </button>
+            <button
+              mat-menu-item
+              aria-label="remove"
+              (click)="devolverAcces(contact)"
+            >
+              <span>Devolver acceso</span>
+            </button>
+          </mat-menu>
         </div>
       </mat-cell>
     </ng-container>

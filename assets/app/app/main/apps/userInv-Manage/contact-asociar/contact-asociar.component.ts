@@ -44,7 +44,7 @@ export class ContactAsociarComponent implements OnInit {
 
   }
 
-  asociarAcamp(contact, pass) {
+  asociarAcamp(contact) {
     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
       disableClose: false
     });
@@ -58,7 +58,6 @@ export class ContactAsociarComponent implements OnInit {
             this.updatePass(contact)
             this.updateAcces(contact)
             swal.fire('Ahora el usuario tiene acceso a la Campaña: ' + this.servCamp.getName())
-            pass.disabled = true
             this.invService.getFiltersAllInv().then(data => {
               console.log(data);
               this.invService.getUsers(data.data)
@@ -139,7 +138,7 @@ export class ContactAsociarComponent implements OnInit {
 
   }
 
-  desvincular(contact, pass) {
+  desvincular(contact) {
     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
       disableClose: false
     });
@@ -157,8 +156,6 @@ export class ContactAsociarComponent implements OnInit {
         this.invService.deleteupdatePass(contact).subscribe(data => {
           console.log(data);
         });
-        pass.value = ''
-        this.contact.password = ""
         this.invService.getFiltersInvCAMP().then(data => {
           console.log(data);
           this.invService.getUsers(data.data)

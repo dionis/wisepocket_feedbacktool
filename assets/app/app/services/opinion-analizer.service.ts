@@ -32,8 +32,6 @@ export class OpinionService implements Resolve<any>
     filters: any[];
     labels: any[];
     routeParams: any;
-    corrent_page = 0;
-    current_limit = 10;
     opnionsTotal = 0;
 
     onOpinionsChanged: BehaviorSubject<any>;
@@ -314,7 +312,7 @@ export class OpinionService implements Resolve<any>
                     this.opinions = opinions.data.map(opinion => {
                         return new OpinionTest(opinion);
                     });
-
+                    
                     this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
                     this.opnionsTotal = this.opinions.length;
                     this.onOpinionsChanged.next(this.opinions);
@@ -342,10 +340,13 @@ export class OpinionService implements Resolve<any>
                  });
                  this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
                  this.opnionsTotal = this.opinions.length;
-                 const startIndex = pageIndex * pageSize;
-                 console.log(startIndex)
-                 this.opinions = this.opinions.slice(startIndex,pageSize);
+                //  const i = Number(pageIndex+1)
+                //  const startIndex = pageIndex * pageSize+1;
+                //  const endIndex = i*Number(pageSize);
+                //  console.log(startIndex)
+                //  this.opinions = this.opinions.slice(startIndex,endIndex+1);
                  console.log(this.opinions);
+                 this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
                  this.onOpinionsChanged.next(this.opinions);
  
                  resolve(this.opinions);
@@ -566,9 +567,7 @@ export class OpinionService implements Resolve<any>
                 
                 this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
                 this.opnionsTotal = this.opinions.length;
-                this.opinions = this.opinions.slice(undefined,this.current_limit);
                 this.onOpinionsChanged.next(this.opinions);
-
                 resolve(this.opinions);
 
             },reject));

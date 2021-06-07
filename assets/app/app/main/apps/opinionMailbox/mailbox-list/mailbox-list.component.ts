@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject,merge } from 'rxjs';
+import { takeUntil,tap } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { fuseAnimations } from '../../../../../@fuse/animations';
@@ -21,6 +21,7 @@ import { OpinionTest } from '../../../../models/opinionTest.model';
 export class MailboxListComponent implements OnInit, OnDestroy
 {
     opinions: OpinionTest[];
+    opinionsTemp: OpinionTest[];
     currentOpinion: Opinion;
     pagesSize = 0;
     pageSize = 10;
@@ -48,7 +49,7 @@ export class MailboxListComponent implements OnInit, OnDestroy
     {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-        this.pagesSize = this._opinionService.opnionsTotal;
+        
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -60,6 +61,7 @@ export class MailboxListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        console.log('Total ',this.pagesSize);
         this.pageIndex = this._activatedRoute.snapshot.params?this._activatedRoute.snapshot.params.pageIndex:0;
         this.pageSize = this._activatedRoute.snapshot.params?this._activatedRoute.snapshot.params.pageSize:10;
         // this._activatedRoute.params.subscribe(params=>{
@@ -71,8 +73,24 @@ export class MailboxListComponent implements OnInit, OnDestroy
         this._opinionService.onOpinionsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(opinions => {
+                this.pagesSize = opinions.length;
+                console.log('Opiniones ',opinions);
                 this.opinions = opinions;
-            });
+                const i = Number(this.paginator.pageIndex+1)
+                const startIndex = this.paginator.pageIndex * this.paginator.pageSize+1;
+                const endIndex = i*Number( this.paginator.pageSize);
+                this.opinionsTemp = this.opinions.slice(startIndex,endIndex+1);
+        });
+        // merge(this._opinionService.onOpinionsChanged,this.paginator.page)
+        // .pipe(
+        //     tap(() => {
+        //         const i = Number(this.paginator.pageIndex+1)
+        //         const startIndex = this.paginator.pageIndex * this.paginator.pageSize+1;
+        //         const endIndex = i*Number( this.paginator.pageSize);
+        //         console.log(startIndex)
+        //         this.opinions = this.opinions.slice(startIndex,endIndex+1);
+        //     })
+        // ).subscribe();
 
         // Subscribe to update current Opinion on changes
         this._opinionService.onCurrentOpinionChanged
@@ -107,16 +125,12 @@ export class MailboxListComponent implements OnInit, OnDestroy
                 }
             });
         this.paginator.page.pipe(takeUntil(this._unsubscribeAll)).subscribe(page=>{
-            console.log(page);
-            //const startIndex = page.pageIndex * page.pageSize;
-            // console.log(this._opinionService.opinions);
-            // this.opinions = this._opinionService.opinions.slice(startIndex,page.pageSize);
-            // console.log(this._opinionService.opinions.slice(startIndex,page.pageSize))
-            // console.log(this.opinions);
-           // this._location.go('apps/opinionMailbox/paginate/' + page.pageIndex + '/'+page.pageSize);
-            //this.opinions.length
-            this.router.navigate(['apps/opinionMailbox/paginate/' + page.pageIndex + '/'+page.pageSize])
-        })
+            const i = Number(this.paginator.pageIndex+1)
+            const startIndex = this.paginator.pageIndex * this.paginator.pageSize+1;
+            const endIndex = i*Number( this.paginator.pageSize);
+            this.opinionsTemp = this.opinions.slice(startIndex,endIndex+1); 
+
+        });
     }
 
     /**

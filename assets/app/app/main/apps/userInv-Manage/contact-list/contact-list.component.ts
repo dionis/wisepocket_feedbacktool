@@ -1,24 +1,16 @@
-
+import { UserService } from '../../../../services/user.service';
 import { UserInvService } from '../../../../services/user-inv.service';
 //import { Campaing } from '../../../../models/campaing.model';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-
 import { fuseAnimations } from '../../../../../@fuse/animations';
 import { FuseConfirmDialogComponent } from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
-
-import { ContactsService } from '../../../../../app/main/apps/userInv-Manage/contacts.service';
 import { ContactsContactFormDialogComponent } from '../../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component';
-import { OpinionService } from '../../../../services/opinion-analizer.service';
-import { OpinionTest } from '../../../../models/opinionTest.model';
-import { ChangeDetectorRef } from '@angular/core';
 import { ContactAsociarComponent } from '../contact-asociar/contact-asociar.component';
 //import {CampaingService} from '../../../../services/campaing.service';
-
+import swal from "sweetalert2";
 
 @Component({
     selector: 'contacts-contact-list',
@@ -35,7 +27,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     contacts: any;
     user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['Nombre', 'Correo', 'Teléfono', 'boton'];
+    displayedColumns = ['Nombre', 'Correo', 'Teléfono', 'boton', 'menu'];
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
@@ -48,7 +40,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     /**
      * Constructor
      *
-     * @param {UserInvService} _contactsService
+     * @param {User_contactsService} _contactsService
      * @param {MatDialog} _matDialog
      */
     constructor(
@@ -71,7 +63,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
         this._contactsService.getInvitados().subscribe(data => {
             console.log(data);
-            this._contactsService.getUsers(data.data)
+            this._contactsService.getUsers(data.data) ///Esta funcion inyecta los usuarios para mostrar en la tabla
 
         })
 
@@ -119,6 +111,81 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
              .subscribe(() => {
                  this._contactsService.deselectContacts();
              });*/
+    }
+    quitarAcces(contact) {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: false
+        });
+
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea quitarle el acceso?';
+
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this._contactsService.quitarAcceso(contact).subscribe(res => {
+                    if (res.success === false) {
+                        swal.fire('Aún no está asociado')
+                    }
+                    else if (res.success) {
+                        swal.fire('Acceso deshabilitado')
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
+
+    }
+
+    devolverAcces(contact) {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: false
+        });
+
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea devolverle el acceso?';
+
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this._contactsService.devolverAcceso(contact).subscribe(res => {
+                    if (res.success === false) {
+                        swal.fire('Aún no está asociado')
+                    }
+                    else if (res.success) {
+                        swal.fire('Acceso habilitado')
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
+
+
+    }
+
+    desvincular(contact) {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: false
+        });
+
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea desvincularlo?';
+
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this._contactsService.deleteRelacion(contact).subscribe(data => {
+                    console.log(data);
+                });
+                this._contactsService.deleteAcces(contact).subscribe(data => {
+                    console.log(data);
+                });
+                this._contactsService.deleteupdatePass(contact).subscribe(data => {
+                    console.log(data);
+                });
+                swal.fire('Desvinculado con éxito')
+                this._contactsService.getFiltersInvCAMP().then(data => {
+                    console.log(data);
+                    this._contactsService.getUsers(data.data)
+
+                })
+            }
+            this.confirmDialogRef = null;
+        });
     }
 
     /**

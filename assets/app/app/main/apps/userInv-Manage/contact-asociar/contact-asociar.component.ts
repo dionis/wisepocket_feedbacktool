@@ -1,3 +1,4 @@
+import { Breakpoints } from '@angular/cdk/layout';
 import { SharedVariablesService } from '../../../../services/shared-variables.service';
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
@@ -43,7 +44,7 @@ export class ContactAsociarComponent implements OnInit {
 
   }
 
-  asociarAcamp(contact, pass) {
+  asociarAcamp(contact) {
     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
       disableClose: false
     });
@@ -57,8 +58,7 @@ export class ContactAsociarComponent implements OnInit {
             this.updatePass(contact)
             this.updateAcces(contact)
             swal.fire('Ahora el usuario tiene acceso a la Campaña: ' + this.servCamp.getName())
-            pass.disabled = true
-            this.invService.getInvitados().subscribe(data => {
+            this.invService.getFiltersAllInv().then(data => {
               console.log(data);
               this.invService.getUsers(data.data)
 
@@ -75,10 +75,6 @@ export class ContactAsociarComponent implements OnInit {
 
   }
 
-
-
-
-
   updatePass(contact) {
     this.invService.updatePass(contact).subscribe(data => {
       console.log(data);
@@ -91,90 +87,16 @@ export class ContactAsociarComponent implements OnInit {
     });
   }
 
-  quitarAcces(contact) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea quitarle el acceso?';
-
-    this.confirmDialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.invService.quitarAcceso(contact).subscribe(res => {
-          if (res.success === false) {
-            swal.fire('Aún no está asociado')
-          }
-          else if (res.success) {
-            swal.fire('Acceso deshabilitado')
-          }
-        });
-      }
-      this.confirmDialogRef = null;
-    });
-
-  }
-
-  devolverAcces(contact) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea devolverle el acceso?';
-
-    this.confirmDialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.invService.devolverAcceso(contact).subscribe(res => {
-          if (res.success === false) {
-            swal.fire('Aún no está asociado')
-          }
-          else if (res.success) {
-            swal.fire('Acceso habilitado')
-          }
-        });
-      }
-      this.confirmDialogRef = null;
-    });
-
-
-  }
-
-  desvincular(contact, pass) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage = '¿Está seguro que desea desvincularlo?';
-
-    this.confirmDialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.invService.deleteRelacion(contact).subscribe(data => {
-          console.log(data);
-        });
-        this.invService.deleteAcces(contact).subscribe(data => {
-          console.log(data);
-        });
-        this.invService.deleteupdatePass(contact).subscribe(data => {
-          console.log(data);
-        });
-        pass.value = ''
-        this.contact.password = ""
-        swal.fire('Desvinculado con éxito')
-      }
-      this.confirmDialogRef = null;
-    });
-  }
-
-  statusAcces(contact): Boolean {
+  statusAcces(contact): any {
     let status: boolean
     this.invService.getStatusAcceso(contact).subscribe(res => {
       console.log(res);
       if (res.success) {
-        status = true
+        return status = true
       } else {
-        status = false
+        return status = false
       }
     });
-    return status
   }
 
   createContactForm(): FormGroup {

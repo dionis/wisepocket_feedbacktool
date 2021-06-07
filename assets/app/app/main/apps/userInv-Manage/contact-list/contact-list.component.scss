@@ -12,6 +12,7 @@ contacts-contact-list {
         box-shadow: none;
 
         mat-header-cell {
+            font-size: medium;
             text-align: center !important;
         }
 
@@ -24,26 +25,16 @@ contacts-contact-list {
             padding-left: 18px;
         }
 
-        .mat-column-Correo {
-            flex: 2 5 0;
-        }
-
         .mat-column-boton {
-            justify-content: end !important;
+            flex: 1 0 80px;
+            justify-content: center !important;
         }
 
-
-
-
-        .mat-column-Nombre {
-            flex: 1 0 0;
+        .mat-column-Correo {
+            flex: 1 4 0 80px;
+            justify-content: left !important;
         }
-
-        .mat-column-avatar {
-            flex: 0 1 64px;
-        }
-
-        .mat-column-buttons {
+        .mat-column-menu {
             flex: 0 1 80px;
         }
 

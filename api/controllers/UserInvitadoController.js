@@ -288,7 +288,7 @@ module.exports = {
         where: { id: req.param("id") },
       },
       {
-        password: '',
+        password: "",
       }
     )
       .then((user) => {
@@ -326,19 +326,37 @@ module.exports = {
   },*/
 
   deleteUserInvitado: async (req, res) => {
-    UserInvitado.destroy({
-      where: { id: req.param("id") },
-    })
-      .then((user) => {
-        return res.send({
-          data: user,
+    let camp = String(req.param("campID"));
+    let userInv = String(req.param("id"));
+    await Campaign.findOne({
+      where: { id: camp },
+    }).then(async (doc) => {
+      if (!doc) {
+        console.log("No encontrado");
+      } else {
+        console.log("Encontrado");
+        await UserInvitado.destroy({
+          where: { id: userInv },
         });
-      })
-      .catch((err) => {
-        return res.send({
-          success: false,
-          message: "Falló la operación",
-        });
-      });
+        await Acceso.destroy(
+          {
+            where: { campaign: camp, userInv: userInv },
+          },
+          (err) => {
+            if (err) {
+              return res.send({
+                success: false,
+                message: "Falló la operación",
+              });
+            } else {
+              return res.send({
+                success: true,
+                message: "Acceso eliminado",
+              });
+            }
+          }
+        );
+      }
+    });
   },
 };

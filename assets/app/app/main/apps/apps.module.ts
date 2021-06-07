@@ -30,10 +30,6 @@ const routes = [
         loadChildren: () => import('../apps/e-commerce/e-commerce.module').then(m => m.EcommerceModule)
     },
     {
-        path: 'contacts',
-        loadChildren: () => import('../apps/contacts/contacts.module').then(m => m.ContactsModule)
-    },
-    {
         path: 'products',
         LoadChildren: () => import('../apps/e-commerce/products/products.component').then(m => m.EcommerceProductsComponent)
     },

@@ -187,4 +187,28 @@ module.exports = {
       }
     });
   },
+
+  isAsociado: async (req, res) => {
+    let camp = String(req.param("campID"));
+    let userInv = String(req.param("id"));
+    await Acceso.findOne({
+      where: { userInv: userInv, campaign: camp },
+    }).then(async (doc) => {
+      if (!doc) {
+        console.log("No encontrado");
+        return res.send({
+          success: false,
+          message: "No esta vinculado",
+          data: false,
+        });
+      } else {
+        console.log("Encontrado");
+        return res.send({
+          success: true,
+          message: "Esta vinculado",
+          data: doc,
+        });
+      }
+    });
+  },
 };

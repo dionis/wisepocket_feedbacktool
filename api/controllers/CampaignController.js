@@ -87,15 +87,15 @@ module.exports = {
         }
         ).populate('userInvitados').then((doc) => {
             return res.send({
-                'message': 'Usuarios Invitados',
-                'data': doc.userInvitados
+                message: 'Usuarios Invitados',
+                data: doc.userInvitados
             })
         })
             .catch(err => {
                 sails.log.debug(err);
                 return res.send({
-                    'success': false,
-                    'message': 'Falló la operación'
+                    success: false,
+                    message: 'Falló la operación'
                 })
             })
     },

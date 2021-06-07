@@ -8,7 +8,7 @@
         class="avatar mr-16"
         [alt]="user.name"
       />
-      <span class="h5">{{ user ? user.name : "" }}</span>
+      <span class="h3">{{ user ? user.name : "" }}</span>
       <!-- / USER -->
     </div>
     <!-- / SIDEBAR HEADER -->
@@ -17,12 +17,7 @@
     <div class="content py-16" fusePerfectScrollbar>
       <div class="nav material2">
         <div class="nav-item" aria-label="inbox">
-          <a
-            class="nav-link"
-            matRipple
-            (click)="changeFilter('all')"
-            [ngClass]="{ 'active accent': filterBy === 'all' }"
-          >
+          <a class="nav-link" matRipple (click)="changeFilterAllInv()">
             <span class="title">Todos los invitados</span>
           </a>
         </div>
@@ -30,13 +25,9 @@
         <div
           class="nav-item"
           aria-label="frequently contacted"
-          (click)="changeFilter('frequent')"
+          (click)="changeFilterXCamp()"
         >
-          <a
-            class="nav-link"
-            matRipple
-            [ngClass]="{ 'active accent': filterBy === 'frequent' }"
-          >
+          <a class="nav-link" matRipple>
             <div class="title">Invitados de la Campaña</div>
           </a>
         </div>

@@ -82,7 +82,6 @@ $typography: mat-typography-config(
 @import "../app/layout/components/toolbar/toolbar.theme";
 
 
-@import "../app/main/apps/contacts/contacts.theme";
 @import "../app/main/apps/e-commerce/orders/orders.theme";
 @import "../app/main/apps/e-commerce/products/products.theme";
 @import "../app/main/apps/mail/mail.theme";
@@ -104,7 +103,6 @@ $typography: mat-typography-config(
 
    // Apps
 
-   @include contacts-theme($theme);
    @include e-commerce-orders-theme($theme);
    @include e-commerce-products-theme($theme);
    @include mail-theme($theme);

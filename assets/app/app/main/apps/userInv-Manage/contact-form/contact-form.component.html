@@ -64,9 +64,9 @@
           />
           <mat-error *ngIf="invUserForm.get('correo').hasError('required')">
             Correo requerido
-            <span *ngIf="invUserForm.get('correo').hasError('correo')">
-              Por favor entre un correo válido
-            </span>
+          </mat-error>
+          <mat-error *ngIf="invUserForm.get('correo').hasError('email')">
+            Por favor entre un correo válido
           </mat-error>
         </mat-form-field>
 

@@ -32,9 +32,10 @@ export class OpinionService implements Resolve<any>
     filters: any[];
     labels: any[];
     routeParams: any;
-    opnionsTotal = 0;
 
     onOpinionsChanged: BehaviorSubject<any>;
+    onOpinionsTotalOfCampChanged: BehaviorSubject<any>;
+    onAspectsTotalOfOpinionChanged: BehaviorSubject<any>;
     oncurrentOpinionAspectsChanged: BehaviorSubject<any>;
     onSelectedOpinionsChanged: BehaviorSubject<any>;
     onCurrentOpinionChanged: BehaviorSubject<any>;
@@ -44,6 +45,7 @@ export class OpinionService implements Resolve<any>
     onLabelsChanged: BehaviorSubject<any>;
     onSearchTextChanged: BehaviorSubject<any>;
     onOpinionSelected: BehaviorSubject<boolean>;
+    onPageChanched: BehaviorSubject<any>;
 
 
     filterBy: string;
@@ -70,7 +72,10 @@ export class OpinionService implements Resolve<any>
         this.onUserDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new BehaviorSubject('');
         this.onOpinionSelected = new BehaviorSubject(false);
+        this.onOpinionsTotalOfCampChanged = new BehaviorSubject(0);
+        this.onAspectsTotalOfOpinionChanged = new BehaviorSubject(0);
         this.currentOpinionAspects = [];
+        this.onPageChanched = new BehaviorSubject({'pageIndex':'0','pageSize':'10'})
     }
 
     /**
@@ -82,15 +87,16 @@ export class OpinionService implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         this.routeParams = route.params;
-        console.log("Parametros",route.params);
+        let pageIndex = this.onPageChanched.value.pageIndex;
+        let pageSize = this.onPageChanched.value.pageSize;
         console.log("Find Information");
-
         return new Promise((resolve, reject) => {
             Promise.all([
                // this.getFolders(),
                 this.getFilters(),
                 //this.getLabels(),
-                this.getOpinions()
+                this.CountOpinionsofCampaign(),
+                this.getOpinions(pageIndex,pageSize),      
             ]).then(
                 () => {
 
@@ -105,11 +111,11 @@ export class OpinionService implements Resolve<any>
                     this.onSearchTextChanged.subscribe(searchText => {
                         if (searchText !== '') {
                             this.searchText = searchText;
-                            this.getOpinions();
+                            this.getOpinions(pageIndex,pageSize);
                         }
                         else {
                             this.searchText = searchText;
-                            this.getOpinions();
+                            this.getOpinions(pageIndex,pageSize);
                         }
                     });
 
@@ -149,18 +155,24 @@ export class OpinionService implements Resolve<any>
       };
 
 
-    getAspectOpin(oPinID: any): Promise<any>{
-        console.log('ID de Opinion ' + oPinID)
+    getAspectOpin(page,limit): Promise<any>{
+        //console.log('Current Opinion Id',this.currentOpinion.id)
         return new Promise((resolve,reject)=>{
             // let httpParams = new HttpParams()
             // .append("id", oPinID)
             this._httpClient.get(
                 environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/aspectoopinion/getAspecto',
-                 { params: {'id':oPinID} }).subscribe((aspects:any)=>{
-                     console.log(aspects.data);
+                 { params: {'id':this.currentOpinion?this.currentOpinion.id:'',
+                            'page': page,
+                            'limit': limit} })
+                 .subscribe((aspects:any)=>{
+                     console.log('Aspectos ',aspects.data);
+                     console.log('Total Aspectos',aspects.count);
+                     this.onAspectsTotalOfOpinionChanged.next(aspects.count);
                      this.currentOpinionAspects = aspects.data;
+                     console.log(this.currentOpinionAspects);
                      this.oncurrentOpinionAspectsChanged.next(this.currentOpinionAspects);
-                    resolve(aspects.data)
+                    resolve(this.currentOpinionAspects)
                  },reject);
         });
         
@@ -198,6 +210,20 @@ export class OpinionService implements Resolve<any>
         });
     }
 
+    CountOpinionsofCampaign(): Promise<any>{
+        return new Promise((resolve,reject)=>{
+            this._httpClient.get(
+                environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/countOpinionsOfCampaign',
+                {params:{
+                        'id': this.sharedVarService.getId()}
+                }).subscribe((result:any)=>{
+                    console.log(result)
+                    this.onOpinionsTotalOfCampChanged.next(result.result)
+                    resolve(result.result)
+                },reject)
+        })
+    }
+
     /**
      * Get all labels
      *
@@ -219,19 +245,19 @@ export class OpinionService implements Resolve<any>
      *
      * @returns {Promise<OpinionTest[]>}
      */
-    getOpinions(): Promise<OpinionTest[]> {
+    getOpinions(page,limit): Promise<OpinionTest[]> {
 
         // if (this.routeParams.labelHandle) {
         //     return this.getOpinionsByLabel(this.routeParams.labelHandle);
         // }
 
         if (this.routeParams.filterHandle) {
-            return this.getOpinionsByFilter(this.routeParams.filterHandle);
+            return this.getOpinionsByFilter(this.routeParams.filterHandle,page,limit);
         }
         if(this.routeParams.pageIndex && this.routeParams.pageSize){
            return this.getOpinionsByPages(this.routeParams.pageIndex,this.routeParams.pageSize);
         }
-        return this.getOpinionsFromBAck('0','','fecha DESC','');
+        return this.getOpinionsFromBAck(page,limit,'fecha DESC','');
         //return this.getOpinionsByFolder(this.routeParams.folderHandle);
 
     }
@@ -245,7 +271,7 @@ export class OpinionService implements Resolve<any>
                 // }
 
                 if (this.routeParams.filterHandle) {
-                    return this.getOpinionsByFilter(this.routeParams.filterHandle);
+                    return this.getOpinionsByFilter(this.routeParams.filterHandle,0,'');
                 }
                 if(this.routeParams.pageIndex && this.routeParams.pageSize){
                     this.getOpinionsByPages(this.routeParams.pageIndex,this.routeParams.pageSize);
@@ -300,23 +326,24 @@ export class OpinionService implements Resolve<any>
      * @param handle
      * @returns {Promise<Opinion[]>}
      */
-    getOpinionsByFilter(handle): Promise<OpinionTest[]> {
+    getOpinionsByFilter(handle,page,limit): Promise<OpinionTest[]> {
         return new Promise((resolve, reject) => {
 
             this._httpClient.get(
                 environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinionbyFilter',
                 {params:{
                         'id': this.sharedVarService.getId(),
-                        'handle':handle}})
+                        'handle':handle,
+                        'page':page,
+                        'limit': limit}})
                 .subscribe((opinions: any) => {
                     this.opinions = opinions.data.map(opinion => {
                         return new OpinionTest(opinion);
                     });
                     
                     this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
-                    this.opnionsTotal = this.opinions.length;
                     this.onOpinionsChanged.next(this.opinions);
-
+                    this.onOpinionsTotalOfCampChanged.next(opinions.count)
                     resolve(this.opinions);
 
                 }, reject);
@@ -339,7 +366,6 @@ export class OpinionService implements Resolve<any>
                      return new OpinionTest(opinion);
                  });
                  this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
-                 this.opnionsTotal = this.opinions.length;
                 //  const i = Number(pageIndex+1)
                 //  const startIndex = pageIndex * pageSize+1;
                 //  const endIndex = i*Number(pageSize);
@@ -531,7 +557,7 @@ export class OpinionService implements Resolve<any>
             this._httpClient.post('api/opinions-opinions/' + opinion.id, { ...opinion })
                 .subscribe(response => {
 
-                    this.getOpinions().then(opinions => {
+                    this.getOpinions('0','10').then(opinions => {
 
                         if (opinions && this.currentOpinion) {
                             this.setCurrentOpinion(this.currentOpinion.id);
@@ -566,7 +592,6 @@ export class OpinionService implements Resolve<any>
                 });
                 
                 this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
-                this.opnionsTotal = this.opinions.length;
                 this.onOpinionsChanged.next(this.opinions);
                 resolve(this.opinions);
 
@@ -579,7 +604,7 @@ export class OpinionService implements Resolve<any>
                 environment.sails_services_urlpath + ":" + environment.sails_services_urlport +'/opinion/deleteOpinion',
                 {params:{'id':opinionId}})
             .subscribe(opinion=>{
-                this.getOpinions().then(opinions=>{}).catch(error=>{})
+                this.getOpinions('0','10').then(opinions=>{}).catch(error=>{})
                 resolve(opinion);
             },reject);
         })

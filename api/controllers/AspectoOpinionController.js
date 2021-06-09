@@ -63,17 +63,24 @@ module.exports = {
     },
 
     getAspecto: async (req, res) => {
-        //const page = req.param('page')
-        const opinionId = req.param('id')
+        const page = req.param('page');
+        const limit = req.param('limit');
+        const opinionId = req.param('id');
         //console.log(page);
         //let opinID = await Opinion.findOne({ id: req.param('id') })
+        let total = await AspectoOpinion.count({where: { opinion: opinionId }})
         await AspectoOpinion.find({
             where: { opinion: opinionId },
         })
+        .paginate(
+            page?page:'',
+            limit?limit:99999999
+        )
         .then(aspectoopinion => {
             return res.send({
                 'message': 'Lista de Aspectos',
                 'data': aspectoopinion,
+                'count': total
             })
         })
         .catch(err => {

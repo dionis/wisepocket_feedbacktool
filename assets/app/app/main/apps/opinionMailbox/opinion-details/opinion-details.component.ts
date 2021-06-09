@@ -96,6 +96,7 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     {
         //this._pruebaServOpin.getOpinXIdioma().subscribe(data => this.prueba = data)
         console.log("ESTOO " + this.pruebas);
+        
         // Subscribe to update the current opinion
         this._opinionService.onCurrentOpinionChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -103,12 +104,14 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
                 this.index = 0;
                 this.opinion = currentOpinion;
                 if(this.opinion){
-                    this._pruebaServOpin.getAspectOpin(this.opinion.id)
+                    let pageIndex = this.paginatorDetails.pageIndex;
+                    let pageSize = this.paginatorDetails.pageSize;
+                    this._pruebaServOpin.getAspectOpin(pageIndex,pageSize)
                     .then((result:any) => {
                     console.log("Data Aspect Opinion", result);
                     if (typeof(result) !== 'undefined')
                         this.prueba3 = result.data
-                        this.pagesize = result.data?result.data.length:0;
+                        //this.pagesize = result.data?result.data.length:0;
                         console.log("Is paginator ", this.sort)
                         //OJO NO ESTA IMPLEMENTADO  
                     })
@@ -117,32 +120,45 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
                         console.log(error);
                     })
                 }
-                
+                this.dataSource = new FilesDataSource(
+                    this._ecommerceOrdersService,
+                    this._pruebaServOpin, 
+                    this.paginatorDetails, 
+                    this.sort);                
         });
-        this._opinionService.onOpinionSelected.pipe( takeUntil(this._unsubscribeAll)).subscribe(flag=>{
+        this._opinionService.onAspectsTotalOfOpinionChanged
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(result=>{
+            this.pagesize = result;
+        });
+        this._opinionService.onOpinionSelected
+        .pipe( takeUntil(this._unsubscribeAll))
+        .subscribe(flag=>{
             this.selected = flag
         })
-        this.router.queryParamMap.pipe( takeUntil(this._unsubscribeAll)).subscribe(async (paramMap: ParamMap) => {
-          const refresh = paramMap.get('campaign_selected');
-          console.log("Selected Campaign === New call options ",refresh );
-          this.selectedCamapaign = refresh;
-          if(this.opinion){
-            await this._pruebaServOpin.getAspectOpin(this.opinion.id)
-            .then((result:any) => {
-                console.log("Data Aspect Opinion", result);
-                if (typeof(result) !== 'undefined')
-                    this.prueba3 = result.data
-                    console.log("Is paginator ", this.sort)
-                    //OJO NO ESTA IMPLEMENTADO
+        // this.router.queryParamMap.pipe( takeUntil(this._unsubscribeAll)).subscribe(async (paramMap: ParamMap) => {
+        //   const refresh = paramMap.get('campaign_selected');
+        //   console.log("Selected Campaign === New call options ",refresh );
+        //   this.selectedCamapaign = refresh;
+        //   if(this.opinion){
+        //     let pageIndex = this.paginatorDetails.pageIndex;
+        //     let pageSize = this.paginatorDetails.pageSize;
+        //     await this._pruebaServOpin.getAspectOpin(pageIndex,pageSize)
+        //     .then((result:any) => {
+        //         console.log("Data Aspect Opinion", result);
+        //         if (typeof(result) !== 'undefined')
+        //             this.prueba3 = result.data
+        //             console.log("Is paginator ", this.sort)
+        //             //OJO NO ESTA IMPLEMENTADO
                    
-            })
-            .catch(error=>{
-                //Implementar Error con Dialog
-                console.log(error);
-            })
-          }   
-        })
-        this.dataSource = new FilesDataSource(this._ecommerceOrdersService,this._pruebaServOpin, this.paginatorDetails, this.sort);
+        //     })
+        //     .catch(error=>{
+        //         //Implementar Error con Dialog
+        //         console.log(error);
+        //     })
+        //   }   
+        // })
+       
 
         // Subscribe to update on label change
         this._opinionService.onLabelsChanged
@@ -264,7 +280,7 @@ export class FilesDataSource extends DataSource<any>
     {
         const displayDataChanges = [
             this._ecommerceOrdersService.onOrdersChanged,
-            this._opinionServ.oncurrentOpinionAspectsChanged,
+            this._opinionServ.onCurrentOpinionChanged,
             this._matPaginator.page,
             this._filterChange,
             this._matSort.sortChange
@@ -272,13 +288,16 @@ export class FilesDataSource extends DataSource<any>
         ];
 
         return merge(...displayDataChanges).pipe(map(() => {
-                console.log(this._opinionServ.currentOpinionAspects);
-                let data = this._opinionServ.currentOpinionAspects.length>0?this._opinionServ.currentOpinionAspects:[];
+                //console.log(this._opinionServ.currentOpinionAspects);
+                let data = [];
                 // this._opinionServ.getAspectOpin(this._opinionServ.currentOpinion.id).then(aspects=>{
                 //     data = aspects;
                 // })
-                if(this._opinionServ.currentOpinionAspects.length>0){
-                    data = this._opinionServ.currentOpinionAspects;
+                //this._opinionServ.getAspectOpin(this._matPaginator.pageIndex,this._matPaginator.pageSize);
+                console.log(this._opinionServ.currentOpinionAspects)
+                data = this._opinionServ.oncurrentOpinionAspectsChanged.value;
+                if(data.length>0){
+
                     console.log(data);
 
                     data = this.filterData(data);    
@@ -288,12 +307,13 @@ export class FilesDataSource extends DataSource<any>
                     data = this.sortData(data);
 
                     // Grab the page's slice of data.
-                    const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
-                    return data.splice(startIndex, this._matPaginator.pageSize);
-                }
-                this.filteredData = [];
+                    //const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
+                    //return data;
+                }else{
+                    this.filteredData  = [];
+                }     
                 return data;
-                
+               
             })
         );
 

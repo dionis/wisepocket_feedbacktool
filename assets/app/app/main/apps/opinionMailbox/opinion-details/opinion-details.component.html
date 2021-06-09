@@ -150,7 +150,7 @@
 
 </div>
 <div fxLayout="row">
-    <div fxFlex="100%" class="content-card" >
+    <div fxFlex="100%" class="content-card" [hidden] ="!opinion" >
 
         <mat-table class="orders-table"
                   #table [dataSource]="dataSource"
@@ -244,7 +244,7 @@
         </mat-table>
     
         <mat-paginator #paginatorDetails
-                      [length]="dataSource.filteredData.length"
+                      [length]="pagesize"
                       [pageIndex]="0"
                       [pageSize]="10"
                       [pageSizeOptions]="[5, 10, 25, 100]">

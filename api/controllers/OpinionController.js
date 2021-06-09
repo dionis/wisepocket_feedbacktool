@@ -193,76 +193,98 @@ module.exports = {
         
     },
 
-    getOpinionbyFilter: (req,res)=>{
+    getOpinionbyFilter: async (req,res)=>{
+        const page = req.param('page');
+        const limit  = Number(req.param('limit'));
        const camp_id = req.param('id')
        const handle = req.param('handle')
        let date;
+       let total = 0;
        switch (handle) {
         case 'today':
             date = moment().format();
             sails.log.debug(date);
-            Opinion.find({
+            total = await Opinion.count({where: {campaign: camp_id, fecha: { '>=': date }}})
+            await Opinion.find({
                 where: {campaign: camp_id, fecha: { '>=': date }}
             })
             .sort('fecha ASC')
             .populate('userend')
+            .paginate(
+                page?page:'',
+                limit?limit:99999999
+            )
             .then(opinions=>{
                 return res.send({
                     'data': opinions,
-                    'count': opinions.length
+                    'count': total
                 })
             })
             .catch(error=>{
                  return res.status(500).send({
                      'message': 'Imposible Mostrar',
-                     'error': err
+                     'error': error
                  })
             })
             break;
         case 'yesterday':
             date = moment().subtract(1, 'days').format();
             sails.log.debug(date);
-            Opinion.find({
+            total = await Opinion.count({where: {campaign: camp_id, fecha: { '>=': date }}})
+            await Opinion.find({
                 where: {campaign: camp_id, fecha: { '>=': date }}
             })
             .sort('fecha ASC')
             .populate('userend')
+            .paginate(
+                page?page:'',
+                limit?limit:99999999
+            )
             .then(opinions=>{
                 return res.send({
                     'data': opinions,
-                    'count': opinions.length
+                    'count': total
                 })
             })
             .catch(error=>{
                 return res.status(500).send({
                     'message': 'Imposible Mostrar',
-                    'error': err
+                    'error': error
                 })
             })
         break;
            case 'last 15 days':
                date = moment().subtract(15, 'days').format();
                sails.log.debug(date);
-               Opinion.find({
+               total = await Opinion.count({ where: {campaign: camp_id, fecha: { '>=': date }}})
+               await Opinion.find({
                    where: {campaign: camp_id, fecha: { '>=': date }}
                })
                .sort('fecha ASC')
                .populate('userend')
+               .paginate(
+                page?page:'',
+                limit?limit:99999999
+                )
                .then(opinions=>{
                    return res.send({
                        'data': opinions,
-                       'count': opinions.length
+                       'count': total
                    })
                })
                .catch(error=>{
                     return res.status(500).send({
                         'message': 'Imposible Mostrar',
-                        'error': err
+                        'error': error
                     })
                })
                break;
             case 'positive':
-                Opinion.find({
+                total = await Opinion.count({ where: {campaign: camp_id, or:[
+                    { polaridad: 'positive' },
+                    { polaridad: 'positiva' },
+                    ]}})
+                await Opinion.find({
                     where: {campaign: camp_id, or:[
                         { polaridad: 'positive' },
                         { polaridad: 'positiva' },
@@ -270,21 +292,29 @@ module.exports = {
                 })
                 .sort('fecha ASC')
                 .populate('userend')
+                .paginate(
+                    page?page:'',
+                    limit?limit:99999999
+                )
                 .then(opinions=>{
                     return res.send({
                         'data': opinions,
-                        'count': opinions.length
+                        'count': total
                     })
                 })
                 .catch(error=>{
                      return res.status(500).send({
                          'message': 'Imposible Mostrar',
-                         'error': err
+                         'error': error
                      })
                 })
                 break;
             case 'negative':
-                Opinion.find({
+                total = await Opinion.count({ where: {campaign: camp_id, or:[
+                    { polaridad: 'negative' },
+                    { polaridad: 'negativa' },
+                    ]}})
+                await Opinion.find({
                     where: {campaign: camp_id, or:[
                         { polaridad: 'negative' },
                         { polaridad: 'negativa' },
@@ -292,16 +322,20 @@ module.exports = {
                 })
                 .sort('fecha ASC')
                 .populate('userend')
+                .paginate(
+                    page?page:'',
+                    limit?limit:99999999
+                )
                 .then(opinions=>{
                     return res.send({
                         'data': opinions,
-                        'count': opinions.length
+                        'count': total
                     })
                 })
                 .catch(error=>{
                      return res.status(500).send({
                          'message': 'Imposible Mostrar',
-                         'error': err
+                         'error': error
                      })
                 })
                 break;
@@ -353,6 +387,40 @@ module.exports = {
                 'error': err
             })
         })
+    },
+
+    countAllOpinions: async (req,res)=>{
+        await Opinion.count({})
+        .then(total=>{
+            return res.send({
+                'result': total
+            });
+        })
+        .catch(err => {
+            return res.status(500).send({
+                'message': 'Imposible Mostrar',
+                'error': err
+            })
+        })
+    },
+
+    countOpinionsOfCampaign: async (req,res)=>{
+        const camp_id= req.param('id');
+        sails.log.debug(req.param('id'));
+        sails.log.debug(camp_id);
+        await Opinion.count({campaign:camp_id})
+        .then(total=>{
+            return res.send({
+                'result': total
+            });
+        })
+        .catch(err => {
+            return res.status(500).send({
+                'message': 'Imposible Mostrar',
+                'error': err
+            })
+        })
+        
     }
 }
 

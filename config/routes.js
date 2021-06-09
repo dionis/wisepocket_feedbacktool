@@ -97,6 +97,7 @@ module.exports.routes = {
   //GET and for Pages
   "GET /opinion/getOpinion": "OpinionController.getOpinion",
   "GET /opinion/getOpinionbyFilter": "OpinionController.getOpinionbyFilter",
+  "GET /opinion/countOpinionsOfCampaign": "OpinionController.countOpinionsOfCampaign", 
   "GET /opinion/getOpinionXIdiomaCamp":
     "OpinionController.getOpinionXIdiomaCamp",
   "GET /pregunta/getPregunta": "PreguntaController.getPregunta",

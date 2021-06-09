@@ -61,36 +61,23 @@ export class MailboxListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        console.log('Total ',this.pagesSize);
-        this.pageIndex = this._activatedRoute.snapshot.params?this._activatedRoute.snapshot.params.pageIndex:0;
-        this.pageSize = this._activatedRoute.snapshot.params?this._activatedRoute.snapshot.params.pageSize:10;
-        // this._activatedRoute.params.subscribe(params=>{
-        //     console.log(params);
-        //     this.pageSize = params.pageSize;
-        //     this.pageIndex = params.pageIndex
-        // })
+       this._opinionService.onOpinionsTotalOfCampChanged
+       .pipe(takeUntil(this._unsubscribeAll))
+       .subscribe(result=>{
+            this.pagesSize = result;
+       })
+         
         // Subscribe to update opinions on changes
         this._opinionService.onOpinionsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(opinions => {
-                this.pagesSize = opinions.length;
                 console.log('Opiniones ',opinions);
                 this.opinions = opinions;
-                const i = Number(this.paginator.pageIndex+1)
-                const startIndex = this.paginator.pageIndex * this.paginator.pageSize+1;
-                const endIndex = i*Number( this.paginator.pageSize);
-                this.opinionsTemp = this.opinions.slice(startIndex,endIndex+1);
+                // const i = Number(this.paginator.pageIndex+1)
+                // const startIndex = this.paginator.pageIndex * this.paginator.pageSize+1;
+                // const endIndex = i*Number( this.paginator.pageSize);
+                // this.opinionsTemp = this.opinions.slice(startIndex,endIndex+1);
         });
-        // merge(this._opinionService.onOpinionsChanged,this.paginator.page)
-        // .pipe(
-        //     tap(() => {
-        //         const i = Number(this.paginator.pageIndex+1)
-        //         const startIndex = this.paginator.pageIndex * this.paginator.pageSize+1;
-        //         const endIndex = i*Number( this.paginator.pageSize);
-        //         console.log(startIndex)
-        //         this.opinions = this.opinions.slice(startIndex,endIndex+1);
-        //     })
-        // ).subscribe();
 
         // Subscribe to update current Opinion on changes
         this._opinionService.onCurrentOpinionChanged
@@ -125,11 +112,12 @@ export class MailboxListComponent implements OnInit, OnDestroy
                 }
             });
         this.paginator.page.pipe(takeUntil(this._unsubscribeAll)).subscribe(page=>{
-            const i = Number(this.paginator.pageIndex+1)
-            const startIndex = this.paginator.pageIndex * this.paginator.pageSize+1;
-            const endIndex = i*Number( this.paginator.pageSize);
-            this.opinionsTemp = this.opinions.slice(startIndex,endIndex+1); 
-
+            // const i = Number(this.paginator.pageIndex+1)
+            // const startIndex = this.paginator.pageIndex * this.paginator.pageSize+1;
+            // const endIndex = i*Number( this.paginator.pageSize);
+            // this.opinionsTemp = this.opinions.slice(startIndex,endIndex+1);
+            this._opinionService.onPageChanched.next({'pageIndex':page.pageIndex,'pageSize':page.pageSize}); 
+            this._opinionService.getOpinions(page.pageIndex,page.pageSize);
         });
     }
 

@@ -3,7 +3,7 @@
 </div>
 
 <div class="opinion-list" [@animateStagger]="{value:'50'}">
-    <opinion-list-item *ngFor="let opinion of opinionsTemp" [opinion]="opinion" (click)="readOpinion(opinion.id)"
+    <opinion-list-item *ngFor="let opinion of opinions" [opinion]="opinion" (click)="readOpinion(opinion.id)"
                     [ngClass]="{'current-opinion':opinion?.id == currentOpinion?.id}"
                     [@animate]="{value:'*',params:{y:'100%'}}">
     </opinion-list-item>

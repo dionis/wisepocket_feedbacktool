@@ -115,7 +115,7 @@
           </div>
 
           <div>
-              <h4 #opiniontxt>{{opinion?opinion.texto:''}}</h4>
+              <h4 #opiniontxt [innerHTML]="opinion?opinion.texto:''"></h4>
           </div>
 
       </div>

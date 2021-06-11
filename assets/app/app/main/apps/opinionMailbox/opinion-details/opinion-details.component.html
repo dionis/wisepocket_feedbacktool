@@ -13,7 +13,7 @@
    </ul>
    </div> -->
 <div fxLayout="row">
-    <div fxFlex="100%" *ngIf="opinion">
+    <div fxFlex="100%" [hidden]="!opinion">
 
       <div class="opinion-header" fxLayout="row" fxLayoutAlign="space-between center">
 
@@ -63,31 +63,31 @@
                       <div fxLayout="column" fxLayoutAlign="start start">
 
                           <div class="name">
-                              {{opinion.userend.name_alias}}
+                             <h2>{{opinion?opinion.userend.name_alias:''}}</h2> 
                           </div>
 
                           <div class="to" fxLayout="row" fxLayoutAlign="start center">
                               <div class="to-text">to</div>
-                              <div>{{opinion.userend.email}}</div>
+                              <div><h3>{{opinion?opinion.userend.email:''}}</h3></div>
                           </div>
                       </div>
                   </div>
 
                   <a class="toggle-details" (click)="showDetails = !showDetails">
-                      <span *ngIf="!showDetails">Show Details</span>
-                      <span *ngIf="showDetails">Hide Details</span>
+                      <span *ngIf="!showDetails"><h3>Show Details</h3></span>
+                      <span *ngIf="showDetails"><h3>Details</h3></span>
                   </a>
 
                   <div *ngIf="showDetails" class="details" fxLayout="row" fxLayoutAlign="start start">
 
                       <div fxLayout="column">
-                          <span class="title">Polaridad:</span>
-                          <span class="title">Fecha:</span>
+                          <span class="title"><h4>Polaridad:</h4></span>
+                          <span class="title"><h4>Fecha:</h4></span>
                       </div>
 
                       <div fxLayout="column">
-                          <span class="detail">{{opinion.polaridad}}</span>
-                          <span class="detail">{{opinion.fecha | date: 'MMM d, y'}}</span>
+                          <span class="detail"><h4>{{opinion?opinion.polaridad:''}}</h4></span>
+                          <span class="detail" *ngIf = "opinion"><h4>{{opinion.fecha | date: 'MMM d, y'}}</h4></span>
                       </div>
                   </div>
               </div>
@@ -114,7 +114,9 @@
               </mat-menu> -->
           </div>
 
-          <div [innerHTML]="opinion.texto"></div>
+          <div>
+              <h4 #opiniontxt>{{opinion?opinion.texto:''}}</h4>
+          </div>
 
       </div>
 
@@ -215,7 +217,7 @@
             </ng-container>
     
             <!-- Date Column -->
-            <ng-container matColumnDef="actions">
+            <!-- <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Date</mat-header-cell>
                 <mat-cell *matCellDef="let aspect" fxHide fxShow.gt-sm>
                     <div fxLayout="row">
@@ -232,11 +234,12 @@
                     </div>
                     
                 </mat-cell>
-            </ng-container>
+            </ng-container> -->
     
             <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
     
             <mat-row *matRowDef="let aspect; columns: displayedColumns;"
+                    (click) = "onShowAspect(aspect)"
                     class="order"
                     matRipple
                     >
@@ -244,7 +247,7 @@
         </mat-table>
     
         <mat-paginator #paginatorDetails
-                      [length]="pagesize"
+                      [length]="dataSource._countAspects"
                       [pageIndex]="0"
                       [pageSize]="10"
                       [pageSizeOptions]="[5, 10, 25, 100]">

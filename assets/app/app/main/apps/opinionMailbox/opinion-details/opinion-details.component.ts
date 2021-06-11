@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import { takeUntil, tap } from 'rxjs/operators';
 import { FuseTranslationLoaderService } from '../../../../../@fuse/services/translation-loader.service';
 
 import { fuseAnimations } from '../../../../../@fuse/animations';
@@ -29,7 +29,7 @@ import { OpinionTest } from '../../../../models/opinionTest.model';
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class OpinionDetailsComponent implements OnInit, OnDestroy
+export class OpinionDetailsComponent implements OnInit,AfterViewInit, OnDestroy
 {
     opinion: OpinionTest;
     labels: any[];
@@ -38,7 +38,7 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     prueba2: any
     prueba3: any[]
     dataSource: FilesDataSource | null;
-    displayedColumns = ['id', 'aspects', 'polarity', 'actions'];
+    displayedColumns = ['id', 'aspects', 'polarity'];
     selected= true;
     pagesize = 0;
     index = 0;
@@ -47,17 +47,23 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     @ViewChild(MatPaginator, {static: true})
     paginatorDetails: MatPaginator;
 
+    @ViewChild("opiniontxt", {static: false})
+    opiniontxt: ElementRef;
+
     @ViewChild('filter', {static: true})
     filter: ElementRef;
 
     @ViewChild(MatSort, {static: true})
     sort: MatSort;
 
+    private renderer: Renderer2
+
     // Private
     private _unsubscribeAll: Subject<any>;
 
 
     selectedCamapaign:string= '';
+    criteria: string;
 
     /**
      * Constructor
@@ -84,6 +90,7 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
 
 
     }
+   
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -96,6 +103,11 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
     {
         //this._pruebaServOpin.getOpinXIdioma().subscribe(data => this.prueba = data)
         console.log("ESTOO " + this.pruebas);
+        this.dataSource = new FilesDataSource(
+            this._ecommerceOrdersService,
+            this._pruebaServOpin, 
+            this.paginatorDetails, 
+            this.sort); 
         
         // Subscribe to update the current opinion
         this._opinionService.onCurrentOpinionChanged
@@ -120,11 +132,8 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
                         console.log(error);
                     })
                 }
-                this.dataSource = new FilesDataSource(
-                    this._ecommerceOrdersService,
-                    this._pruebaServOpin, 
-                    this.paginatorDetails, 
-                    this.sort);                
+            this.dataSource.getAspects('0','10');
+                               
         });
         this._opinionService.onAspectsTotalOfOpinionChanged
         .pipe(takeUntil(this._unsubscribeAll))
@@ -168,6 +177,22 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
             });
     }
 
+    ngAfterViewInit(): void {
+        this.sort.sortChange.subscribe((event) => {
+            this.criteria = event.active +' ' + event.direction
+            //this.paginator.pageIndex = 0;
+        });
+        merge(this.sort.sortChange, this.paginatorDetails.page)
+            .pipe(
+                takeUntil(this._unsubscribeAll),
+                tap(() => {
+                    this.dataSource.getAspects(this.paginatorDetails.pageIndex,
+                                                this.paginatorDetails.pageSize)
+                })
+            )
+            .subscribe();
+    }
+
     /**
      * On destroy
      */
@@ -209,6 +234,37 @@ export class OpinionDetailsComponent implements OnInit, OnDestroy
 
         this._opinionService.updateOpinion(this.opinion);
     }
+
+    onShowAspect(event){
+        
+        var str = this.opinion.texto.slice(event.start,event.end);
+        let highlight_txt:any; 
+        console.log(event)
+        switch (event.polaridad) {
+            case 'positive':
+                highlight_txt = str.fontcolor('#03a9f4');
+                break;
+            case 'positiva':
+                highlight_txt = str.fontcolor('#03a9f4');
+                break;
+            case 'neutral':
+                highlight_txt = str.fontcolor('grey');
+                break;
+            case 'negativa':
+                highlight_txt = str.fontcolor('red');
+                break;
+            case 'negativa':
+                highlight_txt = str.fontcolor('red');
+                break;
+            default:
+                break;
+        }
+        let txtstart = this.opinion.texto.slice(0,event.start);
+        let txtend = this.opinion.texto.slice(event.end,this.opinion.texto.length-1);
+        //this.renderer.appendChild(this.opiniontxt.nativeElement,)
+        this.opiniontxt.nativeElement.innerHTML = txtstart+'<strong>'+highlight_txt+'</strong>'+txtend;
+        console.log(this.opiniontxt.nativeElement )
+    }
 }
 
 
@@ -218,6 +274,10 @@ export class FilesDataSource extends DataSource<any>
     // Private
     private _filterChange = new BehaviorSubject('');
     private _filteredDataChange = new BehaviorSubject('');
+    private _aspectsChange = new BehaviorSubject([]);
+    public _countAspects: number = 0;
+
+
 
     /**
      * Constructor
@@ -237,6 +297,9 @@ export class FilesDataSource extends DataSource<any>
         super();
 
         this.filteredData = this._ecommerceOrdersService.orders;
+        this._opinionServ.onAspectsTotalOfOpinionChanged.subscribe(result=>{
+            this._countAspects = result;
+        })
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -278,44 +341,45 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        const displayDataChanges = [
-            this._ecommerceOrdersService.onOrdersChanged,
-            this._opinionServ.onCurrentOpinionChanged,
-            this._matPaginator.page,
-            this._filterChange,
-            this._matSort.sortChange
+        return this._aspectsChange.asObservable();
+        // const displayDataChanges = [
+        //     this._ecommerceOrdersService.onOrdersChanged,
+        //     this._opinionServ.onCurrentOpinionChanged,
+        //     this._matPaginator.page,
+        //     this._filterChange,
+        //     this._matSort.sortChange
 
-        ];
+        // ];
 
-        return merge(...displayDataChanges).pipe(map(() => {
-                //console.log(this._opinionServ.currentOpinionAspects);
-                let data = [];
-                // this._opinionServ.getAspectOpin(this._opinionServ.currentOpinion.id).then(aspects=>{
-                //     data = aspects;
-                // })
-                //this._opinionServ.getAspectOpin(this._matPaginator.pageIndex,this._matPaginator.pageSize);
-                console.log(this._opinionServ.currentOpinionAspects)
-                data = this._opinionServ.oncurrentOpinionAspectsChanged.value;
-                if(data.length>0){
+        // return merge(...displayDataChanges).pipe(map(() => {
+        //         //console.log(this._opinionServ.currentOpinionAspects);
+        //         let data = [];
+        //         // this._opinionServ.getAspectOpin(this._opinionServ.currentOpinion.id).then(aspects=>{
+        //         //     data = aspects;
+        //         // })
+        //         //this._opinionServ.getAspectOpin(this._matPaginator.pageIndex,this._matPaginator.pageSize);
+        //         console.log(this._opinionServ.currentOpinionAspects)
+        //         data = this._opinionServ.oncurrentOpinionAspectsChanged.value;
+        //         if(data.length>0){
 
-                    console.log(data);
+        //             console.log(data);
 
-                    data = this.filterData(data);    
+        //             data = this.filterData(data);    
 
-                    this.filteredData = [...data];
+        //             this.filteredData = [...data];
 
-                    data = this.sortData(data);
+        //             data = this.sortData(data);
 
-                    // Grab the page's slice of data.
-                    //const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
-                    //return data;
-                }else{
-                    this.filteredData  = [];
-                }     
-                return data;
+        //             // Grab the page's slice of data.
+        //             //const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
+        //             //return data;
+        //         }else{
+        //             this.filteredData  = [];
+        //         }     
+        //         return data;
                
-            })
-        );
+        //     })
+        // );
 
     }
 
@@ -377,5 +441,12 @@ export class FilesDataSource extends DataSource<any>
      */
     disconnect(): void
     {
+        this._aspectsChange.complete();
+    }
+    
+    getAspects(page,limit){
+        this._opinionServ.getAspectOpin(page,limit).then(data=>{
+            this._aspectsChange.next(data);
+        })
     }
 }

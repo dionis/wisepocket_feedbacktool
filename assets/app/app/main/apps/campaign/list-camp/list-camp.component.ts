@@ -123,6 +123,7 @@ export class ListCampComponent implements AfterViewInit,OnInit {
         });
         merge(this.sort.sortChange, this.paginator.page)
             .pipe(
+                takeUntil(this._unsubscribeAll),
                 tap(() => {
                     this.loadCampaignsPage()
                 })

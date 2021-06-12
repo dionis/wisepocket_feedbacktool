@@ -32,6 +32,8 @@ import {OpinionComposeDialogComponent}from '../../../../app/main/apps/opinionMai
 import { EcommerceOrdersService } from '../../../../app/main/apps/e-commerce/orders/orders.service';
 import { CampaignSelectGuard } from '../guards/campaign-select.guard';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
+import { PolarityBackgroundDirective } from './mailbox-list/opinion-list-item/polarityDirective/polarity-background.directive';
+//import { PolarityBackgroundDirective } from './mailbox-list/opinion-list-item/polarityDirective/polarity-background.directive';
 
 const routes: Routes = [
     {
@@ -112,7 +114,8 @@ const routes: Routes = [
         OpinionDetailsComponent,
         MailboxMainSidebarComponent,
         OpinionComposeDialogComponent,
-        AdvancedSearchComponent
+        AdvancedSearchComponent,
+        PolarityBackgroundDirective
     ],
     imports        : [
         RouterModule.forChild(routes),
@@ -143,7 +146,8 @@ const routes: Routes = [
     ],
     entryComponents: [
         OpinionComposeDialogComponent
-    ]
+    ],
+    exports:[PolarityBackgroundDirective]
 })
 export class OpinionModule
 {

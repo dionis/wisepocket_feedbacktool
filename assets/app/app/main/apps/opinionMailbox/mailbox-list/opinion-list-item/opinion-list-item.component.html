@@ -35,7 +35,7 @@
                 <div class="labels" fxLayout="row wrap" fxHide fxShow.gt-sm>
                     <div class="label" fxLayout="row" fxLayoutAlign="start center">
                         <div class="label-color"
-                             [ngStyle]="{'background-color': (opinion.polaridad==='negativa'?'#d84315':'#03a9f4')}"></div>
+                             [ngStyle]="{'background-color': opinion.polarityColor}"></div>
                         <div class="label-title"><strong>{{opinion.polaridad}}</strong></div>
                     </div>
                 </div>

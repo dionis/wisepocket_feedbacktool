@@ -4,7 +4,7 @@ opinion-details {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 24px;
+    padding: 12px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 
@@ -42,7 +42,7 @@ opinion-details {
     }
 
     .opinion-content {
-        padding: 24px 0;
+        padding: 12px 0;
 
         .to {
 

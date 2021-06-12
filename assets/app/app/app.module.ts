@@ -25,6 +25,7 @@ import { Error500Module } from './main/errors/500/error-500.module'
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+//import { PolarityBackgroundDirective } from './main/apps/opinionMailbox/mailbox-list/opinion-list-item/polarityDirective/polarity-background.directive';
 
 const appRoutes: Routes = [
     {
@@ -51,7 +52,8 @@ const appRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        //PolarityBackgroundDirective
     ],
     imports: [
         BrowserModule,

@@ -18,6 +18,9 @@ import { AnalyticsDashboardComponent } from './analytics.component';
 import { AnalyticsDashboardService } from './analytics.service';
 import { CampaignSelectGuard } from '../guards/campaign-select.guard';
 
+import {NgxPrintModule} from 'ngx-print';
+
+
 const routes: Routes = [
     {
         path     : '**',
@@ -51,7 +54,8 @@ const routes: Routes = [
 
         MatDatepickerModule,
         FuseSharedModule,
-        FuseWidgetModule
+        FuseWidgetModule,
+        NgxPrintModule
     ],
     providers   : [
         AnalyticsDashboardService

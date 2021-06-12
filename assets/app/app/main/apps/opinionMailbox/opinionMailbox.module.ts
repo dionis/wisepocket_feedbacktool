@@ -34,7 +34,7 @@ import { CampaignSelectGuard } from '../guards/campaign-select.guard';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { PolarityBackgroundDirective } from './mailbox-list/opinion-list-item/polarityDirective/polarity-background.directive';
 //import { PolarityBackgroundDirective } from './mailbox-list/opinion-list-item/polarityDirective/polarity-background.directive';
-
+import {NgxPrintModule} from 'ngx-print';
 const routes: Routes = [
     {
         path     : 'label/:labelHandle',
@@ -138,7 +138,8 @@ const routes: Routes = [
         TranslateModule,
 
         FuseSharedModule,
-        FuseSidebarModule
+        FuseSidebarModule,
+        NgxPrintModule
     ],
     providers      : [
         OpinionService,

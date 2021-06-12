@@ -33,7 +33,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
     labels: any[];
     searchInput: FormControl;
     currentOpinion: Opinion;
-    
+
 
     showOpinionList:boolean = true;
     campaigns: any;
@@ -223,4 +223,7 @@ export class OpinionMailboxComponent implements OnInit, OnDestroy
     toggleSelectAll():void {
 
     }
+
+    ///Print pdf file Bibliografy
+    //Bibliografy: https://www.learmoreseekmore.com/2020/12/angular-ngx-print-library.html
 }

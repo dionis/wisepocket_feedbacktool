@@ -8,6 +8,10 @@
             <div class="pb-24 font-size-18 font-weight-300">
                 Tendencia de Opiniones por Polaridad
                 <h4>Campaña analizada: {{campaigns}}</h4>
+                <button mat-icon-button  >
+                  <h5>Imprimir:</h5>
+                  <mat-icon class="secondary-text">print</mat-icon>
+                </button>
             </div>
 
             <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
@@ -152,7 +156,7 @@
                         </div>
                         <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer">
                            <!-- <form [formGroup]="dateForm">
-                                 Date picker 
+                                 Date picker
                                 <mat-form-field>
                                     <input matInput readonly [max]="maxDate" [matDatepicker]="picker"
                                         placeholder="Opinion's date" formControlName="usertime"

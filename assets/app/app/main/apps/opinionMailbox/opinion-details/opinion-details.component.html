@@ -63,7 +63,12 @@
                       <div fxLayout="column" fxLayoutAlign="start start">
 
                           <div class="name">
-                             <h2>{{opinion?opinion.userend.name_alias:''}}</h2> 
+                             <h2>{{opinion?opinion.userend.name_alias:''}}</h2>
+                          </div>
+                          <div class="">
+                            <button mat-icon-button >
+                              <mat-icon class="secondary-text">print</mat-icon>
+                            </button>
                           </div>
 
                           <div class="to" fxLayout="row" fxLayoutAlign="start center">
@@ -147,7 +152,7 @@
     </div>
 
 <!-- CONTENT CARD -->
-    
+
 <!-- / CONTENT CARD -->
 
 </div>
@@ -159,7 +164,7 @@
                   matSort
                   [@animateStagger]="{value:'50'}"
                   fusePerfectScrollbar>
-    
+
             <!-- ID Column -->
             <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
@@ -167,7 +172,7 @@
                     <mat-checkbox (click)="$event.stopPropagation();"></mat-checkbox>
                 </mat-cell>
             </ng-container>
-    
+
             <!-- Reference Column -->
             <!-- <ng-container matColumnDef="reference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Reference</mat-header-cell>
@@ -175,7 +180,7 @@
                     <p class="text-truncate">{{order.reference}}</p>
                 </mat-cell>
             </ng-container> -->
-    
+
             <!-- Name Column -->
             <ng-container matColumnDef="aspects">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'OPINION.ASPECT' | translate}}</mat-header-cell>
@@ -185,7 +190,7 @@
                     </p>
                 </mat-cell>
             </ng-container>
-    
+
             <!-- Total Price Column -->
             <!-- <ng-container matColumnDef="total">
                 <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Total</mat-header-cell>
@@ -195,7 +200,7 @@
                     </p>
                 </mat-cell>
             </ng-container> -->
-    
+
             <!-- Payment Column -->
             <!-- <ng-container matColumnDef="payment">
                 <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Payment</mat-header-cell>
@@ -205,7 +210,7 @@
                     </p>
                 </mat-cell>
             </ng-container> -->
-    
+
             <!-- Status Column -->
             <ng-container matColumnDef="polarity">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'OPINION.POLARITY' | translate}}</mat-header-cell>
@@ -215,7 +220,7 @@
                     </p>
                 </mat-cell>
             </ng-container>
-    
+
             <!-- Date Column -->
             <!-- <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Date</mat-header-cell>
@@ -232,12 +237,12 @@
                             </button>
                         </div>
                     </div>
-                    
+
                 </mat-cell>
             </ng-container> -->
-    
+
             <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
-    
+
             <mat-row *matRowDef="let aspect; columns: displayedColumns;"
                     (click) = "onShowAspect(aspect)"
                     class="order"
@@ -245,15 +250,15 @@
                     >
             </mat-row>
         </mat-table>
-    
+
         <mat-paginator #paginatorDetails
                       [length]="dataSource._countAspects"
                       [pageIndex]="0"
                       [pageSize]="10"
                       [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
-    
+
     </div>
-    
-    
+
+
 </div>

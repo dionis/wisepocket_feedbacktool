@@ -21,6 +21,9 @@ import { AnalyticsDashboardService } from './analytics.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CampaignSelectGuard } from '../guards/campaign-select.guard';
 
+
+import {NgxPrintModule} from 'ngx-print';
+
 const routes: Routes = [
     {
         path     : '**',
@@ -56,7 +59,8 @@ const routes: Routes = [
         FuseWidgetModule,
         MatDatepickerModule,
         MatInputModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgxPrintModule
 
     ],
     providers   : [

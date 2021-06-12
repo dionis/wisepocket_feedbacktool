@@ -197,14 +197,14 @@ module.exports = {
       if (!doc) {
         console.log("No encontrado");
         return res.send({
-          success: false,
+          success: true,                  // true para si no esta asociado pues vincularlo
           message: "No esta vinculado",
-          data: false,
+          data: true,
         });
       } else {
         console.log("Encontrado");
         return res.send({
-          success: true,
+          success: false,               // false para si esta asociado pues no vincularlo
           message: "Esta vinculado",
           data: doc,
         });

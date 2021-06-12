@@ -92,7 +92,7 @@ export const navigation: FuseNavigation[] = [
     {
         id: 'record',
         title: 'Colaboración',
-        translate: 'Colaboration',
+        translate: 'Colaboración',
         type     : 'group',
         children : [
         // {

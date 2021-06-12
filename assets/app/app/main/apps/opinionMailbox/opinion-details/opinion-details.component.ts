@@ -247,10 +247,10 @@ export class OpinionDetailsComponent implements OnInit,AfterViewInit, OnDestroy
             case 'positiva':
                 highlight_txt = str.fontcolor('#03a9f4');
                 break;
-            case 'neutral':
-                highlight_txt = str.fontcolor('grey');
+            case 'neutra':
+                highlight_txt = str.fontcolor('brown');
                 break;
-            case 'negativa':
+            case 'negative':
                 highlight_txt = str.fontcolor('red');
                 break;
             case 'negativa':

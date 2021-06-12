@@ -21,8 +21,8 @@ export class OpinionTest {
     case 'positiva':
       this.polarityColor = '#03a9f4';
         break;
-    case 'neutral':
-      this.polarityColor = 'grey';
+    case 'neutra':
+      this.polarityColor = 'brown';
         break;
     case 'negativa':
       this.polarityColor = 'red';

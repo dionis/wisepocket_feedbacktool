@@ -201,6 +201,28 @@ module.exports = {
        let date;
        let total = 0;
        switch (handle) {
+        case 'all':
+            total = await Opinion.count();
+            await Opinion.find()
+            .sort('fecha ASC')
+            .populate('userend')
+            .paginate(
+                page?page:'',
+                limit?limit:99999999
+            )
+            .then(opinions=>{
+                return res.send({
+                    'data': opinions,
+                    'count': total
+                })
+            })
+            .catch(error=>{
+                 return res.status(500).send({
+                     'message': 'Imposible Mostrar',
+                     'error': error
+                 })
+            })
+            break;
         case 'today':
             date = moment().format();
             sails.log.debug(date);
@@ -337,6 +359,37 @@ module.exports = {
                          'message': 'Imposible Mostrar',
                          'error': error
                      })
+                })
+                break;
+            
+            case 'neutral':
+                total = await Opinion.count({ where: {campaign: camp_id, or:[
+                    { polaridad: 'neutral' },
+                    { polaridad: 'neutra' },
+                    ]}})
+                await Opinion.find({
+                    where: {campaign: camp_id, or:[
+                        { polaridad: 'neutral' },
+                        { polaridad: 'neutra' },
+                        ]}
+                })
+                .sort('fecha ASC')
+                .populate('userend')
+                .paginate(
+                    page?page:'',
+                    limit?limit:99999999
+                )
+                .then(opinions=>{
+                    return res.send({
+                        'data': opinions,
+                        'count': total
+                    })
+                })
+                .catch(error=>{
+                        return res.status(500).send({
+                            'message': 'Imposible Mostrar',
+                            'error': error
+                        })
                 })
                 break;
        

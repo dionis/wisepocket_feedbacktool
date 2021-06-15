@@ -1,7 +1,10 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import { FuseTranslationLoaderService } from '../../../../../../@fuse/services/translation-loader.service';
+import { locale as english } from '../../../../../../app/main/apps/opinionMailbox/i18n/en';
+//import { locale as turkish } from '../../../../../../app/main/apps/opinionMailbox/i18n/tr';
+import { locale as spanish } from '../../../../../../app/main/apps/opinionMailbox/i18n/es';
 @Component({
     selector     : 'opinion-compose',
     templateUrl  : './compose.component.html',
@@ -21,12 +24,16 @@ export class OpinionComposeDialogComponent
      */
     constructor(
         public matDialogRef: MatDialogRef<OpinionComposeDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) private _data: any
+        @Inject(MAT_DIALOG_DATA) private _data: any,
+        private _fuseTranslationLoaderService: FuseTranslationLoaderService
     )
     {
         // Set the defaults
         this.composeForm = this.createComposeForm();
         this.showExtraToFields = false;
+
+        //load translations
+        this._fuseTranslationLoaderService.loadTranslations(english,spanish);
     }
 
     // -----------------------------------------------------------------------------------------------------

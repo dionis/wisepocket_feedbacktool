@@ -5,7 +5,7 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-const moment  = require('moment')
+const moment  = require('moment');
 module.exports = {
 
     //function beta
@@ -474,6 +474,56 @@ module.exports = {
             })
         })
         
+    },
+
+    getOpinionsAdvancedSearch:async (req,res)=>{
+        const camp_id = req.param('id');
+        const date_start = req.param('date_start');
+        const date_end = req.param('date_end');
+        const page = req.param('page');
+        const limit  = Number(req.param('limit'));
+        if(!camp_id){
+            return res.status(400).send({
+            'message': 'You Most Provide Campaign ID'
+        });}
+        if(Date.parse(date_start)>Date.parse(date_end)){
+            return res.status(400).send({
+                'message': 'Cannot set Date Start greater than Date End'
+            });
+        }
+        let constraintsByAttrName = {
+            campaign : camp_id?camp_id:undefined,
+            userend: req.param('user_id')?req.param('user_id'):undefined,
+            fecha: date_start&&date_end?
+                    {'>=': date_start,'<=': date_end }:undefined,
+            texto: req.param('text')?{contains: req.param('text') }:undefined,
+            polaridad: req.param('polarity')?req.param('polarity'):undefined
+          };
+          _.each(_.keys(constraintsByAttrName), (attrName)=>{
+            if (constraintsByAttrName[attrName] === undefined) {
+              delete constraintsByAttrName[attrName];
+            }
+          });
+        sails.log.debug(constraintsByAttrName);
+        let total = await Opinion.count(constraintsByAttrName);
+        await Opinion.find(constraintsByAttrName)
+        .sort('fecha ASC')
+        .populate('userend')
+        .paginate(page?page:'', limit?limit:99999999)
+        .then(opinions=>{
+            return res.send({
+                'data': opinions,
+                'count': total
+            })
+        })
+        .catch(error=>{
+            return res.status(500).send({
+                'message': 'Imposible Mostrar',
+                'error': error
+            })
+    })
+
+
     }
 }
 

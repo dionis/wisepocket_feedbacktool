@@ -200,7 +200,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     onExit() {
         this.userService.logout();
-        console.log(this.fixIdOut.fixIDOut());
         this.router.navigate(["'/auth/login'"])
+    }
+
+    goToOpiniones(){
+      this.router.navigate(["/apps/opinionMailbox"])
+    }
+
+    goToStadistic(){
+      this.router.navigate(["/apps/analyticsbyIdioma"])
     }
 }

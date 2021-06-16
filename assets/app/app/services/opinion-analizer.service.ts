@@ -11,6 +11,8 @@ import { environment } from '../../environments/environment';
 import { map, takeUntil } from 'rxjs/operators';
 import { OpinionTest } from '../models/opinionTest.model';
 import { SharedVariablesService } from './shared-variables.service';
+import { AnalyticsDashboardComponent } from '../main/apps/analyticsBy-Polaridad/analytics.component';
+import * as _ from 'lodash';
 
 
 @Injectable({
@@ -254,9 +256,9 @@ export class OpinionService implements Resolve<any>
         if (this.routeParams.filterHandle) {
             return this.getOpinionsByFilter(this.routeParams.filterHandle,page,limit);
         }
-        if(this.routeParams.pageIndex && this.routeParams.pageSize){
-           return this.getOpinionsByPages(this.routeParams.pageIndex,this.routeParams.pageSize);
-        }
+        // if(this.routeParams.pageIndex && this.routeParams.pageSize){
+        //    return this.getOpinionsByPages(this.routeParams.pageIndex,this.routeParams.pageSize);
+        // }
         return this.getOpinionsFromBAck(page,limit,'fecha DESC','');
         //return this.getOpinionsByFolder(this.routeParams.folderHandle);
 
@@ -601,12 +603,44 @@ export class OpinionService implements Resolve<any>
    deleteOpinions(opinionId): Promise<any>{
         return new Promise((resolve,reject)=>{
             this._httpClient.delete(
-                environment.sails_services_urlpath + ":" + environment.sails_services_urlport +'/opinion/deleteOpinion',
+                environment.sails_services_urlpath + 
+                ":" + environment.sails_services_urlport +
+                '/opinion/deleteOpinion',
                 {params:{'id':opinionId}})
             .subscribe(opinion=>{
                 this.getOpinions('0','10').then(opinions=>{}).catch(error=>{})
                 resolve(opinion);
             },reject);
+        })
+   }
+   getOpinionsAdvancedSearch(user_id:string,
+                            date_start:string,
+                            date_end:string,
+                            text:string,
+                            polarity:string,
+                            lang:string): Promise<any>{
+        return new Promise((resolve,reject)=>{
+            this._httpClient.get( environment.sails_services_urlpath + 
+                ":" + environment.sails_services_urlport +
+                '/opinion/getOpinionsAdvancedSearch',
+                {params:{'id': this.sharedVarService.getId(),
+                        'date_start':date_start,
+                        'user_id': user_id,
+                        'date_end':date_end,
+                        'text': text,
+                        'polarity':polarity,
+                        'lang': lang,
+                        }})
+                        .subscribe((opinions:any)=>{
+
+                            this.opinions = opinions.data.map(opinion => {
+                                return new OpinionTest(opinion);
+                            });
+                            this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
+                            this.onOpinionsChanged.next(this.opinions);
+                            this.onOpinionsTotalOfCampChanged.next(opinions.count)
+                            resolve(this.opinions);
+                        },resolve)
         })
    }
 }

@@ -16,6 +16,7 @@ import { AdvancedSearchComponent } from '../../../../../../app/main/apps/opinion
 import { locale as english } from '../../../../../../app/main/apps/opinionMailbox/i18n/en';
 import { locale as turkish } from '../../../../../../app/main/apps/opinionMailbox/i18n/tr';
 import { locale as spanish } from '../../../../../../app/main/apps/opinionMailbox/i18n/es';
+import { result } from 'lodash';
 
 @Component({
     selector     : 'mailbox-main-sidebar',
@@ -125,23 +126,35 @@ export class MailboxMainSidebarComponent implements OnInit, OnDestroy
                 {
                     return;
                 }
-                const actionType: string = response[0];
-                const formData: FormGroup = response[1];
-                switch ( actionType )
-                {
-                    /**
-                     * Send
-                     */
-                    case 'send':
-                        console.log('new Opinion', formData.getRawValue());
-                        break;
-                    /**
-                     * Delete
-                     */
-                    case 'delete':
-                        console.log('delete Opinion');
-                        break;
-                }
+                //const actionType: string = response[0];
+                const formData: FormGroup = response;
+                console.log(formData);
+                this._opinionService.getOpinionsAdvancedSearch(
+                    formData.value.users,
+                    formData.value.date_start,
+                    formData.value.date_end,
+                    formData.value.text,
+                    formData.value.polarity,
+                    formData.value.lang).then(result=>{
+                        console.log(result);
+                    }).catch(error=>{
+
+                    })
+                // switch ( actionType )
+                // {
+                //     /**
+                //      * Send
+                //      */
+                //     case 'send':
+                //         console.log('new Opinion', formData.getRawValue());
+                //         break;
+                //     /**
+                //      * Delete
+                //      */
+                //     case 'delete':
+                //         console.log('delete Opinion');
+                //         break;
+                // }
             });
     }
 }

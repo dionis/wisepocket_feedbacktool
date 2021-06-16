@@ -480,6 +480,10 @@ module.exports = {
         const camp_id = req.param('id');
         const date_start = req.param('date_start');
         const date_end = req.param('date_end');
+        const text = req.param('text');
+        const polarity = req.param('polarity');
+        const lang = req.param('lang');
+        const user_id = req.param('user_id');
         const page = req.param('page');
         const limit  = Number(req.param('limit'));
         if(!camp_id){
@@ -493,14 +497,16 @@ module.exports = {
         }
         let constraintsByAttrName = {
             campaign : camp_id?camp_id:undefined,
-            userend: req.param('user_id')?req.param('user_id'):undefined,
-            fecha: date_start&&date_end?
+            userend: (user_id!==undefined && user_id!=='')?user_id:undefined,
+            fecha: (date_start !== undefined && date_start !=='')&&
+                    (date_end !== undefined && date_end!=='')?
                     {'>=': date_start,'<=': date_end }:undefined,
-            texto: req.param('text')?{contains: req.param('text') }:undefined,
-            polaridad: req.param('polarity')?req.param('polarity'):undefined
+            texto: (text!==undefined && text!=='')?{contains: text}:undefined,
+            polaridad: (polarity!==undefined && polarity!=='')?polarity:undefined,
+            idioma: (lang!==undefined && lang!=='')?lang:undefined,
           };
           _.each(_.keys(constraintsByAttrName), (attrName)=>{
-            if (constraintsByAttrName[attrName] === undefined) {
+            if (constraintsByAttrName[attrName]=== undefined ) {
               delete constraintsByAttrName[attrName];
             }
           });

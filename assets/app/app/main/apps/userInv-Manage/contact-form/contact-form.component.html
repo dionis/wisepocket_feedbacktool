@@ -60,6 +60,7 @@
             placeholder="Email"
             formControlName="correo"
             required
+            maxlength="35"
             type="email"
           />
           <mat-error *ngIf="invUserForm.get('correo').hasError('required')">
@@ -121,6 +122,16 @@
             Dirección requerida
           </mat-error>
         </mat-form-field>
+
+        <button
+          *ngIf="action === 'edit'"
+          floatLabel="always"
+          mat-raised-button
+          (click)="cambiarPass()"
+        >
+          Cambiar contraseña
+          <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+        </button>
       </div>
     </form>
   </div>

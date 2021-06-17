@@ -2,7 +2,14 @@ import { Breakpoints } from "@angular/cdk/layout";
 import { SharedVariablesService } from "../../../../services/shared-variables.service";
 import { Inject } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from "@angular/forms";
 import {
   MatDialog,
   MatDialogRef,
@@ -12,6 +19,8 @@ import { UserInv } from "../../../../models/userInv.model";
 import { UserInvService } from "../../../../services/user-inv.service";
 import swal from "sweetalert2";
 import { FuseConfirmDialogComponent } from "../../../../../@fuse/components/confirm-dialog/confirm-dialog.component";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 
 @Component({
   selector: "app-contact-asociar",
@@ -27,6 +36,7 @@ export class ContactAsociarComponent implements OnInit {
   invUserForm: FormGroup;
   dialogTitle: string;
   estadoAcceso: boolean;
+  private _unsubscribeAll: Subject<any>;
   constructor(
     public matDialogRef: MatDialogRef<ContactAsociarComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
@@ -35,6 +45,7 @@ export class ContactAsociarComponent implements OnInit {
     private servCamp: SharedVariablesService,
     public _matDialog: MatDialog
   ) {
+    this._unsubscribeAll = new Subject();
     this.action = _data.action;
     this.estadoAcceso = false;
     if (this.action === "asociar") {
@@ -42,7 +53,8 @@ export class ContactAsociarComponent implements OnInit {
       this.contact = _data.contact;
     }
     this.invUserForm = this._formBuilder.group({
-      contraseña: ["", Validators.required],
+      password: ["", Validators.required],
+      passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
     });
     this.nameCamp = this.servCamp.getName();
     console.log(this.nameCamp);
@@ -50,7 +62,14 @@ export class ContactAsociarComponent implements OnInit {
     this.invUserForm = this.createContactForm();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.invUserForm
+      .get("password")
+      .valueChanges.pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this.invUserForm.get("passwordConfirm").updateValueAndValidity();
+      });
+  }
 
   asociarAcamp(contact) {
     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -66,7 +85,7 @@ export class ContactAsociarComponent implements OnInit {
 
     this.confirmDialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.invService.getStatusAcceso(contact).subscribe((res) => {
+        this.invService.getStatusAsociado(contact).subscribe((res) => {
           console.log(res.success);
           if (res.success) {
             this.invService.AddCampInv(contact).subscribe((res) => {
@@ -76,11 +95,9 @@ export class ContactAsociarComponent implements OnInit {
                 swal.fire(
                   "Ahora el usuario tiene acceso a la Campaña: " +
                     this.servCamp.getName(),
-                  "Cuando asocie este usuario a otra campaña debe ser la misma contraseña que se usó." +
-                    "  " +
-                    "Si pone una nueva contraseña pues esa es la que usará a partir de ahora"
+                  "Para cambiar la contraseña vaya a la opción Editar"
                 );
-                this.invService.getFiltersAllInv().then((data) => {
+                this.invService.getInvitados().subscribe((data) => {
                   console.log(data);
                   this.invService.getUsers(data.data);
                 });
@@ -115,7 +132,7 @@ export class ContactAsociarComponent implements OnInit {
   }
 
   statusAcces(contact): any {
-    this.invService.getStatusAcceso(contact).subscribe((res) => {
+    this.invService.getStatusAsociado(contact).subscribe((res) => {
       console.log(res.success);
       return res.success;
     });
@@ -130,7 +147,32 @@ export class ContactAsociarComponent implements OnInit {
       correo: [this.contact.correo],
       telefono: [this.contact.telefono],
       password: [this.contact.password],
+      passwordConfirm: [this.contact.password],
       direccion: [this.contact.direccion],
     });
   }
 }
+export const confirmPasswordValidator: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  if (!control.parent || !control) {
+    return null;
+  }
+
+  const password = control.parent.get("password");
+  const passwordConfirm = control.parent.get("passwordConfirm");
+
+  if (!password || !passwordConfirm) {
+    return null;
+  }
+
+  if (passwordConfirm.value === "") {
+    return null;
+  }
+
+  if (password.value === passwordConfirm.value) {
+    return null;
+  }
+
+  return { passwordsNotMatching: true };
+};

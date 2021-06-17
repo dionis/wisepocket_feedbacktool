@@ -18,6 +18,7 @@ import { ContactsContactFormDialogComponent } from "../../../../../app/main/apps
 import { ContactAsociarComponent } from "../contact-asociar/contact-asociar.component";
 //import {CampaingService} from '../../../../services/campaing.service';
 import swal from "sweetalert2";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "contacts-contact-list",
@@ -65,10 +66,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
    * On init
    */
   ngOnInit(): void {
-    this._contactsService.getInvitados().subscribe((data) => {
+    this._contactsService.getInvitadosSearch();
+
+    /*this._contactsService.getInvitados().subscribe((data) => {
       console.log(data);
       this._contactsService.getUsers(data.data); ///Esta funcion inyecta los usuarios para mostrar en la tabla
-    });
+    });*/
 
     this.dataSource = new FilesDataSource(this._contactsService);
     console.log(this.dataSource);
@@ -77,6 +80,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
       //console.log(this._contactsService.getInvitadXID(data[0].id))
     });
 
+    this._contactsService.onContactsChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((contacts) => {
+        console.log("Invitados", contacts);
+        this.contacts = contacts;
+      });
     /* this._contactsService.onContactsChanged
              .pipe(takeUntil(this._unsubscribeAll))
              .subscribe(contacts => {
@@ -123,7 +132,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
     this.confirmDialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this._contactsService.getStatusAcceso(contact).subscribe((res) => {
+        this._contactsService.getStatusAsociado(contact).subscribe((res) => {
           console.log(res.success);
           if (res.success != true) {
             this._contactsService.quitarAcceso(contact).subscribe((res) => {
@@ -148,7 +157,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
     this.confirmDialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this._contactsService.getStatusAcceso(contact).subscribe((res) => {
+        this._contactsService.getStatusAsociado(contact).subscribe((res) => {
           console.log(res.success);
           if (res.success != true) {
             this._contactsService.devolverAcceso(contact).subscribe((res) => {
@@ -173,7 +182,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
     this.confirmDialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this._contactsService.getStatusAcceso(contact).subscribe((res) => {
+        this._contactsService.getStatusAsociado(contact).subscribe((res) => {
           console.log(res.success);
           if (res.success != true) {
             this._contactsService.deleteRelacion(contact).subscribe((data) => {
@@ -191,6 +200,10 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             this._contactsService.getFiltersInvCAMP().then((data) => {
               console.log(data);
               this._contactsService.getUsers(data.data);
+              this._contactsService.getInvitados().subscribe((data) => {
+                console.log(data);
+                this._contactsService.getUsers(data.data);
+              });
             });
           } else {
             swal.fire("No está asociado");

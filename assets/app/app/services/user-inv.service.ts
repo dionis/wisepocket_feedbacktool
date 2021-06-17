@@ -8,6 +8,11 @@ import { UserInv } from "../models/userInv.model";
 import { SharedVariablesService } from "./shared-variables.service";
 import { Subject } from "rxjs";
 import { FuseUtils } from "../../@fuse/utils";
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  RouterStateSnapshot,
+} from "@angular/router";
 
 @Injectable({
   providedIn: "root",
@@ -18,7 +23,7 @@ export class UserInvService {
   onFiltersChanged: BehaviorSubject<any>;
   onFiltersChangedInvAll: BehaviorSubject<any>;
   onSearchTextChanged: BehaviorSubject<any>;
-  searchText: string;
+  searchText: "";
   contacts: UserInv[];
   filters: any[];
   user_id: string;
@@ -34,8 +39,29 @@ export class UserInvService {
     this.onSearchTextChanged = new BehaviorSubject("");
     this.user_id = this.user.getMyUserId();
   }
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<any> | Promise<any> | any {
+    return new Promise((resolve, reject) => {
+      Promise.all([this.getInvitadosSearch()]).then(() => {
+        this.onSearchTextChanged.subscribe((searchText) => {
+          if (searchText !== "") {
+            console.log("Search Value  ", searchText);
 
-  
+            this.searchText = searchText;
+            this.getInvitadosSearch();
+          } else {
+            this.searchText = searchText;
+            this.getInvitadosSearch();
+          }
+        });
+
+        resolve();
+      }, reject);
+    });
+  }
+
   addInvUser(invitado): Observable<any> {
     this.user_id = this.user.getMyUserId();
     return this._http.post(
@@ -62,6 +88,33 @@ export class UserInvService {
         "/userInvitado/getInvXUserChief?id=" +
         this.user_id
     );
+  }
+
+  getInvitadosSearch(): Promise<UserInv[]> {
+    this.user_id = this.user.getMyUserId();
+    return new Promise((resolve, reject) => {
+      this._http
+        .get(
+          environment.sails_services_urlpath +
+            ":" +
+            environment.sails_services_urlport +
+            "/userInvitado/getInvXUserChief?id=" +
+            this.user_id
+        )
+        .subscribe((responseData: any) => {
+          console.log(responseData);
+          this.contacts = responseData.data.map((contact) => {
+            return this.getUsers(responseData.data);
+          });
+
+          this.contacts = FuseUtils.filterArrayByString(
+            this.contacts,
+            this.searchText
+          );
+          this.onContactsChanged.next(this.contacts);
+          resolve(this.contacts);
+        }, reject);
+    });
   }
 
   getUsers(dataInv) {
@@ -134,6 +187,15 @@ export class UserInvService {
     );
   }
 
+  updatePassTemp(invitado, pass): Observable<any> {
+    return this._http.patch(
+      environment.sails_services_urlpath +
+        ":" +
+        environment.sails_services_urlport +
+        "/userInvitado/updatePass",
+        { id: invitado.id, password: pass }
+    );
+  }
   deleteupdatePass(invitado): Observable<any> {
     return this._http.patch(
       environment.sails_services_urlpath +
@@ -177,12 +239,22 @@ export class UserInvService {
     );
   }
 
-  getStatusAcceso(invitado): Observable<any> {
+  getStatusAsociado(invitado): Observable<any> {
     return this._http.get(
       environment.sails_services_urlpath +
         ":" +
         environment.sails_services_urlport +
         "/acceso/isAsociado",
+      { params: { id: invitado.id, campID: this.servCamp.getId() } }
+    );
+  }
+
+  getStatusAcceso(invitado): Observable<any> {
+    return this._http.get(
+      environment.sails_services_urlpath +
+        ":" +
+        environment.sails_services_urlport +
+        "/acceso/getStatusAcceso",
       { params: { id: invitado.id, campID: this.servCamp.getId() } }
     );
   }

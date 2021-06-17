@@ -37,7 +37,6 @@
             type="password"
             matInput
             placeholder="Contraseña"
-            name="password"
             formControlName="password"
             required
             minlength="8"
@@ -46,8 +45,42 @@
           <mat-error *ngIf="invUserForm.get('password').hasError('required')">
             Contraseña requerida
           </mat-error>
+          <mat-error *ngIf="invUserForm.get('password').hasError('minLength')">
+            Máximo 8 caracteres
+          </mat-error>
         </mat-form-field>
 
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="w-100-p"
+        >
+          <mat-label>Confirmar contraseña</mat-label>
+          <input
+            #passConf
+            matInput
+            required
+            minlength="8"
+            maxlength="8"
+            placeholder="Confirmar contraseña"
+            type="password"
+            formControlName="passwordConfirm"
+          />
+          <mat-error
+            *ngIf="invUserForm.get('passwordConfirm').hasError('required')"
+          >
+            Confirmación de contraseña requerida
+          </mat-error>
+          <mat-error
+            *ngIf="
+              pass.value != passConf.value &&
+              !invUserForm.get('passwordConfirm').hasError('required')
+            "
+          >
+            La contraseña no coincide
+          </mat-error>
+        </mat-form-field>
+        <br />
         <span>Se envirá un correo notificando al usuario</span>
         <br />
         <span>Correo del usuario: {{ contact.correo }}</span>

@@ -39,9 +39,8 @@ export class ContactsComponent implements OnInit, OnDestroy {
     private invService: UserInvService,
     private _contactsService: ContactsService,
     private _fuseSidebarService: FuseSidebarService,
-    private _matDialog: MatDialog
-  ) //public campaingService: CampaingService
-  {
+    private _matDialog: MatDialog //public campaingService: CampaingService
+  ) {
     // Set the defaults
     this.searchInput = new FormControl("");
 
@@ -77,7 +76,8 @@ export class ContactsComponent implements OnInit, OnDestroy {
         distinctUntilChanged()
       )
       .subscribe((searchText) => {
-        this.invService.onSearchTextChanged.next(searchText)
+        console.log("Search Text ", searchText);
+        this.invService.onSearchTextChanged.next(searchText);
       });
   }
 

@@ -159,67 +159,80 @@ export class ContactsContactFormDialogComponent {
   }
 
   cambiarPass() {
-    swal
-      .fire({
-        title: "Modificación de contraseña",
-        text: "¿Está seguro que desea cambiarla?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sí",
-        cancelButtonText: "No",
-        allowOutsideClick: true,
-      })
-      .then((result) => {
-        if (result.value) {
-          swal
-            .fire({
-              title: "Cambiar contraseña",
-              html: "<h4>Escriba la nueva contraseña.<br> Tenga en cuanta que el navegador puede tener activado el autocompletado por lo que puede aparcer una contraseña la cual debe eliminar y poner la correspondiente</h4>",
-              input: "password",
-              inputPlaceholder: "Nueva Contraseña",
-              inputValidator: (result) => !result && "Campo requerido",
-              showCancelButton: true,
-              confirmButtonText: "Confirmar",
-              cancelButtonText: "Cancelar",
-              allowOutsideClick: true,
-            })
-            .then((result) => {
-              if (result.value) {
-                let conf = result.value;
-                swal
-                  .fire({
-                    title: "Confirmar contraseña",
-                    html: "<h4>Confirme su contraseña.<br> Tenga en cuanta que el navegador puede tener activado el autocompletado por lo que puede aparcer una contraseña la cual debe eliminar y confirmar su contraseña</h4>",
-                    input: "password",
-                    inputPlaceholder: "Nueva Contraseña",
-                    inputValidator: (result) => !result && "Campo requerido",
-                    showCancelButton: true,
-                    confirmButtonText: "Cambiar",
-                    cancelButtonText: "Cancelar",
-                    allowOutsideClick: true,
-                  })
-                  .then((result) => {
-                    if (conf === result.value) {
-                      this.invService
-                        .updatePassTemp(this.contact, result.value)
-                        .subscribe((data) => {
-                          swal.fire({
-                            title: "Éxito",
-                            icon: "success",
-                            showConfirmButton: false,
-                            timer: 2000,
-                          });
-                        });
-                    } else {
-                      this.error();
-                    }
-                  });
-              } else {
-              }
-            });
-        } else {
-        }
-      });
+    this.invService.getStatusAsociado(this.contact).subscribe((res) => {
+      console.log(res.success);
+      if (res.success != true) {
+        swal
+          .fire({
+            title: "Modificación de contraseña",
+            text: "¿Está seguro que desea cambiarla?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            allowOutsideClick: true,
+          })
+          .then((result) => {
+            if (result.value) {
+              swal
+                .fire({
+                  title: "Cambiar contraseña",
+                  html: "<h4>Escriba la nueva contraseña.<br> Tenga en cuanta que el navegador puede tener activado el autocompletado por lo que puede aparcer una contraseña la cual debe eliminar y poner la correspondiente</h4>",
+                  input: "password",
+                  inputPlaceholder: "Nueva Contraseña",
+                  inputValidator: (result) => !result && "Campo requerido",
+                  showCancelButton: true,
+                  confirmButtonText: "Confirmar",
+                  cancelButtonText: "Cancelar",
+                  allowOutsideClick: true,
+                })
+                .then((result) => {
+                  if (result.value) {
+                    let conf = result.value;
+                    swal
+                      .fire({
+                        title: "Confirmar contraseña",
+                        html: "<h4>Confirme su contraseña.<br> Tenga en cuanta que el navegador puede tener activado el autocompletado por lo que puede aparcer una contraseña la cual debe eliminar y confirmar su contraseña</h4>",
+                        input: "password",
+                        inputPlaceholder: "Nueva Contraseña",
+                        inputValidator: (result) =>
+                          !result && "Campo requerido",
+                        showCancelButton: true,
+                        confirmButtonText: "Cambiar",
+                        cancelButtonText: "Cancelar",
+                        allowOutsideClick: true,
+                      })
+                      .then((result) => {
+                        if (conf === result.value) {
+                          this.invService
+                            .updatePassTemp(this.contact, result.value)
+                            .subscribe((data) => {
+                              swal.fire({
+                                title: "Éxito",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 2000,
+                              });
+                            });
+                        } else {
+                          this.error();
+                        }
+                      });
+                  } else {
+                  }
+                });
+            } else {
+            }
+          });
+      } else {
+        swal.fire({
+          title: "Este usuario no esta asociado aún",
+          icon: "warning",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+    });
   }
 
   error() {

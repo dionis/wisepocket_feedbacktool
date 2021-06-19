@@ -39,14 +39,18 @@
             placeholder="Contraseña"
             formControlName="password"
             required
-            minlength="8"
-            maxlength="8"
+            minlength="6"
           />
           <mat-error *ngIf="invUserForm.get('password').hasError('required')">
             Contraseña requerida
           </mat-error>
-          <mat-error *ngIf="invUserForm.get('password').hasError('minLength')">
-            Máximo 8 caracteres
+          <mat-error
+            *ngIf="
+              !invUserForm.get('password').hasError('required') &&
+              !pass.minlength
+            "
+          >
+            Mínimo 6 caracteres
           </mat-error>
         </mat-form-field>
 
@@ -60,8 +64,7 @@
             #passConf
             matInput
             required
-            minlength="8"
-            maxlength="8"
+            minlength="6"
             placeholder="Confirmar contraseña"
             type="password"
             formControlName="passwordConfirm"

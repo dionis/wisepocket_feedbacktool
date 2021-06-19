@@ -72,51 +72,62 @@ export class ContactAsociarComponent implements OnInit {
   }
 
   asociarAcamp(contact) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false,
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage =
-      "¿Está seguro que desea vincular a " +
-      contact.nombre +
-      " y darle acceso a la campaña " +
-      this.servCamp.getName() +
-      "?";
-
-    this.confirmDialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.invService.getStatusAsociado(contact).subscribe((res) => {
-          console.log(res.success);
-          if (res.success) {
-            this.invService.AddCampInv(contact).subscribe((res) => {
-              if (res.message === "Asociado a la Campaña con éxito") {
-                this.updatePass(contact);
-                this.updateAcces(contact);
-                swal.fire(
-                  "Ahora el usuario tiene acceso a la Campaña: " +
-                    this.servCamp.getName(),
-                  "Para cambiar la contraseña vaya a la opción Editar"
-                );
-                this.invService.getInvitados().subscribe((data) => {
-                  console.log(data);
-                  this.invService.getUsers(data.data);
-                });
-              } else if (res.success === false) {
-                swal.fire("Fallo la operación");
-              }
-              this.statusAcces(contact);
-            });
-          } else {
-            swal.fire("Ya está asociado");
-          }
-        });
-      }
-      this.confirmDialogRef = null;
-    });
-  }
-
-  alert() {
-    swal.fire();
+    swal
+      .fire({
+        title:
+          "¿Está seguro que desea vincular a " +
+          contact.nombre +
+          " y darle acceso a la campaña " +
+          this.servCamp.getName() +
+          "?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+        allowOutsideClick: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          this.invService.getStatusAsociado(contact).subscribe((res) => {
+            console.log(res.success);
+            if (res.success) {
+              this.invService.AddCampInv(contact).subscribe((res) => {
+                if (res.message === "Asociado a la Campaña con éxito") {
+                  this.updatePass(contact);
+                  this.updateAcces(contact);
+                  swal.fire({
+                    title:
+                      "Ahora el usuario tiene acceso a la Campaña: " +
+                      this.servCamp.getName(),
+                    html: "<h3>Para cambiar la contraseña vaya a la opción Editar</h3>",
+                    icon: "success",
+                    showConfirmButton: true,
+                  });
+                  this.invService.getInvitados().subscribe((data) => {
+                    console.log(data);
+                    this.invService.getUsers(data.data);
+                  });
+                } else if (res.success === false) {
+                  swal.fire({
+                    title: "Fallo la operación",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 2500,
+                  });
+                }
+                this.statusAcces(contact);
+              });
+            } else {
+              swal.fire({
+                title: "Ya está asociado",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 2500,
+              });
+            }
+          });
+        }
+      });
   }
 
   updatePass(contact) {

@@ -123,95 +123,130 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
              });*/
   }
   quitarAcces(contact) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false,
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage =
-      "¿Está seguro que desea quitarle el acceso?";
-
-    this.confirmDialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this._contactsService.getStatusAsociado(contact).subscribe((res) => {
-          console.log(res.success);
-          if (res.success != true) {
-            this._contactsService.quitarAcceso(contact).subscribe((res) => {
-              swal.fire("Acceso deshabilitado");
-            });
-          } else {
-            swal.fire("No está asociado");
-          }
-        });
-      }
-      this.confirmDialogRef = null;
-    });
+    swal
+      .fire({
+        title: "¿Está seguro que desea quitarle el acceso?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+        allowOutsideClick: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          this._contactsService.getStatusAsociado(contact).subscribe((res) => {
+            console.log(res.success);
+            if (res.success != true) {
+              this._contactsService.quitarAcceso(contact).subscribe((res) => {
+                swal.fire({
+                  title: "Acceso deshabilitado",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 2500,
+                });
+              });
+            } else {
+              swal.fire({
+                title: "No está asociado",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 2500,
+              });
+            }
+          });
+        }
+      });
   }
 
   devolverAcces(contact) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false,
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage =
-      "¿Está seguro que desea devolverle el acceso?";
-
-    this.confirmDialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this._contactsService.getStatusAsociado(contact).subscribe((res) => {
-          console.log(res.success);
-          if (res.success != true) {
-            this._contactsService.devolverAcceso(contact).subscribe((res) => {
-              swal.fire("Acceso habilitado");
-            });
-          } else {
-            swal.fire("No está asociado");
-          }
-        });
-      }
-      this.confirmDialogRef = null;
-    });
+    swal
+      .fire({
+        title: "¿Está seguro que desea devolverle el acceso?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+        allowOutsideClick: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          this._contactsService.getStatusAsociado(contact).subscribe((res) => {
+            console.log(res.success);
+            if (res.success != true) {
+              this._contactsService.devolverAcceso(contact).subscribe((res) => {
+                swal.fire({
+                  title: "Acceso habilitado",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 2500,
+                });
+              });
+            } else {
+              swal.fire({
+                title: "No está asociado",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 2500,
+              });
+            }
+          });
+        }
+      });
   }
 
   desvincular(contact) {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false,
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage =
-      "¿Está seguro que desea desvincularlo?";
-
-    this.confirmDialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this._contactsService.getStatusAsociado(contact).subscribe((res) => {
-          console.log(res.success);
-          if (res.success != true) {
-            this._contactsService.deleteRelacion(contact).subscribe((data) => {
-              console.log(data);
-            });
-            this._contactsService.deleteAcces(contact).subscribe((data) => {
-              console.log(data);
-            });
-            this._contactsService
-              .deleteupdatePass(contact)
-              .subscribe((data) => {
+    swal
+      .fire({
+        title: "¿Está seguro que desea desvincularlo?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+        allowOutsideClick: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          this._contactsService.getStatusAsociado(contact).subscribe((res) => {
+            console.log(res.success);
+            if (res.success != true) {
+              this._contactsService
+                .deleteRelacion(contact)
+                .subscribe((data) => {
+                  console.log(data);
+                });
+              this._contactsService.deleteAcces(contact).subscribe((data) => {
                 console.log(data);
               });
-            swal.fire("Desvinculado con éxito");
-            this._contactsService.getFiltersInvCAMP().then((data) => {
-              console.log(data);
-              this._contactsService.getUsers(data.data);
-              this._contactsService.getInvitados().subscribe((data) => {
+              this._contactsService
+                .deleteupdatePass(contact)
+                .subscribe((data) => {
+                  console.log(data);
+                });
+              swal.fire({
+                title: "Desvinculado con éxito",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2500,
+              });
+              this._contactsService.getFiltersInvCAMP().then((data) => {
                 console.log(data);
                 this._contactsService.getUsers(data.data);
+                this._contactsService.getInvitados().subscribe((data) => {
+                  console.log(data);
+                  this._contactsService.getUsers(data.data);
+                });
               });
-            });
-          } else {
-            swal.fire("No está asociado");
-          }
-        });
-      }
-      this.confirmDialogRef = null;
-    });
+            } else {
+              swal.fire({
+                title: "No está asociado",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 2500,
+              });
+            }
+          });
+        }
+      });
   }
 
   /**

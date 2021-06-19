@@ -227,7 +227,7 @@ export class ContactsContactFormDialogComponent {
       } else {
         swal.fire({
           title: "Este usuario no esta asociado aún",
-          icon: "warning",
+          icon: "info",
           showConfirmButton: false,
           timer: 2500,
         });

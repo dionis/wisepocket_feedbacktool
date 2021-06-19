@@ -89,18 +89,28 @@
             <button
               mat-menu-item
               aria-label="remove"
-              (click)="quitarAcces(contact)"
+              (click)="quitarAcces(contact, iconFalse)"
             >
               <span>Quitar acceso</span>
             </button>
             <button
               mat-menu-item
               aria-label="remove"
-              (click)="devolverAcces(contact)"
+              (click)="devolverAcces(contact, iconTrue)"
             >
               <span>Devolver acceso</span>
             </button>
           </mat-menu>
+          <mat-icon
+            #iconTrue
+            class="active-icon green-600 s-16"
+            >check</mat-icon
+          >
+          <mat-icon
+            #iconFalse
+            class="active-icon red-500 s-16"
+            >close</mat-icon
+          >
         </div>
       </mat-cell>
     </ng-container>

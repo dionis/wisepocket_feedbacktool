@@ -97,7 +97,8 @@ export class ContactAsociarComponent implements OnInit {
                       this.servCamp.getName(),
                     html: "<h3>Para cambiar la contraseña vaya a la opción Editar</h3>",
                     icon: "success",
-                    showConfirmButton: true,
+                    showConfirmButton: false,
+                    timer: 4000,
                   });
                   this.invService.getInvitados().subscribe((data) => {
                     console.log(data);

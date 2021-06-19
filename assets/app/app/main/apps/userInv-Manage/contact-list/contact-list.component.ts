@@ -37,6 +37,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
   displayedColumns = ["Nombre", "Correo", "Teléfono", "boton", "menu"];
   selectedContacts: any[];
   checkboxes: {};
+  //showStatus: boolean;
   dialogRef: any;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   ListaCampanaService: any;
@@ -76,6 +77,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     this.dataSource = new FilesDataSource(this._contactsService);
     console.log(this.dataSource);
     this.dataSource.connect().subscribe((data) => {
+      this.statusAsociado(data);
       console.log(data);
       //console.log(this._contactsService.getInvitadXID(data[0].id))
     });
@@ -144,6 +146,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                   showConfirmButton: false,
                   timer: 2500,
                 });
+                this.status(contact);
               });
             } else {
               swal.fire({
@@ -180,6 +183,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                   showConfirmButton: false,
                   timer: 2500,
                 });
+                this.status(contact);
               });
             } else {
               swal.fire({
@@ -249,6 +253,25 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
       });
   }
 
+  status(invitado) {
+    this._contactsService.getStatusAcceso(invitado).subscribe((res) => {
+      if (res.success) {
+        //this.showStatus = true;
+      } else {
+        //this.showStatus = false;
+      }
+    });
+  }
+
+  statusAsociado(invitado) {
+    this._contactsService.getStatusAsociado(invitado).subscribe((res) => {
+      if (res.success) {
+        //this.showStatus = true;
+      } else {
+        //this.showStatus = false;
+      }
+    });
+  }
   /**
    * On destroy
    */

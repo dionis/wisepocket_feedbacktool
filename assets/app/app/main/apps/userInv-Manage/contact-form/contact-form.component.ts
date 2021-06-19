@@ -61,18 +61,20 @@ export class ContactsContactFormDialogComponent {
     }
     this.invUserForm = this._formBuilder.group({
       nombre: ["", Validators.required],
-      correo: ["", [Validators.required, Validators.email]],
+      correo: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern(
+            "[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+          ),
+        ],
+      ],
       telefono: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
       direccion: ["", Validators.required],
-      password: ["", [Validators.required, Validators.minLength(8)]],
-      passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
     });
-    this.invUserForm
-      .get("password")
-      .valueChanges.pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(() => {
-        this.invUserForm.get("passwordConfirm").updateValueAndValidity();
-      });
+   
     if (this.action === "edit") {
       this.invUserForm = this.createContactForm();
     }
@@ -319,40 +321,12 @@ export class ContactsContactFormDialogComponent {
    * @returns {FormGroup}
    */
   createContactForm(): FormGroup {
-    console.log("New Form");
-    this.contact.password = "";
     return this._formBuilder.group({
       id: [this.contact.id],
       nombre: [this.contact.nombre],
       correo: [this.contact.correo],
       telefono: [this.contact.telefono],
-      password: [this.contact.password],
-      passwordConfirm: [this.contact.password],
       direccion: [this.contact.direccion],
     });
   }
 }
-export const confirmPasswordValidator: ValidatorFn = (
-  control: AbstractControl
-): ValidationErrors | null => {
-  if (!control.parent || !control) {
-    return null;
-  }
-
-  const password = control.parent.get("password");
-  const passwordConfirm = control.parent.get("passwordConfirm");
-
-  if (!password || !passwordConfirm) {
-    return null;
-  }
-
-  if (passwordConfirm.value === "") {
-    return null;
-  }
-
-  if (password.value === passwordConfirm.value) {
-    return null;
-  }
-
-  return { passwordsNotMatching: true };
-};

@@ -74,7 +74,7 @@ export class ContactsContactFormDialogComponent {
       telefono: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
       direccion: ["", Validators.required],
     });
-   
+
     if (this.action === "edit") {
       this.invUserForm = this.createContactForm();
     }
@@ -85,73 +85,142 @@ export class ContactsContactFormDialogComponent {
     console.log(data);
     this.invService.addInvUser(data).subscribe((res) => {
       if (res.success && res.autorizado) {
-        swal.fire("Invitado registrado");
+        swal.fire({
+          title: "Invitado registrado",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2000,
+        });
         this.contact = data;
         this.invService.getInvitados().subscribe((data) => {
           console.log(data);
           this.invService.getUsers(data.data);
         });
       } else if (res.success === false) {
-        swal.fire("Este usuario ya está registrado");
+        swal.fire({
+          title: "Este usuario ya está registrado",
+          icon: "info",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       }
       if (res.autorizado === false) {
-        swal.fire("No está autorizado");
+        swal.fire({
+          title: "No está autorizado",
+          icon: "info",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       }
     });
   }
 
   onSaveEdit() {
-    this.invService
-      .updateInfo(this.invUserForm.getRawValue())
-      .subscribe((data) => {
-        console.log(data);
-        this.invService
-          .getStatusAsociado(this.invUserForm.getRawValue())
-          .subscribe((res) => {
-            console.log(res.success);
-            if (!res.success) {
-              this.invService
-                .updatePass(this.invUserForm.getRawValue())
-                .subscribe((data) => {});
-              swal.fire("Información de usuario y contraseña actualizados");
+    swal
+      .fire({
+        title:
+          "Se actualizará la información de este usuario. ¿Desea continuar?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+        allowOutsideClick: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          this.invService
+            .updateInfo(this.invUserForm.getRawValue())
+            .subscribe((data) => {
+              swal.fire({
+                title: "Información de usuario actualizada",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000,
+              });
               this.invService.getInvitados().subscribe((data) => {
                 console.log(data);
                 this.invService.getUsers(data.data);
               });
+            });
+        } else {
+        }
+      });
+  }
+
+  onDelete() {
+    swal
+      .fire({
+        title: "¿Está seguro que desea eliminarlo?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+        allowOutsideClick: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          this.invService.getStatusAsociado(this.contact).subscribe((res) => {
+            console.log(res.success);
+            if (res.success != true) {
+              swal
+                .fire({
+                  title:
+                    "Este usuario está asociado y si se elimina será desvinculado. ¿Desea continuar?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Sí",
+                  cancelButtonText: "No",
+                  allowOutsideClick: true,
+                })
+                .then((result) => {
+                  if (result.value) {
+                    this.invService
+                      .deleteUserInv(this.invUserForm.getRawValue())
+                      .subscribe((res) => {
+                        if (res.success) {
+                          swal.fire({
+                            title: "Usuario eliminado",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 2000,
+                          });
+                        } else {
+                          swal.fire({
+                            title: "Falló la acción",
+                            icon: "error",
+                            showConfirmButton: false,
+                            timer: 2000,
+                          });
+                        }
+                      });
+                    this.invService.getInvitados().subscribe((data) => {
+                      console.log(data);
+                      this.invService.getUsers(data.data);
+                    });
+                  } else {
+                  }
+                });
             } else {
-              swal.fire(
-                "Información de usuario actualizado, no se cambió la contraseña ya que este usuario no tiene acceso"
-              );
+              this.invService
+                .deleteUserInv(this.invUserForm.getRawValue())
+                .subscribe((data) => {
+                  console.log(data);
+                });
+              swal.fire({
+                title: "Usuario eliminado",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000,
+              });
               this.invService.getInvitados().subscribe((data) => {
                 console.log(data);
                 this.invService.getUsers(data.data);
               });
             }
           });
+        } else {
+        }
       });
-  }
-
-  onDelete() {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false,
-    });
-    this.confirmDialogRef.componentInstance.confirmMessage =
-      "¿Está seguro que desea eliminarlo?";
-    this.confirmDialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.invService
-          .deleteUserInv(this.invUserForm.getRawValue())
-          .subscribe((data) => {
-            console.log(data);
-          });
-        swal.fire("Usuario eliminado");
-        this.invService.getInvitados().subscribe((data) => {
-          console.log(data);
-          this.invService.getUsers(data.data);
-        });
-      }
-      this.confirmDialogRef = null;
-    });
   }
 
   deleteAcces(invitado) {
@@ -167,7 +236,7 @@ export class ContactsContactFormDialogComponent {
         swal
           .fire({
             title: "Modificación de contraseña",
-            text: "¿Está seguro que desea cambiarla?",
+            html: "<h4>¿Está seguro que desea cambiarla?</h4>",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Sí",

@@ -52,10 +52,6 @@ export class ContactAsociarComponent implements OnInit {
       this.dialogTitle = "Asociar a Campaña";
       this.contact = _data.contact;
     }
-    this.invUserForm = this._formBuilder.group({
-      password: ["", Validators.required],
-      passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
-    });
     this.nameCamp = this.servCamp.getName();
     console.log(this.nameCamp);
 
@@ -150,16 +146,10 @@ export class ContactAsociarComponent implements OnInit {
   }
 
   createContactForm(): FormGroup {
-    console.log("New Form");
     this.contact.password = "";
     return this._formBuilder.group({
-      id: [this.contact.id],
-      nombre: [this.contact.nombre],
-      correo: [this.contact.correo],
-      telefono: [this.contact.telefono],
-      password: [this.contact.password],
-      passwordConfirm: [this.contact.password],
-      direccion: [this.contact.direccion],
+      password: ["", Validators.required],
+      passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
     });
   }
 }

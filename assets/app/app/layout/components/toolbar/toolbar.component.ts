@@ -210,4 +210,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     goToStadistic(){
       this.router.navigate(["/apps/analyticsbyIdioma"])
     }
+
+    goToProfile(){
+      this.router.navigate(["/pages/profile"])
+    }
 }

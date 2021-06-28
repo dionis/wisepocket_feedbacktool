@@ -25,7 +25,7 @@
 <div class="navbar-scroll-container" [ngClass]="fuseConfig.layout.navbar.primaryBackground"
      fusePerfectScrollbar [fusePerfectScrollbarOptions]="{suppressScrollX: true}">
 
-    <div class="user" fxLayout="column" [ngClass]="fuseConfig.layout.navbar.secondaryBackground">
+    <div class="user"  (click)="goToProfile()" fxLayout="column" [ngClass]="fuseConfig.layout.navbar.secondaryBackground">
 
         <div class="h3 username">{{ user?user.name:""}}</div>
         <div class="h5 email hint-text mt-8">{{ user?user.email:""}}</div>

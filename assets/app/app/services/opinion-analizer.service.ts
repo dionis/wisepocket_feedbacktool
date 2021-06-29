@@ -49,6 +49,13 @@ export class OpinionService implements Resolve<any>
     onOpinionSelected: BehaviorSubject<boolean>;
     onPageChanched: BehaviorSubject<any>;
 
+    onLangChanched:  BehaviorSubject<any>;
+    onDateStartChanched:  BehaviorSubject<any>;
+    onDateEndChanched:  BehaviorSubject<any>;
+    onUserIdChanched:  BehaviorSubject<any>;
+    onTextChanched:  BehaviorSubject<any>;
+    onPolarityChanched:  BehaviorSubject<any>;
+
 
     filterBy: string;
 
@@ -78,6 +85,14 @@ export class OpinionService implements Resolve<any>
         this.onAspectsTotalOfOpinionChanged = new BehaviorSubject(0);
         this.currentOpinionAspects = [];
         this.onPageChanched = new BehaviorSubject({'pageIndex':'0','pageSize':'10'})
+        
+        this.onLangChanched = new BehaviorSubject('');
+        this.onUserIdChanched = new BehaviorSubject('');
+        this.onTextChanched = new BehaviorSubject('');
+        this.onPolarityChanched = new BehaviorSubject('');
+        this.onDateStartChanched = new BehaviorSubject('');
+        this.onDateEndChanched= new BehaviorSubject('');
+        
     }
 
     /**
@@ -256,10 +271,19 @@ export class OpinionService implements Resolve<any>
         if (this.routeParams.filterHandle) {
             return this.getOpinionsByFilter(this.routeParams.filterHandle,page,limit);
         }
+
         // if(this.routeParams.pageIndex && this.routeParams.pageSize){
         //    return this.getOpinionsByPages(this.routeParams.pageIndex,this.routeParams.pageSize);
         // }
-        return this.getOpinionsFromBAck(page,limit,'fecha DESC','');
+        return this.getOpinionsAdvancedSearch(page,
+                                limit,
+                                this.onUserIdChanched.value,
+                                this.onDateStartChanched.value,
+                                this.onDateEndChanched.value,
+                                this.onTextChanched.value,
+                                this.onPolarityChanched.value,
+                                this.onLangChanched.value);
+        //return this.getOpinionsFromBAck(page,limit,'fecha DESC','');
         //return this.getOpinionsByFolder(this.routeParams.folderHandle);
 
     }
@@ -278,8 +302,8 @@ export class OpinionService implements Resolve<any>
                 if(this.routeParams.pageIndex && this.routeParams.pageSize){
                     this.getOpinionsByPages(this.routeParams.pageIndex,this.routeParams.pageSize);
                 }
-
-                return this.getOpinionsFromBAck('0','','fecha DESC','');
+                return this.getOpinionsAdvancedSearch('0','','','','','','','');
+                //return this.getOpinionsFromBAck('0','','fecha DESC','');
 
             }
         }
@@ -613,7 +637,10 @@ export class OpinionService implements Resolve<any>
             },reject);
         })
    }
-   getOpinionsAdvancedSearch(user_id:string,
+   getOpinionsAdvancedSearch(
+                            page:string,
+                            limit:string,
+                            user_id:string,
                             date_start:string,
                             date_end:string,
                             text:string,
@@ -630,6 +657,8 @@ export class OpinionService implements Resolve<any>
                         'text': text,
                         'polarity':polarity,
                         'lang': lang,
+                        'page':page,
+                        'limit':limit
                         }})
                         .subscribe((opinions:any)=>{
 

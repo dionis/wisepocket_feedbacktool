@@ -129,13 +129,15 @@ export class MailboxMainSidebarComponent implements OnInit, OnDestroy
                 //const actionType: string = response[0];
                 const formData: FormGroup = response;
                 console.log(formData);
-                this._opinionService.getOpinionsAdvancedSearch(
-                    formData.value.users,
-                    formData.value.date_start,
-                    formData.value.date_end,
-                    formData.value.text,
-                    formData.value.polarity,
-                    formData.value.lang).then(result=>{
+                this._opinionService.onLangChanched.next(formData.value.lang);
+                this._opinionService.onUserIdChanched.next(formData.value.users);
+                this._opinionService.onDateStartChanched.next(formData.value.date_start);
+                this._opinionService.onDateEndChanched.next(formData.value.date_end);
+                this._opinionService.onTextChanched.next(formData.value.text);
+                this._opinionService.onPolarityChanched.next(formData.value.polarity)
+                this._opinionService.getOpinions(
+                    this._opinionService.onPageChanched.value.pageIndex,
+                    this._opinionService.onPageChanched.value.pageSize,).then(result=>{
                         console.log(result);
                     }).catch(error=>{
 

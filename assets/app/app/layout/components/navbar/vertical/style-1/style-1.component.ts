@@ -43,6 +43,7 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
         private _router: Router,
         private userService: UserService,
         private sharedVarService: SharedVariablesService,
+
     )
     {
         // Set the private defaults
@@ -170,5 +171,9 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
     toggleSidebarFolded(): void
     {
         this._fuseSidebarService.getSidebar('navbar').toggleFold();
+    }
+
+    goToProfile(){
+      this._router.navigate(["/pages/profile"])
     }
 }

@@ -31,7 +31,7 @@ import { OpinionTest } from '../../../../models/opinionTest.model';
 })
 export class OpinionDetailsComponent implements OnInit,AfterViewInit, OnDestroy
 {
-    opinion: OpinionTest;
+    opinion: OpinionTest = undefined;
     labels: any[];
     showDetails: boolean;
     pruebas: any

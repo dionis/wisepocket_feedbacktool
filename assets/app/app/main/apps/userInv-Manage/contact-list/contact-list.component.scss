@@ -20,19 +20,17 @@ contacts-contact-list {
             text-align: center;
         }
 
-        .mat-column-checkbox {
-            flex: 0 1 64px;
-            padding-left: 18px;
-        }
-
         .mat-column-boton {
-            flex: 1 0 80px;
+            flex: 2.2;
             justify-content: center !important;
         }
 
         .mat-column-Correo {
-            flex: 1 4 0 80px;
-            justify-content: left !important;
+            flex: 3;
+            justify-content: center !important;
+        }
+        .mat-column-Teléfono {
+            justify-content: center !important;
         }
         .mat-column-menu {
             flex: 0 1 80px;

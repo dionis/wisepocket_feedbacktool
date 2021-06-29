@@ -351,7 +351,7 @@ module.exports = {
             } else {
               return res.send({
                 success: true,
-                message: "Acceso eliminado",
+                message: "Usuario eliminado",
               });
             }
           }

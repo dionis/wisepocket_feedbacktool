@@ -22,7 +22,7 @@
   <!-- Phone Column -->
   <ng-container matColumnDef="Teléfono">
     <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md
-      >Phone</mat-header-cell
+      >Teléfono</mat-header-cell
     >
     <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
       <p class="Teléfono text-truncate">
@@ -33,7 +33,9 @@
   <!-- Buttons Column -->
   <div>
     <ng-container matColumnDef="boton">
-      <mat-header-cell id="editar" *matHeaderCellDef>Editar - Asociar</mat-header-cell>
+      <mat-header-cell id="editar" *matHeaderCellDef
+        >Editar - Asociar</mat-header-cell
+      >
       <mat-cell *matCellDef="let contact">
         <div fxFlex="row" fxLayoutAlign="end center">
           <button
@@ -87,18 +89,28 @@
             <button
               mat-menu-item
               aria-label="remove"
-              (click)="quitarAcces(contact)"
+              (click)="quitarAcces(contact, iconFalse)"
             >
               <span>Quitar acceso</span>
             </button>
             <button
               mat-menu-item
               aria-label="remove"
-              (click)="devolverAcces(contact)"
+              (click)="devolverAcces(contact, iconTrue)"
             >
               <span>Devolver acceso</span>
             </button>
           </mat-menu>
+          <mat-icon
+            #iconTrue
+            class="active-icon green-600 s-16"
+            >check</mat-icon
+          >
+          <mat-icon
+            #iconFalse
+            class="active-icon red-500 s-16"
+            >close</mat-icon
+          >
         </div>
       </mat-cell>
     </ng-container>

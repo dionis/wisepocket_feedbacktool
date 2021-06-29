@@ -60,12 +60,21 @@
             placeholder="Email"
             formControlName="correo"
             required
+            maxlength="35"
             type="email"
           />
           <mat-error *ngIf="invUserForm.get('correo').hasError('required')">
             Correo requerido
           </mat-error>
           <mat-error *ngIf="invUserForm.get('correo').hasError('email')">
+            Por favor entre un correo válido
+          </mat-error>
+          <mat-error
+            *ngIf="
+              !invUserForm.get('correo').hasError('email') &&
+              invUserForm.get('correo').hasError('pattern')
+            "
+          >
             Por favor entre un correo válido
           </mat-error>
         </mat-form-field>
@@ -121,6 +130,16 @@
             Dirección requerida
           </mat-error>
         </mat-form-field>
+
+        <button
+          *ngIf="action === 'edit'"
+          floatLabel="always"
+          mat-raised-button
+          (click)="cambiarPass()"
+        >
+          Cambiar contraseña
+          <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+        </button>
       </div>
     </form>
   </div>

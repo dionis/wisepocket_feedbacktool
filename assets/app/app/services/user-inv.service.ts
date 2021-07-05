@@ -23,7 +23,7 @@ export class UserInvService {
   onFiltersChanged: BehaviorSubject<any>;
   onFiltersChangedInvAll: BehaviorSubject<any>;
   onSearchTextChanged: BehaviorSubject<any>;
-  searchText: "";
+  searchText: string;
   contacts: UserInv[];
   filters: any[];
   user_id: string;
@@ -38,28 +38,6 @@ export class UserInvService {
     this.onFiltersChangedInvAll = new BehaviorSubject([]);
     this.onSearchTextChanged = new BehaviorSubject("");
     this.user_id = this.user.getMyUserId();
-  }
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<any> | Promise<any> | any {
-    return new Promise((resolve, reject) => {
-      Promise.all([this.getInvitadosSearch()]).then(() => {
-        this.onSearchTextChanged.subscribe((searchText) => {
-          if (searchText !== "") {
-            console.log("Search Value  ", searchText);
-
-            this.searchText = searchText;
-            this.getInvitadosSearch();
-          } else {
-            this.searchText = searchText;
-            this.getInvitadosSearch();
-          }
-        });
-
-        resolve();
-      }, reject);
-    });
   }
 
   addInvUser(invitado): Observable<any> {
@@ -81,40 +59,50 @@ export class UserInvService {
 
   getInvitados(): Observable<any> {
     this.user_id = this.user.getMyUserId();
-    return this._http.get(
-      environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/userInvitado/getInvXUserChief?id=" +
-        this.user_id
-    );
-  }
-
-  getInvitadosSearch(): Promise<UserInv[]> {
-    this.user_id = this.user.getMyUserId();
-    return new Promise((resolve, reject) => {
-      this._http
-        .get(
-          environment.sails_services_urlpath +
-            ":" +
-            environment.sails_services_urlport +
-            "/userInvitado/getInvXUserChief?id=" +
-            this.user_id
-        )
-        .subscribe((responseData: any) => {
-          console.log(responseData);
-          this.contacts = responseData.data.map((contact) => {
-            return this.getUsers(responseData.data);
-          });
-
-          this.contacts = FuseUtils.filterArrayByString(
+    return this._http
+      .get(
+        environment.sails_services_urlpath +
+          ":" +
+          environment.sails_services_urlport +
+          "/userInvitado/getInvXUserChief?id=" +
+          this.user_id
+      )
+      .pipe(
+        map((responseData: any) => {
+          console.log(
+            "Contacts>>> ",
             this.contacts,
+            " SearchText>>> ",
             this.searchText
           );
-          this.onContactsChanged.next(this.contacts);
-          resolve(this.contacts);
-        }, reject);
-    });
+          if (responseData.data) {
+            console.log(responseData);
+            this.contacts = responseData.data.map((contact) => {
+              this.getUsers(responseData.data);
+            });
+            this.onSearchTextChanged.subscribe((searchText) => {
+              if (searchText !== "") {
+                console.log("Search Value  ", searchText);
+                this.searchText = searchText;
+                this.contacts = FuseUtils.filterArrayByString(
+                  this.contacts,
+                  this.searchText
+                );
+                console.log(
+                  "Search Value de nuevo  ",
+                  searchText,
+                  "Contacts  ",
+                  this.contacts
+                );
+                this.onContactsChanged.next(this.contacts);
+                this.getUsers(this.contacts);
+              } else {
+                this.getUsers(responseData.data);
+              }
+            });
+          }
+        })
+      );
   }
 
   getUsers(dataInv) {
@@ -193,7 +181,7 @@ export class UserInvService {
         ":" +
         environment.sails_services_urlport +
         "/userInvitado/updatePass",
-        { id: invitado.id, password: pass }
+      { id: invitado.id, password: pass }
     );
   }
   deleteupdatePass(invitado): Observable<any> {
@@ -270,40 +258,40 @@ export class UserInvService {
   }
 
   ///////////// TEST FILTERS ////////////////////
-  getFiltersInvCAMP(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._http
-        .get(
-          environment.sails_services_urlpath +
-            ":" +
-            environment.sails_services_urlport +
-            "/campaign/getInvitadoXCamp",
-          { params: { id: this.servCamp.getId() } }
-        )
-        .subscribe((response: any) => {
-          this.filters = response.data;
+  getFiltersInvCAMP(): Observable<any> {
+    return this._http
+      .get(
+        environment.sails_services_urlpath +
+          ":" +
+          environment.sails_services_urlport +
+          "/campaign/getInvitadoXCamp",
+        { params: { id: this.servCamp.getId() } }
+      )
+      .pipe(
+        map((responseData: any) => {
+          this.filters = responseData.data;
           this.onFiltersChanged.next(this.filters);
-          resolve(this.filters);
-        }, reject);
-    });
+          this.getUsers(this.filters);
+        })
+      );
   }
 
-  getFiltersAllInv(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._http
-        .get(
-          environment.sails_services_urlpath +
-            ":" +
-            environment.sails_services_urlport +
-            "/userInvitado/getInvXUserChief?id=" +
-            this.user_id
-        )
-        .subscribe((response: any) => {
-          this.filters = response.data;
+  getFiltersAllInv(): Observable<any> {
+    return this._http
+      .get(
+        environment.sails_services_urlpath +
+          ":" +
+          environment.sails_services_urlport +
+          "/userInvitado/getInvXUserChief?id=" +
+          this.user_id
+      )
+      .pipe(
+        map((responseData: any) => {
+          this.filters = responseData.data;
           this.onFiltersChangedInvAll.next(this.filters);
-          resolve(this.filters);
-        }, reject);
-    });
+          this.getUsers(this.filters);
+        })
+      );
   }
   ///////////// TEST FILTERS //////////////////////////////
 

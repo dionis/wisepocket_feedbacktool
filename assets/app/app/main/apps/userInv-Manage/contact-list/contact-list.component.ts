@@ -67,12 +67,9 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
    * On init
    */
   ngOnInit(): void {
-    this._contactsService.getInvitadosSearch();
-
-    /*this._contactsService.getInvitados().subscribe((data) => {
+    this._contactsService.getInvitados().subscribe((data) => {
       console.log(data);
-      this._contactsService.getUsers(data.data); ///Esta funcion inyecta los usuarios para mostrar en la tabla
-    });*/
+    });
 
     this.dataSource = new FilesDataSource(this._contactsService);
     console.log(this.dataSource);
@@ -232,12 +229,10 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                 showConfirmButton: false,
                 timer: 2500,
               });
-              this._contactsService.getFiltersInvCAMP().then((data) => {
+              this._contactsService.getFiltersInvCAMP().subscribe((data) => {
                 console.log(data);
-                this._contactsService.getUsers(data.data);
                 this._contactsService.getInvitados().subscribe((data) => {
                   console.log(data);
-                  this._contactsService.getUsers(data.data);
                 });
               });
             } else {

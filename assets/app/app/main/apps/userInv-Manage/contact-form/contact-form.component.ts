@@ -94,7 +94,6 @@ export class ContactsContactFormDialogComponent {
         this.contact = data;
         this.invService.getInvitados().subscribe((data) => {
           console.log(data);
-          this.invService.getUsers(data.data);
         });
       } else if (res.success === false) {
         swal.fire({
@@ -139,7 +138,6 @@ export class ContactsContactFormDialogComponent {
               });
               this.invService.getInvitados().subscribe((data) => {
                 console.log(data);
-                this.invService.getUsers(data.data);
               });
             });
         } else {
@@ -193,10 +191,12 @@ export class ContactsContactFormDialogComponent {
                           });
                         }
                       });
-                    this.invService.getInvitados().subscribe((data) => {
-                      console.log(data);
-                      this.invService.getUsers(data.data);
-                    });
+                      this.invService.getFiltersInvCAMP().subscribe((data) => {
+                        console.log(data);
+                        this.invService.getInvitados().subscribe((data) => {
+                          console.log(data);
+                        });
+                      });
                   } else {
                   }
                 });
@@ -214,7 +214,6 @@ export class ContactsContactFormDialogComponent {
               });
               this.invService.getInvitados().subscribe((data) => {
                 console.log(data);
-                this.invService.getUsers(data.data);
               });
             }
           });

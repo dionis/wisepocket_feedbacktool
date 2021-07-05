@@ -24,7 +24,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
   hasSelectedContacts: boolean;
   searchInput: FormControl;
   ListaCampanaService: any;
-
+  contacts: any;
   // Private
   private _unsubscribeAll: Subject<any>;
 
@@ -77,6 +77,8 @@ export class ContactsComponent implements OnInit, OnDestroy {
       )
       .subscribe((searchText) => {
         console.log("Search Text ", searchText);
+        this.invService.searchText = searchText;
+        console.log("SearchText del Service>>> ", this.invService.searchText);
         this.invService.onSearchTextChanged.next(searchText);
       });
   }

@@ -102,7 +102,6 @@ export class ContactAsociarComponent implements OnInit {
                   });
                   this.invService.getInvitados().subscribe((data) => {
                     console.log(data);
-                    this.invService.getUsers(data.data);
                   });
                 } else if (res.success === false) {
                   swal.fire({

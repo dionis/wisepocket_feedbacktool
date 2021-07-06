@@ -10,6 +10,8 @@ module.exports = {
   //requiere User_ID, id del usuario admin que lo invito
   create: async (req, res) => {
     let userChief;
+    let salt = await bcrypt.genSalt(10);
+    let hashpass = await bcrypt.hash(req.param("password"), salt);
     await User.findOne({
       id: req.param("id"),
     }).then(async (doc) => {
@@ -25,6 +27,7 @@ module.exports = {
               correo: req.param("correo"),
               telefono: req.param("telefono"),
               direccion: req.param("direccion"),
+              password: hashpass,
               //isAdmin: req.param("isAdmin"),
               // acceso: req.param("acceso"),
               invitadoBY: userChief.id,

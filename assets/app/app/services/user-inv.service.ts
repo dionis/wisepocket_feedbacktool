@@ -55,6 +55,7 @@ export class UserInvService {
         correo: invitado.correo,
         telefono: invitado.telefono,
         direccion: invitado.direccion,
+        password: invitado.password,
       }
     );
   }
@@ -104,12 +105,12 @@ export class UserInvService {
                   this.contacts,
                   this.searchText
                 );
-                console.log(
+                /*console.log(
                   "Search Value de nuevo  ",
                   searchText,
                   "Contacts  ",
                   this.contacts
-                );
+                );*/
                 this.onContactsChanged.next(this.contacts);
                 this.getUsers(this.contacts);
                 ///barra de busqueda
@@ -155,9 +156,10 @@ export class UserInvService {
     );
   }
 
-  ///PASS
-  /////CONTRASEÑA DE VINCULACION
+  /////CAMBIAR CONTRASEÑA
   updatePass(invitado): Observable<any> {
+    console.log(invitado);
+
     return this._http.patch(
       environment.sails_services_urlpath +
         ":" +
@@ -166,18 +168,6 @@ export class UserInvService {
       invitado
     );
   }
-
-  ////CAMBIAR CONTRASEÑA
-  updatePassTemp(invitado, pass): Observable<any> {
-    return this._http.patch(
-      environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/userInvitado/updatePass",
-      { id: invitado.id, password: pass }
-    );
-  }
-  ///PASS
   ////UPDATES
 
   /////DELETES INFOS
@@ -190,6 +180,8 @@ export class UserInvService {
       { params: { id: invitado.id, campID: this.servCamp.getId() } }
     );
   }
+  ///PASS
+  ////UPDATES
 
   ////Una vez que se elimina un invitado Se borra toda info de su relacion con la Campaña
   deleteupdatePass(invitado): Observable<any> {

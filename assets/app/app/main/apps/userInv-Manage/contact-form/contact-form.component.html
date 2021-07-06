@@ -194,7 +194,70 @@
             Dirección requerida
           </mat-error>
         </mat-form-field>
+        <h5 *ngIf="action === 'new'">
+          Se genera de forma automática la contraseña
+        </h5>
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="w-100-p"
+          *ngIf="action === 'new'"
+        >
+          <mat-label>Propuesta Contraseña</mat-label>
+          <input
+            #pass
+            type="password"
+            matInput
+            placeholder="Contraseña"
+            formControlName="password"
+            required
+            minlength="6"
+          />
+          <mat-error *ngIf="invUserForm.get('password').hasError('required')">
+            Contraseña requerida
+          </mat-error>
+          <mat-error
+            *ngIf="
+              !invUserForm.get('password').hasError('required') &&
+              !pass.minlength
+            "
+          >
+            Mínimo 6 caracteres
+          </mat-error>
+        </mat-form-field>
 
+        <!--<mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="w-100-p"
+          *ngIf="action === 'new'"
+        >
+          <mat-label>Confirmar contraseña</mat-label>
+          <input
+            #passConf
+            matInput
+            required
+            minlength="6"
+            placeholder="Confirmar contraseña"
+            type="password"
+            formControlName="passwordConfirm"
+          />
+          <mat-error
+            *ngIf="invUserForm.get('passwordConfirm').hasError('required')"
+          >
+            Confirmación de contraseña requerida
+          </mat-error>
+          <mat-error
+            *ngIf="
+              !invUserForm.get('passwordConfirm').hasError('required') &&
+              invUserForm
+                .get('passwordConfirm')
+                .hasError('passwordsNotMatching')
+            "
+          >
+            La contraseña no coincide
+          </mat-error>
+        </mat-form-field><-->
         <button
           *ngIf="action === 'edit'"
           floatLabel="always"

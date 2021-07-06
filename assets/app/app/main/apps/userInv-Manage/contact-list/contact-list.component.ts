@@ -19,6 +19,7 @@ import { ContactAsociarComponent } from "../contact-asociar/contact-asociar.comp
 //import {CampaingService} from '../../../../services/campaing.service';
 import swal from "sweetalert2";
 import { takeUntil } from "rxjs/operators";
+import { SharedVariablesService } from "../../../../services/shared-variables.service";
 
 @Component({
   selector: "contacts-contact-list",
@@ -53,7 +54,8 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
    */
   constructor(
     private _contactsService: UserInvService,
-    public _matDialog: MatDialog
+    public _matDialog: MatDialog,
+    private servCamp: SharedVariablesService,
   ) {
     // Set the private defaults
     this._unsubscribeAll = new Subject();
@@ -75,51 +77,16 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     console.log(this.dataSource);
     this.dataSource.connect().subscribe((data) => {
       this.statusAsociado(data);
-      console.log(data);
+      //console.log(data);
       //console.log(this._contactsService.getInvitadXID(data[0].id))
     });
 
     this._contactsService.onContactsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((contacts) => {
-        console.log("Invitados", contacts);
         this.contacts = contacts;
       });
-    /* this._contactsService.onContactsChanged
-             .pipe(takeUntil(this._unsubscribeAll))
-             .subscribe(contacts => {
-                 this.contacts = contacts;
- 
-                 this.checkboxes = {};
-                 contacts.map(contact => {
-                     this.checkboxes[contact.id] = false;
-                 });
-             });
- 
-         /*this._contactsService.onSelectedContactsChanged
-             .pipe(takeUntil(this._unsubscribeAll))
-             .subscribe(selectedContacts => {
-                 for (const id in this.checkboxes) {
-                     if (!this.checkboxes.hasOwnProperty(id)) {
-                         continue;
-                     }
- 
-                     this.checkboxes[id] = selectedContacts.includes(id);
-                 }
-                 this.selectedContacts = selectedContacts;
-             });
- 
-         this._contactsService.onUserDataChanged
-             .pipe(takeUntil(this._unsubscribeAll))
-             .subscribe(user => {
-                 this.user = user;
-             });
- 
-         this._contactsService.onFilterChanged
-             .pipe(takeUntil(this._unsubscribeAll))
-             .subscribe(() => {
-                 this._contactsService.deselectContacts();
-             });*/
+    
   }
   quitarAcces(contact) {
     swal
@@ -143,7 +110,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                   showConfirmButton: false,
                   timer: 2500,
                 });
-                this.status(contact);
+                this.statusAcces(contact);
               });
             } else {
               swal.fire({
@@ -180,7 +147,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                   showConfirmButton: false,
                   timer: 2500,
                 });
-                this.status(contact);
+                this.statusAcces(contact);
               });
             } else {
               swal.fire({
@@ -248,7 +215,77 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
       });
   }
 
-  status(invitado) {
+  asociarAcamp(contact) {
+    swal
+      .fire({
+        title:
+          "¿Está seguro que desea vincular a " +
+          contact.nombre +
+          " y darle acceso a la campaña " +
+          this.servCamp.getName() +
+          "?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+        allowOutsideClick: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          this._contactsService.getStatusAsociado(contact).subscribe((res) => {
+            console.log(res.success);
+            if (res.success) {
+              this._contactsService.AddCampInv(contact).subscribe((res) => {
+                if (res.message === "Asociado a la Campaña con éxito") {
+                  this.updateAcces(contact);
+                  swal.fire({
+                    title:
+                      "Ahora el usuario tiene acceso a la Campaña: " +
+                      this.servCamp.getName(),
+                    html: "<h3>Para cambiar la contraseña vaya a la opción Editar</h3>",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 4000,
+                  });
+                  this._contactsService.getInvitados().subscribe((data) => {
+                    console.log(data);
+                  });
+                } else if (res.success === false) {
+                  swal.fire({
+                    title: "Fallo la operación",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 2500,
+                  });
+                }
+                this.statusAcces(contact);
+              });
+            } else {
+              swal.fire({
+                title: "Ya está asociado",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 2500,
+              });
+            }
+          });
+        }
+      });
+  }
+
+  updateAcces(contact) {
+    this._contactsService.darAcceso(contact).subscribe((data) => {
+      console.log(data);
+    });
+  }
+
+  statusAsociado(contact): any {
+    this._contactsService.getStatusAsociado(contact).subscribe((res) => {
+      console.log(res.success);
+      return res.success;
+    });
+  }
+  statusAcces(invitado) {
     this._contactsService.getStatusAcceso(invitado).subscribe((res) => {
       if (res.success) {
         //this.showStatus = true;
@@ -258,15 +295,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     });
   }
 
-  statusAsociado(invitado) {
-    this._contactsService.getStatusAsociado(invitado).subscribe((res) => {
-      if (res.success) {
-        //this.showStatus = true;
-      } else {
-        //this.showStatus = false;
-      }
-    });
-  }
+  
   /**
    * On destroy
    */
@@ -295,7 +324,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     });
   }
 
-  asociarCamp(contact): void {
+  /*asociarCamp(contact): void {
     this.dialogRef = this._matDialog.open(ContactAsociarComponent, {
       width: "600px",
       height: "auto",
@@ -305,7 +334,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
         action: "asociar",
       },
     });
-  }
+  }*/
 
   /**
    * Delete Contact

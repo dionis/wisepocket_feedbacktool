@@ -59,10 +59,9 @@ export class ContactsComponent implements OnInit, OnDestroy {
    * On init
    */
   ngOnInit(): void {
-    /*this.invService.getInvitados().subscribe(data =>{
-            console.log(data);
-            
-        })*/
+    this.invService.getFiltersAllInv().subscribe((data) => {
+      console.log(data);
+    });
     this._contactsService.onSelectedContactsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((selectedContacts) => {
@@ -78,7 +77,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
       .subscribe((searchText) => {
         console.log("Search Text ", searchText);
         this.invService.searchText = searchText;
-        console.log("SearchText del Service>>> ", this.invService.searchText);
         this.invService.onSearchTextChanged.next(searchText);
       });
   }

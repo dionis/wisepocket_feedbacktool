@@ -1,13 +1,6 @@
 import { UserInv } from "../../../../models/userInv.model";
 import { Component, Inject, ViewEncapsulation } from "@angular/core";
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -16,10 +9,12 @@ import {
 
 import { UserInvService } from "../../../../services/user-inv.service";
 import swal from "sweetalert2";
+
+import { generate } from "generate-password";
 import { FuseConfirmDialogComponent } from "../../../../../@fuse/components/confirm-dialog/confirm-dialog.component";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
-import { title } from "process";
+import { OnInit } from "@angular/core";
 
 @Component({
   selector: "contacts-contact-form-dialog",
@@ -27,9 +22,10 @@ import { title } from "process";
   styleUrls: ["./contact-form.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class ContactsContactFormDialogComponent {
+export class ContactsContactFormDialogComponent implements OnInit {
   action: string;
   contact: UserInv;
+  passworAuto = generate({ length: 10, numbers: true });
   //contactForm: FormGroup;
   invUserForm: FormGroup;
   dialogTitle: string;
@@ -73,11 +69,22 @@ export class ContactsContactFormDialogComponent {
       ],
       telefono: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
       direccion: ["", Validators.required],
+      password: [this.passworAuto, Validators.required],
+      //passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
     });
+    console.log("Generate Password Auto ", this.passworAuto);
 
     if (this.action === "edit") {
       this.invUserForm = this.createContactForm();
     }
+  }
+  ngOnInit(): void {
+    this.invUserForm
+      .get("password")
+      .valueChanges.pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this.invUserForm.get("passwordConfirm").updateValueAndValidity();
+      });
   }
 
   onSave() {
@@ -87,9 +94,10 @@ export class ContactsContactFormDialogComponent {
       if (res.success && res.autorizado) {
         swal.fire({
           title: "Invitado registrado",
+          html: "<h3>Se le notificará al usuario de la propuesta de contraseña por correo</h3>",
           icon: "success",
           showConfirmButton: false,
-          timer: 2000,
+          timer: 3000,
         });
         this.contact = data;
         this.invService.getInvitados().subscribe((data) => {
@@ -191,12 +199,12 @@ export class ContactsContactFormDialogComponent {
                           });
                         }
                       });
-                      this.invService.getFiltersInvCAMP().subscribe((data) => {
+                    this.invService.getFiltersInvCAMP().subscribe((data) => {
+                      console.log(data);
+                      this.invService.getInvitados().subscribe((data) => {
                         console.log(data);
-                        this.invService.getInvitados().subscribe((data) => {
-                          console.log(data);
-                        });
                       });
+                    });
                   } else {
                   }
                 });
@@ -275,7 +283,7 @@ export class ContactsContactFormDialogComponent {
                       .then((result) => {
                         if (conf === result.value) {
                           this.invService
-                            .updatePassTemp(this.contact, result.value)
+                            .updatePass(this.contact)
                             .subscribe((data) => {
                               swal.fire({
                                 title: "Éxito",
@@ -349,16 +357,14 @@ export class ContactsContactFormDialogComponent {
             })
             .then((result) => {
               if (conf === result.value) {
-                this.invService
-                  .updatePassTemp(this.contact, result.value)
-                  .subscribe((data) => {
-                    swal.fire({
-                      title: "Éxito",
-                      icon: "success",
-                      showConfirmButton: false,
-                      timer: 1500,
-                    });
+                this.invService.updatePass(this.contact).subscribe((data) => {
+                  swal.fire({
+                    title: "Éxito",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500,
                   });
+                });
               } else {
                 this.error();
               }
@@ -398,3 +404,28 @@ export class ContactsContactFormDialogComponent {
     });
   }
 }
+
+/*export const confirmPasswordValidator: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  if (!control.parent || !control) {
+    return null;
+  }
+
+  const password = control.parent.get("password");
+  const passwordConfirm = control.parent.get("passwordConfirm");
+
+  if (!password || !passwordConfirm) {
+    return null;
+  }
+
+  if (passwordConfirm.value === "") {
+    return null;
+  }
+
+  if (password.value === passwordConfirm.value) {
+    return null;
+  }
+
+  return { passwordsNotMatching: true };
+};*/

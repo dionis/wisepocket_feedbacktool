@@ -59,12 +59,7 @@ export class ContactAsociarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.invUserForm
-      .get("password")
-      .valueChanges.pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(() => {
-        this.invUserForm.get("passwordConfirm").updateValueAndValidity();
-      });
+   
   }
 
   asociarAcamp(contact) {
@@ -89,7 +84,6 @@ export class ContactAsociarComponent implements OnInit {
             if (res.success) {
               this.invService.AddCampInv(contact).subscribe((res) => {
                 if (res.message === "Asociado a la Campaña con éxito") {
-                  this.updatePass(contact);
                   this.updateAcces(contact);
                   swal.fire({
                     title:
@@ -124,12 +118,6 @@ export class ContactAsociarComponent implements OnInit {
           });
         }
       });
-  }
-
-  updatePass(contact) {
-    this.invService.updatePass(contact).subscribe((data) => {
-      console.log(data);
-    });
   }
 
   updateAcces(contact) {

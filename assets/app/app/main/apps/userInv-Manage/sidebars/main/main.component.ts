@@ -81,7 +81,6 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy {
       this.userInv.onFiltersChanged
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((filters) => {
-          console.log("XCamp ", filters);
           this.filtersXCamp = filters;
         });
     });
@@ -93,7 +92,6 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy {
       this.userInv.onFiltersChangedInvAll
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((filters) => {
-          console.log("Todos Inv ", filters);
           this.filtersAllInv = filters;
         });
     });

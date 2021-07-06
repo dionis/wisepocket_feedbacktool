@@ -40,6 +40,8 @@ export class UserInvService {
     this.user_id = this.user.getMyUserId();
   }
 
+  ///ADD INFO USER
+  //Add UserInvitado
   addInvUser(invitado): Observable<any> {
     this.user_id = this.user.getMyUserId();
     return this._http.post(
@@ -56,7 +58,20 @@ export class UserInvService {
       }
     );
   }
+  ////Vincular a Camp
+  AddCampInv(invitado): Observable<any> {
+    const cammID = this.servCamp.getId();
+    return this._http.post(
+      environment.sails_services_urlpath +
+        ":" +
+        environment.sails_services_urlport +
+        "/userInvitado/addCampaigns",
+      { id: invitado.id, campID: cammID }
+    );
+  }
+  ///ADD INFO USER
 
+  ///GET INFOS
   getInvitados(): Observable<any> {
     this.user_id = this.user.getMyUserId();
     return this._http
@@ -80,6 +95,7 @@ export class UserInvService {
             this.contacts = responseData.data.map((contact) => {
               this.getUsers(responseData.data);
             });
+            ///barra de busqueda
             this.onSearchTextChanged.subscribe((searchText) => {
               if (searchText !== "") {
                 console.log("Search Value  ", searchText);
@@ -96,6 +112,7 @@ export class UserInvService {
                 );
                 this.onContactsChanged.next(this.contacts);
                 this.getUsers(this.contacts);
+                ///barra de busqueda
               } else {
                 this.getUsers(responseData.data);
               }
@@ -105,6 +122,7 @@ export class UserInvService {
       );
   }
 
+  ///Monitorea dataUser para Mostrarlos segun operaciones(todos, filtrado, al buscar, etc)
   getUsers(dataInv) {
     this.contacts = dataInv.map((data) => {
       return new UserInv(data);
@@ -112,17 +130,57 @@ export class UserInvService {
     this.onContactsChanged.next(this.contacts);
   }
 
-  AddCampInv(invitado): Observable<any> {
-    const cammID = this.servCamp.getId();
-    return this._http.post(
+  ///Invitado by ID
+  getInvitadXID(invitado): Observable<any> {
+    return this._http.get(
       environment.sails_services_urlpath +
         ":" +
         environment.sails_services_urlport +
-        "/userInvitado/addCampaigns",
-      { id: invitado.id, campID: cammID }
+        "/userInvitado/getInvitadoById",
+      invitado
+    );
+  }
+  ///GET INFOS
+
+  ////UPDATES
+  updateInfo(invitado): Observable<any> {
+    console.log(invitado.nombre);
+    return this._http.patch(
+      environment.sails_services_urlpath +
+        ":" +
+        environment.sails_services_urlport +
+        "/userInvitado/updateInfo?id=" +
+        invitado.id,
+      invitado
     );
   }
 
+  ///PASS
+  /////CONTRASEÑA DE VINCULACION
+  updatePass(invitado): Observable<any> {
+    return this._http.patch(
+      environment.sails_services_urlpath +
+        ":" +
+        environment.sails_services_urlport +
+        "/userInvitado/updatePass",
+      invitado
+    );
+  }
+
+  ////CAMBIAR CONTRASEÑA
+  updatePassTemp(invitado, pass): Observable<any> {
+    return this._http.patch(
+      environment.sails_services_urlpath +
+        ":" +
+        environment.sails_services_urlport +
+        "/userInvitado/updatePass",
+      { id: invitado.id, password: pass }
+    );
+  }
+  ///PASS
+  ////UPDATES
+
+  /////DELETES INFOS
   deleteUserInv(invitado): Observable<any> {
     return this._http.delete(
       environment.sails_services_urlpath +
@@ -133,13 +191,14 @@ export class UserInvService {
     );
   }
 
-  deleteAcces(invitado): Observable<any> {
-    return this._http.delete(
+  ////Una vez que se elimina un invitado Se borra toda info de su relacion con la Campaña
+  deleteupdatePass(invitado): Observable<any> {
+    return this._http.patch(
       environment.sails_services_urlpath +
         ":" +
         environment.sails_services_urlport +
-        "/acceso/deleteAcces",
-      { params: { id: invitado.id, campID: this.servCamp.getId() } }
+        "/userInvitado/deleteupdatePass",
+      invitado
     );
   }
 
@@ -153,47 +212,19 @@ export class UserInvService {
     );
   }
 
-  updateInfo(invitado): Observable<any> {
-    console.log(invitado.nombre);
-    return this._http.patch(
+  deleteAcces(invitado): Observable<any> {
+    return this._http.delete(
       environment.sails_services_urlpath +
         ":" +
         environment.sails_services_urlport +
-        "/userInvitado/updateInfo?id=" +
-        invitado.id,
-      invitado
+        "/acceso/deleteAcces",
+      { params: { id: invitado.id, campID: this.servCamp.getId() } }
     );
   }
+  ////Una vez que se elimina un invitado Se borra toda info de su relacion con la Campaña
+  /////DELETES INFOS
 
-  updatePass(invitado): Observable<any> {
-    return this._http.patch(
-      environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/userInvitado/updatePass",
-      invitado
-    );
-  }
-
-  updatePassTemp(invitado, pass): Observable<any> {
-    return this._http.patch(
-      environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/userInvitado/updatePass",
-      { id: invitado.id, password: pass }
-    );
-  }
-  deleteupdatePass(invitado): Observable<any> {
-    return this._http.patch(
-      environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/userInvitado/deleteupdatePass",
-      invitado
-    );
-  }
-
+  ///ACCESO
   darAcceso(invitado): Observable<any> {
     const cammID = this.servCamp.getId();
     return this._http.post(
@@ -226,7 +257,9 @@ export class UserInvService {
       { id: invitado.id, campID: cammID }
     );
   }
+  ///ACCESO
 
+  ////STATUS de USER
   getStatusAsociado(invitado): Observable<any> {
     return this._http.get(
       environment.sails_services_urlpath +
@@ -246,18 +279,10 @@ export class UserInvService {
       { params: { id: invitado.id, campID: this.servCamp.getId() } }
     );
   }
+  ////STATUS de USER
 
-  getInvitadXID(invitado): Observable<any> {
-    return this._http.get(
-      environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/userInvitado/getInvitadoById",
-      invitado
-    );
-  }
-
-  ///////////// TEST FILTERS ////////////////////
+  ///////////// FILTERS ////////////////////
+  ///Invitados de la Camp
   getFiltersInvCAMP(): Observable<any> {
     return this._http
       .get(
@@ -276,6 +301,7 @@ export class UserInvService {
       );
   }
 
+  ///Todos los invitados
   getFiltersAllInv(): Observable<any> {
     return this._http
       .get(
@@ -293,8 +319,9 @@ export class UserInvService {
         })
       );
   }
-  ///////////// TEST FILTERS //////////////////////////////
+  /////////////  FILTERS //////////////////////////////
 
+  ///Eliminar userId despues de cerrar sesion
   fixIDOut() {
     console.log("Eliminando userID...");
     this.user_id = "";

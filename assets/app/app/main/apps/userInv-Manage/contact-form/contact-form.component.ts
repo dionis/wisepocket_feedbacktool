@@ -71,6 +71,8 @@ export class ContactsContactFormDialogComponent {
           ),
         ],
       ],
+      password: ["", Validators.required],
+      passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
       telefono: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
       direccion: ["", Validators.required],
     });
@@ -394,7 +396,34 @@ export class ContactsContactFormDialogComponent {
       nombre: [this.contact.nombre],
       correo: [this.contact.correo],
       telefono: [this.contact.telefono],
+      password: [this.contact.password],
+      passwordConfirm: [this.contact.password],
       direccion: [this.contact.direccion],
     });
   }
 }
+
+export const confirmPasswordValidator: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  if (!control.parent || !control) {
+    return null;
+  }
+
+  const password = control.parent.get("password");
+  const passwordConfirm = control.parent.get("passwordConfirm");
+
+  if (!password || !passwordConfirm) {
+    return null;
+  }
+
+  if (passwordConfirm.value === "") {
+    return null;
+  }
+
+  if (password.value === passwordConfirm.value) {
+    return null;
+  }
+
+  return { passwordsNotMatching: true };
+};

@@ -33,6 +33,9 @@
                         </div>
 
                         <div class="h-96 w-100-p">
+                            <div *ngIf="widget2.datasets.data.length == 0">
+                              <span>No existen datos</span>
+                            </div>
                             <canvas baseChart [datasets]="widget2.datasets" [labels]="widget2.labels"
                                 [colors]="widget2.colors" [options]="widget2.options" [chartType]="widget2.chartType">
                             </canvas>
@@ -60,6 +63,9 @@
                         </div>
 
                         <div class="h-96 w-100-p">
+                           <div *ngIf="widget3.datasets.data.length == 0">
+                              <span>No existen datos</span>
+                           </div>
                             <canvas baseChart [datasets]="widget3.datasets" [labels]="widget3.labels"
                                 [colors]="widget3.colors" [options]="widget3.options" [chartType]="widget3.chartType">
                             </canvas>
@@ -87,6 +93,9 @@
                         </div>
 
                         <div class="h-96 w-100-p">
+                          <div *ngIf="widget4.datasets.data.length == 0">
+                              <span>No existen datos</span>
+                           </div>
                             <canvas baseChart [datasets]="widget4.datasets" [labels]="widget4.labels"
                                 [colors]="widget4.colors" [options]="widget4.options" [chartType]="widget4.chartType">
                             </canvas>
@@ -138,6 +147,9 @@
                 </div>
 
                 <div class="position-relative h-368 pb-16">
+                  <div *ngIf="widget5.datasets[widget5SelectedDay].data.length == 0">
+                    <span>No existen datos</span>
+                 </div>
                     <canvas baseChart [datasets]="widget5.datasets[widget5SelectedDay]" [labels]="widget5.labels"
                         [colors]="widget5.colors" [options]="widget5.options" [chartType]="widget5.chartType">
                     </canvas>

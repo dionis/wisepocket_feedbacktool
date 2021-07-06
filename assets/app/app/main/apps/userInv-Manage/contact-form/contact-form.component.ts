@@ -10,7 +10,7 @@ import {
 import { UserInvService } from "../../../../services/user-inv.service";
 import swal from "sweetalert2";
 
-import { generate } from "generate-password";
+//import { generate } from "generate-password";
 import { FuseConfirmDialogComponent } from "../../../../../@fuse/components/confirm-dialog/confirm-dialog.component";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
@@ -25,7 +25,7 @@ import { OnInit } from "@angular/core";
 export class ContactsContactFormDialogComponent implements OnInit {
   action: string;
   contact: UserInv;
-  passworAuto = generate({ length: 10, numbers: true });
+  //passworAuto = generate({ length: 10, numbers: true });
   //contactForm: FormGroup;
   invUserForm: FormGroup;
   dialogTitle: string;
@@ -69,10 +69,10 @@ export class ContactsContactFormDialogComponent implements OnInit {
       ],
       telefono: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
       direccion: ["", Validators.required],
-      password: [this.passworAuto, Validators.required],
+      password: ["", Validators.required],
       //passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
     });
-    console.log("Generate Password Auto ", this.passworAuto);
+    //console.log("Generate Password Auto ", this.passworAuto);
 
     if (this.action === "edit") {
       this.invUserForm = this.createContactForm();

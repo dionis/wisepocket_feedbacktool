@@ -269,6 +269,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
                   input: "password",
                   inputPlaceholder: "Nueva Contraseña",
                   inputValidator: (result) => !result && "Campo requerido",
+                  
                   showCancelButton: true,
                   confirmButtonText: "Confirmar",
                   cancelButtonText: "Cancelar",

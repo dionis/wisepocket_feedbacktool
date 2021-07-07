@@ -245,7 +245,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                     showConfirmButton: false,
                     timer: 4000,
                   });
-                  this._contactsService.getInvitados().subscribe((data) => {
+                  this._contactsService.getFiltersInvCAMP().subscribe((data) => {
                     console.log(data);
                   });
                 } else if (res.success === false) {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Subject } from "rxjs";
 import { debounceTime, distinctUntilChanged, takeUntil } from "rxjs/operators";
@@ -10,7 +10,6 @@ import { FuseSidebarService } from "../../../../@fuse/components/sidebar/sidebar
 import { UserInvService } from "../../../services/user-inv.service";
 import { ContactsService } from "../../../../app/main/apps/userInv-Manage/contacts.service";
 import { ContactsContactFormDialogComponent } from "../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component";
-import { ContactAsociarComponent } from "./contact-asociar/contact-asociar.component";
 
 @Component({
   selector: "contacts",

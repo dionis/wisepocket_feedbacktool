@@ -9,6 +9,17 @@ import {
 
 import { UserInvService } from "../../../../services/user-inv.service";
 import swal from "sweetalert2";
+
+/*var generator = require("generate-password");
+
+var password = generator.generate({
+  length: 10,
+  numbers: true,
+});
+
+// 'uEyMTw32v9'
+console.log(password);*/
+//import { generate } from "generate-password";
 import { FuseConfirmDialogComponent } from "../../../../../@fuse/components/confirm-dialog/confirm-dialog.component";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
@@ -23,8 +34,7 @@ import { OnInit } from "@angular/core";
 export class ContactsContactFormDialogComponent implements OnInit {
   action: string;
   contact: UserInv;
-  hide = true;
-  passworAuto = Math.random().toString(36).slice(-8);
+  //passworAuto = generate({ length: 10, numbers: true });
   //contactForm: FormGroup;
   invUserForm: FormGroup;
   dialogTitle: string;
@@ -66,14 +76,12 @@ export class ContactsContactFormDialogComponent implements OnInit {
           ),
         ],
       ],
-      password: ["", Validators.required],
-      passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
       telefono: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
       direccion: ["", Validators.required],
-      password: [this.passworAuto, Validators.required],
+      password: ["", Validators.required],
       //passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
     });
-    console.log("Generate Password Auto ", this.passworAuto);
+    //console.log("Generate Password Auto ", this.passworAuto);
 
     if (this.action === "edit") {
       this.invUserForm = this.createContactForm();
@@ -98,8 +106,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
           html: "<h3>Se le notificará al usuario de la propuesta de contraseña por correo</h3>",
           icon: "success",
           showConfirmButton: false,
-          timer: 3500,
-          timerProgressBar:true
+          timer: 3000,
         });
         this.contact = data;
         this.invService.getInvitados().subscribe((data) => {
@@ -238,7 +245,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
     });
   }
 
-  /* cambiarPass() {
+  cambiarPass() {
     this.invService.getStatusAsociado(this.contact).subscribe((res) => {
       console.log(res.success);
       if (res.success != true) {
@@ -261,7 +268,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
                   input: "password",
                   inputPlaceholder: "Nueva Contraseña",
                   inputValidator: (result) => !result && "Campo requerido",
-                  inputValue: "",
                   showCancelButton: true,
                   confirmButtonText: "Confirmar",
                   cancelButtonText: "Cancelar",
@@ -375,7 +381,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
         } else {
         }
       });
-  }*/
+  }
 
   status(invitado): any {
     let temp;
@@ -403,8 +409,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
       nombre: [this.contact.nombre],
       correo: [this.contact.correo],
       telefono: [this.contact.telefono],
-      password: [this.contact.password],
-      passwordConfirm: [this.contact.password],
       direccion: [this.contact.direccion],
     });
   }

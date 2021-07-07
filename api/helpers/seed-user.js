@@ -1,28 +1,18 @@
-
-var faker = require('faker');
-const bcrypt = require('bcrypt');
-const { phone } = require('faker');
+var faker = require("faker");
+const bcrypt = require("bcrypt");
+const { phone } = require("faker");
 
 module.exports = {
+  friendlyName: "Seed user",
 
+  description: "",
 
-  friendlyName: 'Seed user',
-
-
-  description: '',
-
-
-  inputs: {
-
-  },
-
+  inputs: {},
 
   exits: {
-
     success: {
-      description: 'All done.',
+      description: "All done.",
     },
-
   },
 
   //   A few reminders:
@@ -40,77 +30,74 @@ module.exports = {
   fn: async function (inputs, exits) {
     // TODO
 
-    arrayStatus = ['online', 'offline']
+    arrayStatus = ["online", "offline"];
 
-    var gateWayArray = []
+    var gateWayArray = [];
 
     var registerSize = 7;
 
-
     for (var iValue = 1; iValue < registerSize; iValue++) {
-
       const salt = await bcrypt.genSalt(10);
-      const hashpass = await bcrypt.hash("12345678", salt)
+      const hashpass = await bcrypt.hash("12345678", salt);
 
       gateWayArray.push({
         name: faker.name.firstName(),
         email: faker.internet.exampleEmail(faker.name.firstName()),
         phone: faker.phone.phoneNumber("5#######"),
-        password: hashpass
-
-      })
+        password: hashpass,
+      });
     }
-    console.log('CONTRASEÑA PARA USUARIOS: 12345678' + ' ' + 'LOGIN VIA INTERFAZ');
-    console.log('Coger un EMAIL de cualquier usuario en la BD');
-    console.log('');
-    await User.createEach(gateWayArray)
+    console.log(
+      "CONTRASEÑA PARA USUARIOS: 12345678" + " " + "LOGIN VIA INTERFAZ"
+    );
+    console.log("Coger un EMAIL de cualquier usuario en la BD");
+    console.log("");
+    await User.createEach(gateWayArray);
 
-    allGateway = await User.find({})
+    allGateway = await User.find({});
 
-    registerSize = 61
+    registerSize = 61;
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
+      userObjet = faker.random.arrayElement(allGateway);
 
-      userObjet = faker.random.arrayElement(allGateway)
-
-      let campaign = await Campaign.count({ 'userChief': userObjet.id })
+      let campaign = await Campaign.count({ userChief: userObjet.id });
 
       if (campaign < 61) {
         let phone_contact = faker.phone.phoneNumber();
         newCamp = {
           nombre: faker.company.companyName("Test"),
           contactoFacebook: faker.internet.userName(),
-          contactoTelegram: '@test',
+          contactoTelegram: "@test",
           contanctoTelefono: phone_contact,
           contactoWhatsapp: phone_contact,
           fecha: faker.date.recent(7),
-          userChief: userObjet.id
-        }
+          userChief: userObjet.id,
+        };
 
-        await Campaign.create(newCamp)
+        await Campaign.create(newCamp);
       }
     }
 
-    registerSize = 41
+    registerSize = 41;
     for (var iValue = 1; iValue < registerSize; iValue++) {
-      userObjet = faker.random.arrayElement(allGateway)
-      let userInv = await UserInvitado.count({ 'invitadoBY': userObjet.id })
+      userObjet = faker.random.arrayElement(allGateway);
+      let userInv = await UserInvitado.count({ invitadoBY: userObjet.id });
 
       if (userInv < 41) {
         newInv = {
           nombre: faker.name.firstName(),
           correo: faker.internet.exampleEmail(faker.name.firstName()),
           telefono: faker.phone.phoneNumber("5#######"),
-          direccion: faker.lorem.sentences(3, ''),
-          invitadoBY: userObjet.id
-        }
+          direccion: faker.lorem.sentences(3, ""),
+          password: Math.random().toString(36).slice(-8),
+          invitadoBY: userObjet.id,
+        };
 
-        await UserInvitado.create(newInv)
+        await UserInvitado.create(newInv);
       }
     }
 
     return exits.success("OK");
-  }
-
-
+  },
 };

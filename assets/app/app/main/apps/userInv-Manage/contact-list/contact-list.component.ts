@@ -196,9 +196,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
               });
               this._contactsService.getFiltersInvCAMP().subscribe((data) => {
                 console.log(data);
-                this._contactsService.getInvitados().subscribe((data) => {
-                  console.log(data);
-                });
               });
             } else {
               swal.fire({

@@ -146,6 +146,7 @@
             matInput
             placeholder="Contraseña"
             formControlName="password"
+            autocomplete="new-password"
             required
             minlength="6"
           />
@@ -203,7 +204,7 @@
             La contraseña no coincide
           </mat-error>
         </mat-form-field><-->
-        <button
+        <!--<button
           *ngIf="action === 'edit'"
           floatLabel="always"
           mat-raised-button
@@ -211,7 +212,7 @@
         >
           Cambiar contraseña
           <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
-        </button>
+        </button><-->
       </div>
     </form>
   </div>

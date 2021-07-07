@@ -1,6 +1,6 @@
 import { UserInv } from "../../../../models/userInv.model";
 import { Component, Inject, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors } from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -66,13 +66,11 @@ export class ContactsContactFormDialogComponent implements OnInit {
           ),
         ],
       ],
-      password: ["", Validators.required],
+      password: [this.passworAuto, Validators.required],
       passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
       telefono: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
-      direccion: ["", Validators.required],
-      password: [this.passworAuto, Validators.required],
-      //passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
-    });
+      direccion: ["", Validators.required]
+     });
     console.log("Generate Password Auto ", this.passworAuto);
 
     if (this.action === "edit") {
@@ -410,7 +408,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
   }
 }
 
-/*export const confirmPasswordValidator: ValidatorFn = (
+export const confirmPasswordValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
   if (!control.parent || !control) {
@@ -433,4 +431,4 @@ export class ContactsContactFormDialogComponent implements OnInit {
   }
 
   return { passwordsNotMatching: true };
-};*/
+};

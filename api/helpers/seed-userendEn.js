@@ -201,15 +201,20 @@ module.exports = {
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
       if (iValue < 101) {
-        newAspect = {
-          texto: faker.lorem.word(1),
-          polaridad: 'negativa',
-          start: 2,
-          end: 5,
-          opinion: opinObjet.id
-        }
 
-        await AspectoOpinion.create(newAspect)
+        opinAll.forEach( async element=>{
+          newAspect = {
+            texto: faker.lorem.word(1),
+            polaridad: 'negativa',
+            start: 2,
+            end: 5,
+            opinion: element.id
+          }
+
+          await AspectoOpinion.create(newAspect)
+
+        })
+
 
       }
 
@@ -272,15 +277,22 @@ module.exports = {
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
       if (iValue < 101) {
-        newAspect = {
-          texto: faker.lorem.word(1),
-          polaridad: 'negativa',
-          start: 2,
-          end: 5,
-          opinion: opinObjet.id
-        }
 
-        await AspectoOpinion.create(newAspect)
+        opinAll.forEach( async  element =>{
+
+            newAspect = {
+              texto: faker.lorem.word(1),
+              polaridad: 'negativa',
+              start: 2,
+              end: 5,
+              opinion: element.id
+            }
+
+            await AspectoOpinion.create(newAspect)
+
+
+        })
+
 
       }
 
@@ -333,49 +345,62 @@ module.exports = {
         }
 
       }
-      opinAll = await Opinion.find({})
+      opinAll = await Opinion.find({polaridad:'neutra'})
 
       opinObjet = faker.random.arrayElement(opinAll)
 
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
       if (iValue < 70) {
-        newAspect = {
-          texto: faker.lorem.word(1),
-          polaridad: 'negativa',
-          start: 2,
-          end: 5,
-          opinion: opinObjet.id
-        }
+        opinAll.forEach( async element =>{
+            newAspect = {
+              texto: faker.lorem.word(1),
+              polaridad: 'negativa',
+              start: 2,
+              end: 5,
+              opinion: element.id
+            }
 
-        await AspectoOpinion.create(newAspect)
+            await AspectoOpinion.create(newAspect)
+
+        })
+
 
       }
 
       if (iValue < 41) {
-        newAspect = {
-          texto: faker.lorem.word(1),
-          polaridad: 'neutra',
-          start: 2,
-          end: 5,
-          opinion: opinObjet.id
-        }
 
-        await AspectoOpinion.create(newAspect)
+        opinAll.forEach( async element =>{
+          newAspect = {
+            texto: faker.lorem.word(1),
+            polaridad: 'negativa',
+            start: 2,
+            end: 5,
+            opinion: element.id
+          }
+
+          await AspectoOpinion.create(newAspect)
+
+      })
 
       }
 
       let entdOpin = await EntidadOpinion.count({ 'opinion': opinObjet.id })
 
       if (iValue < 31) {
-        newEntidad = {
-          texto: faker.lorem.word(1),
-          start: 12,
-          end: 18,
-          opinion: opinObjet.id
-        }
 
-        await EntidadOpinion.create(newEntidad)
+        opinAll.forEach( async element =>{
+          newEntidad = {
+            texto: faker.lorem.word(1),
+            start: 12,
+            end: 18,
+            opinion: element.id
+          }
+
+          await EntidadOpinion.create(newEntidad)
+
+      })
+
 
       }
       /* if (pregunta < 10 || campPreg < 20) {

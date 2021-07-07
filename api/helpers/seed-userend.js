@@ -158,7 +158,7 @@ module.exports = {
 
       //console.log("# Day ", dateObjet.getDay(), " = Day Name: ",dayNameArray[dateObjet.getDay()] );
       //console.log("TimeStamp ====>> " ,timestamp);
-  //currentTime.toLocaleString('en-US', {weekday:'long'})
+      //currentTime.toLocaleString('en-US', {weekday:'long'})
       if (opinion < opinionSize) {
         newOpinion = {
           texto: faker.lorem.sentences(6, ''),
@@ -189,24 +189,26 @@ module.exports = {
 
       }
 
-      opinAll = await Opinion.find({})
+      opinAll = await Opinion.find({idioma: 'español'})
 
       opinObjet = faker.random.arrayElement(opinAll)
 
       let aspecOpin = await AspectoOpinion.count({ 'opinion': opinObjet.id })
 
       if (iValue < 101) {
-        newAspect = {
-          texto: faker.lorem.word(1),
-          polaridad: 'positiva',
-          start: 30,
-          end: 35,
-          opinion: opinObjet.id
-        }
 
-        await AspectoOpinion.create(newAspect)
+        opinAll.forEach(async element =>{
+          newAspect = {
+            texto: faker.lorem.word(1),
+            polaridad: 'positiva',
+            start: 30,
+            end: 35,
+            opinion: element.id
+          }
 
-      }
+          await AspectoOpinion.create(newAspect)
+
+        })
 
       let entdOpin = await EntidadOpinion.count({ 'opinion': opinObjet.id })
 
@@ -221,24 +223,11 @@ module.exports = {
         await EntidadOpinion.create(newEntidad)
 
       }
-      /*if (iValue < 10) {
 
-        var currentTime = faker.date.recent(7);
-        var dateObjet = new Date(currentTime);
-        var timestamp =  dateObjet.getTime();
 
-        newPregunta = {
-          texto: faker.lorem.sentences(4, ''),
-          fecha: currentTime,
-          currentime: String.toString(timestamp),
-          quesUserend: userEndObjet.id,
-          campaign: campOgjet.id
-        }
-        await Pregunta.create(newPregunta)
-      }*/
-
+      }
     }
-
     return exits.success("OK");
   }
+
 };

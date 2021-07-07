@@ -1,4 +1,4 @@
-import { UserInv } from "../../../../models/userInv.model";
+import { UserInv } from "../../../../../models/userInv.model";
 import { Component, Inject, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
@@ -7,7 +7,7 @@ import {
   MatDialog,
 } from "@angular/material/dialog";
 
-import { UserInvService } from "../../../../services/user-inv.service";
+import { UserInvService } from "../../../../../services/user-inv.service";
 import swal from "sweetalert2";
 
 /*var generator = require("generate-password");
@@ -20,7 +20,7 @@ var password = generator.generate({
 // 'uEyMTw32v9'
 console.log(password);*/
 //import { generate } from "generate-password";
-import { FuseConfirmDialogComponent } from "../../../../../@fuse/components/confirm-dialog/confirm-dialog.component";
+import { FuseConfirmDialogComponent } from "../../../../../../@fuse/components/confirm-dialog/confirm-dialog.component";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { OnInit } from "@angular/core";

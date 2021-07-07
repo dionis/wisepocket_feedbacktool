@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 
 import { fuseAnimations } from "../../../../@fuse/animations";
-import { ContactsContactFormDialogComponent } from "./contact-form/contact-form.component";
+import { ContactsContactFormDialogComponent } from "./tabs/contact-form/contact-form.component";
 
 @Component({
   selector: "profile",

@@ -34,6 +34,7 @@ import { OnInit } from "@angular/core";
 export class ContactsContactFormDialogComponent implements OnInit {
   action: string;
   contact: UserInv;
+  hide = true;
   //passworAuto = generate({ length: 10, numbers: true });
   //contactForm: FormGroup;
   invUserForm: FormGroup;

@@ -1,18 +1,12 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { UserService } from "./user.service";
 import { UserInv } from "../models/userInv.model";
 import { SharedVariablesService } from "./shared-variables.service";
-import { Subject } from "rxjs";
 import { FuseUtils } from "../../@fuse/utils";
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  RouterStateSnapshot,
-} from "@angular/router";
 
 @Injectable({
   providedIn: "root",

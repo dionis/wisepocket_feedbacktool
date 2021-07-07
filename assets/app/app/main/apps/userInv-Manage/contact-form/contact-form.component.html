@@ -142,13 +142,22 @@
           <mat-label>Propuesta Contraseña</mat-label>
           <input
             #pass
-            type="password"
+            [type]="hide ? 'password' : 'text'"
             matInput
             placeholder="Contraseña"
             formControlName="password"
             required
             minlength="6"
           />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
           <mat-error *ngIf="invUserForm.get('password').hasError('required')">
             Contraseña requerida
           </mat-error>

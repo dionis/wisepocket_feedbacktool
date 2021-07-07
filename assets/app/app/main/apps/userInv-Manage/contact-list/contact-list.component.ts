@@ -1,4 +1,3 @@
-import { UserService } from "../../../../services/user.service";
 import { UserInvService } from "../../../../services/user-inv.service";
 //import { Campaing } from '../../../../models/campaing.model';
 import {
@@ -15,7 +14,6 @@ import { Observable, Subject } from "rxjs";
 import { fuseAnimations } from "../../../../../@fuse/animations";
 import { FuseConfirmDialogComponent } from "../../../../../@fuse/components/confirm-dialog/confirm-dialog.component";
 import { ContactsContactFormDialogComponent } from "../../../../../app/main/apps/userInv-Manage/contact-form/contact-form.component";
-import { ContactAsociarComponent } from "../contact-asociar/contact-asociar.component";
 //import {CampaingService} from '../../../../services/campaing.service';
 import swal from "sweetalert2";
 import { takeUntil } from "rxjs/operators";

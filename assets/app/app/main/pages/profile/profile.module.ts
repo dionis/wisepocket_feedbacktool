@@ -12,6 +12,14 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
 import { ProfileTimelineComponent } from '../../pages/profile/tabs/timeline/timeline.component';
 import { ProfileAboutComponent } from '../../pages/profile/tabs/about/about.component';
 import { ProfilePhotosVideosComponent } from '../../pages/profile/tabs/photos-videos/photos-videos.component';
+import { ContactsContactFormDialogComponent } from './contact-form/contact-form.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRippleModule } from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 const routes = [
@@ -29,7 +37,8 @@ const routes = [
         ProfileComponent,
         ProfileTimelineComponent,
         ProfileAboutComponent,
-        ProfilePhotosVideosComponent
+        ProfilePhotosVideosComponent,
+        ContactsContactFormDialogComponent
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -38,6 +47,15 @@ const routes = [
         MatDividerModule,
         MatIconModule,
         MatTabsModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatMenuModule,
+        MatRippleModule,
+        MatTableModule,
+        MatToolbarModule,
 
         FuseSharedModule
     ],

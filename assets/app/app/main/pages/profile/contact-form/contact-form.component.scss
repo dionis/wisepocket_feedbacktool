@@ -1,6 +1,6 @@
 @import "../../../../../@fuse/scss/fuse";
 
-.asocia-contact-form-dialog {
+.contact-form-dialog {
 
     @include media-breakpoint('xs') {
         width: 100%;
@@ -10,9 +10,9 @@
         width: 400px;
     }
 
+
     .mat-dialog-container {
-        padding: auto;
-        margin: 0;
+        padding: 0;
 
         .mat-toolbar {
             flex: 1 0 auto;
@@ -27,6 +27,6 @@
     .dialog-content-wrapper {
         max-height: 85vh;
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
     }
 }

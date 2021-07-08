@@ -6,6 +6,7 @@ contacts-contact-list {
     width: 100%;
 
 
+
     .mat-table {
         width: 100%;
         background: transparent;
@@ -21,7 +22,6 @@ contacts-contact-list {
         }
 
         .mat-column-boton {
-            flex: 2.2;
             justify-content: center !important;
         }
 
@@ -29,9 +29,11 @@ contacts-contact-list {
             flex: 3;
             justify-content: center !important;
         }
+
         .mat-column-Teléfono {
             justify-content: center !important;
         }
+
         .mat-column-menu {
             flex: 0 1 80px;
         }

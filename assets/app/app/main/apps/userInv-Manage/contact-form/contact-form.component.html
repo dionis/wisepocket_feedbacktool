@@ -235,6 +235,10 @@
             Mínimo 6 caracteres
           </mat-error>
         </mat-form-field>
+        <br />
+        <mat-checkbox [checked]="activate" #check id="check"
+          >Asociar a la Campaña actual</mat-checkbox
+        >
 
         <!--<mat-form-field
           appearance="outline"
@@ -298,13 +302,12 @@
     >
       Eliminar
     </button>
-
     <button
       *ngIf="action === 'new'"
       mat-raised-button
       class="save-button"
       [disabled]="invUserForm.invalid"
-      (click)="onSave()"
+      (click)="onSave(check)"
     >
       Agregar
     </button>

@@ -210,7 +210,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
       });
   }
 
-  asociarAcamp(contact) {
+  /*asociarAcamp(contact) {
     swal
       .fire({
         title:
@@ -266,7 +266,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
           });
         }
       });
-  }
+  }*/
 
   updateAcces(contact) {
     this._contactsService.darAcceso(contact).subscribe((data) => {

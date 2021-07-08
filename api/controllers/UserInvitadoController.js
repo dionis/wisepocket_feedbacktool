@@ -59,7 +59,7 @@ module.exports = {
 
   addCampaigns: async (req, res) => {
     let camp = String(req.param("campID"));
-    let userInv = String(req.param("id"));
+    let userInv = String(req.param("nombre"));
     await Campaign.findOne({
       where: { id: camp },
     }).then((doc) => {
@@ -70,13 +70,13 @@ module.exports = {
       }
     });
     await UserInvitado.findOne({
-      where: { id: userInv },
+      where: { nombre: userInv },
     }).then(async (doc) => {
       if (!doc) {
         console.log("No encontrado");
       } else {
         console.log("Encontrado");
-        await UserInvitado.addToCollection(userInv, "campaigns", camp)
+        await UserInvitado.addToCollection(doc.id, "campaigns", camp)
           .then((campInv) => {
             return res.send({
               message: "Asociado a la Campaña con éxito",

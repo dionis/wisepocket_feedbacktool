@@ -18,7 +18,7 @@ module.exports = {
         console.log("Encontrado");
         camp = doc.id;
         await UserInvitado.findOne({
-          where: { id: req.param("id") },
+          where: { nombre: req.param("nombre") },
         }).then(async (doc) => {
           if (!doc) {
             console.log("No encontrado");
@@ -112,7 +112,7 @@ module.exports = {
       await Acceso.findOne({
         where: { userInv: userInv, campaign: camp },
       })
-        .then((data) => {
+        .then(function (data) {
           console.log("StatusAccesData>> ", data);
           if (data.acceso) {
             return res.send({
@@ -197,14 +197,14 @@ module.exports = {
       if (!doc) {
         console.log("No encontrado");
         return res.send({
-          success: true,                  // true para si no esta asociado pues vincularlo
+          success: true, // true para si no esta asociado pues vincularlo
           message: "No esta vinculado",
           data: true,
         });
       } else {
         console.log("Encontrado");
         return res.send({
-          success: false,               // false para si esta asociado pues no vincularlo
+          success: false, // false para si esta asociado pues no vincularlo
           message: "Esta vinculado",
           data: doc,
         });

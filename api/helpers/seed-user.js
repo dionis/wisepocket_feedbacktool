@@ -83,6 +83,11 @@ module.exports = {
     for (var iValue = 1; iValue < registerSize; iValue++) {
       userObjet = faker.random.arrayElement(allGateway);
       let userInv = await UserInvitado.count({ invitadoBY: userObjet.id });
+      const salt = await bcrypt.genSalt(10);
+      const hashpass = await bcrypt.hash(
+        Math.random().toString(36).slice(-8),
+        salt
+      );
 
       if (userInv < 41) {
         newInv = {
@@ -90,7 +95,7 @@ module.exports = {
           correo: faker.internet.exampleEmail(faker.name.firstName()),
           telefono: faker.phone.phoneNumber("5#######"),
           direccion: faker.lorem.sentences(3, ""),
-          password: Math.random().toString(36).slice(-8),
+          password: hashpass,
           invitadoBY: userObjet.id,
         };
 

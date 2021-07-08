@@ -33,9 +33,7 @@
   <!-- Buttons Column -->
   <div>
     <ng-container matColumnDef="boton">
-      <mat-header-cell id="editar" *matHeaderCellDef
-        >Editar - Asociar</mat-header-cell
-      >
+      <mat-header-cell id="editar" *matHeaderCellDef>Editar</mat-header-cell>
       <mat-cell *matCellDef="let contact">
         <div fxFlex="row" fxLayoutAlign="end center">
           <button
@@ -48,7 +46,7 @@
             <mat-icon [ngStyle]="{ color: 'red' }">edit</mat-icon>
             Editar
           </button>
-          <button
+          <!--<button
             id="botonEditar"
             mat-raised-button
             (click)="asociarAcamp(contact)"
@@ -59,7 +57,7 @@
               </span></mat-icon
             >
             Asociar
-          </button>
+          </button><-->
         </div>
       </mat-cell>
     </ng-container>
@@ -101,16 +99,10 @@
               <span>Devolver acceso</span>
             </button>
           </mat-menu>
-          <mat-icon
-            #iconTrue
-            class="active-icon green-600 s-16"
+          <mat-icon #iconTrue class="active-icon green-600 s-16"
             >check</mat-icon
           >
-          <mat-icon
-            #iconFalse
-            class="active-icon red-500 s-16"
-            >close</mat-icon
-          >
+          <mat-icon #iconFalse class="active-icon red-500 s-16">close</mat-icon>
         </div>
       </mat-cell>
     </ng-container>

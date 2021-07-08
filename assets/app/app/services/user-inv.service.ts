@@ -61,7 +61,7 @@ export class UserInvService {
         ":" +
         environment.sails_services_urlport +
         "/userInvitado/addCampaigns",
-      { id: invitado.id, campID: cammID }
+      { nombre: invitado.nombre, campID: cammID }
     );
   }
   ///ADD INFO USER
@@ -218,7 +218,7 @@ export class UserInvService {
         ":" +
         environment.sails_services_urlport +
         "/acceso/darAcceso",
-      { id: invitado.id, campID: cammID }
+      { nombre: invitado.nombre, campID: cammID }
     );
   }
 

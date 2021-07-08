@@ -1,6 +1,6 @@
 import { UserInv } from "../../../../models/userInv.model";
 import { Component, Inject, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -71,8 +71,8 @@ export class ContactsContactFormDialogComponent implements OnInit {
       password: [this.passworAuto, Validators.required],
       //passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
       telefono: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
-      direccion: ["", Validators.required]
-     });
+      direccion: ["", Validators.required],
+    });
     //console.log("Generate Password Auto ", this.passworAuto);
 
     if (this.action === "edit") {
@@ -129,11 +129,11 @@ export class ContactsContactFormDialogComponent implements OnInit {
     });
   }
 
-  onSaveEdit() {
+  onSaveEdit(check) {
     swal
       .fire({
         title:
-          "Se actualizará la información de este usuario. ¿Desea continuar?",
+          "Se actualizará la información de este usuario y recuerde que por defecto se asociará a la Campaña; si asociarlo no es el caso por favor desactívela antes de continuar. ¿Desea continuar?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Sí",
@@ -145,12 +145,19 @@ export class ContactsContactFormDialogComponent implements OnInit {
           this.invService
             .updateInfo(this.invUserForm.getRawValue())
             .subscribe((data) => {
-              swal.fire({
-                title: "Información de usuario actualizada",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 2000,
-              });
+              swal
+                .fire({
+                  title: "Información de usuario actualizada",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 2000,
+                })
+                .then(() => {
+                  if (check.checked) {
+                    this.asociarAcamp(this.invUserForm.getRawValue());
+                  }
+                });
+
               this.invService.getInvitados().subscribe((data) => {
                 console.log(data);
               });

@@ -251,7 +251,7 @@
       *ngIf="action === 'edit'"
       mat-raised-button
       class="save-button"
-      (click)="onSaveEdit()"
+      (click)="onSaveEdit(check)"
       [disabled]="invUserForm.invalid"
       aria-label="SAVE"
     >

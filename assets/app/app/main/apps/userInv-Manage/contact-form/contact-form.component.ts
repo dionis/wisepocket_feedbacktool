@@ -104,6 +104,15 @@ export class ContactsContactFormDialogComponent implements OnInit {
           .then(() => {
             if (check.checked) {
               this.asociarAcamp(data);
+            } else {
+              swal.fire({
+                title:
+                  "Puede asociarlo a la Campaña cuando desee entrando en Editar y presionando Guardar",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+              });
             }
           });
         this.contact = data;

@@ -1,6 +1,6 @@
 import { UserInv } from "../../../../models/userInv.model";
 import { Component, Inject, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -10,7 +10,6 @@ import {
 import { UserInvService } from "../../../../services/user-inv.service";
 import swal from "sweetalert2";
 import { FuseConfirmDialogComponent } from "../../../../../@fuse/components/confirm-dialog/confirm-dialog.component";
-import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { OnInit } from "@angular/core";
 import { SharedVariablesService } from "../../../../services/shared-variables.service";
@@ -70,11 +69,11 @@ export class ContactsContactFormDialogComponent implements OnInit {
         ],
       ],
       password: [this.passworAuto, Validators.required],
-      passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
+      //passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
       telefono: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
       direccion: ["", Validators.required]
      });
-    console.log("Generate Password Auto ", this.passworAuto);
+    //console.log("Generate Password Auto ", this.passworAuto);
 
     if (this.action === "edit") {
       this.invUserForm = this.createContactForm();
@@ -488,14 +487,12 @@ export class ContactsContactFormDialogComponent implements OnInit {
       nombre: [this.contact.nombre],
       correo: [this.contact.correo],
       telefono: [this.contact.telefono],
-      password: [this.contact.password],
-      passwordConfirm: [this.contact.password],
       direccion: [this.contact.direccion],
     });
   }
 }
 
-export const confirmPasswordValidator: ValidatorFn = (
+/*export const confirmPasswordValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
   if (!control.parent || !control) {
@@ -518,4 +515,4 @@ export const confirmPasswordValidator: ValidatorFn = (
   }
 
   return { passwordsNotMatching: true };
-};
+};*/

@@ -109,71 +109,6 @@
             >
           </mat-error>
         </mat-form-field>
-
-        <div class="tab-content p-15" fusePerfectScrollbar>
-              <mat-form-field
-                appearance="outline"
-                floatLabel="always"
-                class="w-100-p"
-              >
-                <mat-label>Asignar Contraseña</mat-label>
-                <input
-                  #pass
-                  type="password"
-                  matInput
-                  placeholder="Contraseña"
-                  formControlName="password"
-                  required
-                  minlength="6"
-                />
-                <mat-error *ngIf="invUserForm.get('password').hasError('required')">
-                  Contraseña requerida
-                </mat-error>
-                <mat-error
-                  *ngIf="
-                    !invUserForm.get('password').hasError('required') &&
-                    !pass.minlength
-                  "
-                >
-                  Mínimo 6 caracteres
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field
-                appearance="outline"
-                floatLabel="always"
-                class="w-100-p"
-              >
-                <mat-label>Confirmar contraseña</mat-label>
-                <input
-                  #passConf
-                  matInput
-                  required
-                  minlength="6"
-                  placeholder="Confirmar contraseña"
-                  type="password"
-                  formControlName="passwordConfirm"
-                />
-                <mat-error
-                  *ngIf="invUserForm.get('passwordConfirm').hasError('required')"
-                >
-                  Confirmación de contraseña requerida
-                </mat-error>
-                <mat-error
-                  *ngIf="
-                    pass.value != passConf.value &&
-                    !invUserForm.get('passwordConfirm').hasError('required')
-                  "
-                >
-                  La contraseña no coincide
-                </mat-error>
-              </mat-form-field>
-              <br />
-              <span>Se envirá un correo notificando al usuario</span>
-              <br />
-              <span>Correo del usuario: {{ contact.correo }}</span>
-        </div>
-
         <mat-form-field
           appearance="outline"
           floatLabel="always"
@@ -235,6 +170,10 @@
             Mínimo 6 caracteres
           </mat-error>
         </mat-form-field>
+        <br />
+        <mat-checkbox [checked]="activate" #check id="check"
+          >Asociar a la Campaña actual</mat-checkbox
+        >
 
         <!--<mat-form-field
           appearance="outline"
@@ -298,13 +237,12 @@
     >
       Eliminar
     </button>
-
     <button
       *ngIf="action === 'new'"
       mat-raised-button
       class="save-button"
       [disabled]="invUserForm.invalid"
-      (click)="onSave()"
+      (click)="onSave(check)"
     >
       Agregar
     </button>
@@ -313,7 +251,7 @@
       *ngIf="action === 'edit'"
       mat-raised-button
       class="save-button"
-      (click)="onSaveEdit()"
+      (click)="onSaveEdit(check)"
       [disabled]="invUserForm.invalid"
       aria-label="SAVE"
     >

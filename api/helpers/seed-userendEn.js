@@ -45,6 +45,11 @@ module.exports = {
 
     var registerSize = 10;
 
+    var PARACIAL_DATA_SEED = 50; //501
+    var REGISTER_SIZE = 300;
+    var REGISTER_SIZE1 = 300;
+    var REGISTER_SIZE2 = 70;
+
 
     for (var iValue = 1; iValue < registerSize; iValue++) {
 
@@ -61,9 +66,10 @@ module.exports = {
     campAll = await Campaign.find({})
 
 
-    registerSize = 300
-    registerSize1 = 300
-    registerSize2 = 70
+    registerSize = REGISTER_SIZE;
+    registerSize1 = REGISTER_SIZE1;
+    registerSize2 = REGISTER_SIZE2;
+
     let data = new Date()
     console.log("Data to show ", data);
     let dateWithMomentParser = moment().format('YYYY-MM-DD');
@@ -130,7 +136,7 @@ module.exports = {
       arrayInDays.push(date.clone());
     }
 
-    var parcialDataSeed = 501;
+    var parcialDataSeed = PARACIAL_DATA_SEED;
     for (var iValue = 1; iValue < registerSize; iValue++) {
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)

@@ -43,6 +43,9 @@ module.exports = {
 
     var registerSize = 10;
 
+    var REGISTER_SIZE = 10;
+    var REGISTER_SIZE1 = 50;
+
     let data = new Date()
     console.log("Data to show ", data);
     let dateWithMomentParser = moment().format('YYYY-MM-DD');
@@ -106,7 +109,7 @@ module.exports = {
     // })
 
 
-    for (var iValue = 1; iValue < registerSize; iValue++) {
+    for (var iValue = 1; iValue < REGISTER_SIZE; iValue++) {
 
       gateWayArray.push({
         name_alias: faker.name.firstName(),
@@ -124,7 +127,7 @@ module.exports = {
     registerSize = 300
     var opinionSize = 201;
     let opinionArray = ['positiva','negativa','neutra']
-    for (var iValue = 1; iValue < registerSize; iValue++) {
+    for (var iValue = 1; iValue < REGISTER_SIZE1; iValue++) {
 
       userEndObjet = faker.random.arrayElement(allGateway)
       campOgjet = faker.random.arrayElement(campAll)

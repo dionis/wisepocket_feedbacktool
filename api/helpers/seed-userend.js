@@ -41,10 +41,10 @@ module.exports = {
 
     var gateWayArray = []
 
-    var registerSize = 10;
+    var registerSize = 5;
 
-    var REGISTER_SIZE = 10;
-    var REGISTER_SIZE1 = 50;
+    var REGISTER_SIZE = 5;
+    var REGISTER_SIZE1 = 5;
 
     let data = new Date()
     console.log("Data to show ", data);

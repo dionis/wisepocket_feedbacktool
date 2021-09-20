@@ -45,10 +45,10 @@ module.exports = {
 
     var registerSize = 10;
 
-    var PARACIAL_DATA_SEED = 50; //501
-    var REGISTER_SIZE = 300;
-    var REGISTER_SIZE1 = 300;
-    var REGISTER_SIZE2 = 70;
+    var PARACIAL_DATA_SEED = 10; //501
+    var REGISTER_SIZE = 20;
+    var REGISTER_SIZE1 = 20;
+    var REGISTER_SIZE2 = 20;
 
 
     for (var iValue = 1; iValue < registerSize; iValue++) {

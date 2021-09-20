@@ -9,7 +9,6 @@ module.exports = {
   attributes: {
     nombre: {
       type: "string",
-      unique: true,
       required: true,
     },
 

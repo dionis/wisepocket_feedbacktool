@@ -44,7 +44,6 @@ module.exports = {
     var gateWayArray = []
 
     var registerSize = 10;
-
     var PARACIAL_DATA_SEED = 10; //501
     var REGISTER_SIZE = 20;
     var REGISTER_SIZE1 = 20;

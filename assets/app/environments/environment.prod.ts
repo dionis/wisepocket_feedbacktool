@@ -1,4 +1,6 @@
 export const environment = {
     production: true,
-    hmr       : false
+    hmr       : false,
+    sails_services_urlpath:'http://localhost',
+    sails_services_urlport:'1337'
 };

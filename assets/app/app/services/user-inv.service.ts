@@ -40,9 +40,7 @@ export class UserInvService {
     this.user_id = this.user.getMyUserId();
     return this._http.post(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/userInvitado/create",
+       "/userInvitado/create",
       {
         id: this.user_id,
         nombre: invitado.nombre,
@@ -58,8 +56,6 @@ export class UserInvService {
     const cammID = this.servCamp.getId();
     return this._http.post(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
         "/userInvitado/addCampaigns",
       { nombre: invitado.nombre, campID: cammID }
     );
@@ -72,8 +68,6 @@ export class UserInvService {
     return this._http
       .get(
         environment.sails_services_urlpath +
-          ":" +
-          environment.sails_services_urlport +
           "/userInvitado/getInvXUserChief?id=" +
           this.user_id
       )
@@ -129,9 +123,7 @@ export class UserInvService {
   getInvitadXID(invitado): Observable<any> {
     return this._http.get(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/userInvitado/getInvitadoById",
+         "/userInvitado/getInvitadoById",
       invitado
     );
   }
@@ -142,9 +134,7 @@ export class UserInvService {
     console.log(invitado.nombre);
     return this._http.patch(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/userInvitado/updateInfo?id=" +
+         "/userInvitado/updateInfo?id=" +
         invitado.id,
       invitado
     );
@@ -156,8 +146,6 @@ export class UserInvService {
 
     return this._http.patch(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
         "/userInvitado/updatePass",
       invitado
     );
@@ -168,8 +156,6 @@ export class UserInvService {
   deleteUserInv(invitado): Observable<any> {
     return this._http.delete(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
         "/userInvitado/deleteUserInvitado",
       { params: { id: invitado.id, campID: this.servCamp.getId() } }
     );
@@ -181,8 +167,6 @@ export class UserInvService {
   deleteupdatePass(invitado): Observable<any> {
     return this._http.patch(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
         "/userInvitado/deleteupdatePass",
       invitado
     );
@@ -191,8 +175,6 @@ export class UserInvService {
   deleteRelacion(invitado): Observable<any> {
     return this._http.delete(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
         "/userInvitado/deleteAsociar",
       { params: { id: invitado.id, campID: this.servCamp.getId() } }
     );
@@ -201,9 +183,7 @@ export class UserInvService {
   deleteAcces(invitado): Observable<any> {
     return this._http.delete(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/acceso/deleteAcces",
+         "/acceso/deleteAcces",
       { params: { id: invitado.id, campID: this.servCamp.getId() } }
     );
   }
@@ -215,9 +195,7 @@ export class UserInvService {
     const cammID = this.servCamp.getId();
     return this._http.post(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/acceso/darAcceso",
+         "/acceso/darAcceso",
       { nombre: invitado.nombre, campID: cammID }
     );
   }
@@ -226,9 +204,7 @@ export class UserInvService {
     const cammID = this.servCamp.getId();
     return this._http.patch(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/acceso/quitarAcceso",
+         "/acceso/quitarAcceso",
       { id: invitado.id, campID: cammID }
     );
   }
@@ -237,8 +213,6 @@ export class UserInvService {
     const cammID = this.servCamp.getId();
     return this._http.patch(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
         "/acceso/devolverAcceso",
       { id: invitado.id, campID: cammID }
     );
@@ -249,8 +223,6 @@ export class UserInvService {
   getStatusAsociado(invitado): Observable<any> {
     return this._http.get(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
         "/acceso/isAsociado",
       { params: { id: invitado.id, campID: this.servCamp.getId() } }
     );
@@ -259,9 +231,7 @@ export class UserInvService {
   getStatusAcceso(invitado): Observable<any> {
     return this._http.get(
       environment.sails_services_urlpath +
-        ":" +
-        environment.sails_services_urlport +
-        "/acceso/getStatusAcceso",
+         "/acceso/getStatusAcceso",
       { params: { id: invitado.id, campID: this.servCamp.getId() } }
     );
   }
@@ -273,9 +243,7 @@ export class UserInvService {
     return this._http
       .get(
         environment.sails_services_urlpath +
-          ":" +
-          environment.sails_services_urlport +
-          "/campaign/getInvitadoXCamp",
+           "/campaign/getInvitadoXCamp",
         { params: { id: this.servCamp.getId() } }
       )
       .pipe(
@@ -292,8 +260,6 @@ export class UserInvService {
     return this._http
       .get(
         environment.sails_services_urlpath +
-          ":" +
-          environment.sails_services_urlport +
           "/userInvitado/getInvXUserChief?id=" +
           this.user_id
       )

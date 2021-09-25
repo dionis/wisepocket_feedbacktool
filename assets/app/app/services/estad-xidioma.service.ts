@@ -26,14 +26,14 @@ export class EstadXidiomaService {
 
   getDataEn(): Observable<any> {
     let campaign_id = this.servCamp.getId();
-    return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getCantENXDia?id=' + campaign_id)
+    return this._http.get<any>(environment.sails_services_urlpath + '/estadisticaByidioma/getCantENXDia?id=' + campaign_id)
 
   }
 
   getDataEs(): Observable<any> {
 
     let campaign_id = this.servCamp.getId();
-    return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getCantESXDia?id=' + campaign_id)
+    return this._http.get<any>(environment.sails_services_urlpath  + '/estadisticaByidioma/getCantESXDia?id=' + campaign_id)
 
   }
 
@@ -41,7 +41,7 @@ export class EstadXidiomaService {
 
     let campaign_id = this.servCamp.getId();
 
-    return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getCantTotalXDia?id=' + campaign_id)
+    return this._http.get<any>(environment.sails_services_urlpath +  '/estadisticaByidioma/getCantTotalXDia?id=' + campaign_id)
 
   }
 
@@ -54,7 +54,7 @@ export class EstadXidiomaService {
       .append("client_timestamp", currentDate)
       .append("language", language)
     ///estadisticaByidioma/getCantTotalXDia?id=' + campaign_id
-    return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByidioma/getIntervalInADay', { params: httpParams })
+    return this._http.get<any>(environment.sails_services_urlpath +  '/estadisticaByidioma/getIntervalInADay', { params: httpParams })
 
       .pipe(map((responseData: any) => {
         if (responseData.data) {

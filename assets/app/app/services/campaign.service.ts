@@ -43,7 +43,7 @@ export class CampaignService {
     //pagina apartir de 0 //page=0 es de prueba
     console.log(limit);
     const campaignService = this;
-    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/campaign/getCampaignbyUser/',
+    return this._http.get(environment.sails_services_urlpath  + '/campaign/getCampaignbyUser/',
     {params: {
               'page': page,
               'limit':limit,
@@ -68,7 +68,7 @@ export class CampaignService {
   }
 
   getCampaignbyId(id:string){
-    return this._http.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport +
+    return this._http.get(environment.sails_services_urlpath +
     '/campaign/getCampaignById',
     {params: {'id': id}});
     // .pipe(map((camp:any)=>{
@@ -199,7 +199,7 @@ export class CampaignService {
 
     countUserCampaigns(){
       return this._http.get(
-        environment.sails_services_urlpath+":"+environment.sails_services_urlport+
+        environment.sails_services_urlpath+
         '/campaign/countUserCampaigns',
         )
         .pipe(

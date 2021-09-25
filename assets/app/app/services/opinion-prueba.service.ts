@@ -32,7 +32,7 @@ export class OpinionPruebaService implements Resolve<any>{
         });
         resolve();
       },reject)
-    }) 
+    })
   }
 
   /*
@@ -41,7 +41,7 @@ export class OpinionPruebaService implements Resolve<any>{
     */
   getOpinionsFromBAck(){
     return new Promise((resolve,reject)=>this._httpClient.get(
-        environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion',
+        environment.sails_services_urlpath +  '/opinion/getOpinion',
         {params:{}})
          .subscribe((opinions:any)=>{
              this.opinions = opinions.map(opinion => {
@@ -51,7 +51,7 @@ export class OpinionPruebaService implements Resolve<any>{
              this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
 
              this.onOpinionsChanged.next(this.opinions);
-             
+
              resolve(this.opinions);
 
          },reject));

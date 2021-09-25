@@ -30,7 +30,7 @@ export class EstadTipoService {
 
     let campaign_id = this.servCamp.getId();
 
-    return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCPostivaXDia?id=' + campaign_id)
+    return this._http.get<any>(environment.sails_services_urlpath +  '/estadisticaByTipo/getCPostivaXDia?id=' + campaign_id)
 
   }
 
@@ -38,7 +38,7 @@ export class EstadTipoService {
 
     let campaign_id = this.servCamp.getId();
 
-    return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCNegativaXDia?id=' + campaign_id)
+    return this._http.get<any>(environment.sails_services_urlpath + '/estadisticaByTipo/getCNegativaXDia?id=' + campaign_id)
 
   }
 
@@ -46,7 +46,7 @@ export class EstadTipoService {
 
     let campaign_id = this.servCamp.getId();
 
-    return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCNeutraXDia?id=' + campaign_id)
+    return this._http.get<any>(environment.sails_services_urlpath +  '/estadisticaByTipo/getCNeutraXDia?id=' + campaign_id)
 
   }
 
@@ -54,7 +54,7 @@ export class EstadTipoService {
 
     let campaign_id = this.servCamp.getId();
 
-    return this._http.get<any>(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/estadisticaByTipo/getCantTotalXDia?id=' + campaign_id)
+    return this._http.get<any>(environment.sails_services_urlpath +  '/estadisticaByTipo/getCantTotalXDia?id=' + campaign_id)
 
   }
 

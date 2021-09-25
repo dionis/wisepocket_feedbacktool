@@ -85,14 +85,14 @@ export class OpinionService implements Resolve<any>
         this.onAspectsTotalOfOpinionChanged = new BehaviorSubject(0);
         this.currentOpinionAspects = [];
         this.onPageChanched = new BehaviorSubject({'pageIndex':'0','pageSize':'10'})
-        
+
         this.onLangChanched = new BehaviorSubject('');
         this.onUserIdChanched = new BehaviorSubject('');
         this.onTextChanched = new BehaviorSubject('');
         this.onPolarityChanched = new BehaviorSubject('');
         this.onDateStartChanched = new BehaviorSubject('');
         this.onDateEndChanched= new BehaviorSubject('');
-        
+
     }
 
     /**
@@ -113,7 +113,7 @@ export class OpinionService implements Resolve<any>
                 this.getFilters(),
                 //this.getLabels(),
                 this.CountOpinionsofCampaign(),
-                this.getOpinions(pageIndex,pageSize),      
+                this.getOpinions(pageIndex,pageSize),
             ]).then(
                 () => {
 
@@ -151,7 +151,7 @@ export class OpinionService implements Resolve<any>
             .append("id", this.campaign.getMyCampsID())
             .append("page", page.toString())
             .append("idioma", 'ingles')
-        return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinionXIdiomaCamp', { params: httpParams })
+        return this._httpClient.get(environment.sails_services_urlpath +  '/opinion/getOpinionXIdiomaCamp', { params: httpParams })
 
     };
 
@@ -167,7 +167,7 @@ export class OpinionService implements Resolve<any>
             let httpParams = new HttpParams()
                 .append("id", campaignid.id)
                 .append("page", page.toString())
-            return this._httpClient.get(environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion', { params: httpParams })
+            return this._httpClient.get(environment.sails_services_urlpath +  '/opinion/getOpinion', { params: httpParams })
         }
       };
 
@@ -178,7 +178,7 @@ export class OpinionService implements Resolve<any>
             // let httpParams = new HttpParams()
             // .append("id", oPinID)
             this._httpClient.get(
-                environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/aspectoopinion/getAspecto',
+                environment.sails_services_urlpath + '/aspectoopinion/getAspecto',
                  { params: {'id':this.currentOpinion?this.currentOpinion.id:'',
                             'page': page,
                             'limit': limit} })
@@ -192,7 +192,7 @@ export class OpinionService implements Resolve<any>
                     resolve(this.currentOpinionAspects)
                  },reject);
         });
-        
+
     };
 
     /**
@@ -217,7 +217,7 @@ export class OpinionService implements Resolve<any>
      * @returns {Promise<any>}
      */
     getFilters(): Promise<any> {
-        return new Promise((resolve, reject) => { 
+        return new Promise((resolve, reject) => {
             this._httpClient.get('api/opinion-filters')
                 .subscribe((response: any) => {
                     this.filters = response;
@@ -230,7 +230,7 @@ export class OpinionService implements Resolve<any>
     CountOpinionsofCampaign(): Promise<any>{
         return new Promise((resolve,reject)=>{
             this._httpClient.get(
-                environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/countOpinionsOfCampaign',
+                environment.sails_services_urlpath +'/opinion/countOpinionsOfCampaign',
                 {params:{
                         'id': this.sharedVarService.getId()}
                 }).subscribe((result:any)=>{
@@ -356,7 +356,7 @@ export class OpinionService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             this._httpClient.get(
-                environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinionbyFilter',
+                environment.sails_services_urlpath + '/opinion/getOpinionbyFilter',
                 {params:{
                         'id': this.sharedVarService.getId(),
                         'handle':handle,
@@ -366,7 +366,7 @@ export class OpinionService implements Resolve<any>
                     this.opinions = opinions.data.map(opinion => {
                         return new OpinionTest(opinion);
                     });
-                    
+
                     this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
                     this.onOpinionsChanged.next(this.opinions);
                     this.onOpinionsTotalOfCampChanged.next(opinions.count)
@@ -376,10 +376,10 @@ export class OpinionService implements Resolve<any>
         });
     }
 
-     
+
     getOpinionsByPages(pageIndex,pageSize): Promise<OpinionTest[]> {
         return new Promise<OpinionTest[]>((resolve,reject)=>this._httpClient.get(
-            environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion',
+            environment.sails_services_urlpath + '/opinion/getOpinion',
             {params:{
                      'id': this.sharedVarService.getId(),
                      'page':'0',
@@ -400,9 +400,9 @@ export class OpinionService implements Resolve<any>
                  console.log(this.opinions);
                  this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
                  this.onOpinionsChanged.next(this.opinions);
- 
+
                  resolve(this.opinions);
- 
+
              },reject));
     }
 
@@ -564,7 +564,7 @@ export class OpinionService implements Resolve<any>
     setFolderOnSelectedOpinions(folderId): void {
         this.selectedOpinions.map(opinion => {
             //opinion.folder = folderId; //OJO BOTON DELETE IMPLEMNTAR!!!!
-            this.deleteOpinions(opinion.id);    
+            this.deleteOpinions(opinion.id);
             //this.updateOpinion(opinion);
         });
 
@@ -604,7 +604,7 @@ export class OpinionService implements Resolve<any>
     */
    getOpinionsFromBAck(page,limit,criteria,filter){
        return new Promise<OpinionTest[]>((resolve,reject)=>this._httpClient.get(
-           environment.sails_services_urlpath + ":" + environment.sails_services_urlport + '/opinion/getOpinion',
+           environment.sails_services_urlpath + '/opinion/getOpinion',
            {params:{
                     'id': this.sharedVarService.getId(),
                     'page':page,
@@ -616,7 +616,7 @@ export class OpinionService implements Resolve<any>
                 this.opinions = opinions.data.map(opinion => {
                     return new OpinionTest(opinion);
                 });
-                
+
                 this.opinions = FuseUtils.filterArrayByString(this.opinions, this.searchText);
                 this.onOpinionsChanged.next(this.opinions);
                 resolve(this.opinions);
@@ -627,8 +627,7 @@ export class OpinionService implements Resolve<any>
    deleteOpinions(opinionId): Promise<any>{
         return new Promise((resolve,reject)=>{
             this._httpClient.delete(
-                environment.sails_services_urlpath + 
-                ":" + environment.sails_services_urlport +
+                environment.sails_services_urlpath +
                 '/opinion/deleteOpinion',
                 {params:{'id':opinionId}})
             .subscribe(opinion=>{
@@ -647,8 +646,7 @@ export class OpinionService implements Resolve<any>
                             polarity:string,
                             lang:string): Promise<any>{
         return new Promise((resolve,reject)=>{
-            this._httpClient.get( environment.sails_services_urlpath + 
-                ":" + environment.sails_services_urlport +
+            this._httpClient.get( environment.sails_services_urlpath +
                 '/opinion/getOpinionsAdvancedSearch',
                 {params:{'id': this.sharedVarService.getId(),
                         'date_start':date_start,

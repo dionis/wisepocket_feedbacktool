@@ -1,0 +1,120 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar class="mat-accent m-0">
+        <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{'OPINION.DIALOGTITLE' | translate}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+
+        <form name="composeForm" [formGroup]="composeForm" class="compose-form" fxLayout="column" fxFlex>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Data Start</mat-label>
+                <input matInput name="date_start"
+                       formControlName="date_start"
+                       type="date">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Data End</mat-label>
+                <input matInput name="date_end"
+                       formControlName="date_end"
+                       type="date">
+            </mat-form-field>
+
+            <div class="show-hide-extra-fields" (click)="toggleExtraToFields()">
+                <span [fxShow]="!showExtraToFields">Show More Fileds</span>
+                <span [fxShow]="showExtraToFields">Hide Fileds</span>
+            </div>
+
+            <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>User</mat-label>
+                <mat-select matInput formControlName="users">
+                    <mat-option *ngFor="let user of users_end" value="{{user.id}}"> 
+                        {{user.nombre}}
+                    </mat-option>
+                </mat-select>
+                <mat-error></mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" [fxShow]="showExtraToFields">
+                <mat-label>Language</mat-label>
+                <mat-select matInput formControlName="lang">
+                    <mat-option *ngFor="let lang of langs" value="{{lang}}"> 
+                        {{lang}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Polarity</mat-label>
+                <mat-select matInput formControlName="polarity">
+                    <mat-option *ngFor="let polarity of polarities" value="{{polarity}}"> 
+                        {{polarity}}
+                    </mat-option>
+                </mat-select>
+                <mat-error></mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" [fxShow]="showExtraToFields">
+                <mat-label>Text</mat-label>
+                <textarea matInput name="text"
+                          formControlName="text"
+                          rows="6">
+                </textarea>
+            </mat-form-field>
+
+            <!-- <div class="attachment-list">
+
+                <div class="attachment" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div>
+                        <span class="filename">attachment-2.doc</span>
+                        <span class="size ml-4">(12 Kb)</span>
+                    </div>
+
+                    <button mat-icon-button aria-label="Delete attachment">
+                        <mat-icon class="s-16">close</mat-icon>
+                    </button>
+                </div>
+
+                <div class="attachment" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div>
+                        <span class="filename">attachment-1.jpg</span>
+                        <span class="size ml-4">(350 Kb)</span>
+                    </div>
+
+                    <button mat-icon-button aria-label="Delete attachment">
+                        <mat-icon class="s-16">close</mat-icon>
+                    </button>
+                </div>
+            </div> -->
+        </form>
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+            <button mat-raised-button
+                    color="accent"
+                    (click)="matDialogRef.close(composeForm)"
+                    class="save-button"
+                    [disabled]="composeForm.invalid"
+                    aria-label="ACCEPT">
+                Accept
+            </button>
+
+           <!-- <button mat-icon-button matTooltip="Attach a file">
+                <mat-icon>attach_file</mat-icon>
+            </button>  -->
+        </div>
+
+        <!-- <button mat-icon-button (click)="matDialogRef.close(['delete',composeForm])"
+                aria-label="Delete"
+                matTooltip="Delete">
+            <mat-icon>delete</mat-icon>
+        </button> -->
+    </div>
+</div>

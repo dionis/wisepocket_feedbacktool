@@ -1,0 +1,166 @@
+<div id="dashboard-analytics" class="page-layout blank">
+
+
+    <div class="content">
+
+        <div class="left mr-lg-32">
+
+            <div class="pb-24 font-size-18 font-weight-300">
+                Tendencia de Opiniones por idiomas Inglés - Español
+                <h4>Campaña analizada: {{campaigns}}</h4>
+                <button mat-icon-button >
+                  <h5>Imprimir:</h5>
+                  <mat-icon class="secondary-text">print</mat-icon>
+                </button>
+            </div>
+            <br>
+            <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+
+                <!-- Widget 2 -->
+                <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+
+                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+
+                        <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+                            <div class="pr-16">
+                                <div class="h2">Inglés</div>
+                                <div class="h3 secondary-text">Opiniones en la semana</div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                    {{widget2.englishOpin[0].value}}
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="h-96 w-100-p">
+                            <div *ngIf="widget2.datasets.data.length == 0">
+                              <span>No existen datos</span>
+                            </div>
+                            <canvas baseChart [datasets]="widget2.datasets" [labels]="widget2.labels"
+                                [colors]="widget2.colors" [options]="widget2.options" [chartType]="widget2.chartType">
+                            </canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- / Widget 2 -->
+
+                <!-- Widget 3 -->
+                <div class="widget" fxFlex="100" fxFlex.gt-sm="34">
+
+                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+
+                        <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                            <div class="pr-16">
+                                <div class="h2">Español</div>
+                                <div class="h3 secondary-text">Opiniones en la semana</div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                    {{widget3.spanishOpin[0].value}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="h-96 w-100-p">
+                           <div *ngIf="widget3.datasets.data.length == 0">
+                              <span>No existen datos</span>
+                           </div>
+                            <canvas baseChart [datasets]="widget3.datasets" [labels]="widget3.labels"
+                                [colors]="widget3.colors" [options]="widget3.options" [chartType]="widget3.chartType">
+                            </canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- / Widget 3 -->
+
+                <!-- Widget 4 -->
+                <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+
+                    <div class="fuse-card auto-width">
+
+                        <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                            <div class="pr-16">
+                                <div class="h2">Total de Opiniones</div>
+                                <div class="h3 secondary-text">Opiniones en la semana</div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                    {{widget4.totalOpin[0].value}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="h-96 w-100-p">
+                          <div *ngIf="widget4.datasets.data.length == 0">
+                              <span>No existen datos</span>
+                           </div>
+                            <canvas baseChart [datasets]="widget4.datasets" [labels]="widget4.labels"
+                                [colors]="widget4.colors" [options]="widget4.options" [chartType]="widget4.chartType">
+                            </canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- / Widget 4 -->
+
+            </div>
+
+            <!-- Widget 5 -->
+            <div class="pt-48 pb-24 font-size-18 font-weight-300">
+                Comportamiento
+            </div>
+
+            <div class="fuse-card auto-width">
+
+                <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column" fxLayoutAlign="start start">
+                        <span class="h2">Inglés y Español</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                            (click)="widget5SelectedDay = 'yesterday'"
+                            [ngClass]="{'accent': widget5SelectedDay === 'yesterday'}">
+                            Ayer
+                        </div>
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                            (click)="widget5SelectedDay = 'today'"
+                            [ngClass]="{'accent': widget5SelectedDay === 'today'}">
+                            Hoy
+                        </div>
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer">
+                            <form [formGroup]="dateForm">
+                                <!-- Date picker -->
+                                <mat-form-field>
+                                    <input matInput readonly [max]="maxDate" [matDatepicker]="picker"
+                                        placeholder="Opinion's date" formControlName="usertime"
+                                        (dateChange)="date($event)">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative h-368 pb-16">
+                  <div *ngIf="widget5.datasets[widget5SelectedDay].data.length == 0">
+                    <span>No existen datos</span>
+                 </div>
+                    <canvas baseChart [datasets]="widget5.datasets[widget5SelectedDay]" [labels]="widget5.labels"
+                        [colors]="widget5.colors" [options]="widget5.options" [chartType]="widget5.chartType">
+                    </canvas>
+                </div>
+
+            </div>
+            <!-- / Widget 5 -->
+
+
+        </div>
+
+    </div>
+
+</div>

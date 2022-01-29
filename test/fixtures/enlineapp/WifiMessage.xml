@@ -1,0 +1,51 @@
+<update system="EnLineaContigo" date="2017/05/23" imei="353567051450238">
+  <informations>
+    <info type="opinion" id="45665">     
+      <citizenid>
+        45665
+      </citizenid>
+      <programtitle>El problema del agua en Santiago</programtitle>
+      <data>
+        <contacto>
+          <name>
+            Pedro Jose
+          </name>
+          <lastname>
+            Moreno
+          </lastname>
+          <address>
+            Calle 10 Rpto Sueño, #264
+          </address>
+          <phone>
+            2334345444
+          </phone>
+          <mail>
+            pedro@nauta.cu
+          </mail>
+          <nickname>
+            ElSabelotodo
+          </nickname>
+          <gps>
+          </gps>
+        </contacto>
+        <title>
+          El problema del agua es terrible
+        </title>
+        <text>
+         Como conocer el medicamento contra el Dengue
+        </text>
+      </data>
+      <images>
+        <image>
+          /_2_lavado nasal2.jpeg
+        </image>
+      </images>
+      <videos>
+        /fgdd.mp4
+      </videos>
+      <records>
+        /gardd.mp3
+      </records>
+    </info>
+   </informations>
+</update>

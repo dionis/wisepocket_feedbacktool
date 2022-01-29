@@ -1,0 +1,35 @@
+NOTICIAS:
+  Se encuentra foco de contagio en el Reparto de Vista Alegre (5) y en el poblado del Caney (2)
+ALERTAS: 
+   En motos particulares y estatales solo puede ir el conductor. Prohibido montar otro pasajero (incluyendo motos con sidecarr)
+
+CASOS:
+   CONFIRMADOS:   21
+   ALTAS: 34
+   INGRESADOS: 800
+   MUERTOS: 2
+
+EVENTOS:
+    - LUGAR: 
+      NOMBRE: Parque Abel Santiamar�a
+      MUNICIPIO: Santiago de Cuba
+      UBICACION:  lat="20.025520" long="-75.905280"
+      COMENTARIO: Lugar donde se vender�n productos para la poblaci�n como pollo (20 pesos/lb), papas (9lb/persona)
+      TELEFONO: 51360771
+      TIPO: Alimentos
+
+    - LUGAR:   
+      NOMBRE: Parque C�spedes
+      MUNICIPIO: Santiago de Cuba      
+      UBICACION:  lat="20.115520" long="-75.915180"
+      COMENTARIO: Venta de productos Agropecuarios Horario 8:00 am a 6:30 pm
+      TELEFONO: 51360771
+      TIPO: Alimentos
+
+    - LUGAR:   
+      NOMBRE: Parque Serrano
+      MUNICIPIO: Santiago de Cuba      
+      UBICACION:  lat="20.115520" long="-75.915180"
+      COMENTARIO: Venta de productos Agropecuarios Horario 8:00 am a 6:30 pm
+      TELEFONO: 51360771
+      TIPO: Alimentos

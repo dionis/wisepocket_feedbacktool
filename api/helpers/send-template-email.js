@@ -1,3 +1,5 @@
+
+var MailerService = require ('sails-service-mailer');
 module.exports = {
 
 
@@ -14,11 +16,10 @@ module.exports = {
 
   inputs: {
 
-
     template: {
       description: 'The relative path to an EJS template within our `views/emails/` folder -- WITHOUT the file extension.',
-      extendedDescription: 'Use strings like "foo" or "foo/bar", but NEVER "foo/bar.ejs" or "/foo/bar".  For example, '+
-        '"internal/email-contact-form" would send an email using the "views/emails/internal/email-contact-form.ejs" template.',
+      extendedDescription: 'Use strings like "foo" or "foo/bar", but NEVER "foo/bar.ejs".  For example, '+
+        '"marketing/welcome" would send an email using the "views/emails/marketing/welcome.ejs" template.',
       example: 'email-reset-password',
       type: 'string',
       required: true
@@ -45,31 +46,14 @@ module.exports = {
       description: 'The email address of the primary recipient.',
       extendedDescription: 'If this is any address ending in "@example.com", then don\'t actually deliver the message. '+
         'Instead, just log it to the console.',
-      example: 'nola.thacker@example.com',
-      required: true,
-      isEmail: true,
-    },
-
-    toName: {
-      description: 'Name of the primary recipient as displayed in their inbox.',
-      example: 'Nola Thacker',
+      example: 'foo@bar.com',
+      required: true
     },
 
     subject: {
       description: 'The subject of the email.',
       example: 'Hello there.',
       defaultsTo: ''
-    },
-
-    from: {
-      description: 'An override for the default "from" email that\'s been configured.',
-      example: 'anne.martin@example.com',
-      isEmail: true,
-    },
-
-    fromName: {
-      description: 'An override for the default "from" name.',
-      example: 'Anne Martin',
     },
 
     layout: {
@@ -84,27 +68,7 @@ module.exports = {
       extendedDescription: 'Otherwise by default, this returns immediately and delivers the request to deliver this email in the background.',
       type: 'boolean',
       defaultsTo: false
-    },
-
-    bcc: {
-      description: 'The email addresses of recipients secretly copied on the email.',
-      example: ['jahnna.n.malcolm@example.com'],
-    },
-
-    attachments: {
-      description: 'Attachments to include in the email, with the file content encoded as base64.',
-      whereToGet: {
-        description: 'If you have `sails-hook-uploads` installed, you can use `sails.reservoir` to get an attachment into the expected format.',
-      },
-      example: [
-        {
-          contentBytes: 'iVBORw0KGgoAA…',
-          name: 'sails.png',
-          type: 'image/png',
-        }
-      ],
-      defaultsTo: [],
-    },
+    }
 
   },
 
@@ -122,14 +86,14 @@ module.exports = {
   },
 
 
-  fn: async function({template, templateData, to, toName, subject, from, fromName, layout, ensureAck, bcc, attachments}) {
+  fn: async function(inputs) {
 
     var path = require('path');
     var url = require('url');
     var util = require('util');
 
 
-    if (!_.startsWith(path.basename(template), 'email-')) {
+    if (!_.startsWith(path.basename(inputs.template), 'email-')) {
       sails.log.warn(
         'The "template" that was passed in to `sendTemplateEmail()` does not begin with '+
         '"email-" -- but by convention, all email template files in `views/emails/` should '+
@@ -139,7 +103,7 @@ module.exports = {
       );
     }
 
-    if (_.startsWith(template, 'views/') || _.startsWith(template, 'emails/')) {
+    if (_.startsWith(inputs.template, 'views/') || _.startsWith(inputs.template, 'emails/')) {
       throw new Error(
         'The "template" that was passed in to `sendTemplateEmail()` was prefixed with\n'+
         '`emails/` or `views/` -- but that part is supposed to be omitted.  Instead, please\n'+
@@ -153,12 +117,12 @@ module.exports = {
     }//•
 
     // Determine appropriate email layout and template to use.
-    var emailTemplatePath = path.join('emails/', template);
-    var emailTemplateLayout;
-    if (layout) {
-      emailTemplateLayout = path.relative(path.dirname(emailTemplatePath), path.resolve('layouts/', layout));
+    var emailTemplatePath = path.join('emails/', inputs.template);
+    var layout;
+    if (inputs.layout) {
+      layout = path.relative(path.dirname(emailTemplatePath), path.resolve('layouts/', inputs.layout));
     } else {
-      emailTemplateLayout = false;
+      layout = false;
     }
 
     // Compile HTML template.
@@ -167,7 +131,7 @@ module.exports = {
     // > `util` package (for dumping debug data in internal emails).
     var htmlEmailContents = await sails.renderView(
       emailTemplatePath,
-      _.extend({layout: emailTemplateLayout, url, util }, templateData)
+      _.extend({layout, url, util }, inputs.templateData)
     )
     .intercept((err)=>{
       err.message =
@@ -185,7 +149,7 @@ module.exports = {
     // > for convenience during development, but also for safety.  (For example,
     // > a special-cased version of "user@example.com" is used by Trend Micro Mars
     // > scanner to "check apks for malware".)
-    var isToAddressConsideredFake = Boolean(to.match(/@example\.com$/i));
+    var isToAddressConsideredFake = Boolean(inputs.to.match(/@example\.com$/i));
 
     // If that's the case, or if we're in the "test" environment, then log
     // the email instead of sending it:
@@ -199,8 +163,8 @@ module.exports = {
         '\n'+
         'But anyway, here is what WOULD have been sent:\n'+
         '-=-=-=-=-=-=-=-=-=-=-=-=-= Email log =-=-=-=-=-=-=-=-=-=-=-=-=-\n'+
-        'To: '+to+'\n'+
-        'Subject: '+subject+'\n'+
+        'To: '+inputs.to+'\n'+
+        'Subject: '+inputs.subject+'\n'+
         '\n'+
         'Body:\n'+
         htmlEmailContents+'\n'+
@@ -210,24 +174,27 @@ module.exports = {
       // Otherwise, we'll check that all required Mailgun credentials are set up
       // and, if so, continue to actually send the email.
 
-      if (!sails.config.custom.sendgridSecret) {
+      if (!sails.config.custom.mailgunSecret || !sails.config.custom.mailgunDomain) {
         throw new Error(
-          'Cannot deliver email to "'+to+'" because:\n'+
+          'Cannot deliver email to "'+inputs.to+'" because:\n'+
           (()=>{
             let problems = [];
-            if (!sails.config.custom.sendgridSecret) {
-              problems.push(' • Sendgrid secret is missing from this app\'s configuration (`sails.config.custom.sendgridSecret`)');
+            if (!sails.config.custom.mailgunSecret) {
+              problems.push(' • Mailgun secret is missing from this app\'s configuration (`sails.config.custom.mailgunSecret`)');
+            }
+            if (!sails.config.custom.mailgunDomain) {
+              problems.push(' • Mailgun domain is missing from this app\'s configuration (`sails.config.custom.mailgunDomain`)');
             }
             return problems.join('\n');
           })()+
           '\n'+
           'To resolve these configuration issues, add the missing config variables to\n'+
           '\`config/custom.js\`-- or in staging/production, set them up as system\n'+
-          'environment vars.  (If you don\'t have a Sendgrid secret, you can\n'+
-          'sign up for free at https://sendgrid.com to receive credentials.)\n'+
+          'environment vars.  (If you don\'t have a Mailgun domain or secret, you can\n'+
+          'sign up for free at https://mailgun.com to receive sandbox credentials.)\n'+
           '\n'+
           '> Note that, for convenience during development, there is another alternative:\n'+
-          '> In lieu of setting up real Sendgrid credentials, you can "fake" email\n'+
+          '> In lieu of setting up real Mailgun credentials, you can "fake" email\n'+
           '> delivery by using any email address that ends in "@example.com".  This will\n'+
           '> write automated emails to your logs rather than actually sending them.\n'+
           '> (To simulate clicking on a link from an email, just copy and paste the link\n'+
@@ -237,44 +204,159 @@ module.exports = {
         );
       }
 
-      var subjectLinePrefix = sails.config.environment === 'production' ? '' : sails.config.environment === 'staging' ? '[FROM STAGING] ' : '[FROM LOCALHOST] ';
-      var messageData = {
-        htmlMessage: htmlEmailContents,
-        to: to,
-        toName: toName,
-        bcc: bcc,
-        subject: subjectLinePrefix+subject,
-        from: from,
-        fromName: fromName,
-        attachments
-      };
+      ///***********************************************/
+      ///Send mail with my protocoll
+      ///***********************************************/
+      // var toEmail = options.to;
+      // var ccEmail =  options.cc;  //Comma separated list or an array of recipients e-mail addresses that will appear on the Cc: field
+      // var subjectEmail =   options.subject;
+      // var textEmail =   options.text;
+      // var htmlEmail =  options.html;
 
-      var deferred = sails.helpers.sendgrid.sendHtmlEmail.with(messageData);
-      if (ensureAck) {
-        await deferred;
-      } else {
-        // FUTURE: take advantage of .background() here instead (when available)
-        deferred.exec((err)=>{
-          if (err) {
-            sails.log.error(
-              'Background instruction failed:  Could not deliver email:\n'+
-              util.inspect({template, templateData, to, toName, subject, from, fromName, layout, ensureAck, bcc, attachments},{depth:null})+'\n',
-              'Error details:\n'+
-              util.inspect(err)
-            );
-          } else {
-            sails.log.info(
-              'Background instruction complete:  Email sent via email delivery service (or at least queued):\n'+
-              util.inspect({to, toName, subject, from, fromName, bcc},{depth:null})
-            );
+      // var mailElement = { to: toEmail,
+      //   cc: ccEmail,
+      //   text: textEmail,
+      //   subject:subjectEmail
+      // };
+  
+      // ///If exist parament text set
+      // if ( htmlEmail) {
+      //   mailElement.html = htmlEmail;
+      //   mailElement.text = htmlEmail;
+      // }
+      // ///Read in Configuration´s Colecction data about email server configuration
+      // ///Get in Database email´s confguration data.
+      // var ConfigurationObject = "";
+  
+      // Configuration.find({type:"smtp"} ).exec(function userConfiguration(err, configuration) {
+      //   if (!configuration || err || configuration == "") {
+      //    callback(null, {response:"ERROR", message:"Not exits smtp servers configuration."});
+      //     return;
+      //   }
+      //   else {
+      //     if (configuration.length > 1){
+      //       callback(null, {response:"ERROR", messaje:"There are many smtp servers configuration."});
+      //       return;
+      //     }
+      //     ///Take first  element in array
+      //     ConfigurationObject = configuration[0];
+  
+      //     var emailportFormation = ConfigurationObject.emailport
+      //     var emailhostFormation  = ConfigurationObject.emailhost
+      //     var emailuserFormation  = ConfigurationObject.emailuser
+      //     var emailpassFormation  = ConfigurationObject.emailpassword
+      //     var emailsystemFormation  = ConfigurationObject.emailsystemadress
+      //     var mailconfig = {
+      //       from: emailsystemFormation ,
+      //       ignoreTLS: false, // Turns off STARTTLS support if true
+      //       provider: {
+      //         port: emailportFormation , // The port to connect to
+      //         host: emailhostFormation, // The hostname to connect to
+      //         name: "" , // Options hostname of the client
+      //         localAddress:  '', // Local interface to bind to for network connections
+      //         connectionTimeout: 2000, // How many ms to wait for the connection to establish
+      //         greetingTimeout: 2000, // How many ms to wait for the greeting after connection
+      //         socketTimeout: 2000, // How many ms of inactivity to allow
+      //         debug: true // If true, the connection emits all traffic between client and server as `log` events
+      //       }
+      //     };
+  
+  
+      //     if (emailpassFormation && emailuserFormation && emailuserFormation != "" ) {
+      //        mailconfig.provider.auth = { // Defines authentication data
+      //         user: emailuserFormation, // Username
+      //         pass: emailpassFormation, // Password
+  
+      //       }
+      //       mailconfig.secure = true; // Defines if the connection should use SSL
+  
+      //     }
+      //     var smtp = MailerService('smtp', mailconfig );
+      //     smtp.send(
+      //       mailElement
+      //     )
+      //       .then( function () {
+  
+      //         callback(null, {
+      //           response: 'OK'
+      //         });
+      //       })
+      //       .catch(function (errSend) {
+      //         callback( null, {
+      //           response:"ERROR",
+      //           error: errSend
+      //         });
+      //       });
+  
+      //   }  
+      // })
+
+      ///------------ These code use mailgun service -----------///
+      // var deferred = sails.helpers.mailgun.sendHtmlEmail.with({
+      //   htmlMessage: htmlEmailContents,
+      //   to: inputs.to,
+      //   subject: inputs.subject
+      // });
+
+      Configuration.find({key:"smtp"}).limit(1).exec( async function userConfiguration(err, configurationObject) {
+        if (!configurationObject || err || configurationObject == "") {
+          await Configuration.create({key:"smtp", value:JSON.stringify(emailconfig)})
+        }
+
+        emailData = {
+            to:inputs.to,
+            subject:inputs.subject,
+            html:htmlEmailContents
+        }
+        
+        var deferred =  await sails.helpers.sendMail.with({
+          configuration:configurationObject,
+             emailInfo:emailData
+            }).intercept('error', ()=>{
+              sails.log.error(
+                'Background instruction failed:  Could not deliver email:\n'+
+                util.inspect(inputs,{depth:null})+'\n',
+                'Error details:\n'+
+                util.inspect(err)
+              );
+
+
+          if (deferred !== undefined){
+                sails.log.info(
+                  'Background instruction complete:  Email sent (or at least queued):\n'+
+                  util.inspect(inputs,{depth:null})
+                );
           }
-        });//_∏_
-      }//ﬁ
+              
+            //return new Error('Don\'t send email.');
+        });      
+      }); 
+
+      // if (inputs.ensureAck) {
+      //   await deferred;
+      // } else {
+      //   // FUTURE: take advantage of .background() here instead (when available)
+      //   deferred.exec((err)=>{
+      //     if (err) {
+      //       sails.log.error(
+      //         'Background instruction failed:  Could not deliver email:\n'+
+      //         util.inspect(inputs,{depth:null})+'\n',
+      //         'Error details:\n'+
+      //         util.inspect(err)
+      //       );
+      //     } else {
+      //       sails.log.info(
+      //         'Background instruction complete:  Email sent (or at least queued):\n'+
+      //         util.inspect(inputs,{depth:null})
+      //       );
+      //     }
+      //   });//_∏_
+      // }//ﬁ
     }//ﬁ
 
     // All done!
     return {
-      loggedInsteadOfSending: dontActuallySend,
+      loggedInsteadOfSending: dontActuallySend
     };
 
   }

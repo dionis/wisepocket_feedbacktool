@@ -97,11 +97,11 @@ module.exports.routes = {
   //GET and for Pages
   "GET /opinion/getOpinion": "OpinionController.getOpinion",
   "GET /opinion/getOpinionbyFilter": "OpinionController.getOpinionbyFilter",
-  "GET /opinion/countOpinionsOfCampaign": "OpinionController.countOpinionsOfCampaign", 
-  "GET /opinion/getOpinionsAdvancedSearch": "OpinionController.getOpinionsAdvancedSearch", 
+  "GET /opinion/countOpinionsOfCampaign": "OpinionController.countOpinionsOfCampaign",
+  "GET /opinion/getOpinionsAdvancedSearch": "OpinionController.getOpinionsAdvancedSearch",
   "GET /opinion/getOpinionXIdiomaCamp":
     "OpinionController.getOpinionXIdiomaCamp",
-  
+
   "GET /pregunta/getPregunta": "PreguntaController.getPregunta",
   "GET /respuesta/getRespuesta": "RespuestaController.getRespuesta",
   "GET /registro/getRegistro": "RegistroController.getRegistro",
@@ -144,6 +144,38 @@ module.exports.routes = {
   "PATCH /acceso/quitarAcceso": "AccesoController.quitarAcceso",
   "PATCH /acceso/devolverAcceso": "AccesoController.devolverAcceso",
   //"PATCH /userInvitado/updateisAdmin": "UserInvitadoController.updateisAdmin",
+
+  /*******************************************************************************
+
+      IMPORTANT FROM wisepocketopinionmodule's project
+
+  */
+  ///From project
+
+  'GET /review/count-all-opinion':    { action: 'review/count-all-opinion'},
+  'GET /review/count-all':            { action: 'review/count-all'},
+  'GET /review/count-by-type':        { action: 'review/count-by-type'},
+  'GET /review/find-advanced':        { action: 'review/find-advanced'},
+  'GET /review/find-all-citizen':     { action: 'review/find-all-citizen'},
+  'GET /review/find-all-last':        { action: 'review/find-all-last'},
+  'GET /review/find-all':             { action: 'review/find-all'},
+  'GET /review/find-by-opinion-text': { action: 'review/find-by-opinion-text'},
+  'GET /review/opinion-since-7-days': { action: 'review/opinion-since-7-days'},
+
+  'GET /review/available-opinioninsert': { action: 'review/available-opinioninsert' },
+
+  'GET /campainginfo/lastupdate':{  action:'campainginfo/lastupdate'},
+
+  'GET /review/update-information' :{ action:'review/update-information'},
+
+  'GET /review/count-updateds': { action: 'review/count-updateds' },
+
+  'GET /campainginfo/reload-information-sources': { action: 'campainginfo/reload-information-sources' },
+
+  'POST /review/upload-opinion': {
+                                     action: 'review/upload-opinion',
+                                     csrf: false
+                                 },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

@@ -1,0 +1,117 @@
+<mat-table #table [dataSource]="dataSource" [@animateStagger]="{ value: '50' }">
+  <!-- Name Column -->
+  <ng-container matColumnDef="Nombre">
+    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+    <mat-cell *matCellDef="let contact">
+      <p class="text-truncate font-weight-600">{{ contact.nombre }}</p>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="Correo">
+    <mat-header-cell id="textCorreo" *matHeaderCellDef fxHide fxShow.gt-sm
+      >Correo</mat-header-cell
+    >
+    <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
+      <p class="email text-truncate">
+        {{ contact.correo }}
+      </p>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Phone Column -->
+  <ng-container matColumnDef="Teléfono">
+    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md
+      >Teléfono</mat-header-cell
+    >
+    <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
+      <p class="Teléfono text-truncate">
+        {{ contact.telefono }}
+      </p>
+    </mat-cell>
+  </ng-container>
+  <!-- Buttons Column -->
+  <div>
+    <ng-container matColumnDef="boton">
+      <mat-header-cell id="editar" *matHeaderCellDef>Editar</mat-header-cell>
+      <mat-cell *matCellDef="let contact">
+        <div fxFlex="row" fxLayoutAlign="end center">
+          <button
+            id="botonAsociar"
+            mat-raised-button
+            fxHide
+            fxShow.gt-md
+            (click)="editContact(contact)"
+          >
+            <mat-icon [ngStyle]="{ color: 'red' }">edit</mat-icon>
+            Editar
+          </button>
+          <!--<button
+            id="botonEditar"
+            mat-raised-button
+            (click)="asociarAcamp(contact)"
+          >
+            <mat-icon [ngStyle]="{ color: 'green' }"
+              ><span class="material-icons-outlined">
+                wifi_protected_setup
+              </span></mat-icon
+            >
+            Asociar
+          </button><-->
+        </div>
+      </mat-cell>
+    </ng-container>
+  </div>
+  <!-- Menu Column -->
+  <div>
+    <ng-container matColumnDef="menu">
+      <mat-header-cell *matHeaderCellDef>Campaña</mat-header-cell>
+      <mat-cell *matCellDef="let contact">
+        <div fxFlex="row" fxLayoutAlign="end center">
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="moreMenu"
+            aria-label="More"
+            (click)="$event.stopPropagation()"
+          >
+            <mat-icon class="secondary-text">more_vert</mat-icon>
+          </button>
+          <mat-menu #moreMenu="matMenu">
+            <button
+              mat-menu-item
+              aria-label="remove"
+              (click)="desvincular(contact)"
+            >
+              <span>Desvincular</span>
+            </button>
+            <button
+              mat-menu-item
+              aria-label="remove"
+              (click)="quitarAcces(contact, iconFalse)"
+            >
+              <span>Quitar acceso</span>
+            </button>
+            <button
+              mat-menu-item
+              aria-label="remove"
+              (click)="devolverAcces(contact, iconTrue)"
+            >
+              <span>Devolver acceso</span>
+            </button>
+          </mat-menu>
+          <mat-icon #iconTrue class="active-icon green-600 s-16"
+            >check</mat-icon
+          >
+          <mat-icon #iconFalse class="active-icon red-500 s-16">close</mat-icon>
+        </div>
+      </mat-cell>
+    </ng-container>
+  </div>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row
+    *matRowDef="let contact; columns: displayedColumns"
+    class="contact"
+    [@animate]="{ value: '*', params: { y: '100%' } }"
+  >
+  </mat-row>
+</mat-table>

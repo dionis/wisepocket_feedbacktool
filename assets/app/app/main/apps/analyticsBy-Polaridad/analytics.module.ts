@@ -1,0 +1,67 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { AgmCoreModule } from '@agm/core';
+import { ChartsModule } from 'ng2-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
+import { FuseSharedModule } from '../../../../@fuse/shared.module';
+import { FuseWidgetModule } from '../../../../@fuse/components/widget/widget.module';
+
+import { AnalyticsDashboardComponent } from './analytics.component';
+import { AnalyticsDashboardService } from './analytics.service';
+import { CampaignSelectGuard } from '../guards/campaign-select.guard';
+
+import {NgxPrintModule} from 'ngx-print';
+
+
+const routes: Routes = [
+    {
+        path     : '**',
+        component: AnalyticsDashboardComponent,
+        canActivate: [CampaignSelectGuard],
+        resolve  : {
+            data: AnalyticsDashboardService
+        }
+    }
+];
+
+@NgModule({
+    declarations: [
+        AnalyticsDashboardComponent
+    ],
+    imports     : [
+        RouterModule.forChild(routes),
+
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatMenuModule,
+        MatSelectModule,
+        MatTabsModule,
+
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyD81ecsCj4yYpcXSLFcYU97PvRsE_X8Bx8'
+        }),
+        ChartsModule,
+        NgxChartsModule,
+
+        MatDatepickerModule,
+        FuseSharedModule,
+        FuseWidgetModule,
+        NgxPrintModule
+    ],
+    providers   : [
+        AnalyticsDashboardService
+    ]
+})
+export class AnalyticsDashboardModule
+{
+}
+

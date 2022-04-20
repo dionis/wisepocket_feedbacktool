@@ -1,0 +1,46 @@
+{
+  "update": {
+    "system": "WisePocket2.1",
+    "date": "2022/04/12",
+    "datetimestamp": "1649793786",
+    "imei": "353567051450238",
+    "campaignid": "62536687faa935445457aa34",
+    "informations": [
+      {
+        "info": [
+          {
+            "type": "opinion",
+            "id": "45665",
+            "data": [
+              {
+                "contacto": {
+                  "name": "Pedro Jose",
+                  "lastname": "Moreno",
+                  "address": "Calle 10 Rpto Sueño,",
+                  "phone": "2334345444",
+                  "mail": "pedro@nauta.cu",
+                  "nickname": "ElSabelotodo"
+                },
+                "title": "El problema del agua es terrible",
+                "text": "Como conocer el medicamento contra el Dengu          \n",
+                "images": {
+                  "image": [
+                    "/_2_pulmon.png",
+                    "/testimage.jpg"
+                  ]
+                },
+                "videos": [
+                  "/fgdd.mp4"
+                ],
+                "records": [
+                  "/gardd.mp3"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+      

@@ -1,0 +1,175 @@
+<div id="product" class="page-layout carded fullwidth inner-scroll">
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+    <!-- HEADER -->
+    <div
+      class="header accent"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button
+          mat-icon-button
+          class="mr-0 mr-sm-16"
+          [routerLink]="'/apps/e-commerce/products'"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div
+          class="product-image mr-8 mr-sm-16"
+          [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }"
+        >
+          <img [src]="'assets/images/Icons-Añadidos/users.png'" />
+        </div>
+
+        <div>
+          <h2>Nuevo Invitado</h2>
+          <span class="subtitle secondary-text"
+            >Invitado a colaborar con el administrador (Con limitaciones)
+          </span>
+        </div>
+      </div>
+      <!-- / APP TITLE -->
+
+      <button
+        mat-raised-button
+        class="save-product-button"
+        [disabled]="productForm.invalid || productForm.pristine"
+        *ngIf="pageType === 'edit'"
+        (click)="saveProduct()"
+      >
+        <span>SAVE</span>
+      </button>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+      <!-- CONTENT -->
+      <div class="content">
+        <form name="invUserForm" [formGroup]="invUserForm">
+          <mat-card>
+            <h2 id="InfoTitle">Información Básica</h2>
+            <br />
+            <div class="tab-content p-24" fusePerfectScrollbar>
+              <mat-form-field
+                appearance="outline"
+                floatLabel="always"
+                class="w-100-p"
+              >
+                <mat-label>Nombre</mat-label>
+                <input
+                  matInput
+                  placeholder="Nombre"
+                  name="nombre"
+                  formControlName="nombre"
+                  required
+                  maxlength="50"
+                />
+                <mat-error
+                  *ngIf="invUserForm.get('nombre').hasError('required')"
+                >
+                  Nombre requerido
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field
+                appearance="outline"
+                floatLabel="always"
+                class="w-100-p"
+              >
+                <mat-label>Correo</mat-label>
+                <input
+                  matInput
+                  placeholder="Email"
+                  formControlName="correo"
+                  required
+                  type="email"
+                />
+                <mat-error
+                  *ngIf="invUserForm.get('correo').hasError('required')"
+                >
+                  Correo requerido
+                  <span *ngIf="invUserForm.get('correo').hasError('correo')">
+                    Por favor entre un correo válido
+                  </span>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field
+                appearance="outline"
+                floatLabel="always"
+                class="w-100-p"
+              >
+                <mat-label>Teléfono</mat-label>
+                <input
+                  matInput
+                  placeholder="Teléfono"
+                  formControlName="telefono"
+                  required
+                  inputmode="numeric"
+                  maxlength="8"
+                  minlength="8"
+                />
+                <mat-error
+                  *ngIf="
+                    invUserForm.get('telefono').errors &&
+                    (invUserForm.get('telefono').dirty ||
+                      invUserForm.get('telefono').touched)
+                  "
+                >
+                  <span *ngIf="invUserForm.get('telefono').hasError('required')"
+                    >Teléfono requerido</span
+                  >
+                  <span *ngIf="invUserForm.get('telefono').hasError('pattern')"
+                    >Números sólamente</span
+                  >
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field
+                appearance="outline"
+                floatLabel="always"
+                class="w-100-p"
+              >
+                <mat-label>Dirección</mat-label>
+                <textarea
+                  matInput
+                  placeholder="Dirección"
+                  name="direccion"
+                  formControlName="direccion"
+                  required
+                  rows="5"
+                  maxlength="350"
+                >
+                </textarea>
+                <mat-error
+                  *ngIf="invUserForm.get('direccion').hasError('required')"
+                >
+                  Dirección requerida
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <button
+              mat-raised-button
+              class="save-product-button"
+              [disabled]="invUserForm.invalid"
+              (click)="onSave()"
+            >
+              <span>Agregar</span>
+            </button>
+          </mat-card>
+        </form>
+      </div>
+      <!-- / CONTENT -->
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

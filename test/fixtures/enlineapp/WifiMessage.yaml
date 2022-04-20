@@ -1,0 +1,138 @@
+---
+# Using https://www.site24x7.com/tools/xml-to-yaml.html
+#https://jsonformatter.org/xml-to-yaml
+update:
+  "-system": EnLineaContigo
+  "-date": 2017/05/23
+  "-imei": 353567051450238
+  "-campaignid": 62536687faa935445457aa34
+  informations:
+    info:
+    -
+      "-type": opinion
+      "-id": 45665
+      citizenid: 
+        45665
+      
+      programtitle: El problema del agua en Santiago
+      data:
+        contacto:
+          name: 
+            Pedro Jose
+          
+          lastname: 
+            Moreno
+          
+          address: 
+            Calle 10 Rpto Sueño, #264
+          
+          phone: 
+            2334345444
+          
+          mail: 
+            pedro@nauta.cu
+          
+          nickname: 
+            ElSabelotodo
+          
+          gps:
+        title: 
+          El problema del agua es terrible
+        
+        text: 
+         Como conocer el medicamento contra el Dengue
+        
+    -
+      "-type": opinion
+      "-id": 45666
+      citizenid: 
+        45666
+      
+      programtitle: 
+        Santiago arde
+      
+      data:
+        contacto:
+          name: 
+            Maria
+          
+          lastname: 
+            Perez
+          
+          address: 
+            Calle 10 Rpto Sueño, #264
+          
+          phone: 
+            2334345333
+          
+          mail: 
+            maria@nauta.cu
+          
+          nickname:
+          gps:
+            latitude: 
+              23.3232
+            
+            longitude: 
+              54.333
+            
+        title: 
+          Una idea muy buena
+        
+        text: 
+          En mi barrio se existen numerosos pozos de agua estancada.
+        
+    -
+      "-type": felicitation
+      "-id": 45667
+      citizenid: 
+        45667
+      
+      programtitle: El problema del agua en Santiago
+      data:
+        contacto:
+          name: 
+            Pedro Jose
+          
+          lastname: 
+            Moreno
+          
+          address: 
+            Calle 10 Rpto Sueño, #264
+          
+          phone: 
+            2334345444
+          
+          mail: 
+            pedro@nauta.cu
+          
+          nickname: 
+            El Bello
+          
+          gps:
+            latitude: 
+              23.3232
+            
+            longitude: 
+              54.333
+            
+        title: 
+          Viva el 1ro de Mayo
+        
+        text: 
+          Hemos tenido un buen trato en los hospitales
+        
+      images:
+        image:
+        - 
+          /_2_pulmon.png
+        
+        - 
+          /testimage.jpg
+        
+      videos: 
+        /fgdd.mp4
+      
+      records: 
+        /gardd.mp3
+      

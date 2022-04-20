@@ -1,0 +1,31 @@
+---
+# Using https://www.site24x7.com/tools/xml-to-yaml.html
+#https://jsonformatter.org/xml-to-yaml
+# Aeach opinion will send in a mail
+#
+# https://onlineyamltools.com/convert-yaml-to-json
+#
+"system":WisePocket2.1
+"date": "2022/04/12"
+"datetimestamp": "1649793786"
+"campaignid": "62536687faa935445457aa34"
+info:
+  - "type": opinion
+  - contacto:
+       name: Pedro Jose          
+       lastname: Moreno          
+       address: Calle 10 Rpto Sueño, #264          
+       phone: "2334345444"          
+       mail: "pedro@nauta.cu"          
+       nickname: "ElSabelotodo"          
+   - title: "El problema del agua es terrible"        
+   - text: >
+              Como conocer el medicamento contra el Dengu          
+   - images:
+       -  /_2_pulmon.png
+       - /testimage.jpg       
+   - videos: 
+       - /fgdd.mp4     
+   - records: 
+       - /gardd.mp3
+      

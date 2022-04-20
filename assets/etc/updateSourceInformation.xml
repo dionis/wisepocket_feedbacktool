@@ -1,0 +1,32 @@
+
+<informations cant="3">
+<!-- inoid@wysepocket.cu ymartinez -->
+		<info>
+            <title>Orientaciones: Consejo de Defensa Provincial</title>
+            <source>dionis@uo.edu.cu </source>
+            <classifier>Actualidad</classifier>
+             <uuid>2222</uuid>
+             <type>text</type>
+        </info>
+        <info>
+            <title>Noticias Falsas</title>
+            <uuid>3333</uuid>
+            <classifier>Actualidad</classifier>
+            <source>yadymartinez@nauta.cu</source>
+             <type>text</type>
+        </info>
+        <info>
+            <title>GeoInformacion</title>            
+             <uuid>0001</uuid>
+             <classifier>Actualidad</classifier>
+            <source>yadisbel.martinez@gmail.com</source>
+            <type>geomap</type>
+        </info>
+        <info>
+            <title>Actualidad de la información sobre COVID-19 en Cuba</title>
+             <uuid>1143</uuid>
+             <classifier>Actualidad</classifier>
+            <source>web-services</source>
+             <type>chart</type>
+        </info>   
+</informations>

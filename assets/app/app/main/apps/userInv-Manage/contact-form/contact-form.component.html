@@ -1,0 +1,261 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar matDialogTitle class="mat-accent m-0">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title">{{ dialogTitle }}</span>
+      <button
+        mat-icon-button
+        (click)="matDialogRef.close()"
+        aria-label="Close dialog"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row
+      class="toolbar-bottom py-16"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+    >
+      <img
+        [src]="'assets/images/Icons-Añadidos/user-192.png'"
+        class="avatar contact-avatar huge m-0"
+      />
+      <div *ngIf="action === 'edit'" class="contact-name mt-8">
+        {{ contact.nombre }}
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+    <form [formGroup]="invUserForm">
+      <div class="tab-content p-24" fusePerfectScrollbar>
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="w-100-p"
+        >
+          <mat-label>Nombre</mat-label>
+          <input
+            #nombre
+            matInput
+            placeholder="Nombre"
+            name="nombre"
+            formControlName="nombre"
+            required
+            maxlength="50"
+          />
+          <mat-error *ngIf="invUserForm.get('nombre').hasError('required')">
+            Nombre requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="w-100-p"
+        >
+          <mat-label>Correo</mat-label>
+          <input
+            matInput
+            placeholder="Email"
+            formControlName="correo"
+            required
+            maxlength="35"
+            type="email"
+          />
+          <mat-error *ngIf="invUserForm.get('correo').hasError('required')">
+            Correo requerido
+          </mat-error>
+          <mat-error *ngIf="invUserForm.get('correo').hasError('email')">
+            Por favor entre un correo válido
+          </mat-error>
+          <mat-error
+            *ngIf="
+              !invUserForm.get('correo').hasError('email') &&
+              invUserForm.get('correo').hasError('pattern')
+            "
+          >
+            Por favor entre un correo válido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="w-100-p"
+        >
+          <mat-label>Teléfono</mat-label>
+          <input
+            matInput
+            placeholder="Teléfono"
+            formControlName="telefono"
+            required
+            inputmode="numeric"
+            maxlength="8"
+            minlength="8"
+          />
+          <mat-error
+            *ngIf="
+              invUserForm.get('telefono').errors &&
+              (invUserForm.get('telefono').dirty ||
+                invUserForm.get('telefono').touched)
+            "
+          >
+            <span *ngIf="invUserForm.get('telefono').hasError('required')"
+              >Teléfono requerido</span
+            >
+            <span *ngIf="invUserForm.get('telefono').hasError('pattern')"
+              >Números sólamente</span
+            >
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="w-100-p"
+        >
+          <mat-label>Dirección</mat-label>
+          <textarea
+            matInput
+            placeholder="Dirección"
+            name="direccion"
+            formControlName="direccion"
+            required
+            rows="5"
+            maxlength="350"
+          >
+          </textarea>
+          <mat-error *ngIf="invUserForm.get('direccion').hasError('required')">
+            Dirección requerida
+          </mat-error>
+        </mat-form-field>
+        <h5 *ngIf="action === 'new'">
+          Se genera de forma automática la contraseña
+        </h5>
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="w-100-p"
+          *ngIf="action === 'new'"
+        >
+          <mat-label>Propuesta Contraseña</mat-label>
+          <input
+            #pass
+            [type]="hide ? 'password' : 'text'"
+            matInput
+            placeholder="Contraseña"
+            formControlName="password"
+            autocomplete="new-password"
+            required
+            minlength="6"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="invUserForm.get('password').hasError('required')">
+            Contraseña requerida
+          </mat-error>
+          <mat-error
+            *ngIf="
+              !invUserForm.get('password').hasError('required') &&
+              !pass.minlength
+            "
+          >
+            Mínimo 6 caracteres
+          </mat-error>
+        </mat-form-field>
+        <br />
+        <mat-checkbox [checked]="activate" #check id="check"
+          >Asociar a la Campaña actual</mat-checkbox
+        >
+
+        <!--<mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="w-100-p"
+          *ngIf="action === 'new'"
+        >
+          <mat-label>Confirmar contraseña</mat-label>
+          <input
+            #passConf
+            matInput
+            required
+            minlength="6"
+            placeholder="Confirmar contraseña"
+            type="password"
+            formControlName="passwordConfirm"
+          />
+          <mat-error
+            *ngIf="invUserForm.get('passwordConfirm').hasError('required')"
+          >
+            Confirmación de contraseña requerida
+          </mat-error>
+          <mat-error
+            *ngIf="
+              !invUserForm.get('passwordConfirm').hasError('required') &&
+              invUserForm
+                .get('passwordConfirm')
+                .hasError('passwordsNotMatching')
+            "
+          >
+            La contraseña no coincide
+          </mat-error>
+        </mat-form-field><-->
+        <!--<button
+          *ngIf="action === 'edit'"
+          floatLabel="always"
+          mat-raised-button
+          (click)="cambiarPass()"
+        >
+          Cambiar contraseña
+          <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+        </button><-->
+      </div>
+    </form>
+  </div>
+
+  <div
+    mat-dialog-actions
+    class="m-0 p-16"
+    fxLayout="row"
+    fxLayoutAlign="end center"
+  >
+    <button
+      *ngIf="action === 'edit'"
+      mat-raised-button
+      class="mr-8"
+      (click)="onDelete()"
+      [disabled]="invUserForm.invalid"
+      aria-label="Delete"
+      matTooltip="Delete"
+    >
+      Eliminar
+    </button>
+    <button
+      *ngIf="action === 'new'"
+      mat-raised-button
+      class="save-button"
+      [disabled]="invUserForm.invalid"
+      (click)="onSave(check)"
+    >
+      Agregar
+    </button>
+
+    <button
+      *ngIf="action === 'edit'"
+      mat-raised-button
+      class="save-button"
+      (click)="onSaveEdit(check)"
+      [disabled]="invUserForm.invalid"
+      aria-label="SAVE"
+    >
+      Guardar
+    </button>
+  </div>
+</div>

@@ -99,6 +99,7 @@ module.exports.bootstrap = async function () {
 
   // By convention, this is a good place to set up fake data during development.
   const salt = await bcrypt.genSalt(10);
+
   const hashpass = await bcrypt.hash('12345678', salt);
   await User.createEach([
     {

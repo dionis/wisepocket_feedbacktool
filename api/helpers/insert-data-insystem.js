@@ -55,21 +55,21 @@ module.exports = {
 
   fn: async function( inputs, exits) {
     // TODO
-    var sourceReview = inputs.review
-    var sourceCitizen = inputs.citizen
-    var sourceInSystem = inputs.sourceInfo
-    var source = inputs.source
+    var sourceReview = inputs.review;
+    var sourceCitizen = inputs.citizen;
+    var sourceInSystem = inputs.sourceInfo;
+    var source = inputs.source;
     // console.log("--- View Other -----")
     if (typeof sourceInSystem === 'undefined' || typeof sourceInSystem.id === 'undefined' ) {
       await Source.create(source);
-      console.log('--- View -----')
+      console.log('--- View -----');
       sourceInSystem = await Source.find({
         type:source.type,
         email:source.email,
         phonenumber:source.phonenumber,
         imei:source.imei
 
-      }).limit(1)
+      }).limit(1);
 
 
     }
@@ -82,7 +82,7 @@ module.exports = {
     // }
     // else { //Exist Source object in database
     // console.log("Insert Citizen 2 " + JSON.stringify(sourceCitizen))
-    let result = await sails.helpers.insertCitizen( sourceReview, sourceCitizen, sourceInSystem)
+    let result = await sails.helpers.insertCitizen( sourceReview, sourceCitizen, sourceInSystem);
     //  console.log("Result ---> " + JSON.stringify(result))
 
     //#################################################################
@@ -105,27 +105,40 @@ module.exports = {
     //       .then(_=>{console.log("Opinion was sended to NLP Processing Module")})
     //       .catch(err => console.error("Error in NLP Opinion in system ", err ))
     var aspectText = '';
+
+    //console.log(' Review Insert ', result);
+
+    if (typeof result === 'undefined' || typeof result.opinion === 'undefined') {
+      return exits.error();
+    }
+
     console.log(' <=== NLP SERVICE CALL PARAMETERS ===>');
     console.log('Review text: ', sourceReview.data);
     console.log('Aspect text: ', aspectText);
-    console.log('Opinion id: ', result.id);
-    console.log('Campaign id: ',sourceReview.camapaign );
-
+    console.log('Opinion id: ', result.opinion.id);
+    console.log('Campaign id: ',sourceReview.campaign );
+    let sourceText = {};
+    sourceText.textreview  = ''+sourceReview.data;
+    sourceText.aspect = ' ';
+    sourceText.opinionid =  ''+result.opinion.id;
+    sourceText.camapaignid = ''+sourceReview.campaign;
+    console.log('--- CALL ----');
     sails.helpers
-      .nlpSentimentAnalysisCall(
-        sourceReview.data,
-        aspectText,
-        result.id,
-        sourceReview.camapaign
-      ).tolerate('callServiceError', ()=>{
-        console.log('<==== Error ====> ' );
-        console.log('<==== Write RECORD IN LOG ABOUT BAT CALL TO NLP SERVICES====>')
-      })
-      .then( (result)=>{
-        console.log('<==== SUCESSFUL CALL TO NLP SERVICES ====> ' );
-        console.log(result);
-        //return done();
-      });
+    .nlpSentimentAnalysisCall(
+      sourceText.textreview,
+      sourceText.aspect,
+      sourceText.opinionid,
+      sourceText.camapaignid
+    ).tolerate('callServiceError', ()=>{
+      console.log('<==== Error ====> ' );
+      console.log('<==== Error ====> ' );
+      console.log('<==== Write RECORD IN LOG ABOUT BAT CALL TO NLP SERVICES====>');
+    })
+    .then((result)=>{
+      console.log('<==== SUCESSFUL CALL TO NLP SERVICES ====> ' );
+      console.log(result);
+      //return done();
+    });
     //###################################################################
     return exits.success(result);
 

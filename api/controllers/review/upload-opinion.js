@@ -1,13 +1,13 @@
 module.exports = {
-  friendlyName: "Upload opinion",
+  friendlyName: 'Upload opinion',
 
-  description: "",
+  description: '',
 
   inputs: {
     campaingid: {
-      type: "string",
-      description: "Campaing identifier in database",
-      example: "34453",
+      type: 'string',
+      description: 'Campaing identifier in database',
+      example: '34453',
       required: true,
     },
   },
@@ -34,16 +34,16 @@ module.exports = {
   //       don't forget to re-lift the server before testing!
 
   fn: async function (inputs, exist) {
-    var camapingid = this.req.param("campaingid");
-    console.log("-----: " + this.req.param("campaingid"));
+    var camapingid = this.req.param('campaingid');
+    console.log('-----: ' + this.req.param('campaingid'));
     const res = this.res;
     const req = this.req;
     let result = await Campaign.find({ id: camapingid }).limit(1);
 
     if (typeof result === 'undefined' || result.length === 0)
       return res.json({
-        status: "Error",
-        messg: "Not exist Public Campaing in WisePocket's plataform",
+        status: 'Error',
+        messg: 'Not exist Public Campaing in WisePocket\'s plataform',
       });
     camapingid = result[0].id;
     // await Citizen.find({}).limit(1)
@@ -52,9 +52,9 @@ module.exports = {
       campaing: camapingid,
       req: this.req,
     });
-    console.log("<======= End Send Service Insert =====>")
+    console.log('<======= End Send Service Insert =====>')
     return res.json({
-      status: "OK",
+      status: 'OK',
     });
     //console.log("---------------------------------0000000000000000000------------------------")
   },

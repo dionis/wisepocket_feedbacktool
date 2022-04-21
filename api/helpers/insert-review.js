@@ -34,10 +34,18 @@ module.exports = {
     let review = inputs.review;
     let source = inputs.source;
 
-    if (typeof review.campaing === 'undefined') {
+    if (typeof review.campaign === 'undefined') {
       throw exits.errorNotCampaing();
     } else {
       review.source = source.id;
+      let royalOpinion = await Opinion.create({
+        texto:review.data,
+        fecha:review.date,
+        campaign:review.campaign,
+        citizen:review.citizen
+      }).fetch();
+
+      //console.log('<== Royal Opinion Insert ==>', royalOpinion);
       await Review.create(review);
       //console.log("Valores---->>> " + JSON.stringify(review))
       let newReview = await Review.find({
@@ -47,12 +55,20 @@ module.exports = {
         data: review.data,
       });
 
-      await sails.helpers
-        .insertImages(newReview, source)
-        .tolerate('noImageFound', () => {
-          ///Not image found to insert
-        });
-      if (newReview !== undefined) {return exits.success(newReview[0]);}
+      //***************View**************************
+      //Not necesary in this version
+      //*****************************************
+
+      // await sails.helpers
+      //   .insertImages(newReview, source)
+      //   .tolerate('noImageFound', () => {
+      //     ///Not image found to insert
+      //   });
+
+      // if (newReview !== undefined) {return exits.success(newReview[0]);}
+      // else {throw exits.errorNotInsert();}
+
+      if (newReview !== undefined) {return exits.success({id:royalOpinion.id, data:royalOpinion.texto,type:'opinion',campaign:royalOpinion.campaign});}
       else {throw exits.errorNotInsert();}
     }
   },

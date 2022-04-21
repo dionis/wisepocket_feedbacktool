@@ -23,16 +23,16 @@ module.exports = {
     },
     subject: {
       type: 'string',
-      defaultsTo: ""
+      defaultsTo: ''
     },
     citizenid:{
       type: 'string',
-      defaultsTo: ""
+      defaultsTo: ''
     },
 
     data: {
       type: 'string',
-      defaultsTo: ""
+      defaultsTo: ''
     },
 
     images: {
@@ -68,7 +68,7 @@ module.exports = {
       collection: 'Images',
       via: 'review'
     },
-    campaing:{
+    campaign:{
       model:'campaign',
 
     }

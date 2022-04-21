@@ -4,7 +4,8 @@
 "campaignid": "62536687faa935445457aa34"
 info:
   "type": opinion
-  contact:  {address: '', mail: '', phone: '', name: '', nickname: ''}
+  contact: { address: "Calle 10 Rpto Sue�o, #264", mail: pedro@nauta.cu, phone: '2334345444',
+               name: Pedro Jose, nickname: Pedro Jose}
   title: "El problema del agua es terrible"
   text: |
               Como conocer el medicamento contra el Dengu

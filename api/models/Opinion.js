@@ -58,7 +58,9 @@ module.exports = {
     campaign: {
       model: 'campaign'
     },
-
+    citizen: {
+      model: 'Citizen'
+    },
   },
   customToJSON: function () {
     return _.omit(this, [ 'aspectos', 'entidades', 'createDay', 'campaign', 'createdAt', 'updatedAt']);

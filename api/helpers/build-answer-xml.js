@@ -1,94 +1,80 @@
 module.exports = {
-
-
   friendlyName: 'Build answer xml',
-
 
   description: '',
 
-
   inputs: {
-
-    reviews:{
-      type:'ref',
-      required:true,
-      description:'Text in xml format'
+    reviews: {
+      type: 'ref',
+      required: true,
+      description: 'Text in xml format',
     },
-    source:{
-      type:'json',
-      required:true,
-      description:'Review procedence'
+    source: {
+      type: 'json',
+      required: true,
+      description: 'Review procedence',
     },
-    campaingid:{
-      type:'string',
-      description:"Campaing identifier in database",
-      example:"34453",
-      required: true
+    campaingid: {
+      type: 'string',
+      description: 'Campaing identifier in database',
+      example: '34453',
+      required: true,
     },
   },
 
-
   exits: {
-
     success: {
       description: 'All done.',
     },
-    NotExistInfomation:{
-      description:'Not exist information'
+    NotExistInfomation: {
+      description: 'Not exist information',
     },
-    ErrorNotSourceFind:{
-
-    }
-
+    ErrorNotSourceFind: {},
   },
-
 
   fn: async function (inputs, exits) {
     // TODO
-    let reviews = inputs.reviews
-    let source = inputs.source
-    let campaing = inputs.campaingid
-    console.log("----> buildAnswerXml <------")
-    if (typeof reviews === "undefined" || typeof source === "undefined") {
-       return exists.NotExistInfomation()
-    }
-    else {
-
-     // console.log("Cantidad de Opiniones " +  reviews.length)
+    let reviews = inputs.reviews;
+    let source = inputs.source;
+    let campaing = inputs.campaingid;
+    console.log('----> buildAnswerXml <------');
+    if (typeof reviews === 'undefined' || typeof source === 'undefined') {
+      return exists.NotExistInfomation();
+    } else {
+      // console.log("Cantidad de Opiniones " +  reviews.length)
       //console.log("Text " + JSON.stringify(source))
-      let query = {imei: source.imei}
+      let query = { imei: source.imei };
       //console.log("Text ===> " + JSON.stringify(query))
       await Citizen.find({}).limit(1);
       //console.log("<===> " + JSON.stringify(query))
       await Source.find({}).limit(1);
       //console.log("Text ===> " + JSON.stringify(query))
-      Source.find(query).limit(1).exec(async function (err, sourceInfo){
+      Source.find(query)
+        .limit(1)
+        .exec(async (err, sourceInfo) => {
+          if (err) {
+            // console.log("Error " + JSON.stringify(err))
+            return exits.ErrorNotSourceFind(err);
+          }
+          // console.log("<--->")
+          if (typeof sourceInfo !== 'undefined') sourceInfo = sourceInfo[0];
 
-        if (err){
-          // console.log("Error " + JSON.stringify(err))
-            return exits.ErrorNotSourceFind(err)
-        }
-       // console.log("<--->")
-        if (typeof sourceInfo !== "undefined")
-        sourceInfo = sourceInfo[0]
+          if (typeof sourceInfo === 'undefined') {
+            await Source.create(source);
+            //console.log("<----33---->")
+            sourceInfo = await Source.find({ imei: source.imei });
+            //console.log("<----34---->")
+            sourceInfo = sourceInfo[0];
+          }
 
-        if (typeof sourceInfo === "undefined") {
-          await Source.create(source);
-          //console.log("<----33---->")
-          sourceInfo =  await Source.find({imei: source.imei})
-          //console.log("<----34---->")
-          sourceInfo = sourceInfo[0]
-        }
+          //console.log("Fuente --> " + JSON.stringify(source));
+          var directoryAddress = source.directoryAddress;
+          //console.log("Fuente :" + directoryAddress);
+          var xmlToSend = '<WisePocket>';
+          ////Fin all formationcenter id
 
-        //console.log("Fuente --> " + JSON.stringify(source));
-        var directoryAddress = source.directoryAddress
-        //console.log("Fuente :" + directoryAddress);
-        var xmlToSend = "<WisePocket>";
-        ////Fin all formationcenter id
-
-        var currentDate = new Date();
-        for ( const iInfo of reviews) {
-
+          var currentDate = new Date();
+          for (const iInfo of reviews) {
             var objectToUpdate = {};
             var programTheme = {};
             var citizenInfo = {};
@@ -100,7 +86,7 @@ module.exports = {
             // :["Orgulloso de Santiago y sus activades"]}],"images":[{"image":["/199393.JPG"]}],"videos":["/fgdd.mp4"],"records":["/gardd.mp3"]}
             // console.log(JSON.stringify(iInfo))
 
-            objectToUpdate.campaing =  campaing
+            objectToUpdate.campaign = campaing;
             objectToUpdate.type = iInfo.$.type;
             objectToUpdate.data = iInfo.data[0].text[0];
             objectToUpdate.images = iInfo.images;
@@ -108,7 +94,7 @@ module.exports = {
             objectToUpdate.gps = iInfo.gps;
             objectToUpdate.taperecord = iInfo.records;
             objectToUpdate.date = currentDate;
-            objectToUpdate.datelong =  String (currentDate.getTime());
+            objectToUpdate.datelong = String(currentDate.getTime());
             objectToUpdate.citizenid = iInfo.citizenid[0];
             objectToUpdate.title = iInfo.programtitle;
             programTheme.title = iInfo.programtitle;
@@ -131,23 +117,20 @@ module.exports = {
 
             //console.log("Insert Data in System <---> "   + JSON.stringify(sourceInfo))
 
-            await sails.helpers.insertDataInsystem(objectToUpdate, citizenInfo, sourceInfo, sourceInfo)
+            await sails.helpers.insertDataInsystem(
+              objectToUpdate,
+              citizenInfo,
+              sourceInfo,
+              sourceInfo
+            );
 
-
-
-          xmlToSend += "<info id=\"inserted\" />";
-          console.log("-------->>>><<<<--------")
-
-        }
-        xmlToSend += "</WisePocket>"
-        console.log("End process "  + JSON.stringify(xmlToSend))
-        return  exits.success(xmlToSend)
-
-
-      })
-
-   }
-  }
-
+            xmlToSend += '<info id="inserted" />';
+            console.log('-------->>>><<<<--------');
+          }
+          xmlToSend += '</WisePocket>';
+          console.log('End process ' + JSON.stringify(xmlToSend));
+          return exits.success(xmlToSend);
+        });
+    }
+  },
 };
-

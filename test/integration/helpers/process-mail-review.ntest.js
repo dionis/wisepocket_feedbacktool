@@ -108,11 +108,11 @@ describe('process-mail-review (Helper)', () => {
                     'Como conocer el medicamento contra el Dengu\n peuwba y accion y prueba y acciones y sigo\n',
                     opinionInformation.data
                   );
-                  Review.findOne({ id: result.opinion.id })
+                  Opinion.findOne({ id: result.opinion.id })
                     .populate('citizen')
                     .then((findReview) => {
                       resultCitizen = findReview.citizen;
-                      console.log("Contact Info ==> ", resultCitizen)
+                      console.log('Contact Info ==> ', resultCitizen)
                       assert.equal('Pedro Jose', resultCitizen.name);
                       assert.equal('', resultCitizen.lastname);
                       assert.equal('2334345444', resultCitizen.phonenumber);

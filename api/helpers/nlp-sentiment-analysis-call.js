@@ -52,13 +52,20 @@ module.exports = {
     let opinionid = inputs.opinionid;
     let camapaignid = inputs.camapaignid;
     let aspectInReview = inputs.aspect;
+    console.log('**** In Call Configuration Read ****');
     let configuration = sails.config.globals.configsystem;
 
+    console.log('**** In Call ****');
+
     if (typeof configuration === 'undefined') {
+      console.error(' !!!! NOT CONFIFURATION NLP CALL SERVICES ');
+      return exits.callServiceError();
     } else if (
       typeof configuration.nlpurlservices === 'undefine' ||
       configuration.nlpurlservices === ''
     ) {
+      console.error(' !!!! NOT CONFIFURATION NLP CALL SERVICES ');
+      return exits.callServiceError();
     } else {
 
       let hostnameAddress =  configuration.nlpurlservices;

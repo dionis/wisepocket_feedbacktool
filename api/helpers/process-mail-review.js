@@ -144,8 +144,9 @@ module.exports = {
           //          phone: '2334345444'
           //          mail: 'pedro@nauta.cu'
           //          nickname: 'ElSabelotodo'
-          console.log('JSON in File ', yamlJSON);
-          console.log('Data in File ', yamlJSON.info);
+
+          //console.log('JSON in File ', yamlJSON);
+          //console.log('Data in File ', yamlJSON.info);
           let theOpinion = yamlJSON.info;
 
           if ( theOpinion.type !== OPINION_TYPE){
@@ -156,7 +157,7 @@ module.exports = {
             let dataInOpinion = theOpinion.contact;
             console.log(' Opionion Inner information ' , dataInOpinion)
 
-            if ( typeof  dataInOpinion.phone !== 'undefined') {
+            if ( typeof  dataInOpinion.phone !== 'undefined' || typeof  dataInOpinion.name !== 'undefined' || typeof  dataInOpinion.mail !== 'undefined' ) {
 
               opinionInfo.phone = dataInOpinion.phone  || '';
               opinionInfo.address = dataInOpinion.address || '';
@@ -165,7 +166,7 @@ module.exports = {
               opinionInfo.lastname = dataInOpinion.lastname || '';
               opinionInfo.email = dataInOpinion.mail || '';
 
-             // opinionInfo.email = sourceText.fromemail;
+              // opinionInfo.email = sourceText.fromemail;
 
 
               opinionInfo.title = theOpinion.title;
@@ -193,6 +194,7 @@ module.exports = {
               nsource.email = sourceText.fromemail;
 
               var currentDate = new Date();
+              nreview.campaign = campaingid;
               nreview.type = 'opinion';
               nreview.data = opinionInfo.data;
               nreview.title = opinionInfo.title;
@@ -203,10 +205,10 @@ module.exports = {
               nreview.date = currentDate;
               nreview.datelong = String(currentDate.getTime());
 
-              nreview.campaing = campaingid;
+
               ncitizen.name = opinionInfo.name;
               ncitizen.lastname = opinionInfo.lastname;
-              ncitizen.address = opinionInfo.address ;
+              ncitizen.address = opinionInfo.address;
               ncitizen.phonenumber = opinionInfo.phone;
               ncitizen.email = opinionInfo.email;
 
@@ -239,12 +241,10 @@ module.exports = {
                         sourceInfo: nsourceInfo,
                       });
 
-                    if (resultInsert === undefined) {
+                    if (typeof resultInsert === 'undefined') {
                       throw 'InsertMailError';
                     }
-                    else {
-                       console.log('********** CALL SERVICES FOR NLP OPINION CLASIFICATION *********');
-                    }
+                    console.log('Process Mail end !!!!===!!!!')
                     return exits.success(resultInsert);
                   }
                 }

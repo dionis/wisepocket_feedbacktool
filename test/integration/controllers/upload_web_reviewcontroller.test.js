@@ -414,7 +414,7 @@ describe('UploadWebReviewController', () => {
       Campaign.find({}).limit(1).then( (campainInfo) => {
 
         const campaingId = campainInfo[0].id;
-        console.log("<==== Campaing ID =====> ",campaingId);
+        console.log('<==== Campaing ID =====> ',campaingId);
         const campaingData = {
           campaingid: campaingId
         };

@@ -48,7 +48,7 @@ describe('process-call-nlp-sentimentanalysis (Helper)', () => {
               // IMPORTANT ALWAYS ANY WISEPOCKET MESSAGES MUST HAVE AS A FIRT ELEMENT THE CAMPAING INDENTIFIER
               // IN THESE TEST WILL BE  campaingdata.data + "=>"
 
-              console.log('Output  YAML TO JSON ===> ', yamlJSON);
+              //console.log('Output  YAML TO JSON ===> ', yamlJSON);
 
               sourceText.textreview  = 'Apple is looking at buying U.K. startup for $1 billion. But New York find people';
               sourceText.aspect = 'people';

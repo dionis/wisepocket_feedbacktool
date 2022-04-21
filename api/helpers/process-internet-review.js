@@ -15,8 +15,8 @@ var path = require('path');module.exports = {
   inputs: {
     campaingid:{
       type:'string',
-      description:"Campaing identifier in database",
-      example:"34453",
+      description:'Campaing identifier in database',
+      example:'34453',
       required: true
     },
     text:{
@@ -73,19 +73,19 @@ var path = require('path');module.exports = {
     var campaing = inputs.campaingid
     //console.log("TEXTO" + reviewText);
     //await Citizen.find({}).limit(1)
-    parser.parseString(reviewText,  async  function (err, result) {
+    parser.parseString(reviewText,  async (err, result) => {
 
       if (err){
         console.log(err)
         return NotInfoFormat(err);
       }
       else {
-        if (typeof result.update === "undefined" || typeof result.update.informations === "undefined") {
+        if (typeof result.update === 'undefined' || typeof result.update.informations === 'undefined') {
           return NotExistInfo();
         }
         else {
 
-          if (typeof result.update.informations[0].info === "undefined") {
+          if (typeof result.update.informations[0].info === 'undefined') {
             return NotExistInfo();
           }
           else {
@@ -95,15 +95,15 @@ var path = require('path');module.exports = {
               ///Verify contac and text informations
               var notExecute = false
 
-              console.log("!!!!!! Opinion's Campaign ids !!! ===> ",result.update.campaignid )
-              console.log("!!!!!! Opinion's Sizes  !!! ===> ",result.update.informations.length)
-             for (const iInfo of result.update.informations[0].info) {
-                 //.forEach(function (iInfo) {
+              console.log('!!!!!! Opinion\'s Campaign ids !!! ===> ',result.update.campaignid )
+              console.log('!!!!!! Opinion\'s Sizes  !!! ===> ',result.update.informations.length)
+              for (const iInfo of result.update.informations[0].info) {
+                //.forEach(function (iInfo) {
                 // console.log("-----------------------------------------------------------")
                 // console.log(JSON.stringify(iInfo))
                 // console.log("-----------------------------------------------------------")
-                 if (typeof iInfo.data[0].contacto === "undefined" || typeof iInfo.data[0].text === "undefined") {
-                 // console.log("iInfo.data.contacto")
+                if (typeof iInfo.data[0].contacto === 'undefined' || typeof iInfo.data[0].text === 'undefined') {
+                  // console.log("iInfo.data.contacto")
                   notExecute = true
                   return NotContacInfo();
 
@@ -113,11 +113,11 @@ var path = require('path');module.exports = {
               if (!notExecute) {
                 ///Build answer XML and Insert in Data Base
                 var sourceInfo = {};
-                sourceInfo.type = "internet";
+                sourceInfo.type = 'internet';
                 sourceInfo.imei = result.update.$.imei;
 
                 sourceInfo.directoryAddress = directoryAddress;
-                console.log("----> process-internet-review <-------- " ) //+ JSON.stringify(result.update.informations[0].info)
+                console.log('----> process-internet-review <-------- ' ) //+ JSON.stringify(result.update.informations[0].info)
 
                 return exits.success( await sails.helpers.buildAnswerXml.with({
                   campaingid:campaing,
@@ -133,8 +133,8 @@ var path = require('path');module.exports = {
           }
         }
       }
-  })
-}
+    })
+  }
 
 
 };
